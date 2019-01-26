@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.navigation_map -> {
                 Log.d("TestingStuff", "Opened Map")
-                val mapFragment = MapFrag.newInstance()
+                val mapFragment = MapFragment.newInstance()
                 openFragment(mapFragment)
                 return@OnNavigationItemSelectedListener true
             }

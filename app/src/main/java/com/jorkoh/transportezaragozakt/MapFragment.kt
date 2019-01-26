@@ -10,7 +10,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 
-class MapFrag : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
     }
@@ -38,6 +38,6 @@ class MapFrag : Fragment(), OnMapReadyCallback {
 
     companion object {
         @JvmStatic
-        fun newInstance(): MapFrag = MapFrag()
+        fun newInstance(): MapFragment = MapFragment()
     }
 }
