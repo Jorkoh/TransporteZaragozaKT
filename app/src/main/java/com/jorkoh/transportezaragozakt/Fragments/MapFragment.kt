@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt
+package com.jorkoh.transportezaragozakt.Fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.jorkoh.transportezaragozakt.R
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-    override fun onMapReady(p0: GoogleMap?) {
+
+    override fun onMapReady(googleMap: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
     }
 
@@ -19,14 +21,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var mapFragment : SupportMapFragment? = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment?
-        if (mapFragment == null){
+        // Get and (if needed) initialize the map fragment programmatically
+        var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment?
+        if (mapFragment == null) {
             mapFragment = SupportMapFragment()
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, "mapFragment")
@@ -38,6 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     companion object {
         @JvmStatic
-        fun newInstance(): MapFragment = MapFragment()
+        fun newInstance(): MapFragment =
+            MapFragment()
     }
 }
