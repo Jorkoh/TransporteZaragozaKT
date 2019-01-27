@@ -1,17 +1,15 @@
 package com.jorkoh.transportezaragozakt
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.jorkoh.transportezaragozakt.DI.appModule
 import com.jorkoh.transportezaragozakt.Fragments.FavoritesFragment
 import com.jorkoh.transportezaragozakt.Fragments.MapFragment
 import com.jorkoh.transportezaragozakt.Fragments.MoreFragment
 import com.jorkoh.transportezaragozakt.Fragments.SearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.startKoin
 
 /**
  * TODO: Fragments probably shouldn't be recreated between destinations to keep things snappy like YouTube app
@@ -60,9 +58,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Start Koin
-        startKoin(this, listOf(appModule))
-
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         val favoritesFragment = FavoritesFragment.newInstance()
@@ -71,13 +66,16 @@ class MainActivity : AppCompatActivity() {
         args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
         favoritesFragment.arguments = args
         // END REMOVE
-        openFragment(favoritesFragment)
+        // TODO: This could be done differently?
+        openFragment(favoritesFragment, false)
     }
 
-    private fun openFragment(fragment: Fragment) {
+    private fun openFragment(fragment: Fragment, addToBackStack: Boolean = true) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
-        transaction.addToBackStack(null)
+        if (addToBackStack) {
+            transaction.addToBackStack(null)
+        }
         transaction.commit()
     }
 }
