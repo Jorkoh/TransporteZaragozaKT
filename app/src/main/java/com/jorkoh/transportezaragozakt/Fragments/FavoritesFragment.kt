@@ -15,6 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FavoritesFragment : Fragment() {
 
     companion object {
+        const val TAG = "FavoritesFragment"
         const val STOP_ID_KEY = "STOP_ID_KEY"
 
         @JvmStatic

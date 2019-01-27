@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jorkoh.transportezaragozakt.Fragments.FavoritesFragment
 import com.jorkoh.transportezaragozakt.Fragments.MapFragment
@@ -18,6 +19,24 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val ACTIVE_DESTINATION = "ACTIVE_DESTINATION"
+    }
+
+    private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
+        // TODO: This must be easier to do
+        val activeFragment = supportFragmentManager.findFragmentByTag(ACTIVE_DESTINATION)
+        if(activeFragment != null){
+            when(activeFragment::class){
+                FavoritesFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_favorites)
+                MapFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_map)
+                MoreFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_more)
+                SearchFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_search)
+                else -> return@OnBackStackChangedListener
+            }.isChecked = true
+        }
+    }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -58,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener)
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         val favoritesFragment = FavoritesFragment.newInstance()
@@ -72,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFragment(fragment: Fragment, addToBackStack: Boolean = true) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
+        transaction.replace(R.id.container, fragment, ACTIVE_DESTINATION)
         if (addToBackStack) {
             transaction.addToBackStack(null)
         }
