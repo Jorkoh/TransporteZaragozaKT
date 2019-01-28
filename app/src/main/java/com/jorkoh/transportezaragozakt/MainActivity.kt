@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jorkoh.transportezaragozakt.Fragments.FavoritesFragment
 import com.jorkoh.transportezaragozakt.Fragments.MapFragment
@@ -20,11 +21,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    // Update selected item on BottomNavigationView
     private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
         // TODO: This must be easier to do
         val activeFragment = supportFragmentManager.primaryNavigationFragment
-        if(activeFragment != null){
-            when(activeFragment::class){
+        if (activeFragment != null) {
+            when (activeFragment::class) {
                 FavoritesFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_favorites)
                 MapFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_map)
                 MoreFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_more)
@@ -69,33 +71,42 @@ class MainActivity : AppCompatActivity() {
 
 //        val favoritesFragment = FavoritesFragment.newInstance()
         // @REMOVE: Testing stuff
-//        val args = Bundle()
-//        args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
-//        favoritesFragment.arguments = args
+        // val args = Bundle()
+        // args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
+        // favoritesFragment.arguments = args
         // END REMOVE
         showFragment(::FavoritesFragment)
     }
 
-    private fun <T>showFragment(f: () -> T) {
+    private fun <T> showFragment(f: () -> T, firstFragment: Boolean = false) {
+        val tag = f.hashCode().toString()
         val transaction = supportFragmentManager.beginTransaction()
         val currentFragment = supportFragmentManager.primaryNavigationFragment
-        var fragmentToOpen = supportFragmentManager.findFragmentByTag(f.hashCode().toString())
-        if(currentFragment == fragmentToOpen){
+        var fragmentToOpen = supportFragmentManager.findFragmentByTag(tag)
+        if (currentFragment == fragmentToOpen) {
             return
         }
 
-        if(currentFragment!= null){
+        if (currentFragment != null) {
             transaction.hide(currentFragment)
         }
-        if(fragmentToOpen == null){
+        if (fragmentToOpen == null) {
             fragmentToOpen = f() as Fragment
-            transaction.add(R.id.fragment_container, fragmentToOpen, f.hashCode().toString())
-        }else{
+            transaction.add(R.id.fragment_container, fragmentToOpen, tag)
+        } else {
             transaction.show(fragmentToOpen)
         }
 
+        manageBackStack(transaction, tag, firstFragment)
+
         transaction.setPrimaryNavigationFragment(fragmentToOpen)
         transaction.setReorderingAllowed(true)
-        transaction.commitNowAllowingStateLoss()
+        transaction.commit()
+    }
+
+    private fun manageBackStack(transaction: FragmentTransaction, tag: String, firstFragment: Boolean) {
+        if (!firstFragment) {
+            transaction.addToBackStack(tag)
+        }
     }
 }
