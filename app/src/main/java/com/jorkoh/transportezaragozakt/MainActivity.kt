@@ -20,13 +20,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        private const val ACTIVE_DESTINATION = "ACTIVE_DESTINATION"
-    }
-
     private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
         // TODO: This must be easier to do
-        val activeFragment = supportFragmentManager.findFragmentByTag(ACTIVE_DESTINATION)
+        val activeFragment = supportFragmentManager.primaryNavigationFragment
         if(activeFragment != null){
             when(activeFragment::class){
                 FavoritesFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_favorites)
@@ -42,31 +38,22 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.navigation_favorites -> {
                 Log.d("TestingStuff", "Opened Favorites")
-                val favoritesFragment = FavoritesFragment.newInstance()
-                // @REMOVE: Testing stuff
-                val args = Bundle()
-                args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
-                favoritesFragment.arguments = args
-                // END REMOVE
-                openFragment(favoritesFragment)
+                showFragment(::FavoritesFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_map -> {
                 Log.d("TestingStuff", "Opened Map")
-                val mapFragment = MapFragment.newInstance()
-                openFragment(mapFragment)
+                showFragment(::MapFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_search -> {
                 Log.d("TestingStuff", "Opened Search")
-                val searchFragment = SearchFragment.newInstance()
-                openFragment(searchFragment)
+                showFragment(::SearchFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_more -> {
                 Log.d("TestingStuff", "Opened More")
-                val moreFragment = MoreFragment.newInstance()
-                openFragment(moreFragment)
+                showFragment(::MoreFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -80,22 +67,35 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener)
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        val favoritesFragment = FavoritesFragment.newInstance()
+//        val favoritesFragment = FavoritesFragment.newInstance()
         // @REMOVE: Testing stuff
-        val args = Bundle()
-        args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
-        favoritesFragment.arguments = args
+//        val args = Bundle()
+//        args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
+//        favoritesFragment.arguments = args
         // END REMOVE
-        // TODO: This could be done differently?
-        openFragment(favoritesFragment, false)
+        showFragment(::FavoritesFragment)
     }
 
-    private fun openFragment(fragment: Fragment, addToBackStack: Boolean = true) {
+    private fun <T>showFragment(f: () -> T) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment, ACTIVE_DESTINATION)
-        if (addToBackStack) {
-            transaction.addToBackStack(null)
+        val currentFragment = supportFragmentManager.primaryNavigationFragment
+        var fragmentToOpen = supportFragmentManager.findFragmentByTag(f.hashCode().toString())
+        if(currentFragment == fragmentToOpen){
+            return
         }
-        transaction.commit()
+
+        if(currentFragment!= null){
+            transaction.hide(currentFragment)
+        }
+        if(fragmentToOpen == null){
+            fragmentToOpen = f() as Fragment
+            transaction.add(R.id.fragment_container, fragmentToOpen, f.hashCode().toString())
+        }else{
+            transaction.show(fragmentToOpen)
+        }
+
+        transaction.setPrimaryNavigationFragment(fragmentToOpen)
+        transaction.setReorderingAllowed(true)
+        transaction.commitNowAllowingStateLoss()
     }
 }
