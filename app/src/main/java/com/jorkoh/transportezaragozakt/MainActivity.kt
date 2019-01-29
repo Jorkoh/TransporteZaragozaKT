@@ -4,58 +4,123 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jorkoh.transportezaragozakt.Fragments.FavoritesFragment
 import com.jorkoh.transportezaragozakt.Fragments.MapFragment
 import com.jorkoh.transportezaragozakt.Fragments.MoreFragment
 import com.jorkoh.transportezaragozakt.Fragments.SearchFragment
+import com.jorkoh.transportezaragozakt.ViewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * TODO: Fragments probably shouldn't be recreated between destinations to keep things snappy like YouTube app
  * TODO: Learn more about Koin, Dagger and DI in general
+ * val args = Bundle()
+ * args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
+ * favoritesFragment.arguments = args
  */
 
 
 class MainActivity : AppCompatActivity() {
 
-    // Update selected item on BottomNavigationView
-    private val onBackStackChangedListener = FragmentManager.OnBackStackChangedListener {
-        // TODO: This must be easier to do
-        val activeFragment = supportFragmentManager.primaryNavigationFragment
-        if (activeFragment != null) {
-            when (activeFragment::class) {
-                FavoritesFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_favorites)
-                MapFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_map)
-                MoreFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_more)
-                SearchFragment::class -> bottom_navigation.menu.findItem(R.id.navigation_search)
-                else -> return@OnBackStackChangedListener
-            }.isChecked = true
-        }
+    enum class Destinations {
+        Favorites {
+            override fun getFragment(): Fragment {
+                return FavoritesFragment.newInstance()
+            }
+
+            override fun getTag(): String {
+                return FavoritesFragment.DESTINATION_TAG
+            }
+
+            override fun getMenuItemID(): Int {
+                return R.id.navigation_favorites
+            }
+
+            override fun toString(): String {
+                return getTag()
+            }
+        },
+        Map {
+            override fun getFragment(): Fragment {
+                return MapFragment.newInstance()
+            }
+
+            override fun getTag(): String {
+                return MapFragment.DESTINATION_TAG
+            }
+
+            override fun getMenuItemID(): Int {
+                return R.id.navigation_map
+            }
+
+            override fun toString(): String {
+                return getTag()
+            }
+        },
+        Search {
+            override fun getFragment(): Fragment {
+                return SearchFragment.newInstance()
+            }
+
+            override fun getTag(): String {
+                return SearchFragment.DESTINATION_TAG
+            }
+
+            override fun getMenuItemID(): Int {
+                return R.id.navigation_search
+            }
+
+            override fun toString(): String {
+                return getTag()
+            }
+        },
+        More {
+            override fun getFragment(): Fragment {
+                return MoreFragment.newInstance()
+            }
+
+            override fun getTag(): String {
+                return MoreFragment.DESTINATION_TAG
+            }
+
+            override fun getMenuItemID(): Int {
+                return R.id.navigation_more
+            }
+
+            override fun toString(): String {
+                return getTag()
+            }
+        };
+
+        abstract fun getFragment(): Fragment
+        abstract fun getTag(): String
+        abstract fun getMenuItemID(): Int
     }
+
+    private val mainActivityVM: MainActivityViewModel by viewModel()
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_favorites -> {
                 Log.d("TestingStuff", "Opened Favorites")
-                showFragment(::FavoritesFragment)
+                openDestination(Destinations.Favorites)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_map -> {
                 Log.d("TestingStuff", "Opened Map")
-                showFragment(::MapFragment)
+                openDestination(Destinations.Map)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_search -> {
                 Log.d("TestingStuff", "Opened Search")
-                showFragment(::SearchFragment)
+                openDestination(Destinations.Search)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_more -> {
                 Log.d("TestingStuff", "Opened More")
-                showFragment(::MoreFragment)
+                openDestination(Destinations.More)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -66,49 +131,78 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.addOnBackStackChangedListener(onBackStackChangedListener)
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-//        val favoritesFragment = FavoritesFragment.newInstance()
-        // @REMOVE: Testing stuff
-        // val args = Bundle()
-        // args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
-        // favoritesFragment.arguments = args
-        // END REMOVE
-        showFragment(::FavoritesFragment, true)
+        openDestination(mainActivityVM.getCustomBackStack().lastOrNull() ?: Destinations.Favorites)
     }
 
-    private fun <T> showFragment(f: () -> T, firstFragment: Boolean = false) {
-        val tag = f.hashCode().toString()
-        val transaction = supportFragmentManager.beginTransaction()
-        val currentFragment = supportFragmentManager.primaryNavigationFragment
-        var fragmentToOpen = supportFragmentManager.findFragmentByTag(tag)
+    private fun openDestination(destination: Destinations) {
+        val currentFragment = supportFragmentManager.findFragmentByTag(mainActivityVM.getCustomBackStack().lastOrNull()?.getTag())
+        var fragmentToOpen = supportFragmentManager.findFragmentByTag(destination.getTag())
 
-        // Don't mess with an already open fragment
+        val transaction = supportFragmentManager.beginTransaction()
+
+        // Ignore reselection of shown fragment
         if (currentFragment == fragmentToOpen && fragmentToOpen != null) {
             return
         }
 
+        // Hide the current fragment
         if (currentFragment != null) {
             transaction.hide(currentFragment)
         }
+        // Show the fragment to Open
         if (fragmentToOpen == null) {
-            fragmentToOpen = f() as Fragment
-            transaction.add(R.id.fragment_container, fragmentToOpen, tag)
+            // Get an instance if it's the first time the destination is selected
+            fragmentToOpen = destination.getFragment()
+            transaction.add(R.id.fragment_container, fragmentToOpen, destination.getTag())
         } else {
             transaction.show(fragmentToOpen)
         }
 
-        manageBackStack(transaction, tag, firstFragment)
+        // Remove previous instance of this destination if exists, avoid dropping first element like YT app
+        val position = mainActivityVM.getCustomBackStack().drop(1).indexOf(destination)
+        if(position != -1){
+            mainActivityVM.getCustomBackStack().removeAt(position+1)
+        }
+        // Add the destination to the custom BackStack
+        mainActivityVM.getCustomBackStack().add(destination)
 
         transaction.setPrimaryNavigationFragment(fragmentToOpen)
         transaction.setReorderingAllowed(true)
         transaction.commit()
     }
 
-    private fun manageBackStack(transaction: FragmentTransaction, tag: String, firstFragment: Boolean) {
-        if (!firstFragment) {
-            transaction.addToBackStack(tag)
+    private fun goBackToPreviousDestination() {
+        val destination = mainActivityVM.getCustomBackStack()[mainActivityVM.getCustomBackStack().size - 2]
+        val currentFragment = supportFragmentManager.findFragmentByTag(mainActivityVM.getCustomBackStack().last().getTag())
+        val fragmentToOpen = supportFragmentManager.findFragmentByTag(destination.getTag())
+
+        val transaction = supportFragmentManager.beginTransaction()
+
+        if (currentFragment != null) {
+            transaction.hide(currentFragment)
+        }
+        if (fragmentToOpen != null) {
+            transaction.show(fragmentToOpen)
+        } else {
+            transaction.add(R.id.fragment_container, destination.getFragment(), destination.getTag())
+        }
+
+        transaction.setPrimaryNavigationFragment(fragmentToOpen)
+        transaction.setReorderingAllowed(true)
+        transaction.commit()
+
+        mainActivityVM.getCustomBackStack().removeAt(mainActivityVM.getCustomBackStack().size - 1)
+        bottom_navigation.menu.findItem(destination.getMenuItemID()).isChecked = true
+    }
+
+    override fun onBackPressed() {
+        if (mainActivityVM.getCustomBackStack().count() > 1) {
+            goBackToPreviousDestination()
+        } else {
+            super.onBackPressed()
         }
     }
+
 }

@@ -13,6 +13,14 @@ import com.jorkoh.transportezaragozakt.R
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
+    companion object {
+        const val DESTINATION_TAG = "MAP"
+
+        @JvmStatic
+        fun newInstance(): MapFragment =
+            MapFragment()
+    }
+
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
     }
@@ -36,11 +44,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync(this)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): MapFragment =
-            MapFragment()
     }
 }

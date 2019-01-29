@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FavoritesFragment : Fragment() {
 
     companion object {
-        const val TAG = "FavoritesFragment"
+        const val DESTINATION_TAG = "FAVORITES"
         const val STOP_ID_KEY = "STOP_ID_KEY"
 
         @JvmStatic
@@ -23,7 +23,7 @@ class FavoritesFragment : Fragment() {
             FavoritesFragment()
     }
 
-    private val favoritesViewModel: FavoritesViewModel by viewModel()
+    private val favoritesVM: FavoritesViewModel by viewModel()
 
     private val stopObserver = Observer<BusStopModel> { value -> value?.let { favorites_text.text = value.features.first().properties.title } }
 
@@ -39,8 +39,8 @@ class FavoritesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         // Set-up observer for the live data, init the viewmodel with an id passed as argument to the fragment
-        favoritesViewModel.init(arguments?.getString(STOP_ID_KEY) ?: "")
-        favoritesViewModel.getStop().observe(this, stopObserver)
+        favoritesVM.init(arguments?.getString(STOP_ID_KEY) ?: "")
+        favoritesVM.getStop().observe(this, stopObserver)
     }
 
 }

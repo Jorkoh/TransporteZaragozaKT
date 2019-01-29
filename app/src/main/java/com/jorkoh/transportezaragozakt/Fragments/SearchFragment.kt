@@ -9,17 +9,19 @@ import com.jorkoh.transportezaragozakt.R
 
 class SearchFragment : Fragment() {
 
+    companion object {
+        const val DESTINATION_TAG = "SEARCH"
+
+        @JvmStatic
+        fun newInstance(): SearchFragment =
+            SearchFragment()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(): SearchFragment =
-            SearchFragment()
     }
 }
