@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         // args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
         // favoritesFragment.arguments = args
         // END REMOVE
-        showFragment(::FavoritesFragment)
+        showFragment(::FavoritesFragment, true)
     }
 
     private fun <T> showFragment(f: () -> T, firstFragment: Boolean = false) {
@@ -83,7 +83,9 @@ class MainActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         val currentFragment = supportFragmentManager.primaryNavigationFragment
         var fragmentToOpen = supportFragmentManager.findFragmentByTag(tag)
-        if (currentFragment == fragmentToOpen) {
+
+        // Don't mess with an already open fragment
+        if (currentFragment == fragmentToOpen && fragmentToOpen != null) {
             return
         }
 
