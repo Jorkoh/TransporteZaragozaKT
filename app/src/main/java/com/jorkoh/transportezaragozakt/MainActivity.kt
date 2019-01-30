@@ -101,6 +101,9 @@ class MainActivity : AppCompatActivity() {
 
     private val mainActivityVM: MainActivityViewModel by viewModel()
 
+    private val customBackStack
+        get() = mainActivityVM.getCustomBackStack()
+
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_favorites -> {
@@ -133,11 +136,12 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        openDestination(mainActivityVM.getCustomBackStack().lastOrNull() ?: Destinations.Favorites)
+        openDestination(customBackStack.lastOrNull() ?: Destinations.Favorites)
     }
 
     private fun openDestination(destination: Destinations) {
-        val currentFragment = supportFragmentManager.findFragmentByTag(mainActivityVM.getCustomBackStack().lastOrNull()?.getTag())
+        val currentFragment =
+            supportFragmentManager.findFragmentByTag(customBackStack.lastOrNull()?.getTag())
         var fragmentToOpen = supportFragmentManager.findFragmentByTag(destination.getTag())
 
         val transaction = supportFragmentManager.beginTransaction()
@@ -161,12 +165,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Remove previous instance of this destination if exists, avoid dropping first element like YT app
-        val position = mainActivityVM.getCustomBackStack().drop(1).indexOf(destination)
-        if(position != -1){
-            mainActivityVM.getCustomBackStack().removeAt(position+1)
+        val position = customBackStack.drop(1).indexOf(destination)
+        if (position != -1) {
+            customBackStack.removeAt(position + 1)
         }
         // Add the destination to the custom BackStack
-        mainActivityVM.getCustomBackStack().add(destination)
+        customBackStack.add(destination)
 
         transaction.setPrimaryNavigationFragment(fragmentToOpen)
         transaction.setReorderingAllowed(true)
@@ -174,8 +178,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goBackToPreviousDestination() {
-        val destination = mainActivityVM.getCustomBackStack()[mainActivityVM.getCustomBackStack().size - 2]
-        val currentFragment = supportFragmentManager.findFragmentByTag(mainActivityVM.getCustomBackStack().last().getTag())
+        val destination = customBackStack[customBackStack.size - 2]
+        val currentFragment =
+            supportFragmentManager.findFragmentByTag(customBackStack.last().getTag())
         val fragmentToOpen = supportFragmentManager.findFragmentByTag(destination.getTag())
 
         val transaction = supportFragmentManager.beginTransaction()
@@ -193,16 +198,23 @@ class MainActivity : AppCompatActivity() {
         transaction.setReorderingAllowed(true)
         transaction.commit()
 
-        mainActivityVM.getCustomBackStack().removeAt(mainActivityVM.getCustomBackStack().size - 1)
+        customBackStack.removeAt(customBackStack.size - 1)
         bottom_navigation.menu.findItem(destination.getMenuItemID()).isChecked = true
     }
 
     override fun onBackPressed() {
-        if (mainActivityVM.getCustomBackStack().count() > 1) {
+        if (customBackStack.count() > 1 && !isDoubleHome()) {
             goBackToPreviousDestination()
         } else {
             super.onBackPressed()
         }
     }
+
+    private fun isDoubleHome(): Boolean {
+        return customBackStack.size == 2
+                && customBackStack[customBackStack.size - 2] == customBackStack.last()
+                && customBackStack.last() == Destinations.Favorites
+    }
+
 
 }
