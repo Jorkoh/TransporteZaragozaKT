@@ -3,8 +3,7 @@ package com.jorkoh.transportezaragozakt.DI
 import com.jorkoh.transportezaragozakt.Repositories.StopRepository
 import com.jorkoh.transportezaragozakt.Repositories.StopRepositoryImplementation
 import com.jorkoh.transportezaragozakt.Services.API.APIService
-import com.jorkoh.transportezaragozakt.ViewModels.FavoritesViewModel
-import com.jorkoh.transportezaragozakt.ViewModels.MainActivityViewModel
+import com.jorkoh.transportezaragozakt.ViewModels.*
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
@@ -23,6 +22,12 @@ val appModule = module {
     single<StopRepository> { StopRepositoryImplementation(get()) }
 
     viewModel { FavoritesViewModel(get()) }
+
+    viewModel { MapViewModel() }
+
+    viewModel { SearchViewModel() }
+
+    viewModel { MoreViewModel() }
 
     viewModel { MainActivityViewModel() }
 }

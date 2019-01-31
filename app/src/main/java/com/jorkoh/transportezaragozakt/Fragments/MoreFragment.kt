@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.ViewModels.MoreViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoreFragment : Fragment() {
 
@@ -16,6 +18,8 @@ class MoreFragment : Fragment() {
         fun newInstance(): MoreFragment =
             MoreFragment()
     }
+
+    private val moreVM: MoreViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

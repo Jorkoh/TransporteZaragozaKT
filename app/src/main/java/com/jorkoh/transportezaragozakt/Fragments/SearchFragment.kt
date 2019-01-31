@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.ViewModels.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
@@ -16,6 +18,8 @@ class SearchFragment : Fragment() {
         fun newInstance(): SearchFragment =
             SearchFragment()
     }
+
+    private val searchVM: SearchViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

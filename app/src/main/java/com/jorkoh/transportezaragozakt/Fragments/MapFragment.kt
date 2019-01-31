@@ -10,6 +10,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.ViewModels.MapViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -20,6 +22,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         fun newInstance(): MapFragment =
             MapFragment()
     }
+
+    private val mapVM: MapViewModel by viewModel()
 
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
