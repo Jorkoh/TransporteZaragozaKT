@@ -1,7 +1,10 @@
 package com.jorkoh.transportezaragozakt.DI
 
+import androidx.lifecycle.LiveData
+import com.jorkoh.transportezaragozakt.Models.BusStop.BusStopModel
+import com.jorkoh.transportezaragozakt.Models.BusStopLocations.BusStopLocationsModel
 import com.jorkoh.transportezaragozakt.Repositories.StopRepository
-import com.jorkoh.transportezaragozakt.Repositories.StopRepositoryImplementation
+import com.jorkoh.transportezaragozakt.Repositories.BusStopRepository
 import com.jorkoh.transportezaragozakt.Services.API.APIService
 import com.jorkoh.transportezaragozakt.ViewModels.*
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -19,11 +22,11 @@ val appModule = module {
             .create(APIService::class.java)
     }
 
-    single<StopRepository> { StopRepositoryImplementation(get()) }
+    single<StopRepository> { BusStopRepository(get()) }
 
     viewModel { FavoritesViewModel(get()) }
 
-    viewModel { MapViewModel() }
+    viewModel { MapViewModel(get()) }
 
     viewModel { SearchViewModel() }
 

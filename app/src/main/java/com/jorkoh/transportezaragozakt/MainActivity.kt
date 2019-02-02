@@ -3,18 +3,12 @@ package com.jorkoh.transportezaragozakt
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.jorkoh.transportezaragozakt.Fragments.FavoritesFragment
-import com.jorkoh.transportezaragozakt.Fragments.MapFragment
-import com.jorkoh.transportezaragozakt.Fragments.MoreFragment
-import com.jorkoh.transportezaragozakt.Fragments.SearchFragment
 import com.jorkoh.transportezaragozakt.ViewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
- * TODO: Fragments probably shouldn't be recreated between destinations to keep things snappy like YouTube app
  * TODO: Learn more about Koin, Dagger and DI in general
  * val args = Bundle()
  * args.putString(FavoritesFragment.STOP_ID_KEY, "tuzsa-3063")
@@ -23,82 +17,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
-
-    enum class Destinations {
-        Favorites {
-            override fun getFragment(): Fragment {
-                return FavoritesFragment.newInstance()
-            }
-
-            override fun getTag(): String {
-                return FavoritesFragment.DESTINATION_TAG
-            }
-
-            override fun getMenuItemID(): Int {
-                return R.id.navigation_favorites
-            }
-
-            override fun toString(): String {
-                return getTag()
-            }
-        },
-        Map {
-            override fun getFragment(): Fragment {
-                return MapFragment.newInstance()
-            }
-
-            override fun getTag(): String {
-                return MapFragment.DESTINATION_TAG
-            }
-
-            override fun getMenuItemID(): Int {
-                return R.id.navigation_map
-            }
-
-            override fun toString(): String {
-                return getTag()
-            }
-        },
-        Search {
-            override fun getFragment(): Fragment {
-                return SearchFragment.newInstance()
-            }
-
-            override fun getTag(): String {
-                return SearchFragment.DESTINATION_TAG
-            }
-
-            override fun getMenuItemID(): Int {
-                return R.id.navigation_search
-            }
-
-            override fun toString(): String {
-                return getTag()
-            }
-        },
-        More {
-            override fun getFragment(): Fragment {
-                return MoreFragment.newInstance()
-            }
-
-            override fun getTag(): String {
-                return MoreFragment.DESTINATION_TAG
-            }
-
-            override fun getMenuItemID(): Int {
-                return R.id.navigation_more
-            }
-
-            override fun toString(): String {
-                return getTag()
-            }
-        };
-
-        abstract fun getFragment(): Fragment
-        abstract fun getTag(): String
-        abstract fun getMenuItemID(): Int
-    }
-
     private val mainActivityVM: MainActivityViewModel by viewModel()
 
     private val customBackStack
@@ -136,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         bottom_navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        openDestination(customBackStack.lastOrNull() ?: Destinations.Favorites)
+        openDestination(customBackStack.lastOrNull() ?: Destinations.getMainDestination())
     }
 
     private fun openDestination(destination: Destinations) {
@@ -164,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             transaction.show(fragmentToOpen)
         }
 
-        // Remove previous instance of this destination if exists, avoid dropping first element like YT app
+        // Remove previous instance of this destination if exists, avoid dropping first destination like YT app
         val position = customBackStack.drop(1).indexOf(destination)
         if (position != -1) {
             customBackStack.removeAt(position + 1)
@@ -213,8 +131,6 @@ class MainActivity : AppCompatActivity() {
     private fun isDoubleHome(): Boolean {
         return customBackStack.size == 2
                 && customBackStack[customBackStack.size - 2] == customBackStack.last()
-                && customBackStack.last() == Destinations.Favorites
+                && customBackStack.last() == Destinations.getMainDestination()
     }
-
-
 }
