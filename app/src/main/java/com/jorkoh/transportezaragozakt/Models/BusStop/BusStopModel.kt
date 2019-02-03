@@ -1,7 +1,5 @@
 package com.jorkoh.transportezaragozakt.Models.BusStop
-import com.jorkoh.transportezaragozakt.Models.BusStopLocations.Feature
-import com.jorkoh.transportezaragozakt.Models.BusStopLocations.Geometry
-import com.jorkoh.transportezaragozakt.Models.BusStopLocations.Properties
+
 import com.squareup.moshi.Json
 
 data class BusStopModel(

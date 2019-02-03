@@ -1,37 +1,47 @@
 package com.jorkoh.transportezaragozakt.Models.BusStopLocations
-import com.jorkoh.transportezaragozakt.Models.BusStop.Properties
+
+import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.Json
 
 data class BusStopLocationsModel(
-    @Json(name = "features")
-    val features: List<Feature>,
-    @Json(name = "type")
+    @field:Json(name = "features")
+    val locations: List<Locations>,
+
+    @field:Transient
+    @field:Json(name = "type")
     val type: String
 )
 
-data class Feature(
-    @Json(name = "geometry")
+data class Locations(
+    @field:Json(name = "geometry")
     val geometry: Geometry,
-    @Json(name = "properties")
+    @field:Json(name = "properties")
     val properties: Properties,
-    @Json(name = "type")
+
+    @field:Transient
+    @field:Json(name = "type")
     val type: String
 )
 
 data class Properties(
-    @Json(name = "icon")
+    @field:Json(name = "link")
+    val link: String,
+    @field:Json(name = "title")
+    val title: String,
+
+    @field:Transient
+    @field:Json(name = "icon")
     val icon: String,
     @Json(name = "id")
-    val id: String,
-    @Json(name = "link")
-    val link: String,
-    @Json(name = "title")
-    val title: String
+    @Transient
+    val id: String
 )
 
 data class Geometry(
-    @Json(name = "coordinates")
-    val coordinates: List<Double>,
-    @Json(name = "type")
+    @field:Json(name = "coordinates")
+    val coordinates: LatLng,
+
+    @Transient
+    @field:Json(name = "type")
     val type: String
 )

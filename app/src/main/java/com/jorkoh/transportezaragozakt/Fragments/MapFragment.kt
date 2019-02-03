@@ -22,10 +22,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         const val DESTINATION_TAG = "MAP"
 
         const val MAX_ZOOM = 17.5f
-        const val MIN_ZOOM = 12.5f
+        const val MIN_ZOOM = 12f
         const val DEFAULT_ZOOM = 15f
         val ZARAGOZA_BOUNDS = LatLngBounds(
-            LatLng(41.63, -0.95), LatLng(41.68, -0.84)
+            LatLng(41.6078, -0.9786), LatLng(41.6969, -0.8003)
         )
 
         @JvmStatic
@@ -37,12 +37,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val locationsObserver = Observer<BusStopLocationsModel> { value ->
         value?.let {
-            value.features.forEach {
-                map.addMarker(
-                    MarkerOptions().position(
-                        LatLng(it.geometry.coordinates.last(), it.geometry.coordinates.first())
-                    )
-                )
+            value.locations.forEach {
+                map.addMarker(MarkerOptions().position(it.geometry.coordinates))
             }
         }
     }
@@ -52,6 +48,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
         map = googleMap!!
+
 
         styleMap()
         mapVM.getStopLocations().observe(this, locationsObserver)
@@ -90,6 +87,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map.uiSettings.isZoomControlsEnabled = false
         map.uiSettings.isMapToolbarEnabled = false
         map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(ZARAGOZA_BOUNDS.center, DEFAULT_ZOOM))
+        if (!mapVM.mapHasBeenStyled) {
+            //Don't center the camera when coming back from orientation change
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ZARAGOZA_BOUNDS.center, DEFAULT_ZOOM))
+            mapVM.mapHasBeenStyled = true
+        }
     }
 }

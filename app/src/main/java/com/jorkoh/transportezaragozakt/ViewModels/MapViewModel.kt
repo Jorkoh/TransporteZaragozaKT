@@ -6,7 +6,11 @@ import com.jorkoh.transportezaragozakt.Models.BusStopLocations.BusStopLocationsM
 import com.jorkoh.transportezaragozakt.Repositories.StopRepository
 
 class MapViewModel(private val stopRepository: StopRepository) : ViewModel() {
+
     private lateinit var stopLocations: LiveData<BusStopLocationsModel>
+
+    // @TODO: investigate how to do this properly
+    var mapHasBeenStyled = false
 
     fun init(){
         //Repository already injected by DI thanks to Koin
