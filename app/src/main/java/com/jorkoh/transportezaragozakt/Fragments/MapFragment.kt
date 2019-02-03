@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.Fragments
 
+import com.jorkoh.transportezaragozakt.R
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,20 +8,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jorkoh.transportezaragozakt.Models.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.ViewModels.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.google.android.gms.maps.model.LatLngBounds
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     companion object {
         const val DESTINATION_TAG = "MAP"
+
+        const val MAX_ZOOM = 17.5f
+        const val MIN_ZOOM = 12.5f
+        const val DEFAULT_ZOOM = 15f
+        val ZARAGOZA_BOUNDS = LatLngBounds(
+            LatLng(41.63, -0.95), LatLng(41.68, -0.84)
+        )
 
         @JvmStatic
         fun newInstance(): MapFragment =
@@ -34,10 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             value.features.forEach {
                 map.addMarker(
                     MarkerOptions().position(
-                        LatLng(
-                            it.geometry.coordinates.last(),
-                            it.geometry.coordinates.first()
-                        )
+                        LatLng(it.geometry.coordinates.last(), it.geometry.coordinates.first())
                     )
                 )
             }
@@ -49,6 +52,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
         map = googleMap!!
+
+        styleMap()
         mapVM.getStopLocations().observe(this, locationsObserver)
     }
 
@@ -76,5 +81,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync(this)
+    }
+
+    private fun styleMap() {
+        map.setMaxZoomPreference(MAX_ZOOM)
+        map.setMinZoomPreference(MIN_ZOOM)
+        map.uiSettings.isTiltGesturesEnabled = false
+        map.uiSettings.isZoomControlsEnabled = false
+        map.uiSettings.isMapToolbarEnabled = false
+        map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(ZARAGOZA_BOUNDS.center, DEFAULT_ZOOM))
     }
 }
