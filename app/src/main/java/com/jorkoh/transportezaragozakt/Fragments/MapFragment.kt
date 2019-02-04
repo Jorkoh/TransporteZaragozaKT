@@ -47,8 +47,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d("TestingStuff", "Map Ready")
-        map = googleMap!!
-
+        map = checkNotNull(googleMap)
 
         styleMap()
         mapVM.getStopLocations().observe(this, locationsObserver)
@@ -87,8 +86,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map.uiSettings.isZoomControlsEnabled = false
         map.uiSettings.isMapToolbarEnabled = false
         map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
+        //Don't center the camera when coming back from orientation change
         if (!mapVM.mapHasBeenStyled) {
-            //Don't center the camera when coming back from orientation change
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(ZARAGOZA_BOUNDS.center, DEFAULT_ZOOM))
             mapVM.mapHasBeenStyled = true
         }

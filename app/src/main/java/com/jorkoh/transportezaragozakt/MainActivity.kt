@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jorkoh.transportezaragozakt.ViewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : CyaneaAppCompatActivity() {
     private val mainActivityVM: MainActivityViewModel by viewModel()
 
     private val customBackStack
