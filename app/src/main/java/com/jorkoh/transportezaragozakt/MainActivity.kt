@@ -2,9 +2,11 @@ package com.jorkoh.transportezaragozakt
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.MenuItem
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
+import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
 import com.jorkoh.transportezaragozakt.ViewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -133,5 +135,11 @@ class MainActivity : CyaneaAppCompatActivity() {
         return customBackStack.size == 2
                 && customBackStack[customBackStack.size - 2] == customBackStack.last()
                 && customBackStack.last() == Destinations.getMainDestination()
+    }
+
+    fun openThemeSettings(@Suppress("UNUSED_PARAMETER") v: View) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, CyaneaSettingsFragment.newInstance())
+            .commit()
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.ViewModels.MoreViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : Fragment() {
 
