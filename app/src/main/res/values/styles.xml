@@ -1,6 +1,4 @@
 <resources>
-
     <style name="AppTheme" parent="Theme.Cyanea.Light.DarkActionBar" />
-
     <style name="AppTheme.NoActionBar" parent="Theme.Cyanea.Light.NoActionBar" />
 </resources>

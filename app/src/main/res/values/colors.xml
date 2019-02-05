@@ -2,7 +2,4 @@
 <resources>
     <color name="cyanea_primary_reference">#0288D1</color>
     <color name="cyanea_accent_reference">#FFA000</color>
-    <color name="cyanea_background_light">#EBE5D9</color>
-    <color name="cyanea_background_light_darker">#D4D4D4</color>
-    <color name="cyanea_background_light_lighter">#EEE8DE</color>
 </resources>
