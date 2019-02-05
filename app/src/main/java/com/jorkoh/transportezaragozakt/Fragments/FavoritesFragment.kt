@@ -31,6 +31,8 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        favoritesVM.getStop().observe(this, stopObserver)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
@@ -38,9 +40,7 @@ class FavoritesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Set-up observer for the live data, init the viewmodel with an id passed as argument to the fragment
         favoritesVM.init(arguments?.getString(STOP_ID_KEY) ?: "")
-        favoritesVM.getStop().observe(this, stopObserver)
     }
 
 }

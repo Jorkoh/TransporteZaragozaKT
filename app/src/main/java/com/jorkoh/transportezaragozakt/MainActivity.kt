@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
@@ -35,6 +36,8 @@ class MainActivity : CyaneaAppCompatActivity() {
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        //@TODO: Support multiple backstacks like YT app
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         when (item.itemId) {
             R.id.navigation_favorites -> {
                 Log.d("TestingStuff", "Opened Favorites")
@@ -135,8 +138,12 @@ class MainActivity : CyaneaAppCompatActivity() {
     }
 
     fun openThemeSettings(@Suppress("UNUSED_PARAMETER") v: View) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, CyaneaSettingsFragment.newInstance())
+        val transaction = supportFragmentManager.beginTransaction()
+        val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.last().getTag())
+        if (currentFragment != null) {
+            transaction.hide(currentFragment)
+        }
+        transaction.add(R.id.fragment_container, CyaneaSettingsFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }
