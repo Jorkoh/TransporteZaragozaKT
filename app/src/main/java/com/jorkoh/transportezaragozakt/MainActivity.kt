@@ -142,14 +142,10 @@ class MainActivity : CyaneaAppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.last().getTag())
         if (currentFragment != null) {
-            transaction.hide(currentFragment)
+            transaction.detach(currentFragment)
         }
         transaction.add(R.id.fragment_container, CyaneaSettingsFragment.newInstance())
             .addToBackStack(null)
             .commit()
-
-//        val transaction = supportFragmentManager.beginTransaction()
-//        supportFragmentManager.fragments.forEach { transaction.detach(it).attach(it) }
-//        transaction.commit()
     }
 }
