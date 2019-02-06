@@ -65,6 +65,7 @@ class MainActivity : CyaneaAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         addOnBackPressedCallback(onBackPressedCallback)
@@ -146,5 +147,9 @@ class MainActivity : CyaneaAppCompatActivity() {
         transaction.add(R.id.fragment_container, CyaneaSettingsFragment.newInstance())
             .addToBackStack(null)
             .commit()
+
+//        val transaction = supportFragmentManager.beginTransaction()
+//        supportFragmentManager.fragments.forEach { transaction.detach(it).attach(it) }
+//        transaction.commit()
     }
 }
