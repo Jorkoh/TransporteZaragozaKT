@@ -1,10 +1,11 @@
-package com.jorkoh.transportezaragozakt
+package com.jorkoh.transportezaragozakt.Navigation
 
 import androidx.fragment.app.Fragment
 import com.jorkoh.transportezaragozakt.Fragments.FavoritesFragment
 import com.jorkoh.transportezaragozakt.Fragments.MapFragment
 import com.jorkoh.transportezaragozakt.Fragments.MoreFragment
 import com.jorkoh.transportezaragozakt.Fragments.SearchFragment
+import com.jorkoh.transportezaragozakt.R
 
 enum class Destinations {
     Favorites {
@@ -81,6 +82,7 @@ enum class Destinations {
     abstract fun getMenuItemID(): Int
 
     companion object {
-        fun getMainDestination(): Destinations = Favorites
+        fun getMainDestination(): Destinations =
+            Favorites
     }
 }

@@ -3,26 +3,26 @@ package com.jorkoh.transportezaragozakt.Repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.Models.BusStop.BusStopModel
-import com.jorkoh.transportezaragozakt.Models.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.Models.Bus.BusStop.BusStopModel
+import com.jorkoh.transportezaragozakt.Models.Bus.BusStopLocations.BusStopLocationsModel
 import com.jorkoh.transportezaragozakt.Services.API.APIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-interface StopRepository {
-    fun getStop(busStopId: String): LiveData<BusStopModel>
+interface BusRepository {
+    fun getStopInfo(busStopId: String): LiveData<BusStopModel>
     fun getStopLocations(): LiveData<BusStopLocationsModel>
 }
 
-class BusStopRepository(
+class BusRepositoryImplementation(
     private val apiService: APIService,
     private val busStopCache: MutableMap<String, LiveData<BusStopModel>> = mutableMapOf(),
     private var busStopLocationsCache: LiveData<BusStopLocationsModel>? = null
-) : StopRepository {
+) : BusRepository {
 
-    override fun getStop(busStopId: String): LiveData<BusStopModel> {
+    override fun getStopInfo(busStopId: String): LiveData<BusStopModel> {
         val cached = busStopCache[busStopId]
         if (cached != null) {
             Log.d("TestingStuff", "Bus stop repository returns cached stop info")

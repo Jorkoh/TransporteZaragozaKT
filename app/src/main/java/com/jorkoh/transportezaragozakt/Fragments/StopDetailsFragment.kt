@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.Adapters.StopDetailsAdapter
-
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.ViewModels.StopDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_stop_details.*
+import kotlinx.android.synthetic.main.fragment_stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StopDetailsFragment : Fragment() {
@@ -27,12 +27,10 @@ class StopDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val rootView = inflater.inflate(R.layout.fragment_stop_details, container, false)
-
-        recycler_view.apply {
-            layoutManager = LinearLayoutManager(activity)
+        rootView.recycler_view.apply {
             setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(activity)
             adapter = StopDetailsAdapter(mutableListOf("test1", "test2", "test3", "test4"))
         }
 

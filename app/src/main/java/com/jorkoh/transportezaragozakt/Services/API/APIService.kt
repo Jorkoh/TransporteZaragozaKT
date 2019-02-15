@@ -1,7 +1,9 @@
 package com.jorkoh.transportezaragozakt.Services.API
 
-import com.jorkoh.transportezaragozakt.Models.BusStop.BusStopModel
-import com.jorkoh.transportezaragozakt.Models.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.Models.Bus.BusStop.BusStopModel
+import com.jorkoh.transportezaragozakt.Models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.Models.Tram.TramStop.TramStopModel
+import com.jorkoh.transportezaragozakt.Models.Tram.TramStopLocations.TramStopLocationsModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -19,4 +21,12 @@ interface APIService{
     @Headers("Accept: application/geo+json")
     @GET("poste-autobus?removeproperties")
     fun getBusStopsLocations() : Call<BusStopLocationsModel>
+
+    @Headers("Accept: application/geo+json")
+    @GET("parada-tranvia/{id}")
+    fun getTramStop(@Path("id") id: String): Call<TramStopModel>
+
+    @Headers("Accept: application/geo+json")
+    @GET("parada-tranvia?removeproperties")
+    fun getTramStopsLocations() : Call<TramStopLocationsModel>
 }

@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.Fragments
 
 import com.jorkoh.transportezaragozakt.R
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,11 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.jorkoh.transportezaragozakt.Models.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.Models.Bus.BusStopLocations.BusStopLocationsModel
 import com.jorkoh.transportezaragozakt.ViewModels.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.google.android.gms.maps.model.LatLngBounds
+import com.jorkoh.transportezaragozakt.Models.Tram.TramStopLocations.TramStopLocationsModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -35,10 +35,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapVM: MapViewModel by viewModel()
 
-    private val locationsObserver = Observer<BusStopLocationsModel> { value ->
+    private val busLocationsObserver = Observer<BusStopLocationsModel> { value ->
         value?.let {
             value.locations.forEach {
-                map.addMarker(MarkerOptions().position(it.geometry.coordinates))
+                map.addMarker(MarkerOptions().alpha(0.5f).position(it.geometry.coordinates))
+            }
+        }
+    }
+
+    private val tramLocationsObserver = Observer<TramStopLocationsModel> { value ->
+        value?.let {
+            value.locations.forEach {
+                map.addMarker(MarkerOptions().alpha(1f).position(it.geometry.coordinates))
             }
         }
     }
@@ -46,11 +54,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        Log.d("TestingStuff", "Map Ready")
         map = checkNotNull(googleMap)
 
         styleMap()
-        mapVM.getStopLocations().observe(this, locationsObserver)
+        mapVM.getBusStopLocations().observe(this, busLocationsObserver)
+        mapVM.getTramStopLocations().observe(this, tramLocationsObserver)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

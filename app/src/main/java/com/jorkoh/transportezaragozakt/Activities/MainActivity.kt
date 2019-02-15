@@ -1,14 +1,17 @@
 package com.jorkoh.transportezaragozakt.Activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
-import com.jorkoh.transportezaragozakt.Destinations
+import com.jorkoh.transportezaragozakt.Navigation.Destinations
+import com.jorkoh.transportezaragozakt.Fragments.StopDetailsFragment
+import com.jorkoh.transportezaragozakt.Navigation.goBackToPreviousDestination
+import com.jorkoh.transportezaragozakt.Navigation.needsCustomBackHandling
+import com.jorkoh.transportezaragozakt.Navigation.openDestination
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.ViewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,6 +78,7 @@ class MainActivity : CyaneaAppCompatActivity() {
         )
     }
 
+    //@TEST
     fun openThemeSettings(@Suppress("UNUSED_PARAMETER") v: View) {
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(
@@ -88,6 +92,24 @@ class MainActivity : CyaneaAppCompatActivity() {
             transaction.detach(currentFragment)
         }
         transaction.add(R.id.fragment_container, CyaneaSettingsFragment.newInstance())
+            .addToBackStack(null)
+            .commit()
+    }
+
+    //@TEST
+    fun openDetailsTest(@Suppress("UNUSED_PARAMETER") v: View) {
+        val transaction = supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
+        val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.last().getTag())
+        if (currentFragment != null) {
+            transaction.detach(currentFragment)
+        }
+        transaction.add(R.id.fragment_container, StopDetailsFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }

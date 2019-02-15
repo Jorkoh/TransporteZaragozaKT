@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.Models.BusStopLocations
+package com.jorkoh.transportezaragozakt.Models.Bus.BusStopLocations
 
 import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.Json
@@ -24,17 +24,16 @@ data class Locations(
 )
 
 data class Properties(
-    @field:Json(name = "link")
-    val link: String,
+    @field:Json(name = "id")
+    val id: String,
     @field:Json(name = "title")
     val title: String,
+    @field:Json(name = "link")
+    val link: String,
 
     @field:Transient
     @field:Json(name = "icon")
-    val icon: String,
-    @Json(name = "id")
-    @Transient
-    val id: String
+    val icon: String
 )
 
 data class Geometry(

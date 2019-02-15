@@ -1,14 +1,15 @@
-package com.jorkoh.transportezaragozakt.Activities
+package com.jorkoh.transportezaragozakt.Navigation
 
 import android.view.Menu
 import androidx.fragment.app.FragmentManager
-import com.jorkoh.transportezaragozakt.Destinations
 
 fun needsCustomBackHandling(
     myBackStack: MutableList<Destinations>,
     supportFragmentManager: FragmentManager
 ): Boolean {
-    return supportFragmentManager.backStackEntryCount == 0 && myBackStack.count() > 1 && !isDoubleHome(myBackStack)
+    return supportFragmentManager.backStackEntryCount == 0 && myBackStack.count() > 1 && !isDoubleHome(
+        myBackStack
+    )
 }
 
 private fun isDoubleHome(myBackStack: MutableList<Destinations>): Boolean {
