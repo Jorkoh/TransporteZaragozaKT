@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt
 
 import android.app.Application
 import com.jaredrummler.cyanea.Cyanea
-import com.jorkoh.transportezaragozakt.DI.appModule
 import org.koin.android.ext.android.startKoin
 
 class MainApplication : Application() {

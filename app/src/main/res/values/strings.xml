@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Transporte Zaragoza</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites_destination_title">Favorites</string>
+    <string name="map_destination_title">Map</string>
+    <string name="search_destination_title">Search</string>
+    <string name="more_destination_title">More</string>
 </resources>
