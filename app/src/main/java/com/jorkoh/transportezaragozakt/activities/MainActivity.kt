@@ -106,10 +106,10 @@ class MainActivity : CyaneaAppCompatActivity() {
         }
         val stopDetailsFragment = StopDetailsFragment.newInstance()
         stopDetailsFragment.arguments = Bundle().apply {
-            putString(StopDetailsFragment.STOP_ID_KEY, "tuzsa-3063")
-            putString(StopDetailsFragment.STOP_TYPE_KEY, StopType.BUS.name)
-//            putString(StopDetailsFragment.STOP_ID_KEY, "202")
-//            putString(StopDetailsFragment.STOP_TYPE_KEY, StopType.TRAM.name)
+//            putString(StopDetailsFragment.STOP_ID_KEY, "tuzsa-3063")
+//            putString(StopDetailsFragment.STOP_TYPE_KEY, StopType.BUS.name)
+            putString(StopDetailsFragment.STOP_ID_KEY, "202")
+            putString(StopDetailsFragment.STOP_TYPE_KEY, StopType.TRAM.name)
         }
         transaction.add(R.id.fragment_container, stopDetailsFragment)
             .addToBackStack(null)

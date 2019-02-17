@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
+import com.jorkoh.transportezaragozakt.models.IStop
 import com.jorkoh.transportezaragozakt.models.Tram.TramStop.TramStopModel
 import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
 import com.jorkoh.transportezaragozakt.services.API.APIService
@@ -12,24 +13,24 @@ import retrofit2.Response
 
 
 interface TramRepository {
-    fun getStopInfo(tramStopId: String): LiveData<TramStopModel>
+    fun getStopInfo(tramStopId: String): LiveData<IStop>
     fun getStopLocations(): LiveData<TramStopLocationsModel>
 }
 
 class TramRepositoryImplementation(
     private val apiService: APIService,
-    private val tramStopCache: MutableMap<String, LiveData<TramStopModel>> = mutableMapOf(),
+    private val tramStopCache: MutableMap<String, LiveData<IStop>> = mutableMapOf(),
     private var tramStopLocationsCache: LiveData<TramStopLocationsModel>? = null
 ) : TramRepository {
 
-    override fun getStopInfo(tramStopId: String): LiveData<TramStopModel> {
+    override fun getStopInfo(tramStopId: String): LiveData<IStop> {
         val cached = tramStopCache[tramStopId]
         if (cached != null) {
             Log.d("TestingStuff", "Tram stop repository returns cached stop info")
             return cached
         }
 
-        val data = MutableLiveData<TramStopModel>()
+        val data = MutableLiveData<IStop>()
         tramStopCache[tramStopId] = data
 
         // Service already injected by DI thanks to Koin

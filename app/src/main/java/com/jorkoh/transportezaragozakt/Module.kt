@@ -36,7 +36,7 @@ val appModule = module {
     single<BusRepository> { BusRepositoryImplementation(get()) }
     single<TramRepository> { TramRepositoryImplementation(get()) }
 
-    viewModel { FavoritesViewModel(get()) }
+    viewModel { FavoritesViewModel() }
 
     viewModel { MapViewModel(get(), get()) }
 

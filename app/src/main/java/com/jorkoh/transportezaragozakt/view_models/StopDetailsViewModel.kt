@@ -14,8 +14,8 @@ class StopDetailsViewModel(private val busRepository: BusRepository, private val
     fun init(stopID: String, stopType : StopType) {
         stop = when(stopType){
             //@TODO Clean this up
-            StopType.BUS -> busRepository.getStopInfo(stopID) as LiveData<IStop>
-            StopType.TRAM -> tramRepository.getStopInfo(stopID) as LiveData<IStop>
+            StopType.BUS -> busRepository.getStopInfo(stopID)
+            StopType.TRAM -> tramRepository.getStopInfo(stopID)
         }
     }
 

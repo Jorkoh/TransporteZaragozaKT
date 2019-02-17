@@ -76,8 +76,8 @@ data class Destino(
 
     override val times: List<Int>
         get() = listOf(
-            primero.split("").first().toIntOrNull() ?: 0,
-            segundo.split("").first().toIntOrNull() ?: 0
+            primero.split(" ").first().toIntOrNull() ?: 0,
+            segundo.split(" ").first().toIntOrNull() ?: 0
         )
 }
 
