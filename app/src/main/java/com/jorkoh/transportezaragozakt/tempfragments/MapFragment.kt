@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.tempfragments
 
 import com.jorkoh.transportezaragozakt.R
 import android.os.Bundle
@@ -96,7 +96,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
         //Don't center the camera when coming back from orientation change
         if (!mapVM.mapHasBeenStyled) {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ZARAGOZA_BOUNDS.center, DEFAULT_ZOOM))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                ZARAGOZA_BOUNDS.center,
+                DEFAULT_ZOOM
+            ))
             mapVM.mapHasBeenStyled = true
         }
     }

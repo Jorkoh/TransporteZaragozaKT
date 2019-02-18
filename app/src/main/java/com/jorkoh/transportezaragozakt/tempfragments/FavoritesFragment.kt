@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.tempfragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.view_models.FavoritesViewModel
-import kotlinx.android.synthetic.main.fragment_favorites.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.tempfragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,26 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.view_models.SearchViewModel
+import com.jorkoh.transportezaragozakt.view_models.MoreViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchFragment : Fragment() {
+class MoreFragment : Fragment() {
 
     companion object {
-        const val DESTINATION_TAG = "SEARCH"
+        const val DESTINATION_TAG = "MORE"
 
         @JvmStatic
-        fun newInstance(): SearchFragment =
-            SearchFragment()
+        fun newInstance(): MoreFragment =
+            MoreFragment()
     }
 
-    private val searchVM: SearchViewModel by viewModel()
+    private val moreVM: MoreViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        return inflater.inflate(R.layout.fragment_more, container, false)
     }
 }
