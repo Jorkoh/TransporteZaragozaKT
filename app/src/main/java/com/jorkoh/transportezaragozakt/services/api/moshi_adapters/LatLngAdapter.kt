@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.API.MoshiAdapters
+package com.jorkoh.transportezaragozakt.services.api.moshi_adapters
 
 import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.FromJson

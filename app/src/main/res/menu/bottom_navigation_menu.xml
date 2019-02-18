@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
             android:id="@+id/navigation_favorites"
-            android:icon="@drawable/ic_favorite_black_24dp"
+            android:icon="@drawable/animation_favorites"
             android:title="@string/favorites_destination_title"/>
     <item
             android:id="@+id/navigation_map"
@@ -14,6 +14,6 @@
             android:title="@string/search_destination_title"/>
     <item
             android:id="@+id/navigation_more"
-            android:icon="@drawable/ic_more_horiz_black_24dp"
+            android:icon="@drawable/animation_more"
             android:title="@string/more_destination_title"/>
 </menu>

@@ -4,8 +4,8 @@ import com.jorkoh.transportezaragozakt.repositories.BusRepository
 import com.jorkoh.transportezaragozakt.repositories.BusRepositoryImplementation
 import com.jorkoh.transportezaragozakt.repositories.TramRepository
 import com.jorkoh.transportezaragozakt.repositories.TramRepositoryImplementation
-import com.jorkoh.transportezaragozakt.services.API.APIService
-import com.jorkoh.transportezaragozakt.services.API.MoshiAdapters.LatLngAdapter
+import com.jorkoh.transportezaragozakt.services.api.APIService
+import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
 import com.jorkoh.transportezaragozakt.view_models.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter

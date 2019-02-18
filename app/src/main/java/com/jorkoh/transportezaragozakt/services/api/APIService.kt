@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.API
+package com.jorkoh.transportezaragozakt.services.api
 
 import com.jorkoh.transportezaragozakt.models.Bus.BusStop.BusStopModel
 import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel

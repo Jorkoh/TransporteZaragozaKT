@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.models.Bus.BusStop.BusStopModel
 import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
 import com.jorkoh.transportezaragozakt.models.IStop
-import com.jorkoh.transportezaragozakt.services.API.APIService
+import com.jorkoh.transportezaragozakt.services.api.APIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +40,7 @@ class BusRepositoryImplementation(
             }
 
             override fun onFailure(call: Call<BusStopModel>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                //TODO: Implement this
             }
         })
 
@@ -65,7 +65,7 @@ class BusRepositoryImplementation(
             }
 
             override fun onFailure(call: Call<BusStopLocationsModel>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                //TODO: Implement this
             }
         })
 
