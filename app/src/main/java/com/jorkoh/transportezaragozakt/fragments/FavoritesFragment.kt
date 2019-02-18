@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.tempfragments
+package com.jorkoh.transportezaragozakt.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

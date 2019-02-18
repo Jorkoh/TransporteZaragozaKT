@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.tempadapters
+package com.jorkoh.transportezaragozakt.adapters
 
 import android.view.LayoutInflater
 import android.view.View

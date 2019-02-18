@@ -1,10 +1,10 @@
 package com.jorkoh.transportezaragozakt.navigation
 
 import androidx.fragment.app.Fragment
-import com.jorkoh.transportezaragozakt.tempfragments.FavoritesFragment
-import com.jorkoh.transportezaragozakt.tempfragments.MapFragment
-import com.jorkoh.transportezaragozakt.tempfragments.MoreFragment
-import com.jorkoh.transportezaragozakt.tempfragments.SearchFragment
+import com.jorkoh.transportezaragozakt.fragments.FavoritesFragment
+import com.jorkoh.transportezaragozakt.fragments.MapFragment
+import com.jorkoh.transportezaragozakt.fragments.MoreFragment
+import com.jorkoh.transportezaragozakt.fragments.SearchFragment
 import com.jorkoh.transportezaragozakt.R
 
 enum class Destinations {
