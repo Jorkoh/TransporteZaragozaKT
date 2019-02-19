@@ -10,7 +10,7 @@
             android:title="@string/map_destination_title"/>
     <item
             android:id="@+id/navigation_search"
-            android:icon="@drawable/ic_search_black_24dp"
+            android:icon="@drawable/animation_search"
             android:title="@string/search_destination_title"/>
     <item
             android:id="@+id/navigation_more"
