@@ -92,7 +92,11 @@ class MainActivity : CyaneaAppCompatActivity() {
     }
 
     //@TEST
-    fun openDetailsTest(@Suppress("UNUSED_PARAMETER") v: View) {
+    fun onClickTest(@Suppress("UNUSED_PARAMETER") v: View) {
+        openStopDetails("tuzsa-3063", StopType.BUS)
+    }
+
+    fun openStopDetails(id : String, type : StopType){
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 android.R.anim.fade_in,
@@ -106,10 +110,8 @@ class MainActivity : CyaneaAppCompatActivity() {
         }
         val stopDetailsFragment = StopDetailsFragment.newInstance()
         stopDetailsFragment.arguments = Bundle().apply {
-//            putString(StopDetailsFragment.STOP_ID_KEY, "tuzsa-3063")
-//            putString(StopDetailsFragment.STOP_TYPE_KEY, StopType.BUS.name)
-            putString(StopDetailsFragment.STOP_ID_KEY, "202")
-            putString(StopDetailsFragment.STOP_TYPE_KEY, StopType.TRAM.name)
+            putString(StopDetailsFragment.STOP_ID_KEY, id)
+            putString(StopDetailsFragment.STOP_TYPE_KEY, type.name)
         }
         transaction.add(R.id.fragment_container, stopDetailsFragment)
             .addToBackStack(null)

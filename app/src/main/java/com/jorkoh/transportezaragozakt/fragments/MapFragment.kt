@@ -1,22 +1,29 @@
 package com.jorkoh.transportezaragozakt.fragments
 
-import com.jorkoh.transportezaragozakt.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.activities.MainActivity
 import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.models.StopType
+import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
 import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.google.android.gms.maps.model.LatLngBounds
-import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
+
+    data class TagInfo(val id : String,val type : StopType)
 
     companion object {
         const val DESTINATION_TAG = "MAP"
@@ -37,16 +44,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val busLocationsObserver = Observer<BusStopLocationsModel> { value ->
         value?.let {
-            value.locations.forEach {
-                map.addMarker(MarkerOptions().alpha(0.5f).position(it.geometry.coordinates))
+            it.locations.forEach {location ->
+                map.addMarker(MarkerOptions().title(location.properties.title).alpha(0.5f).position(location.geometry.coordinates))
+                    .tag = TagInfo(location.properties.id, StopType.BUS)
             }
         }
     }
 
     private val tramLocationsObserver = Observer<TramStopLocationsModel> { value ->
         value?.let {
-            value.locations.forEach {
-                map.addMarker(MarkerOptions().alpha(1f).position(it.geometry.coordinates))
+            value.locations.forEach {location ->
+                map.addMarker(MarkerOptions().alpha(1f).title(location.properties.title).position(location.geometry.coordinates))
+                    .tag = TagInfo(location.properties.id, StopType.TRAM)
+            }
+        }
+    }
+
+    private val onInfoWindowClickListener = GoogleMap.OnInfoWindowClickListener { marker ->
+        marker?.let {
+            val markerInfo = marker.tag
+            if(markerInfo is TagInfo){
+                (activity as MainActivity).openStopDetails(markerInfo.id, markerInfo.type)
             }
         }
     }
@@ -57,6 +75,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map = checkNotNull(googleMap)
 
         styleMap()
+        map.setOnInfoWindowClickListener(onInfoWindowClickListener)
         mapVM.getBusStopLocations().observe(this, busLocationsObserver)
         mapVM.getTramStopLocations().observe(this, tramLocationsObserver)
     }
@@ -96,10 +115,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
         //Don't center the camera when coming back from orientation change
         if (!mapVM.mapHasBeenStyled) {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                ZARAGOZA_BOUNDS.center,
-                DEFAULT_ZOOM
-            ))
+            map.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    ZARAGOZA_BOUNDS.center,
+                    DEFAULT_ZOOM
+                )
+            )
             mapVM.mapHasBeenStyled = true
         }
     }
