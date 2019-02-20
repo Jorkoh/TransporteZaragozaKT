@@ -1,0 +1,97 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:name="opened_connectors"
+                android:pathData="M 8.392 20.024 L 15.469 20.053 Z M 8.471 4.022 L 15.359 4.037 Z"
+                android:fillColor="#000000"
+                android:strokeColor="#000000"
+                android:strokeWidth="2"
+                android:trimPathStart="1"/>
+            <path
+                android:name="normal_sides"
+                android:pathData="M 8.625 18.732 L 3.379 20.671 L 3.378 5.367 L 8.623 3.47 Z M 15.303 5.342 L 20.548 3.397 L 20.561 18.701 L 15.318 20.603 Z"
+                android:fillColor="#000000"
+                android:strokeColor="#000000"
+                android:strokeWidth="0.8"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"/>
+            <path
+                android:name="normal_conectors"
+                android:pathData="M 8.333 17.841 L 15.469 20.053 Z M 8.471 4.022 L 15.477 6.22 Z"
+                android:fillColor="#000000"
+                android:strokeColor="#000000"
+                android:strokeWidth="2"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="normal_sides">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="100"
+                    android:duration="202"
+                    android:valueFrom="M 8.625 18.732 L 3.379 20.671 L 3.378 5.367 L 8.623 3.47 L 8.625 18.732 M 15.303 5.342 L 20.548 3.397 L 20.561 18.701 L 15.318 20.603 L 15.303 5.342"
+                    android:valueTo="M 14.86 18.991 L 9.024 18.96 L 9.023 5.914 L 14.86 18.201 L 14.86 18.991 M 9.023 5.914 L 9.023 5.12 L 14.857 5.13 L 14.86 18.201 L 9.023 5.914"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="385"
+                    android:duration="191"
+                    android:valueFrom="M 9.023 5.914 L 9.023 5.12 L 14.857 5.13 L 14.86 18.201 L 9.023 5.914 M 14.86 18.991 L 9.024 18.96 L 9.023 5.914 L 14.86 18.201 L 14.86 18.991"
+                    android:valueTo="M 15.303 3.454 L 20.548 3.397 L 20.561 20.589 L 15.259 20.662 L 15.303 3.454 M 8.684 20.62 L 3.379 20.671 L 3.319 3.42 L 8.623 3.411 L 8.684 20.62"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="639"
+                    android:duration="161"
+                    android:valueFrom="M 15.303 3.454 L 20.548 3.397 L 20.561 20.589 L 15.259 20.662 L 15.303 3.454 M 8.684 20.62 L 3.379 20.671 L 3.319 3.42 L 8.623 3.411 L 8.684 20.62"
+                    android:valueTo="M 15.303 5.342 L 20.548 3.397 L 20.561 18.701 L 15.318 20.603 L 15.303 5.342 M 8.625 18.732 L 3.379 20.671 L 3.378 5.367 L 8.623 3.47 L 8.625 18.732"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/linear_interpolator"/>
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="normal_conectors">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="trimPathStart"
+                android:duration="140"
+                android:valueFrom="0"
+                android:valueTo="1"
+                android:valueType="floatType"
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+        </aapt:attr>
+    </target>
+    <target android:name="opened_connectors">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="trimPathStart"
+                    android:startOffset="531"
+                    android:duration="108"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="639"
+                    android:duration="161"
+                    android:valueFrom="M 8.392 20.024 L 15.469 20.053 Z M 8.471 4.022 L 15.359 4.037 Z"
+                    android:valueTo="M 8.333 17.841 L 15.469 20.053 Z M 8.471 4.022 L 15.477 6.22 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:anim/linear_interpolator"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

@@ -6,7 +6,7 @@
             android:title="@string/favorites_destination_title"/>
     <item
             android:id="@+id/navigation_map"
-            android:icon="@drawable/ic_map_black_24dp"
+            android:icon="@drawable/animation_map"
             android:title="@string/map_destination_title"/>
     <item
             android:id="@+id/navigation_search"
