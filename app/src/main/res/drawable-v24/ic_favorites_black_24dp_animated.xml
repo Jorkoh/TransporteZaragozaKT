@@ -1,19 +1,22 @@
 <animated-vector
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:aapt="http://schemas.android.com/aapt">
     <aapt:attr name="android:drawable">
         <vector
-            android:name="vector"
-            android:width="24dp"
-            android:height="24dp"
-            android:viewportWidth="24"
-            android:viewportHeight="24">
-            <group android:name="group">
+                android:name="vector"
+                android:width="24dp"
+                android:height="24dp"
+                android:viewportWidth="24"
+                android:viewportHeight="24">
+            <group
+                    android:name="group"
+                    android:pivotX="12"
+                    android:pivotY="12">
                 <path
-                    android:name="path"
-                    android:pathData="M 12 21.35 L 10.55 20.03 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7.5 3 C 9.24 3 10.91 3.81 12 5.09 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 C 22 12.28 18.6 15.36 13.45 20.04 L 12 21.35 Z"
-                    android:fillColor="#000"
-                    android:strokeWidth="1"/>
+                        android:name="path"
+                        android:pathData="M 12 21.35 L 10.55 20.03 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7.5 3 C 9.24 3 10.91 3.81 12 5.09 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 C 22 12.28 18.6 15.36 13.45 20.04 L 12 21.35 Z"
+                        android:fillColor="#000"
+                        android:strokeWidth="1"/>
             </group>
         </vector>
     </aapt:attr>
@@ -21,97 +24,83 @@
         <aapt:attr name="android:animation">
             <set>
                 <objectAnimator
-                    android:propertyName="scaleX"
-                    android:duration="175"
-                    android:valueFrom="1"
-                    android:valueTo="0.9"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleX"
+                        android:duration="233"
+                        android:valueFrom="1"
+                        android:valueTo="0.9"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleY"
-                    android:duration="175"
-                    android:valueFrom="1"
-                    android:valueTo="0.9"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleY"
+                        android:duration="233"
+                        android:valueFrom="1"
+                        android:valueTo="0.9"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="pivotX"
-                    android:duration="600"
-                    android:valueFrom="12"
-                    android:valueTo="12"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleX"
+                        android:startOffset="233"
+                        android:duration="167"
+                        android:valueFrom="0.9"
+                        android:valueTo="1.2"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="pivotY"
-                    android:duration="600"
-                    android:valueFrom="12"
-                    android:valueTo="12"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleY"
+                        android:startOffset="233"
+                        android:duration="167"
+                        android:valueFrom="0.9"
+                        android:valueTo="1.2"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleX"
-                    android:startOffset="175"
-                    android:duration="125"
-                    android:valueFrom="0.9"
-                    android:valueTo="1.2"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleX"
+                        android:startOffset="400"
+                        android:duration="100"
+                        android:valueFrom="1.2"
+                        android:valueTo="0.9"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleY"
-                    android:startOffset="175"
-                    android:duration="125"
-                    android:valueFrom="0.9"
-                    android:valueTo="1.2"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleY"
+                        android:startOffset="400"
+                        android:duration="100"
+                        android:valueFrom="1.2"
+                        android:valueTo="0.9"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleX"
-                    android:startOffset="300"
-                    android:duration="75"
-                    android:valueFrom="1.2"
-                    android:valueTo="0.9"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleX"
+                        android:startOffset="500"
+                        android:duration="133"
+                        android:valueFrom="0.9"
+                        android:valueTo="1.2"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleY"
-                    android:startOffset="300"
-                    android:duration="75"
-                    android:valueFrom="1.2"
-                    android:valueTo="0.9"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleY"
+                        android:startOffset="500"
+                        android:duration="133"
+                        android:valueFrom="0.9"
+                        android:valueTo="1.2"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleX"
-                    android:startOffset="375"
-                    android:duration="99"
-                    android:valueFrom="0.9"
-                    android:valueTo="1.2"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleX"
+                        android:startOffset="633"
+                        android:duration="167"
+                        android:valueFrom="1.2"
+                        android:valueTo="1"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
-                    android:propertyName="scaleY"
-                    android:startOffset="375"
-                    android:duration="99"
-                    android:valueFrom="0.9"
-                    android:valueTo="1.2"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
-                <objectAnimator
-                    android:propertyName="scaleX"
-                    android:startOffset="474"
-                    android:duration="126"
-                    android:valueFrom="1.2"
-                    android:valueTo="1"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
-                <objectAnimator
-                    android:propertyName="scaleY"
-                    android:startOffset="474"
-                    android:duration="126"
-                    android:valueFrom="1.2"
-                    android:valueTo="1"
-                    android:valueType="floatType"
-                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                        android:propertyName="scaleY"
+                        android:startOffset="633"
+                        android:duration="167"
+                        android:valueFrom="1.2"
+                        android:valueTo="1"
+                        android:valueType="floatType"
+                        android:interpolator="@android:interpolator/fast_out_slow_in"/>
             </set>
         </aapt:attr>
     </target>
