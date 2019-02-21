@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.models.Bus.BusStop
 
 import com.jorkoh.transportezaragozakt.models.IStop
 import com.jorkoh.transportezaragozakt.models.IStopDestination
+import com.jorkoh.transportezaragozakt.models.StopType
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -11,8 +12,13 @@ data class BusStopModel(
 
     @field:Transient
     @field:Json(name = "type")
-    val type: String
+    val itemType: String
 ) : IStop {
+    override val type: StopType = StopType.BUS
+
+    override val id: String
+        get() = features.firstOrNull()?.properties?.id ?: ""
+
     override val title: String
         get() = features.firstOrNull()?.properties?.title ?: ""
 

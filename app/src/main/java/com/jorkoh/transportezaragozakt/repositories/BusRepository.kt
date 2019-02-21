@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
+import com.jorkoh.transportezaragozakt.db.daos.BusDao
 import com.jorkoh.transportezaragozakt.models.Bus.BusStop.BusStopModel
 import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
 import com.jorkoh.transportezaragozakt.models.IStop
@@ -19,11 +20,20 @@ interface BusRepository {
 
 class BusRepositoryImplementation(
     private val apiService: APIService,
+    private val busDao: BusDao,
     private val busStopCache: MutableMap<String, LiveData<IStop>> = mutableMapOf(),
     private var busStopLocationsCache: LiveData<BusStopLocationsModel>? = null
 ) : BusRepository {
 
+    companion object {
+        const val FRESH_TIMEOUT = 30
+    }
+
     override fun getStopInfo(busStopId: String): LiveData<IStop> {
+        refreshStop(busStopId)
+        return busDao.getStop(busStopId) as LiveData<IStop>
+
+        /**/
         val cached = busStopCache[busStopId]
         if (cached != null) {
             Log.d("TestingStuff", "Bus stop repository returns cached stop info")
@@ -46,6 +56,25 @@ class BusRepositoryImplementation(
 
         Log.d("TestingStuff", "Bus stop repository returns retrofit stop info")
         return data
+    }
+
+    fun refreshStop(busStopId: String) {
+        //TODO ROOM: COROUTINE THIS CALL OR USE SOME KIND OF EXECUTOR
+        if (!busDao.stopHasFreshInfo(busStopId, FRESH_TIMEOUT)) {
+            apiService.getBusStop(busStopId).enqueue(object : Callback<BusStopModel> {
+                override fun onResponse(call: Call<BusStopModel>, response: Response<BusStopModel>) {
+                    //TODO ROOM: THIS SHOULD BE AN UPDATE/INSERT
+                    busDao.insertStop(checkNotNull(response.body()))
+                }
+
+                override fun onFailure(call: Call<BusStopModel>, t: Throwable) {
+                    //TODO: Implement this
+                }
+            })
+            Log.d("TestingStuff", "Stop info refreshed with retrofit")
+        } else {
+            Log.d("TestingStuff", "Stop info is still fresh")
+        }
     }
 
     override fun getStopLocations(): LiveData<BusStopLocationsModel> {

@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations
 
 import com.google.android.gms.maps.model.LatLng
+import com.jorkoh.transportezaragozakt.models.IStopLocation
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -23,7 +24,12 @@ data class Locations(
     @field:Transient
     @field:Json(name = "type")
     val type: String
-)
+): IStopLocation {
+    override val stopId: String
+        get() = properties.id
+    override val coordinates: LatLng
+        get() = geometry.coordinates
+}
 
 data class Properties(
     @field:Json(name = "id")
