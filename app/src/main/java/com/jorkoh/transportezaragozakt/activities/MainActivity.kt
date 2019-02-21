@@ -77,10 +77,10 @@ class MainActivity : CyaneaAppCompatActivity() {
     fun openThemeSettings(@Suppress("UNUSED_PARAMETER") v: View) {
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out,
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
+                R.anim.fade_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.fade_out
             )
         val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.last().getTag())
         if (currentFragment != null) {
@@ -99,10 +99,10 @@ class MainActivity : CyaneaAppCompatActivity() {
     fun openStopDetails(id : String, type : StopType){
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out,
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
+                R.anim.fade_in,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.fade_out
             )
         val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.last().getTag())
         if (currentFragment != null) {
