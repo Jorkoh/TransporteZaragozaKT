@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.navigation
 
 import android.view.Menu
 import androidx.fragment.app.FragmentManager
+import com.jorkoh.transportezaragozakt.R
 
 fun needsCustomBackHandling(
     myBackStack: MutableList<Destinations>,
@@ -24,11 +25,19 @@ fun goBackToPreviousDestination(
     fragmentContainerID: Int,
     menu: Menu
 ) {
+    val origin = myBackStack.last()
     val destination = myBackStack[myBackStack.size - 2]
-    val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.last().getTag())
+    val currentFragment = supportFragmentManager.findFragmentByTag(origin.getTag())
     val fragmentToOpen = supportFragmentManager.findFragmentByTag(destination.getTag())
     val transaction = supportFragmentManager.beginTransaction()
-        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+
+    // Animation
+    if(origin < destination){
+        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+    }else{
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
     // Hide current if it exists
     if (currentFragment != null) {
         transaction.hide(currentFragment)
@@ -56,14 +65,29 @@ fun openDestination(
     supportFragmentManager: FragmentManager,
     fragmentContainerID: Int
 ) {
-    val currentFragment = supportFragmentManager.findFragmentByTag(myBackStack.lastOrNull()?.getTag())
+    val origin = myBackStack.lastOrNull()
+    val currentFragment = supportFragmentManager.findFragmentByTag(origin?.getTag())
     val fragmentToOpen = supportFragmentManager.findFragmentByTag(destination.getTag())
-    val transaction = supportFragmentManager.beginTransaction()
-        .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+
     // Ignore reselection of shown fragment
     if (currentFragment == fragmentToOpen && fragmentToOpen != null) {
         return
     }
+
+    val transaction = supportFragmentManager.beginTransaction()
+
+    // Animation
+    if(origin != null) {
+        if (origin < destination) {
+            transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+        } else {
+            transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+    }else{
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+    }
+
+
     // Hide the current fragment if it exists
     if (currentFragment != null) {
         transaction.hide(currentFragment)
