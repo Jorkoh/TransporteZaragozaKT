@@ -15,9 +15,9 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.activities.MainActivity
-import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.models.StopType
-import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
 import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

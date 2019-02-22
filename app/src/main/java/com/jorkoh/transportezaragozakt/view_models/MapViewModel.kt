@@ -2,8 +2,8 @@ package com.jorkoh.transportezaragozakt.view_models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
 import com.jorkoh.transportezaragozakt.repositories.BusRepository
 import com.jorkoh.transportezaragozakt.repositories.TramRepository
 

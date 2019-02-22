@@ -3,9 +3,9 @@ package com.jorkoh.transportezaragozakt.repositories
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.models.IStop
-import com.jorkoh.transportezaragozakt.models.Tram.TramStop.TramStopModel
-import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.IStop
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopModel
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import retrofit2.Call
 import retrofit2.Callback

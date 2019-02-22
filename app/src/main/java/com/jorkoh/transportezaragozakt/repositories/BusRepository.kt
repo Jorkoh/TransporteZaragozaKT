@@ -1,26 +1,29 @@
 package com.jorkoh.transportezaragozakt.repositories
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.db.daos.BusDao
-import com.jorkoh.transportezaragozakt.models.Bus.BusStop.BusStopModel
-import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.models.IStop
+import androidx.lifecycle.MutableLiveData
+import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.db.StopsDao
 import com.jorkoh.transportezaragozakt.services.api.APIService
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.BusStopModel
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.toStop
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.toStopDestinations
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.IStop
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 interface BusRepository {
-    fun getStopInfo(busStopId: String): LiveData<IStop>
+    fun getStopInfo(busStopId: String): LiveData<Stop>
     fun getStopLocations(): LiveData<BusStopLocationsModel>
 }
 
 class BusRepositoryImplementation(
     private val apiService: APIService,
-    private val busDao: BusDao,
+    private val stopsDao: StopsDao,
     private val busStopCache: MutableMap<String, LiveData<IStop>> = mutableMapOf(),
     private var busStopLocationsCache: LiveData<BusStopLocationsModel>? = null
 ) : BusRepository {
@@ -29,42 +32,21 @@ class BusRepositoryImplementation(
         const val FRESH_TIMEOUT = 30
     }
 
-    override fun getStopInfo(busStopId: String): LiveData<IStop> {
+    override fun getStopInfo(busStopId: String): LiveData<Stop> {
         refreshStop(busStopId)
-        return busDao.getStop(busStopId) as LiveData<IStop>
-
-        /**/
-        val cached = busStopCache[busStopId]
-        if (cached != null) {
-            Log.d("TestingStuff", "Bus stop repository returns cached stop info")
-            return cached
-        }
-
-        val data = MutableLiveData<IStop>()
-        busStopCache[busStopId] = data
-
-        // Service already injected by DI thanks to Koin
-        apiService.getBusStop(busStopId).enqueue(object : Callback<BusStopModel> {
-            override fun onResponse(call: Call<BusStopModel>, response: Response<BusStopModel>) {
-                data.value = response.body()
-            }
-
-            override fun onFailure(call: Call<BusStopModel>, t: Throwable) {
-                //TODO: Implement this
-            }
-        })
-
-        Log.d("TestingStuff", "Bus stop repository returns retrofit stop info")
-        return data
+        return stopsDao.getStop(busStopId)
     }
 
     fun refreshStop(busStopId: String) {
         //TODO ROOM: COROUTINE THIS CALL OR USE SOME KIND OF EXECUTOR
-        if (!busDao.stopHasFreshInfo(busStopId, FRESH_TIMEOUT)) {
+        if (!stopsDao.stopHasFreshInfo(busStopId, FRESH_TIMEOUT)) {
             apiService.getBusStop(busStopId).enqueue(object : Callback<BusStopModel> {
                 override fun onResponse(call: Call<BusStopModel>, response: Response<BusStopModel>) {
-                    //TODO ROOM: THIS SHOULD BE AN UPDATE/INSERT
-                    busDao.insertStop(checkNotNull(response.body()))
+                    checkNotNull(response.body())
+                    val body = response.body()
+                    if(body is BusStopModel){
+                        stopsDao.insertStopDestinations(body.toStopDestinations())
+                    }
                 }
 
                 override fun onFailure(call: Call<BusStopModel>, t: Throwable) {

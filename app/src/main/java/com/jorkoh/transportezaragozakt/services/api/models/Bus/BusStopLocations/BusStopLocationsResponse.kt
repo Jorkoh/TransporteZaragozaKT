@@ -1,7 +1,7 @@
-package com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations
+package com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations
 
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.models.IStopLocation
+import com.jorkoh.transportezaragozakt.services.api.models.IStopLocation
 import com.squareup.moshi.Json
 
 data class BusStopLocationsModel(

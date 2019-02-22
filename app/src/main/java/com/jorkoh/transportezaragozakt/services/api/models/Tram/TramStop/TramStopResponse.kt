@@ -1,12 +1,12 @@
-package com.jorkoh.transportezaragozakt.models.Tram.TramStop
+package com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop
 
-import com.jorkoh.transportezaragozakt.models.IStop
-import com.jorkoh.transportezaragozakt.models.IStopDestination
-import com.jorkoh.transportezaragozakt.models.StopType
+import com.jorkoh.transportezaragozakt.services.api.models.IStop
+import com.jorkoh.transportezaragozakt.services.api.models.IStopDestination
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.Json
 import java.util.*
 
-data class TramStopModel(
+data class TramStopResponse(
     @field:Json(name = "features")
     val features: List<Feature>,
 

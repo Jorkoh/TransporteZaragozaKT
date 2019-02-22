@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.jorkoh.transportezaragozakt.models.IStop
+import com.jorkoh.transportezaragozakt.services.api.models.IStop
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.row_view.view.*
 

@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.models
+package com.jorkoh.transportezaragozakt.services.api.models
 
 import com.google.android.gms.maps.model.LatLng
 

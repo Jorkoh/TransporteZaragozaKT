@@ -2,8 +2,8 @@ package com.jorkoh.transportezaragozakt.view_models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.jorkoh.transportezaragozakt.models.IStop
-import com.jorkoh.transportezaragozakt.models.StopType
+import com.jorkoh.transportezaragozakt.services.api.models.IStop
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.jorkoh.transportezaragozakt.repositories.BusRepository
 import com.jorkoh.transportezaragozakt.repositories.TramRepository
 

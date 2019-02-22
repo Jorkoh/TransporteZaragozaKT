@@ -1,10 +1,8 @@
 package com.jorkoh.transportezaragozakt.db
 
 import androidx.room.TypeConverter
-import com.jorkoh.transportezaragozakt.models.StopType
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*

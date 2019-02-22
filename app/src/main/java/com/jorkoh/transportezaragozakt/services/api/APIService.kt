@@ -1,9 +1,9 @@
 package com.jorkoh.transportezaragozakt.services.api
 
-import com.jorkoh.transportezaragozakt.models.Bus.BusStop.BusStopModel
-import com.jorkoh.transportezaragozakt.models.Bus.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.models.Tram.TramStop.TramStopModel
-import com.jorkoh.transportezaragozakt.models.Tram.TramStopLocations.TramStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.BusStopModel
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopModel
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

@@ -1,8 +1,9 @@
-package com.jorkoh.transportezaragozakt.models.Bus.BusStop
+package com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop
 
-import com.jorkoh.transportezaragozakt.models.IStop
-import com.jorkoh.transportezaragozakt.models.IStopDestination
-import com.jorkoh.transportezaragozakt.models.StopType
+import com.google.android.gms.maps.model.LatLng
+import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -13,18 +14,7 @@ data class BusStopModel(
     @field:Transient
     @field:Json(name = "type")
     val itemType: String
-) : IStop {
-    override val type: StopType = StopType.BUS
-
-    override val id: String
-        get() = features.firstOrNull()?.properties?.id ?: ""
-
-    override val title: String
-        get() = features.firstOrNull()?.properties?.title ?: ""
-
-    override val destinations: List<IStopDestination>
-        get() = features.firstOrNull()?.properties?.destinos ?: listOf()
-}
+)
 
 data class Feature(
     @field:Json(name = "geometry")
@@ -48,13 +38,12 @@ data class Properties(
     @field:Json(name = "destinos")
     val destinos: List<Destino>,
 
+    @field:Json(name = "lastUpdated")
+    val lastUpdated: Date,
+
     @field:Transient
     @field:Json(name = "icon")
     val icon: String,
-
-    @field:Transient
-    @field:Json(name = "lastUpdated")
-    val lastUpdated: Date,
 
     @field:Transient
     @field:Json(name = "link")
@@ -73,19 +62,7 @@ data class Destino(
 
     @field:Json(name = "segundo")
     val segundo: String
-) : IStopDestination {
-    override val line: String
-        get() = linea
-
-    override val destination: String
-        get() = destino
-
-    override val times: List<Int>
-        get() = listOf(
-            primero.split(" ").first().toIntOrNull() ?: 0,
-            segundo.split(" ").first().toIntOrNull() ?: 0
-        )
-}
+)
 
 data class Geometry(
     @field:Json(name = "coordinates")
@@ -95,3 +72,26 @@ data class Geometry(
     @field:Json(name = "type")
     val type: String
 )
+
+fun BusStopModel.toStop() = Stop(
+    StopType.BUS,
+    features.first().properties.id,
+    features.first().properties.title,
+    LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1])
+)
+
+fun BusStopModel.toStopDestinations() : MutableList<StopDestination> {
+    val stopDestinations = mutableListOf<StopDestination>()
+    features.first().properties.destinos.forEach { destination ->
+        stopDestinations.add(
+            StopDestination(
+                destination.linea,
+                destination.destino,
+                features.first().properties.id,
+                listOf(destination.primero.toInt(), destination.segundo.toInt()),
+                features.first().properties.lastUpdated
+            )
+        )
+    }
+    return stopDestinations
+}

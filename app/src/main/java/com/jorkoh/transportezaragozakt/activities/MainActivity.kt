@@ -9,7 +9,7 @@ import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
 import com.jorkoh.transportezaragozakt.navigation.Destinations
 import com.jorkoh.transportezaragozakt.fragments.StopDetailsFragment
-import com.jorkoh.transportezaragozakt.models.StopType
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.jorkoh.transportezaragozakt.navigation.goBackToPreviousDestination
 import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
 import com.jorkoh.transportezaragozakt.navigation.openDestination
