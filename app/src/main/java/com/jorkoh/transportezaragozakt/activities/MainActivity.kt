@@ -91,11 +91,6 @@ class MainActivity : CyaneaAppCompatActivity() {
             .commit()
     }
 
-    //@TEST
-    fun onClickTest(@Suppress("UNUSED_PARAMETER") v: View) {
-        openStopDetails("tuzsa-3063", StopType.BUS)
-    }
-
     fun openStopDetails(id : String, type : StopType){
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(

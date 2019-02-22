@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
-import com.jorkoh.transportezaragozakt.services.api.models.IStop
+import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.jorkoh.transportezaragozakt.view_models.StopDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_stop_details.view.*
@@ -32,7 +32,7 @@ class StopDetailsFragment : Fragment() {
     private val stopDetailsAdapter : StopDetailsAdapter =
         StopDetailsAdapter()
 
-    private val stopObserver = Observer<IStop> { value ->
+    private val stopDestinationsObserver = Observer<List<StopDestination>> { value ->
         value?.let {
             stopDetailsAdapter.setDestinations(value)
         }
@@ -50,7 +50,7 @@ class StopDetailsFragment : Fragment() {
             adapter = stopDetailsAdapter
         }
 
-        stopDetailsVM.getStop().observe(this, stopObserver)
+        stopDetailsVM.getStop().observe(this, stopDestinationsObserver)
 
         return rootView
     }

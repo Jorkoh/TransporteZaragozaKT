@@ -1,10 +1,11 @@
 package com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations
 
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.services.api.models.IStopLocation
+import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.Json
 
-data class BusStopLocationsModel(
+data class BusStopLocationsResponse(
     @field:Json(name = "features")
     val locations: List<Locations>,
 
@@ -22,12 +23,7 @@ data class Locations(
     @field:Transient
     @field:Json(name = "type")
     val type: String
-) : IStopLocation {
-    override val stopId: String
-        get() = properties.id
-    override val coordinates: LatLng
-        get() = geometry.coordinates
-}
+)
 
 data class Properties(
     @field:Json(name = "id")
@@ -50,3 +46,19 @@ data class Geometry(
     @field:Json(name = "type")
     val type: String
 )
+
+fun BusStopLocationsResponse.toStops() : List<Stop> {
+    //TODO: Generate this list without adding?
+    val stops = mutableListOf<Stop>()
+    locations.forEach { location ->
+        stops.add(
+            Stop(
+                StopType.BUS,
+                location.properties.id,
+                location.properties.title,
+                location.geometry.coordinates
+            )
+        )
+    }
+    return stops
+}

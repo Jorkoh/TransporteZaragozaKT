@@ -1,9 +1,9 @@
 package com.jorkoh.transportezaragozakt.services.api
 
-import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.BusStopModel
-import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopModel
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.BusStopResponse
+import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsResponse
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopResponse
+import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -16,17 +16,17 @@ interface APIService{
 
     @Headers("Accept: application/geo+json")
     @GET("poste-autobus/{id}")
-    fun getBusStop(@Path("id") id: String): Call<BusStopModel>
+    fun getBusStop(@Path("id") id: String): Call<BusStopResponse>
 
     @Headers("Accept: application/geo+json")
     @GET("poste-autobus?removeproperties")
-    fun getBusStopsLocations() : Call<BusStopLocationsModel>
+    fun getBusStopsLocations() : Call<BusStopLocationsResponse>
 
     @Headers("Accept: application/geo+json")
     @GET("parada-tranvia/{id}")
-    fun getTramStop(@Path("id") id: String): Call<TramStopModel>
+    fun getTramStop(@Path("id") id: String): Call<TramStopResponse>
 
     @Headers("Accept: application/geo+json")
     @GET("parada-tranvia?removeproperties")
-    fun getTramStopsLocations() : Call<TramStopLocationsModel>
+    fun getTramStopsLocations() : Call<TramStopLocationsResponse>
 }

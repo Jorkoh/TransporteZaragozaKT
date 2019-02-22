@@ -7,7 +7,7 @@ import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.Json
 import java.util.*
 
-data class BusStopModel(
+data class BusStopResponse(
     @field:Json(name = "features")
     val features: List<Feature>,
 
@@ -73,14 +73,15 @@ data class Geometry(
     val type: String
 )
 
-fun BusStopModel.toStop() = Stop(
+fun BusStopResponse.toStop() = Stop(
     StopType.BUS,
     features.first().properties.id,
     features.first().properties.title,
     LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1])
 )
 
-fun BusStopModel.toStopDestinations() : MutableList<StopDestination> {
+fun BusStopResponse.toStopDestinations(): List<StopDestination> {
+    //TODO: Generate this list without adding?
     val stopDestinations = mutableListOf<StopDestination>()
     features.first().properties.destinos.forEach { destination ->
         stopDestinations.add(
@@ -88,7 +89,10 @@ fun BusStopModel.toStopDestinations() : MutableList<StopDestination> {
                 destination.linea,
                 destination.destino,
                 features.first().properties.id,
-                listOf(destination.primero.toInt(), destination.segundo.toInt()),
+                listOf(
+                    destination.primero.split(" ")[0].toIntOrNull() ?: 0,
+                    destination.segundo.split(" ")[0].toIntOrNull() ?: 0
+                ),
                 features.first().properties.lastUpdated
             )
         )

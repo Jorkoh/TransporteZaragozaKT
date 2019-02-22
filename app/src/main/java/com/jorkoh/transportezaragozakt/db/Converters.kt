@@ -1,15 +1,20 @@
 package com.jorkoh.transportezaragozakt.db
 
 import androidx.room.TypeConverter
+import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
 import java.util.*
 
 class Converters : KoinComponent{
 
-    private val intListAdapter: JsonAdapter<List<Int>> by inject()
+    private val intListAdapter: JsonAdapter<List<Int>> =
+        Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Int::class.javaObjectType))
+    private val doubleListAdapter: JsonAdapter<List<Double>> =
+        Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Double::class.javaObjectType))
 
     @TypeConverter
     fun timestampToDate(value: Long?): Date? {
@@ -29,6 +34,17 @@ class Converters : KoinComponent{
     @TypeConverter
     fun jsonToIntList(value: String): List<Int>? {
         return intListAdapter.fromJson(value)
+    }
+
+    @TypeConverter
+    fun latLongToJson(value: LatLng): String {
+        return doubleListAdapter.toJson(listOf(value.latitude, value.longitude))
+    }
+
+    @TypeConverter
+    fun jsonToLatLng(value: String): LatLng? {
+        val doubleList = doubleListAdapter.fromJson(value)
+        return if (doubleList == null) null else LatLng(doubleList[0], doubleList[1])
     }
 
     @TypeConverter

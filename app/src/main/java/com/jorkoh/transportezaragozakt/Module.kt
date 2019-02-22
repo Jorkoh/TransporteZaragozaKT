@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt
 
 import androidx.room.Room
 import com.jorkoh.transportezaragozakt.db.AppDatabase
-import com.jorkoh.transportezaragozakt.db.Converters
 import com.jorkoh.transportezaragozakt.repositories.BusRepository
 import com.jorkoh.transportezaragozakt.repositories.BusRepositoryImplementation
 import com.jorkoh.transportezaragozakt.repositories.TramRepository
@@ -13,15 +12,22 @@ import com.jorkoh.transportezaragozakt.view_models.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 
 val appModule = module {
+
+    single<Executor>{
+        Executors.newSingleThreadExecutor()
+    }
 
     single<APIService> {
         Retrofit.Builder()
@@ -38,21 +44,21 @@ val appModule = module {
             .create(APIService::class.java)
     }
 
-    single{
-        Moshi.Builder().build().adapter<List<Int>>(Types.newParameterizedType(List::class.java, Integer::class.java))
-    }
-
     single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+        Room.databaseBuilder(androidApplication(), AppDatabase::class.java, AppDatabase.DATABASE_NAME)
             .build()
     }
 
     single{
-        get<AppDatabase>().busDao()
+        Executors.newSingleThreadExecutor()
     }
 
-    single<BusRepository> { BusRepositoryImplementation(get(), get()) }
-    single<TramRepository> { TramRepositoryImplementation(get()) }
+    single{
+        get<AppDatabase>().stopsDao()
+    }
+
+    single<BusRepository> { BusRepositoryImplementation(get(), get(), get()) }
+    single<TramRepository> { TramRepositoryImplementation(get(), get(), get()) }
 
     viewModel { FavoritesViewModel() }
 

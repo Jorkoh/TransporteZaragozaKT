@@ -1,7 +1,8 @@
 package com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations
 
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.services.api.models.IStopLocation
+import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -78,3 +79,19 @@ data class Destino(
     @field:Json(name = "minutos")
     val minutos: Int
 )
+
+fun TramStopLocationsResponse.toStops() : List<Stop> {
+    //TODO: Generate this list without adding?
+    val stops = mutableListOf<Stop>()
+    locations.forEach { location ->
+        stops.add(
+            Stop(
+                StopType.TRAM,
+                location.properties.id,
+                location.properties.title,
+                location.geometry.coordinates
+            )
+        )
+    }
+    return stops
+}

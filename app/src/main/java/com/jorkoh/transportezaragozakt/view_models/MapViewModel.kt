@@ -2,15 +2,14 @@ package com.jorkoh.transportezaragozakt.view_models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
+import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.repositories.BusRepository
 import com.jorkoh.transportezaragozakt.repositories.TramRepository
 
 class MapViewModel(private val busRepository: BusRepository, private val tramRepository: TramRepository) : ViewModel() {
 
-    private lateinit var busStopLocations: LiveData<BusStopLocationsModel>
-    private lateinit var tramStopLocations: LiveData<TramStopLocationsModel>
+    private lateinit var busStopLocations: LiveData<List<Stop>>
+    private lateinit var tramStopLocations: LiveData<List<Stop>>
 
     // @TODO: investigate how to do this properly
     var mapHasBeenStyled = false
@@ -21,11 +20,11 @@ class MapViewModel(private val busRepository: BusRepository, private val tramRep
         tramStopLocations = tramRepository.getStopLocations()
     }
 
-    fun getBusStopLocations(): LiveData<BusStopLocationsModel> {
+    fun getBusStopLocations(): LiveData<List<Stop>> {
         return busStopLocations
     }
 
-    fun getTramStopLocations(): LiveData<TramStopLocationsModel> {
+    fun getTramStopLocations(): LiveData<List<Stop>> {
         return tramStopLocations
     }
 }

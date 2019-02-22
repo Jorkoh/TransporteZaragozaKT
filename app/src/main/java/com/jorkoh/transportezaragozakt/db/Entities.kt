@@ -32,7 +32,8 @@ data class Stop(
 
 @Entity(tableName = "stopDestinations",
     primaryKeys = ["line", "destination", "stopId"],
-    foreignKeys = [ForeignKey(entity = Stop::class, parentColumns = ["id"], childColumns = ["stopId"], onDelete = ForeignKey.CASCADE)])
+    foreignKeys = [ForeignKey(entity = Stop::class, parentColumns = ["id"], childColumns = ["stopId"], onDelete = ForeignKey.CASCADE)],
+    indices = [Index("stopId")])
 data class StopDestination(
     @ColumnInfo(name = "line")
     var line: String,

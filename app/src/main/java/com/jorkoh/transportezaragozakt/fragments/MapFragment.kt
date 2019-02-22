@@ -15,9 +15,8 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.activities.MainActivity
-import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsModel
+import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.services.api.models.StopType
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsModel
 import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,20 +41,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapVM: MapViewModel by viewModel()
 
-    private val busLocationsObserver = Observer<BusStopLocationsModel> { value ->
-        value?.let {
-            it.locations.forEach {location ->
-                map.addMarker(MarkerOptions().title(location.properties.title).alpha(0.5f).position(location.geometry.coordinates))
-                    .tag = TagInfo(location.properties.id, StopType.BUS)
+    private val busLocationsObserver = Observer<List<Stop>> { value ->
+        value?.let {stops ->
+            stops.forEach {stop ->
+                map.addMarker(MarkerOptions().title(stop.title).alpha(0.4f).position(stop.location))
+                    .tag = TagInfo(stop.id, StopType.BUS)
             }
         }
     }
 
-    private val tramLocationsObserver = Observer<TramStopLocationsModel> { value ->
-        value?.let {
-            value.locations.forEach {location ->
-                map.addMarker(MarkerOptions().alpha(1f).title(location.properties.title).position(location.geometry.coordinates))
-                    .tag = TagInfo(location.properties.id, StopType.TRAM)
+    private val tramLocationsObserver = Observer<List<Stop>> { value ->
+        value?.let {stops ->
+            stops.forEach {stop ->
+                map.addMarker(MarkerOptions().title(stop.title).alpha(1f).position(stop.location))
+                    .tag = TagInfo(stop.id, StopType.TRAM)
             }
         }
     }

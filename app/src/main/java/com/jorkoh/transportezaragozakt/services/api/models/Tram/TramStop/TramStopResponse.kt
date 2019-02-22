@@ -1,7 +1,8 @@
 package com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop
 
-import com.jorkoh.transportezaragozakt.services.api.models.IStop
-import com.jorkoh.transportezaragozakt.services.api.models.IStopDestination
+import com.google.android.gms.maps.model.LatLng
+import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.Json
 import java.util.*
@@ -13,18 +14,7 @@ data class TramStopResponse(
     @field:Transient
     @field:Json(name = "type")
     val itemType: String
-) : IStop {
-    override val type: StopType = StopType.TRAM
-
-    override val id: String
-        get() = features.firstOrNull()?.properties?.id ?: ""
-
-    override val title: String
-        get() = features.firstOrNull()?.properties?.title ?: ""
-
-    override val destinations: List<IStopDestination>
-        get() = features.firstOrNull()?.properties?.destinations ?: listOf()
-}
+)
 
 data class Feature(
     @field:Json(name = "geometry")
@@ -48,7 +38,6 @@ data class Properties(
     @field:Json(name = "title")
     val title: String,
 
-    @field:Transient
     @field:Json(name = "lastUpdated")
     val lastUpdated: Date,
 
@@ -66,19 +55,7 @@ data class Properties(
     @field:Transient
     @field:Json(name = "description")
     val description: String
-) {
-    val destinations: List<IStopDestination>
-        get() = listOf(
-            object : IStopDestination {
-                override val line: String = destinos.firstOrNull()?.linea ?: ""
-                override val destination: String = destinos.firstOrNull()?.destino ?: ""
-                override val times: List<Int> = listOf(
-                    destinos.firstOrNull()?.minutos ?: 0,
-                    destinos.lastOrNull()?.minutos ?: 0
-                )
-            }
-        )
-}
+)
 
 data class Destino(
     @field:Json(name = "destino")
@@ -99,3 +76,30 @@ data class Geometry(
     @field:Json(name = "type")
     val type: String
 )
+
+fun TramStopResponse.toStop() = Stop(
+    StopType.TRAM,
+    features.first().properties.id,
+    features.first().properties.title,
+    LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1])
+)
+
+fun TramStopResponse.toStopDestinations(): List<StopDestination> {
+    //TODO: Generate this list without adding?
+    val stopDestinations = mutableListOf<StopDestination>()
+    features.first().properties.destinos.forEach { destination ->
+        stopDestinations.add(
+            StopDestination(
+                destination.linea,
+                destination.destino,
+                features.first().properties.id,
+                listOf(
+                    features.first().properties.destinos.getOrNull(0)?.minutos ?: -1,
+                    features.first().properties.destinos.getOrNull(1)?.minutos ?: -1
+                ),
+                features.first().properties.lastUpdated
+            )
+        )
+    }
+    return stopDestinations
+}
