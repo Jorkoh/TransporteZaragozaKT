@@ -2,7 +2,7 @@ package com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocatio
 
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.squareup.moshi.Json
 import java.util.*
 

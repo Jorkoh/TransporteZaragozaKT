@@ -12,6 +12,10 @@ import retrofit2.http.Path
 interface APIService{
     companion object {
         const val BASE_URL = "https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/"
+
+        //Internal API values update every minute but request distribute stale data for up to 30 seconds afterwards
+        const val FRESH_TIMEOUT_BUS = 70
+        const val FRESH_TIMEOUT_TRAM = 70
     }
 
     @Headers("Accept: application/geo+json")

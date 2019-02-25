@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.db
 
 import androidx.room.TypeConverter
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types

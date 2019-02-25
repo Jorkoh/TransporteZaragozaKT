@@ -2,9 +2,11 @@ package com.jorkoh.transportezaragozakt.db
 
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import java.util.*
 
+enum class StopType{
+    BUS, TRAM
+}
 
 class StopAndDestinations {
     @Embedded

@@ -4,13 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.StopsDao
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.BusStopResponse
 import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.toStopDestinations
 import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsResponse
 import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.toStops
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -28,10 +28,6 @@ class BusRepositoryImplementation(
     private val stopsDao: StopsDao
 ) : BusRepository {
 
-    companion object {
-        const val FRESH_TIMEOUT = 60
-    }
-
     override fun getStopDestinations(busStopId: String): LiveData<List<StopDestination>> {
         refreshStopDestinations(busStopId)
         return stopsDao.getStopDestinations(busStopId)
@@ -40,7 +36,7 @@ class BusRepositoryImplementation(
     private fun refreshStopDestinations(busStopId: String) {
         //TODO: Clean this, way too nested
         GlobalScope.launch {
-            if (!stopsDao.stopHasFreshInfo(busStopId, FRESH_TIMEOUT)) {
+            if (!stopsDao.stopHasFreshInfo(busStopId, APIService.FRESH_TIMEOUT_BUS)) {
                 fetchStop(busStopId)
             } else {
                 Log.d("TestingStuff", "Bus Stop info is still fresh")

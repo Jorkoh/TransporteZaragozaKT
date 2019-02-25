@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
 
 @Dao
 interface StopsDao {

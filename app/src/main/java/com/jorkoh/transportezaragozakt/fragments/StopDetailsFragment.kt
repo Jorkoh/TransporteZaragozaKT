@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
 import com.jorkoh.transportezaragozakt.db.StopDestination
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.view_models.StopDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -10,19 +10,21 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.activities.MainActivity
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+
+
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
-    data class TagInfo(val id : String,val type : StopType)
+    data class TagInfo(val id: String, val type: StopType)
 
     companion object {
         const val DESTINATION_TAG = "MAP"
@@ -41,19 +43,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapVM: MapViewModel by viewModel()
 
+    private lateinit var busMarker: MarkerOptions
+    private lateinit var tramMarker: MarkerOptions
+
     private val busLocationsObserver = Observer<List<Stop>> { value ->
-        value?.let {stops ->
-            stops.forEach {stop ->
-                map.addMarker(MarkerOptions().title(stop.title).alpha(0.4f).position(stop.location))
+        value?.let { stops ->
+            stops.forEach { stop ->
+                map.addMarker(busMarker.title(stop.title).position(stop.location))
                     .tag = TagInfo(stop.id, StopType.BUS)
             }
         }
     }
 
     private val tramLocationsObserver = Observer<List<Stop>> { value ->
-        value?.let {stops ->
-            stops.forEach {stop ->
-                map.addMarker(MarkerOptions().title(stop.title).alpha(1f).position(stop.location))
+        value?.let { stops ->
+            stops.forEach { stop ->
+                map.addMarker(tramMarker.title(stop.title).position(stop.location))
                     .tag = TagInfo(stop.id, StopType.TRAM)
             }
         }
@@ -62,7 +67,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val onInfoWindowClickListener = GoogleMap.OnInfoWindowClickListener { marker ->
         marker?.let {
             val markerInfo = marker.tag
-            if(markerInfo is TagInfo){
+            if (markerInfo is TagInfo) {
                 (activity as MainActivity).openStopDetails(markerInfo.id, markerInfo.type)
             }
         }
@@ -106,6 +111,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun styleMap() {
+        val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
+        val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap, 48, 48, false)
+        busMarker = MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(busBitmap))
+            .anchor(0.5f, 0.5f)
+        val tramDrawable = resources.getDrawable(R.drawable.marker_tram, null) as BitmapDrawable
+        val tramBitmap = Bitmap.createScaledBitmap(tramDrawable.bitmap, 48, 48, false)
+        tramMarker = MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(tramBitmap))
+            .anchor(0.5f, 0.5f)
+
         map.setMaxZoomPreference(MAX_ZOOM)
         map.setMinZoomPreference(MIN_ZOOM)
         map.uiSettings.isTiltGesturesEnabled = false

@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.StopsDao
 import com.jorkoh.transportezaragozakt.services.api.APIService
-import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopResponse
 import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.toStopDestinations
 import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsResponse
@@ -28,10 +28,6 @@ class TramRepositoryImplementation(
     private val stopsDao: StopsDao
 ) : TramRepository {
 
-    companion object {
-        const val FRESH_TIMEOUT = 120
-    }
-
     override fun getStopDestinations(tramStopId: String): LiveData<List<StopDestination>> {
         refreshStopDestinations(tramStopId)
         return stopsDao.getStopDestinations(tramStopId)
@@ -40,7 +36,7 @@ class TramRepositoryImplementation(
     private fun refreshStopDestinations(tramStopId: String) {
         //TODO: Clean this, way too nested
         GlobalScope.launch {
-            if (!stopsDao.stopHasFreshInfo(tramStopId, FRESH_TIMEOUT)) {
+            if (!stopsDao.stopHasFreshInfo(tramStopId, APIService.FRESH_TIMEOUT_TRAM)) {
                 fetchStop(tramStopId)
             } else {
                 Log.d("TestingStuff", "Tram Stop info is still fresh")
