@@ -20,8 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 
-
-
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     data class TagInfo(val id: String, val type: StopType)

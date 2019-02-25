@@ -77,7 +77,8 @@ fun BusStopResponse.toStop() = Stop(
     StopType.BUS,
     features.first().properties.id,
     features.first().properties.title,
-    LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1])
+    LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1]),
+    false
 )
 
 fun BusStopResponse.toStopDestinations(): List<StopDestination> {

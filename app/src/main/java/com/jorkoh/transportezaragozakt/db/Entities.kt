@@ -29,7 +29,10 @@ data class Stop(
     var title: String,
 
     @ColumnInfo(name = "location")
-    var location : LatLng
+    var location : LatLng,
+
+    @ColumnInfo(name = "isFavorite")
+    var isFavorite : Boolean
 )
 
 @Entity(tableName = "stopDestinations",

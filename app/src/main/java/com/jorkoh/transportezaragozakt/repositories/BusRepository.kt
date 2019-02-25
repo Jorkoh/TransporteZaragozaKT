@@ -21,6 +21,8 @@ import retrofit2.Response
 interface BusRepository {
     fun getStopDestinations(busStopId: String): LiveData<List<StopDestination>>
     fun getStopLocations(): LiveData<List<Stop>>
+    fun isStopFavorited(busStopId: String): LiveData<Boolean>
+    fun toggleStopFavorite(busStopId: String)
 }
 
 class BusRepositoryImplementation(
@@ -29,12 +31,6 @@ class BusRepositoryImplementation(
 ) : BusRepository {
 
     override fun getStopDestinations(busStopId: String): LiveData<List<StopDestination>> {
-        refreshStopDestinations(busStopId)
-        return stopsDao.getStopDestinations(busStopId)
-    }
-
-    private fun refreshStopDestinations(busStopId: String) {
-        //TODO: Clean this, way too nested
         GlobalScope.launch {
             if (!stopsDao.stopHasFreshInfo(busStopId, APIService.FRESH_TIMEOUT_BUS)) {
                 fetchStop(busStopId)
@@ -42,6 +38,7 @@ class BusRepositoryImplementation(
                 Log.d("TestingStuff", "Bus Stop info is still fresh")
             }
         }
+        return stopsDao.getStopDestinations(busStopId)
     }
 
     private fun fetchStop(busStopId: String) {
@@ -96,5 +93,15 @@ class BusRepositoryImplementation(
             }
         })
         Log.d("TestingStuff", "Bus stop locations refreshed with retrofit")
+    }
+
+    override fun isStopFavorited(busStopId: String) : LiveData<Boolean>{
+        return stopsDao.stopIsFavorite(busStopId)
+    }
+
+    override fun toggleStopFavorite(busStopId: String){
+        GlobalScope.launch {
+            stopsDao.toggleStopFavorite(busStopId)
+        }
     }
 }

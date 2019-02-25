@@ -25,6 +25,12 @@ interface StopsDao {
     @Query("SELECT EXISTS(SELECT 1 FROM stops WHERE type = :stopType)")
     suspend fun areStopLocationsSaved(stopType: StopType): Boolean
 
+    @Query("SELECT isFavorite FROM stops WHERE id = :stopId")
+    fun stopIsFavorite(stopId: String): LiveData<Boolean>
+
+    @Query("UPDATE stops SET isFavorite = NOT isFavorite WHERE id = :stopId")
+    suspend fun toggleStopFavorite(stopId: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStop(stop: Stop)
 

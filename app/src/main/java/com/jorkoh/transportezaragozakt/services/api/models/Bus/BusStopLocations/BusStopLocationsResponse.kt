@@ -56,7 +56,8 @@ fun BusStopLocationsResponse.toStops() : List<Stop> {
                 StopType.BUS,
                 location.properties.id,
                 location.properties.title,
-                location.geometry.coordinates
+                location.geometry.coordinates,
+                false
             )
         )
     }

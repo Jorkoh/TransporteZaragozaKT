@@ -89,7 +89,8 @@ fun TramStopLocationsResponse.toStops() : List<Stop> {
                 StopType.TRAM,
                 location.properties.id,
                 location.properties.title,
-                location.geometry.coordinates
+                location.geometry.coordinates,
+                false
             )
         )
     }
