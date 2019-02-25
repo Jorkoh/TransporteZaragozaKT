@@ -13,11 +13,9 @@ import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.
 import com.jorkoh.transportezaragozakt.services.api.models.StopType
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.concurrent.Executor
 
 
 interface BusRepository {
@@ -27,8 +25,7 @@ interface BusRepository {
 
 class BusRepositoryImplementation(
     private val apiService: APIService,
-    private val stopsDao: StopsDao,
-    private val executor: Executor
+    private val stopsDao: StopsDao
 ) : BusRepository {
 
     companion object {
@@ -37,67 +34,71 @@ class BusRepositoryImplementation(
 
     override fun getStopDestinations(busStopId: String): LiveData<List<StopDestination>> {
         refreshStopDestinations(busStopId)
-        //TODO Does this block the main thread?
         return stopsDao.getStopDestinations(busStopId)
     }
 
     private fun refreshStopDestinations(busStopId: String) {
-        //TODO ROOM: Clean this, way too nested
-        if (runBlocking { !stopsDao.stopHasFreshInfo(busStopId, FRESH_TIMEOUT) }) {
-            apiService.getBusStop(busStopId).enqueue(object : Callback<BusStopResponse> {
-                override fun onResponse(call: Call<BusStopResponse>, response: Response<BusStopResponse>) {
-                    checkNotNull(response.body())
-                    val body = response.body()
-                    if (body is BusStopResponse) {
-                        GlobalScope.launch {
-                            stopsDao.insertStopDestinations(body.toStopDestinations())
-                        }
+        //TODO: Clean this, way too nested
+        GlobalScope.launch {
+            if (!stopsDao.stopHasFreshInfo(busStopId, FRESH_TIMEOUT)) {
+                fetchStop(busStopId)
+            } else {
+                Log.d("TestingStuff", "Bus Stop info is still fresh")
+            }
+        }
+    }
+
+    private fun fetchStop(busStopId: String) {
+        apiService.getBusStop(busStopId).enqueue(object : Callback<BusStopResponse> {
+            override fun onResponse(call: Call<BusStopResponse>, response: Response<BusStopResponse>) {
+                checkNotNull(response.body())
+                val body = response.body()
+                if (body is BusStopResponse) {
+                    GlobalScope.launch {
+                        stopsDao.insertStopDestinations(body.toStopDestinations())
                     }
                 }
+            }
 
-                override fun onFailure(call: Call<BusStopResponse>, t: Throwable) {
-                    //TODO: Implement this
-                }
-            })
-            Log.d("TestingStuff", "Bus Stop info refreshed with retrofit")
-        } else {
-            Log.d("TestingStuff", "Bus Stop info is still fresh")
-        }
+            override fun onFailure(call: Call<BusStopResponse>, t: Throwable) {
+                //TODO: Implement this
+            }
+        })
+        Log.d("TestingStuff", "Bus Stop info refreshed with retrofit")
     }
 
     override fun getStopLocations(): LiveData<List<Stop>> {
-        refreshStopLocations()
-        //TODO Does this block the main thread?
+        //TODO: This is iffy
+        GlobalScope.launch {
+            if (!stopsDao.areStopLocationsSaved(StopType.BUS)) {
+                fetchStopLocations()
+            } else {
+                Log.d("TestingStuff", "Bus stop locations already saved")
+            }
+        }
         return stopsDao.getStopsByType(StopType.BUS)
     }
 
-    private fun refreshStopLocations() {
-        //TODO ROOM: Clean this, way too nested
-        //TODO: This is iffy
-
-        if (runBlocking { !stopsDao.areStopLocationsSaved(StopType.BUS) }) {
-            apiService.getBusStopsLocations().enqueue(object : Callback<BusStopLocationsResponse> {
-                override fun onResponse(
-                    call: Call<BusStopLocationsResponse>,
-                    response: Response<BusStopLocationsResponse>
-                ) {
-                    checkNotNull(response.body())
-                    val body = response.body()
-                    if (body is BusStopLocationsResponse) {
-                        //TODO: Making stop objects just for locations feels weird
-                        GlobalScope.launch {
-                            stopsDao.insertStops(body.toStops())
-                        }
+    private fun fetchStopLocations() {
+        apiService.getBusStopsLocations().enqueue(object : Callback<BusStopLocationsResponse> {
+            override fun onResponse(
+                call: Call<BusStopLocationsResponse>,
+                response: Response<BusStopLocationsResponse>
+            ) {
+                checkNotNull(response.body())
+                val body = response.body()
+                if (body is BusStopLocationsResponse) {
+                    //TODO: Making stop objects just for locations feels weird
+                    GlobalScope.launch {
+                        stopsDao.insertStops(body.toStops())
                     }
                 }
+            }
 
-                override fun onFailure(call: Call<BusStopLocationsResponse>, t: Throwable) {
-                    //TODO: Implement this
-                }
-            })
-            Log.d("TestingStuff", "Bus stop locations refreshed with retrofit")
-        } else {
-            Log.d("TestingStuff", "Bus stop locations already saved")
-        }
+            override fun onFailure(call: Call<BusStopLocationsResponse>, t: Throwable) {
+                //TODO: Implement this
+            }
+        })
+        Log.d("TestingStuff", "Bus stop locations refreshed with retrofit")
     }
 }

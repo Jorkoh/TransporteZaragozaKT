@@ -9,7 +9,7 @@ import com.squareup.moshi.Types
 import org.koin.standalone.KoinComponent
 import java.util.*
 
-class Converters : KoinComponent{
+class Converters : KoinComponent {
 
     private val intListAdapter: JsonAdapter<List<Int>> =
         Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Int::class.javaObjectType))
@@ -18,12 +18,12 @@ class Converters : KoinComponent{
 
     @TypeConverter
     fun timestampToDate(value: Long?): Date? {
-        return value?.let { Date(it) }
+        return value?.let { Date(it * 1000) }
     }
 
     @TypeConverter
     fun dateToTimestamp(value: Date?): Long? {
-        return value?.time
+        return value?.let { it.time / 1000 }
     }
 
     @TypeConverter

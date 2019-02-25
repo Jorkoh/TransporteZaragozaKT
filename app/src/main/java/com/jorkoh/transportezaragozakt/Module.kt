@@ -25,10 +25,6 @@ import java.util.concurrent.Executors
 
 val appModule = module {
 
-    single<Executor>{
-        Executors.newSingleThreadExecutor()
-    }
-
     single<APIService> {
         Retrofit.Builder()
             .baseUrl(APIService.BASE_URL)
@@ -50,15 +46,11 @@ val appModule = module {
     }
 
     single{
-        Executors.newSingleThreadExecutor()
-    }
-
-    single{
         get<AppDatabase>().stopsDao()
     }
 
-    single<BusRepository> { BusRepositoryImplementation(get(), get(), get()) }
-    single<TramRepository> { TramRepositoryImplementation(get(), get(), get()) }
+    single<BusRepository> { BusRepositoryImplementation(get(), get()) }
+    single<TramRepository> { TramRepositoryImplementation(get(), get()) }
 
     viewModel { FavoritesViewModel() }
 

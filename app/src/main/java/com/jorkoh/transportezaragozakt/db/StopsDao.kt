@@ -19,7 +19,7 @@ interface StopsDao {
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
     fun getStopDestinations(stopId: String) : LiveData<List<StopDestination>>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM stopDestinations WHERE stopId = :stopId AND (JULIANDAY(CURRENT_TIMESTAMP) - JULIANDAY(updatedAt)) * 86400.0 < :timeoutInSeconds )")
+    @Query("SELECT EXISTS(SELECT 1 FROM stopDestinations WHERE stopId = :stopId AND (CAST(strftime('%s', datetime('now', 'localtime')) AS INTEGER) - updatedAt) < :timeoutInSeconds )")
     suspend fun stopHasFreshInfo(stopId: String, timeoutInSeconds: Int) : Boolean
 
     //TODO: This needs a lot of work
