@@ -27,6 +27,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     companion object {
         const val DESTINATION_TAG = "MAP"
 
+        const val ICON_SIZE = 55
+        const val ICON_FAV_SIZE = 70
         const val MAX_ZOOM = 17.5f
         const val MIN_ZOOM = 12f
         const val DEFAULT_ZOOM = 15f
@@ -42,12 +44,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val mapVM: MapViewModel by viewModel()
 
     private lateinit var busMarker: MarkerOptions
+    private lateinit var busFavoriteMarker: MarkerOptions
     private lateinit var tramMarker: MarkerOptions
+    private lateinit var tramFavoriteMarker: MarkerOptions
 
     private val busLocationsObserver = Observer<List<Stop>> { value ->
         value?.let { stops ->
             stops.forEach { stop ->
-                map.addMarker(busMarker.title(stop.title).position(stop.location))
+                val baseMarker = if(stop.isFavorite) busFavoriteMarker else busMarker
+                map.addMarker(baseMarker.title(stop.title).position(stop.location))
                     .tag = TagInfo(stop.id, StopType.BUS)
             }
         }
@@ -56,7 +61,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val tramLocationsObserver = Observer<List<Stop>> { value ->
         value?.let { stops ->
             stops.forEach { stop ->
-                map.addMarker(tramMarker.title(stop.title).position(stop.location))
+                val baseMarker = if(stop.isFavorite) tramFavoriteMarker else tramMarker
+                map.addMarker(baseMarker.title(stop.title).position(stop.location))
                     .tag = TagInfo(stop.id, StopType.TRAM)
             }
         }
@@ -109,16 +115,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun styleMap() {
-        val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
-        val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap, 48, 48, false)
-        busMarker = MarkerOptions()
-            .icon(BitmapDescriptorFactory.fromBitmap(busBitmap))
-            .anchor(0.5f, 0.5f)
-        val tramDrawable = resources.getDrawable(R.drawable.marker_tram, null) as BitmapDrawable
-        val tramBitmap = Bitmap.createScaledBitmap(tramDrawable.bitmap, 48, 48, false)
-        tramMarker = MarkerOptions()
-            .icon(BitmapDescriptorFactory.fromBitmap(tramBitmap))
-            .anchor(0.5f, 0.5f)
+        createBaseMarkers()
+        setStyle()
 
         map.setMaxZoomPreference(MAX_ZOOM)
         map.setMinZoomPreference(MIN_ZOOM)
@@ -136,5 +134,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             )
             mapVM.mapHasBeenStyled = true
         }
+    }
+
+    private fun createBaseMarkers(){
+        val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
+        val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap, ICON_SIZE, ICON_SIZE, false)
+        busMarker = MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(busBitmap))
+            .anchor(0.5f, 0.5f)
+
+        val busFavoriteDrawable = resources.getDrawable(R.drawable.marker_bus_favorite, null) as BitmapDrawable
+        val busFavoriteBitmap = Bitmap.createScaledBitmap(busFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
+        busFavoriteMarker = MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(busFavoriteBitmap))
+            .anchor(0.5f, 0.5f)
+
+
+        val tramDrawable = resources.getDrawable(R.drawable.marker_tram, null) as BitmapDrawable
+        val tramBitmap = Bitmap.createScaledBitmap(tramDrawable.bitmap, ICON_SIZE, ICON_SIZE, false)
+        tramMarker = MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(tramBitmap))
+            .anchor(0.5f, 0.5f)
+
+        val tramFavoriteDrawable = resources.getDrawable(R.drawable.marker_tram_favorite, null) as BitmapDrawable
+        val tramFavoriteBitmap = Bitmap.createScaledBitmap(tramFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
+        tramFavoriteMarker = MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap))
+            .anchor(0.5f, 0.5f)
+    }
+
+    private fun setStyle(){
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
     }
 }
