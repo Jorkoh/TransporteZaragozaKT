@@ -5,44 +5,29 @@ import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.BusRepository
+import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.TramRepository
 
-class StopDetailsViewModel(private val busRepository: BusRepository, private val tramRepository: TramRepository) :
+class StopDetailsViewModel(private val stopsRepository: StopsRepository) :
     ViewModel() {
 
     private lateinit var stopID: String
-    private lateinit var stopType: StopType
     private lateinit var stopDestinations: LiveData<List<StopDestination>>
     private lateinit var stopIsFavorited: LiveData<Boolean>
 
     fun init(stopID: String, stopType : StopType) {
-        //TODO: :/
         this.stopID = stopID
-        this.stopType = stopType
 
-        stopDestinations = when(stopType){
-            //@TODO either repository does kinda the same here :/
-            StopType.BUS -> busRepository.getStopDestinations(stopID)
-            StopType.TRAM -> tramRepository.getStopDestinations(stopID)
-        }
+        stopDestinations = stopsRepository.getStopDestinations(stopID, stopType)
 
-        stopIsFavorited = when(stopType){
-            //@TODO either repository does kinda the same here :/
-            StopType.BUS -> busRepository.isStopFavorited(stopID)
-            StopType.TRAM -> tramRepository.isStopFavorited(stopID)
-        }
-
+        stopIsFavorited = stopsRepository.isStopFavorited(stopID)
     }
 
     fun toggleStopFavorite(){
-        when(stopType){
-            //@TODO either repository does kinda the same here :/
-            StopType.BUS -> busRepository.toggleStopFavorite(stopID)
-            StopType.TRAM -> tramRepository.toggleStopFavorite(stopID)
-        }
+        stopsRepository.toggleStopFavorite(stopID)
     }
 
-    fun getStop(): LiveData<List<StopDestination>> {
+    fun getStopDestinations(): LiveData<List<StopDestination>> {
         return stopDestinations
     }
 

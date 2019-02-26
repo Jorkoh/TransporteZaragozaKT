@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
 import com.jorkoh.transportezaragozakt.db.StopDestination
@@ -67,7 +66,7 @@ class StopDetailsFragment : Fragment() {
             adapter = stopDetailsAdapter
         }
 
-        stopDetailsVM.getStop().observe(this, stopDestinationsObserver)
+        stopDetailsVM.getStopDestinations().observe(this, stopDestinationsObserver)
         stopDetailsVM.getStopIsFavorited().observe(this, stopIsFavoritedObserved)
 
         rootView.favorite_fab.setOnClickListener(onFavoritesClickListener)

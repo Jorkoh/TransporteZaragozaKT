@@ -2,10 +2,7 @@ package com.jorkoh.transportezaragozakt
 
 import androidx.room.Room
 import com.jorkoh.transportezaragozakt.db.AppDatabase
-import com.jorkoh.transportezaragozakt.repositories.BusRepository
-import com.jorkoh.transportezaragozakt.repositories.BusRepositoryImplementation
-import com.jorkoh.transportezaragozakt.repositories.TramRepository
-import com.jorkoh.transportezaragozakt.repositories.TramRepositoryImplementation
+import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
 import com.jorkoh.transportezaragozakt.view_models.*
@@ -51,8 +48,9 @@ val appModule = module {
 
     single<BusRepository> { BusRepositoryImplementation(get(), get()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get()) }
+    single<StopsRepository>{StopsRepositoryImplementation(get(), get(), get())}
 
-    viewModel { FavoritesViewModel() }
+    viewModel { FavoritesViewModel(get()) }
 
     viewModel { MapViewModel(get(), get()) }
 
@@ -60,7 +58,7 @@ val appModule = module {
 
     viewModel { MoreViewModel() }
 
-    viewModel { StopDetailsViewModel(get(), get()) }
+    viewModel { StopDetailsViewModel(get()) }
 
     viewModel { MainActivityViewModel() }
 }

@@ -17,7 +17,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="23"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -30,13 +29,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/line_text"
-            android:text="PARQUE VENECIA"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintBottom_toTopOf="@+id/first_time_text"/>
 
     <TextView
-            android:text="2 minutos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -49,7 +46,6 @@
             app:layout_constraintBottom_toTopOf="@+id/second_time_text"/>
 
     <TextView
-            android:text="4 minutos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/second_time_text"

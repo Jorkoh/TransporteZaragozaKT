@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
-import kotlinx.android.synthetic.main.row_view.view.*
+import kotlinx.android.synthetic.main.destination_row.view.*
 
 class StopDetailsAdapter: RecyclerView.Adapter<StopDetailsAdapter.StopDetailsViewHolder>() {
 
@@ -16,7 +16,7 @@ class StopDetailsAdapter: RecyclerView.Adapter<StopDetailsAdapter.StopDetailsVie
     lateinit var stopDestinations: List<StopDestination>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDetailsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view, parent, false) as View
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.destination_row, parent, false) as View
         return StopDetailsViewHolder(view)
     }
 

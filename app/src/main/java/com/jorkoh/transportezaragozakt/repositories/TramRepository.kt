@@ -21,8 +21,6 @@ import retrofit2.Response
 interface TramRepository {
     fun getStopDestinations(tramStopId: String): LiveData<List<StopDestination>>
     fun getStopLocations(): LiveData<List<Stop>>
-    fun isStopFavorited(tramStopId: String): LiveData<Boolean>
-    fun toggleStopFavorite(tramStopId: String)
 }
 
 class TramRepositoryImplementation(
@@ -93,15 +91,5 @@ class TramRepositoryImplementation(
             }
         })
         Log.d("TestingStuff", "Tram stop locations refreshed with retrofit")
-    }
-
-    override fun isStopFavorited(tramStopId: String) : LiveData<Boolean>{
-        return stopsDao.stopIsFavorite(tramStopId)
-    }
-
-    override fun toggleStopFavorite(tramStopId: String){
-        GlobalScope.launch {
-            stopsDao.toggleStopFavorite(tramStopId)
-        }
     }
 }

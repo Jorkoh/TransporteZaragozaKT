@@ -12,14 +12,20 @@ interface StopsDao {
     @Query("SELECT * FROM stops WHERE id = :stopId LIMIT 1")
     fun getStop(stopId: String): LiveData<Stop>
 
+    @Query("SELECT * FROM stops")
+    fun getStops(): LiveData<List<Stop>>
+
     @Query("SELECT * FROM stops WHERE type = :stopType")
     fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
-    fun getStopDestinations(stopId: String) : LiveData<List<StopDestination>>
+    fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM stopDestinations WHERE stopId = :stopId AND (CAST(strftime('%s', datetime('now', 'localtime')) AS INTEGER) - updatedAt) < :timeoutInSeconds )")
-    suspend fun stopHasFreshInfo(stopId: String, timeoutInSeconds: Int) : Boolean
+    suspend fun stopHasFreshInfo(stopId: String, timeoutInSeconds: Int): Boolean
+
+    @Query("SELECT EXISTS(SELECT 1 FROM stops)")
+    suspend fun areStopLocationsSaved(): Boolean
 
     //TODO: This needs a lot of work
     @Query("SELECT EXISTS(SELECT 1 FROM stops WHERE type = :stopType)")
@@ -31,6 +37,9 @@ interface StopsDao {
     @Query("UPDATE stops SET isFavorite = NOT isFavorite WHERE id = :stopId")
     suspend fun toggleStopFavorite(stopId: String)
 
+    @Query("SELECT * FROM stops WHERE isFavorite = 1")
+    fun getFavoriteStops(): LiveData<List<Stop>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStop(stop: Stop)
 
@@ -38,5 +47,5 @@ interface StopsDao {
     suspend fun insertStops(stop: List<Stop>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStopDestinations(stopDestinations : List<StopDestination>)
+    suspend fun insertStopDestinations(stopDestinations: List<StopDestination>)
 }
