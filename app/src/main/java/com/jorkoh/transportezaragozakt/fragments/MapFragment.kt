@@ -47,12 +47,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var tramMarker: MarkerOptions
     private lateinit var tramFavoriteMarker: MarkerOptions
 
+    private val mapStopsMarkers = mutableMapOf<String, Marker>()
+
     private val busLocationsObserver = Observer<List<Stop>> { value ->
         value?.let { stops ->
             stops.forEach { stop ->
+                mapStopsMarkers[stop.id]?.remove()
                 val baseMarker = if(stop.isFavorite) busFavoriteMarker else busMarker
-                map.addMarker(baseMarker.title(stop.title).position(stop.location))
-                    .tag = TagInfo(stop.id, StopType.BUS)
+                val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
+                newMarker.tag = TagInfo(stop.id, StopType.BUS)
+                mapStopsMarkers[stop.id] = newMarker
             }
         }
     }
@@ -60,9 +64,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val tramLocationsObserver = Observer<List<Stop>> { value ->
         value?.let { stops ->
             stops.forEach { stop ->
+                mapStopsMarkers[stop.id]?.remove()
                 val baseMarker = if(stop.isFavorite) tramFavoriteMarker else tramMarker
-                map.addMarker(baseMarker.title(stop.title).position(stop.location))
-                    .tag = TagInfo(stop.id, StopType.TRAM)
+                val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
+                newMarker.tag = TagInfo(stop.id, StopType.TRAM)
+                mapStopsMarkers[stop.id] = newMarker
             }
         }
     }
