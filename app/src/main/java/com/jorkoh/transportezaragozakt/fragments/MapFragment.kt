@@ -1,5 +1,7 @@
 package com.jorkoh.transportezaragozakt.fragments
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import com.jorkoh.transportezaragozakt.db.TagInfo
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -49,25 +52,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapStopsMarkers = mutableMapOf<String, Marker>()
 
-    private val busLocationsObserver = Observer<List<Stop>> { value ->
+    private val stopLocationsObserver: (List<Stop>?) -> Unit = { value: List<Stop>? ->
         value?.let { stops ->
             stops.forEach { stop ->
-                mapStopsMarkers[stop.id]?.remove()
-                val baseMarker = if(stop.isFavorite) busFavoriteMarker else busMarker
-                val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
-                newMarker.tag = TagInfo(stop.id, StopType.BUS)
-                mapStopsMarkers[stop.id] = newMarker
-            }
-        }
-    }
+                val baseMarker = when (stop.type) {
+                    StopType.BUS -> if (stop.isFavorite) busFavoriteMarker else busMarker
+                    StopType.TRAM -> if (stop.isFavorite) tramFavoriteMarker else tramMarker
+                }
 
-    private val tramLocationsObserver = Observer<List<Stop>> { value ->
-        value?.let { stops ->
-            stops.forEach { stop ->
-                mapStopsMarkers[stop.id]?.remove()
-                val baseMarker = if(stop.isFavorite) tramFavoriteMarker else tramMarker
                 val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
-                newMarker.tag = TagInfo(stop.id, StopType.TRAM)
+                newMarker.tag = TagInfo(stop.id, stop.type)
+                if (mapStopsMarkers[stop.id]?.isInfoWindowShown == true) {
+                    newMarker.showInfoWindow()
+                }
+                mapStopsMarkers[stop.id]?.remove()
                 mapStopsMarkers[stop.id] = newMarker
             }
         }
@@ -89,8 +87,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         styleMap()
         map.setOnInfoWindowClickListener(onInfoWindowClickListener)
-        mapVM.getBusStopLocations().observe(this, busLocationsObserver)
-        mapVM.getTramStopLocations().observe(this, tramLocationsObserver)
+        mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
+        mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -139,9 +137,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             )
             mapVM.mapHasBeenStyled = true
         }
+
+        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
+            @SuppressLint("MissingPermission")
+            map.isMyLocationEnabled = true
+        }
     }
 
-    private fun createBaseMarkers(){
+    private fun createBaseMarkers() {
         val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
         val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap, ICON_SIZE, ICON_SIZE, false)
         busMarker = MarkerOptions()
@@ -149,7 +152,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             .anchor(0.5f, 0.5f)
 
         val busFavoriteDrawable = resources.getDrawable(R.drawable.marker_bus_favorite, null) as BitmapDrawable
-        val busFavoriteBitmap = Bitmap.createScaledBitmap(busFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
+        val busFavoriteBitmap =
+            Bitmap.createScaledBitmap(busFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
         busFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(busFavoriteBitmap))
             .anchor(0.5f, 0.5f)
@@ -162,13 +166,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             .anchor(0.5f, 0.5f)
 
         val tramFavoriteDrawable = resources.getDrawable(R.drawable.marker_tram_favorite, null) as BitmapDrawable
-        val tramFavoriteBitmap = Bitmap.createScaledBitmap(tramFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
+        val tramFavoriteBitmap =
+            Bitmap.createScaledBitmap(tramFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
         tramFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap))
             .anchor(0.5f, 0.5f)
     }
 
-    private fun setStyle(){
+    private fun setStyle() {
         map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.activities.MainActivity
@@ -36,9 +37,10 @@ class FavoritesFragment : Fragment() {
         }
     }
 
+    //TODO: TESTING
     private val itemOnLongClick: (TagInfo) -> Boolean = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            (activity as MainActivity).openStopDetails(info)
+            Toast.makeText(context, "Long press", Toast.LENGTH_LONG).show()
         }
         true
     }
@@ -63,6 +65,7 @@ class FavoritesFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteStopsAdapter
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         favoritesVM.getFavoriteStops().observe(this, favoriteStopsObserver)

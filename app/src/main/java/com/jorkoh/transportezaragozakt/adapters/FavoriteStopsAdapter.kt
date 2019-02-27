@@ -10,7 +10,10 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import kotlinx.android.synthetic.main.stop_row.view.*
 
-class FavoriteStopsAdapter(private val clickListener: (TagInfo) -> Unit, private val longClickListener: (TagInfo) -> Boolean) : RecyclerView.Adapter<FavoriteStopsAdapter.StopDetailsViewHolder>() {
+class FavoriteStopsAdapter(
+    private val clickListener: (TagInfo) -> Unit,
+    private val longClickListener: (TagInfo) -> Boolean
+) : RecyclerView.Adapter<FavoriteStopsAdapter.StopDetailsViewHolder>() {
 
     class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(stop: Stop, clickListener: (TagInfo) -> Unit, longClickListener: (TagInfo) -> Boolean) {
@@ -18,7 +21,7 @@ class FavoriteStopsAdapter(private val clickListener: (TagInfo) -> Unit, private
                 type_text.text = stop.type.name
                 title_text.text = stop.title
                 setOnClickListener { clickListener(TagInfo(stop.id, stop.type)) }
-                setOnLongClickListener{longClickListener(TagInfo(stop.id, stop.type))}
+                setOnLongClickListener { longClickListener(TagInfo(stop.id, stop.type)) }
             }
         }
     }
