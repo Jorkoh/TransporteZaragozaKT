@@ -14,6 +14,7 @@ import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
 import com.jorkoh.transportezaragozakt.navigation.openDestination
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.view_models.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -91,7 +92,7 @@ class MainActivity : CyaneaAppCompatActivity() {
             .commit()
     }
 
-    fun openStopDetails(id : String, type : StopType){
+    fun openStopDetails(info : TagInfo){
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.fade_in,
@@ -105,8 +106,8 @@ class MainActivity : CyaneaAppCompatActivity() {
         }
         val stopDetailsFragment = StopDetailsFragment.newInstance()
         stopDetailsFragment.arguments = Bundle().apply {
-            putString(StopDetailsFragment.STOP_ID_KEY, id)
-            putString(StopDetailsFragment.STOP_TYPE_KEY, type.name)
+            putString(StopDetailsFragment.STOP_ID_KEY, info.id)
+            putString(StopDetailsFragment.STOP_TYPE_KEY, info.type.name)
         }
         transaction.add(R.id.fragment_container, stopDetailsFragment)
             .addToBackStack(null)

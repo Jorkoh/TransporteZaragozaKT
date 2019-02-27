@@ -55,3 +55,6 @@ data class StopDestination(
     @ColumnInfo(name = "updatedAt")
     var updatedAt: Date
 )
+
+//TODO: Figure this out
+data class TagInfo(val id: String, val type: StopType)

@@ -19,10 +19,9 @@ import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import com.jorkoh.transportezaragozakt.db.TagInfo
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-
-    data class TagInfo(val id: String, val type: StopType)
 
     companion object {
         const val DESTINATION_TAG = "MAP"
@@ -72,7 +71,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         marker?.let {
             val markerInfo = marker.tag
             if (markerInfo is TagInfo) {
-                (activity as MainActivity).openStopDetails(markerInfo.id, markerInfo.type)
+                (activity as MainActivity).openStopDetails(markerInfo)
             }
         }
     }
