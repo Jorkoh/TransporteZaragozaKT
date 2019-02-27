@@ -35,7 +35,15 @@ class FavoritesFragment : Fragment() {
             (activity as MainActivity).openStopDetails(info)
         }
     }
-    private val favoriteStopsAdapter: FavoriteStopsAdapter = FavoriteStopsAdapter(itemOnClick)
+
+    private val itemOnLongClick: (TagInfo) -> Boolean = { info ->
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            (activity as MainActivity).openStopDetails(info)
+        }
+        true
+    }
+
+    private val favoriteStopsAdapter: FavoriteStopsAdapter = FavoriteStopsAdapter(itemOnClick, itemOnLongClick)
 
     private val favoriteStopsObserver = Observer<List<Stop>> { value ->
         value?.let {
