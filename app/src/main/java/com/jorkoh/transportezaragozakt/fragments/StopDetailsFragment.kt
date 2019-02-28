@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
 import com.jorkoh.transportezaragozakt.db.StopDestination
@@ -18,8 +19,7 @@ import kotlinx.android.synthetic.main.fragment_stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
-class StopDetailsFragment : Fragment() {
-
+class StopDetailsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     companion object : Serializable {
         const val STOP_ID_KEY = "STOP_ID_KEY"
         const val STOP_TYPE_KEY = "STOP_TYPE_KEY"
@@ -39,7 +39,7 @@ class StopDetailsFragment : Fragment() {
         }
     }
 
-    private val stopIsFavoritedObserved = Observer<Boolean> { isFavorited ->
+    private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->
         isFavorited?.let {
             favorite_fab.setImageDrawable(
                 if (isFavorited) {
@@ -69,7 +69,7 @@ class StopDetailsFragment : Fragment() {
         }
 
         stopDetailsVM.getStopDestinations().observe(this, stopDestinationsObserver)
-        stopDetailsVM.getStopIsFavorited().observe(this, stopIsFavoritedObserved)
+        stopDetailsVM.getStopIsFavorited().observe(this, stopFavoriteStatusObserver)
 
         rootView.favorite_fab.setOnClickListener(onFavoritesClickListener)
 
@@ -82,6 +82,10 @@ class StopDetailsFragment : Fragment() {
             checkNotNull(arguments?.getString(STOP_ID_KEY)),
             StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
         )
+    }
+
+    override fun onRefresh() {
+        stopDetailsVM.refreshStopDestinations()
     }
 
 }

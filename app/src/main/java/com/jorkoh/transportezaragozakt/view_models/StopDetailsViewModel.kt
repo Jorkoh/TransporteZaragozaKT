@@ -12,19 +12,25 @@ class StopDetailsViewModel(private val stopsRepository: StopsRepository) :
     ViewModel() {
 
     private lateinit var stopID: String
+    private lateinit var stopType:StopType
     private lateinit var stopDestinations: LiveData<List<StopDestination>>
     private lateinit var stopIsFavorited: LiveData<Boolean>
 
     fun init(stopID: String, stopType : StopType) {
         this.stopID = stopID
+        this.stopType = stopType
 
-        stopDestinations = stopsRepository.getStopDestinations(stopID, stopType)
+        refreshStopDestinations()
 
         stopIsFavorited = stopsRepository.isStopFavorited(stopID)
     }
 
     fun toggleStopFavorite(){
         stopsRepository.toggleStopFavorite(stopID)
+    }
+
+    fun refreshStopDestinations() {
+        stopDestinations = stopsRepository.getStopDestinations(stopID, stopType)
     }
 
     fun getStopDestinations(): LiveData<List<StopDestination>> {
