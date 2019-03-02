@@ -22,6 +22,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import com.jorkoh.transportezaragozakt.db.TagInfo
+import com.jorkoh.transportezaragozakt.repositories.Resource
+import com.jorkoh.transportezaragozakt.repositories.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -52,21 +54,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapStopsMarkers = mutableMapOf<String, Marker>()
 
-    private val stopLocationsObserver: (List<Stop>?) -> Unit = { value: List<Stop>? ->
-        value?.let { stops ->
-            stops.forEach { stop ->
-                val baseMarker = when (stop.type) {
-                    StopType.BUS -> if (stop.isFavorite) busFavoriteMarker else busMarker
-                    StopType.TRAM -> if (stop.isFavorite) tramFavoriteMarker else tramMarker
-                }
+    private val stopLocationsObserver: (Resource<List<Stop>?>) -> Unit = { value: Resource<List<Stop>?> ->
+        if (value.status == Status.SUCCESS) {
+            value.data?.let { stops ->
+                stops.forEach { stop ->
+                    val baseMarker = when (stop.type) {
+                        StopType.BUS -> if (stop.isFavorite) busFavoriteMarker else busMarker
+                        StopType.TRAM -> if (stop.isFavorite) tramFavoriteMarker else tramMarker
+                    }
 
-                val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
-                newMarker.tag = TagInfo(stop.id, stop.type)
-                if (mapStopsMarkers[stop.id]?.isInfoWindowShown == true) {
-                    newMarker.showInfoWindow()
+                    val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
+                    newMarker.tag = TagInfo(stop.id, stop.type)
+                    if (mapStopsMarkers[stop.id]?.isInfoWindowShown == true) {
+                        newMarker.showInfoWindow()
+                    }
+                    mapStopsMarkers[stop.id]?.remove()
+                    mapStopsMarkers[stop.id] = newMarker
                 }
-                mapStopsMarkers[stop.id]?.remove()
-                mapStopsMarkers[stop.id] = newMarker
             }
         }
     }

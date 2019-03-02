@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,15 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.repositories.Resource
+import com.jorkoh.transportezaragozakt.repositories.Status
 import com.jorkoh.transportezaragozakt.view_models.StopDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_stop_details.*
 import kotlinx.android.synthetic.main.fragment_stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
-class StopDetailsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class StopDetailsFragment : Fragment() {
     companion object : Serializable {
         const val STOP_ID_KEY = "STOP_ID_KEY"
         const val STOP_TYPE_KEY = "STOP_TYPE_KEY"
@@ -33,10 +36,17 @@ class StopDetailsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val stopDetailsAdapter: StopDetailsAdapter = StopDetailsAdapter()
 
-    private val stopDestinationsObserver = Observer<List<StopDestination>> { value ->
-        value?.let {
-            stopDetailsAdapter.setDestinations(value)
+    private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { value ->
+        Log.d("TestingStuff", "OBSERVED DESTINATIONS. Status: ${value.status}")
+        when (value.status) {
+            Status.SUCCESS -> {
+                value.data?.let { stopDetailsAdapter.setDestinations(it)}
+                swiperefresh.isRefreshing = false
+            }
+            Status.ERROR -> TODO()
+            Status.LOADING -> swiperefresh.isRefreshing = true
         }
+
     }
 
     private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->
@@ -55,6 +65,11 @@ class StopDetailsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         stopDetailsVM.toggleStopFavorite()
     }
 
+    private val onSwipeRefresListener = SwipeRefreshLayout.OnRefreshListener {
+        stopDetailsVM.refreshStopDestinations()
+        Log.d("TestingStuff", "HIT REFRESH")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -69,9 +84,10 @@ class StopDetailsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         stopDetailsVM.getStopDestinations().observe(this, stopDestinationsObserver)
-        stopDetailsVM.getStopIsFavorited().observe(this, stopFavoriteStatusObserver)
+        stopDetailsVM.stopIsFavorited.observe(this, stopFavoriteStatusObserver)
 
         rootView.favorite_fab.setOnClickListener(onFavoritesClickListener)
+        rootView.swiperefresh.setOnRefreshListener(onSwipeRefresListener)
 
         return rootView
     }
@@ -83,9 +99,4 @@ class StopDetailsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
         )
     }
-
-    override fun onRefresh() {
-        stopDetailsVM.refreshStopDestinations()
-    }
-
 }

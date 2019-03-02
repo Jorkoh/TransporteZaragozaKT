@@ -4,6 +4,12 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.annotation.Nullable
+import com.jorkoh.transportezaragozakt.AppExecutors
+import com.jorkoh.transportezaragozakt.services.api.ApiEmptyResponse
+import com.jorkoh.transportezaragozakt.services.api.ApiErrorResponse
+import com.jorkoh.transportezaragozakt.services.api.ApiResponse
+import com.jorkoh.transportezaragozakt.services.api.ApiSuccessResponse
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -76,12 +82,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 is ApiErrorResponse -> {
                     onFetchFailed()
                     result.addSource(dbSource) { newData ->
-                        setValue(
-                            Resource.error(
-                                response.errorMessage,
-                                newData
-                            )
-                        )
+                        setValue(Resource.error(response.errorMessage, newData))
                     }
                 }
             }
@@ -107,3 +108,4 @@ abstract class NetworkBoundResource<ResultType, RequestType>
     @MainThread
     protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
 }
+

@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop
+package com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop
 
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.Stop
@@ -7,7 +7,7 @@ import com.jorkoh.transportezaragozakt.db.StopType
 import com.squareup.moshi.Json
 import java.util.*
 
-data class TramStopResponse(
+data class BusStopResponse(
     @field:Json(name = "features")
     val features: List<Feature>,
 
@@ -32,29 +32,22 @@ data class Properties(
     @field:Json(name = "id")
     val id: String,
 
-    @field:Json(name = "uri")
-    val link: String,
-
     @field:Json(name = "title")
     val title: String,
+
+    @field:Json(name = "destinos")
+    val destinos: List<Destino>,
 
     @field:Json(name = "lastUpdated")
     val lastUpdated: Date,
 
     @field:Transient
-    @field:Json(name = "mensajes")
-    val messages: List<String>,
-
-    @field:Transient
     @field:Json(name = "icon")
     val icon: String,
 
-    @field:Json(name = "destinos")
-    val destinos: List<Destino>,
-
     @field:Transient
-    @field:Json(name = "description")
-    val description: String
+    @field:Json(name = "link")
+    val link: String
 )
 
 data class Destino(
@@ -64,8 +57,11 @@ data class Destino(
     @field:Json(name = "linea")
     val linea: String,
 
-    @field:Json(name = "minutos")
-    val minutos: Int
+    @field:Json(name = "primero")
+    val primero: String,
+
+    @field:Json(name = "segundo")
+    val segundo: String
 )
 
 data class Geometry(
@@ -77,15 +73,15 @@ data class Geometry(
     val type: String
 )
 
-fun TramStopResponse.toStop() = Stop(
-    StopType.TRAM,
+fun BusStopResponse.toStop() = Stop(
+    StopType.BUS,
     features.first().properties.id,
     features.first().properties.title,
     LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1]),
     false
 )
 
-fun TramStopResponse.toStopDestinations(): List<StopDestination> {
+fun BusStopResponse.toStopDestinations(): List<StopDestination> {
     //TODO: Generate this list without adding?
     val stopDestinations = mutableListOf<StopDestination>()
     features.first().properties.destinos.forEach { destination ->
@@ -95,10 +91,10 @@ fun TramStopResponse.toStopDestinations(): List<StopDestination> {
                 destination.destino,
                 features.first().properties.id,
                 listOf(
-                    features.first().properties.destinos.getOrNull(0)?.minutos ?: -1,
-                    features.first().properties.destinos.getOrNull(1)?.minutos ?: -1
+                    destination.primero.split(" ")[0].toIntOrNull() ?: 0,
+                    destination.segundo.split(" ")[0].toIntOrNull() ?: 0
                 ),
-                features.first().properties.lastUpdated
+                Date()
             )
         )
     }

@@ -1,10 +1,10 @@
 package com.jorkoh.transportezaragozakt.services.api
 
-import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStop.BusStopResponse
-import com.jorkoh.transportezaragozakt.services.api.models.Bus.BusStopLocations.BusStopLocationsResponse
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopResponse
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsResponse
-import retrofit2.Call
+import androidx.lifecycle.LiveData
+import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.BusStopResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.BusStopLocationsResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop.TramStopResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocations.TramStopLocationsResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -13,24 +13,24 @@ interface APIService{
     companion object {
         const val BASE_URL = "https://www.zaragoza.es/sede/servicio/urbanismo-infraestructuras/transporte-urbano/"
 
-        //Internal API values update every minute but request distribute stale data for up to 30 seconds afterwards
-        const val FRESH_TIMEOUT_BUS = 70
-        const val FRESH_TIMEOUT_TRAM = 70
+        //Just to limit users a bit from spamming requests
+        const val FRESH_TIMEOUT_BUS = 10
+        const val FRESH_TIMEOUT_TRAM = 10
     }
 
     @Headers("Accept: application/geo+json")
     @GET("poste-autobus/{id}")
-    fun getBusStop(@Path("id") id: String): Call<BusStopResponse>
+    fun getBusStop(@Path("id") id: String): LiveData<ApiResponse<BusStopResponse>>
 
     @Headers("Accept: application/geo+json")
     @GET("poste-autobus?removeproperties")
-    fun getBusStopsLocations() : Call<BusStopLocationsResponse>
+    fun getBusStopsLocations() : LiveData<ApiResponse<BusStopLocationsResponse>>
 
     @Headers("Accept: application/geo+json")
     @GET("parada-tranvia/{id}")
-    fun getTramStop(@Path("id") id: String): Call<TramStopResponse>
+    fun getTramStop(@Path("id") id: String): LiveData<ApiResponse<TramStopResponse>>
 
     @Headers("Accept: application/geo+json")
     @GET("parada-tranvia?removeproperties")
-    fun getTramStopsLocations() : Call<TramStopLocationsResponse>
+    fun getTramStopsLocations() : LiveData<ApiResponse<TramStopLocationsResponse>>
 }

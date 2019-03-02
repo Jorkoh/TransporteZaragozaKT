@@ -2,15 +2,14 @@ package com.jorkoh.transportezaragozakt.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.db.StopDestination
-import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.db.StopsDao
+import com.jorkoh.transportezaragozakt.AppExecutors
+import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.TramStopResponse
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStop.toStopDestinations
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.TramStopLocationsResponse
-import com.jorkoh.transportezaragozakt.services.api.models.Tram.TramStopLocations.toStops
+import com.jorkoh.transportezaragozakt.services.api.ApiResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop.TramStopResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop.toStopDestinations
+import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocations.TramStopLocationsResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocations.toStops
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -19,77 +18,52 @@ import retrofit2.Response
 
 
 interface TramRepository {
-    fun getStopDestinations(tramStopId: String): LiveData<List<StopDestination>>
-    fun getStopLocations(): LiveData<List<Stop>>
+    fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>>
+    fun loadStopLocations(): LiveData<Resource<List<Stop>>>
 }
 
 class TramRepositoryImplementation(
+    private val appExecutors: AppExecutors,
     private val apiService: APIService,
-    private val stopsDao: StopsDao
+    private val stopsDao: StopsDao,
+    private val db : AppDatabase
 ) : TramRepository {
 
-    override fun getStopDestinations(tramStopId: String): LiveData<List<StopDestination>> {
-        GlobalScope.launch {
-            if (!stopsDao.stopHasFreshInfo(tramStopId, APIService.FRESH_TIMEOUT_TRAM)) {
-                fetchStop(tramStopId)
-            } else {
-                Log.d("TestingStuff", "Tram Stop info is still fresh")
-            }
-        }
-        return stopsDao.getStopDestinations(tramStopId)
-    }
-
-    private fun fetchStop(tramStopId: String){
-        apiService.getTramStop(tramStopId).enqueue(object : Callback<TramStopResponse> {
-            override fun onResponse(call: Call<TramStopResponse>, response: Response<TramStopResponse>) {
-                checkNotNull(response.body())
-                val body = response.body()
-                if (body is TramStopResponse) {
-                    GlobalScope.launch {
-                        stopsDao.insertStopDestinations(body.toStopDestinations())
-                    }
+    override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
+        return object : NetworkBoundResource<List<StopDestination>, TramStopResponse>(appExecutors) {
+            override fun saveCallResult(item: TramStopResponse) {
+                db.runInTransaction{
+                    stopsDao.deleteStopDestinations(tramStopId)
+                    stopsDao.insertStopDestinations(item.toStopDestinations())
                 }
             }
 
-            override fun onFailure(call: Call<TramStopResponse>, t: Throwable) {
-                //TODO: Implement this
+            override fun shouldFetch(data: List<StopDestination>?): Boolean {
+                return return (data == null || data.isEmpty() || !data.isFresh(APIService.FRESH_TIMEOUT_TRAM))
             }
-        })
-        Log.d("TestingStuff", "Tram Stop info refreshed with retrofit")
+
+            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(tramStopId)
+
+            override fun createCall(): LiveData<ApiResponse<TramStopResponse>> = apiService.getTramStop(tramStopId)
+        }.asLiveData()
     }
 
-    override fun getStopLocations(): LiveData<List<Stop>> {
-        //TODO: This is iffy
-        GlobalScope.launch {
-            if (!stopsDao.areStopLocationsSaved(StopType.TRAM)) {
-                fetchStopLocations()
-            } else {
-                Log.d("TestingStuff", "Tram stop locations already saved")
-            }
-        }
-        return stopsDao.getStopsByType(StopType.TRAM)
-    }
+    fun List<StopDestination>.isFresh(timeoutInSeconds:Int) = (this.minBy { it.updatedAt }?.isFresh(timeoutInSeconds) ?: false)
 
-    private fun fetchStopLocations() {
-        apiService.getTramStopsLocations().enqueue(object : Callback<TramStopLocationsResponse> {
-            override fun onResponse(
-                call: Call<TramStopLocationsResponse>,
-                response: Response<TramStopLocationsResponse>
-            ) {
-                checkNotNull(response.body())
-                val body = response.body()
-                if (body is TramStopLocationsResponse) {
-                    //TODO: Making stop objects just for locations feels weird
-                    GlobalScope.launch {
-                        stopsDao.insertStops(body.toStops())
-                    }
-                }
+    override fun loadStopLocations(): LiveData<Resource<List<Stop>>> {
+        return object : NetworkBoundResource<List<Stop>, TramStopLocationsResponse>(appExecutors) {
+            override fun saveCallResult(item: TramStopLocationsResponse) {
+                stopsDao.insertStops(item.toStops())
             }
 
-            override fun onFailure(call: Call<TramStopLocationsResponse>, t: Throwable) {
-                //TODO: Implement this
+            override fun shouldFetch(data: List<Stop>?): Boolean {
+                return data == null || data.isEmpty()
             }
-        })
-        Log.d("TestingStuff", "Tram stop locations refreshed with retrofit")
+
+            override fun loadFromDb(): LiveData<List<Stop>> = stopsDao.getStopsByType(StopType.TRAM)
+
+            override fun createCall(): LiveData<ApiResponse<TramStopLocationsResponse>> =
+                apiService.getTramStopsLocations()
+        }.asLiveData()
     }
 }

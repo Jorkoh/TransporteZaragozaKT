@@ -2,53 +2,31 @@ package com.jorkoh.transportezaragozakt.repositories
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.db.StopDestination
-import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.db.StopsDao
+import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 interface StopsRepository {
-    fun getStopDestinations(stopId: String, stopType: StopType): LiveData<List<StopDestination>>
-    fun getStopLocations(stopType: StopType): LiveData<List<Stop>>
-    fun getFavoriteStops(): LiveData<List<Stop>>
-    fun isStopFavorited(stopId: String): LiveData<Boolean>
-    fun toggleStopFavorite(stopId: String)
+    fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>>
+    fun loadStopLocations(stopType: StopType): LiveData<Resource<List<Stop>>>
 }
 
 class StopsRepositoryImplementation(
-    private val stopsDao: StopsDao,
     private val busRepository: BusRepository,
     private val tramRepository: TramRepository
 ) : StopsRepository {
-    override fun getStopDestinations(stopId: String, stopType: StopType): LiveData<List<StopDestination>> {
+    override fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>> {
         return when (stopType) {
-            StopType.BUS -> busRepository.getStopDestinations(stopId)
-            StopType.TRAM -> tramRepository.getStopDestinations(stopId)
+            StopType.BUS -> busRepository.loadStopDestinations(stopId)
+            StopType.TRAM -> tramRepository.loadStopDestinations(stopId)
         }
     }
 
-    override fun getStopLocations(stopType: StopType): LiveData<List<Stop>> {
+    override fun loadStopLocations(stopType: StopType): LiveData<Resource<List<Stop>>> {
         return when (stopType){
-            StopType.BUS -> busRepository.getStopLocations()
-            StopType.TRAM -> tramRepository.getStopLocations()
+            StopType.BUS -> busRepository.loadStopLocations()
+            StopType.TRAM -> tramRepository.loadStopLocations()
         }
     }
-
-    override fun getFavoriteStops(): LiveData<List<Stop>> {
-        return stopsDao.getFavoriteStops()
-    }
-
-    override fun isStopFavorited(stopId: String): LiveData<Boolean> {
-        return stopsDao.stopIsFavorite(stopId)
-    }
-
-    override fun toggleStopFavorite(stopId: String) {
-        GlobalScope.launch {
-            stopsDao.toggleStopFavorite(stopId)
-        }
-    }
-
 }

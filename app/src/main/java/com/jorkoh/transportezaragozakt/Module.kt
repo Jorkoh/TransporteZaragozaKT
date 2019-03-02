@@ -5,6 +5,7 @@ import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
+import com.jorkoh.transportezaragozakt.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.view_models.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -22,6 +23,10 @@ import java.util.concurrent.Executors
 
 val appModule = module {
 
+    single<AppExecutors>{
+        AppExecutors()
+    }
+
     single<APIService> {
         Retrofit.Builder()
             .baseUrl(APIService.BASE_URL)
@@ -33,6 +38,7 @@ val appModule = module {
                         .build()
                 )
             )
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .build()
             .create(APIService::class.java)
     }
@@ -46,19 +52,20 @@ val appModule = module {
         get<AppDatabase>().stopsDao()
     }
 
-    single<BusRepository> { BusRepositoryImplementation(get(), get()) }
-    single<TramRepository> { TramRepositoryImplementation(get(), get()) }
-    single<StopsRepository>{StopsRepositoryImplementation(get(), get(), get())}
+    single<StopsRepository>{StopsRepositoryImplementation(get(), get())}
+    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get()) }
+    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get()) }
+    single<FavoritesRepository> {FavoritesRepositoryImplementation(get(), get(), get())}
 
     viewModel { FavoritesViewModel(get()) }
 
-    viewModel { MapViewModel(get(), get()) }
+    viewModel { MapViewModel(get()) }
 
     viewModel { SearchViewModel() }
 
     viewModel { MoreViewModel() }
 
-    viewModel { StopDetailsViewModel(get()) }
+    viewModel { StopDetailsViewModel(get(), get()) }
 
     viewModel { MainActivityViewModel() }
 }
