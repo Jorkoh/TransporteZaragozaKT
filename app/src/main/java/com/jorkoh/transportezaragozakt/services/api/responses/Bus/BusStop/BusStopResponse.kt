@@ -88,7 +88,7 @@ fun BusStopResponse.toStopDestinations(): List<StopDestination> {
         stopDestinations.add(
             StopDestination(
                 destination.linea,
-                destination.destino,
+                destination.destino.dropLast(1),
                 features.first().properties.id,
                 listOf(
                     destination.primero.split(" ")[0].toIntOrNull() ?: 0,

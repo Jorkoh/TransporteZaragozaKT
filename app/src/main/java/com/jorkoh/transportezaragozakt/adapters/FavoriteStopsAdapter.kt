@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import kotlinx.android.synthetic.main.stop_row.view.*
 
@@ -18,7 +19,12 @@ class FavoriteStopsAdapter(
     class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(stop: Stop, clickListener: (TagInfo) -> Unit, longClickListener: (TagInfo) -> Boolean) {
             itemView.apply {
-                type_text.text = stop.type.name
+                type_image.setImageResource(
+                    when (stop.type) {
+                        StopType.BUS -> R.drawable.ic_bus
+                        StopType.TRAM -> R.drawable.ic_tram
+                    }
+                )
                 title_text.text = stop.title
                 setOnClickListener { clickListener(TagInfo(stop.id, stop.type)) }
                 setOnLongClickListener { longClickListener(TagInfo(stop.id, stop.type)) }
