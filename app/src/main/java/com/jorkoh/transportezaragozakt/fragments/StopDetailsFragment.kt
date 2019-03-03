@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -41,9 +42,18 @@ class StopDetailsFragment : Fragment() {
         when (value.status) {
             Status.SUCCESS -> {
                 value.data?.let { stopDetailsAdapter.setDestinations(it)}
+                if(value.data?.isEmpty() != false){
+                    no_data_text.visibility = View.VISIBLE
+                }else{
+                    no_data_text.visibility = View.GONE
+                }
                 swiperefresh.isRefreshing = false
             }
-            Status.ERROR -> TODO()
+            Status.ERROR -> {
+                Toast.makeText(context, "Error loading destinations!",Toast.LENGTH_LONG).show()
+                no_data_text.visibility = View.VISIBLE
+                swiperefresh.isRefreshing = false
+            }
             Status.LOADING -> swiperefresh.isRefreshing = true
         }
 

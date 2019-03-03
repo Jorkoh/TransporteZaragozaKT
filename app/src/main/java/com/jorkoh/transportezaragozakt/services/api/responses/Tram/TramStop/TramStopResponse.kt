@@ -88,19 +88,21 @@ fun TramStopResponse.toStop() = Stop(
 fun TramStopResponse.toStopDestinations(): List<StopDestination> {
     //TODO: Generate this list without adding?
     val stopDestinations = mutableListOf<StopDestination>()
-    features.first().properties.destinos.forEach { destination ->
-        stopDestinations.add(
-            StopDestination(
-                destination.linea,
-                destination.destino,
-                features.first().properties.id,
-                listOf(
-                    features.first().properties.destinos.getOrNull(0)?.minutos ?: -1,
-                    features.first().properties.destinos.getOrNull(1)?.minutos ?: -1
-                ),
-                Date()
+    features.first().properties.destinos?.let{destinations ->
+        destinations.forEach { destination ->
+            stopDestinations.add(
+                StopDestination(
+                    destination.linea,
+                    destination.destino,
+                    features.first().properties.id,
+                    listOf(
+                        features.first().properties.destinos.getOrNull(0)?.minutos ?: -1,
+                        features.first().properties.destinos.getOrNull(1)?.minutos ?: -1
+                    ),
+                    Date()
+                )
             )
-        )
+        }
     }
     return stopDestinations
 }
