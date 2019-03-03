@@ -13,7 +13,6 @@ import com.jorkoh.transportezaragozakt.navigation.goBackToPreviousDestination
 import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
 import com.jorkoh.transportezaragozakt.navigation.openDestination
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.view_models.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*

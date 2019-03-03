@@ -1,1 +1,1 @@
-include ':app', ':cyanea-jorkoh'
+include ':app', ':cyanea-jorkoh', ':quickpermissions-kotlin'

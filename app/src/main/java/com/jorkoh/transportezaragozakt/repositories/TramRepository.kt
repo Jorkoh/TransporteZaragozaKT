@@ -39,7 +39,7 @@ class TramRepositoryImplementation(
             }
 
             override fun shouldFetch(data: List<StopDestination>?): Boolean {
-                return return (data == null || data.isEmpty() || !data.isFresh(APIService.FRESH_TIMEOUT_TRAM))
+                return (data == null || data.isEmpty() || !data.isFresh(APIService.FRESH_TIMEOUT_TRAM))
             }
 
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(tramStopId)
