@@ -38,10 +38,10 @@ dependencies {
     implementation deps.material
     implementation deps.androidx.recyclerView
 
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-coroutines:$room_version"
+    implementation deps.androidx.room.runtime
+    annotationProcessor deps.androidx.room.compiler
+    kapt deps.androidx.room.compiler
+    implementation deps.androidx.room.coroutines
 
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
 

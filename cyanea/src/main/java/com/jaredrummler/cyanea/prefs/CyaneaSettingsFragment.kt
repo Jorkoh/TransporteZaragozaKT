@@ -102,10 +102,10 @@ open class CyaneaSettingsFragment : PreferenceFragmentCompat(), OnPreferenceChan
                 activity?.run {
                     supportFragmentManager.beginTransaction()
                             .setCustomAnimations(
-                                    android.R.anim.fade_in,
-                                    android.R.anim.fade_out,
-                                    android.R.anim.fade_in,
-                                    android.R.anim.fade_out
+                                    R.anim.fade_in,
+                                    R.anim.fade_out,
+                                    R.anim.fade_in,
+                                    R.anim.fade_out
                             )
                             .detach(this@CyaneaSettingsFragment)
                             .add((view?.parent as ViewGroup).id, CyaneaThemePickerFragment.newInstance())

@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 object PermissionsUtil {
 
     fun getDeniedPermissions(permissions: Array<String>, grantResults: IntArray): Array<String> =
-            permissions.filterIndexed { index, s ->
+            permissions.filterIndexed { index, _ ->
                 grantResults[index] == PackageManager.PERMISSION_DENIED
             }.toTypedArray()
 

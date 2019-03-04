@@ -1,15 +1,14 @@
 package com.livinglifetechway.quickpermissions_kotlin.util
 
-
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri.fromParts
 import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import org.jetbrains.anko.alert
 
 /**
  * This fragment holds the single permission request and holds it until the flow is completed
@@ -66,8 +65,10 @@ class PermissionCheckerFragment : Fragment() {
             removeRequestPermissionsRequest()
             removeListener()
         } else {
-            Log.w(TAG, "clean: QuickPermissionsRequest has already completed its flow. " +
-                    "No further callbacks will be called for the current flow.")
+            Log.w(
+                TAG, "clean: QuickPermissionsRequest has already completed its flow. " +
+                        "No further callbacks will be called for the current flow."
+            )
         }
     }
 
@@ -76,9 +77,11 @@ class PermissionCheckerFragment : Fragment() {
             Log.d(TAG, "requestPermissionsFromUser: requesting permissions")
             requestPermissions(quickPermissionsRequest?.permissions.orEmpty(), PERMISSIONS_REQUEST_CODE)
         } else {
-            Log.w(TAG, "requestPermissionsFromUser: QuickPermissionsRequest has already completed its flow. " +
-                    "Cannot request permissions again from the request received from the callback. " +
-                    "You can start the new flow by calling runWithPermissions() { } again.")
+            Log.w(
+                TAG, "requestPermissionsFromUser: QuickPermissionsRequest has already completed its flow. " +
+                        "Cannot request permissions again from the request received from the callback. " +
+                        "You can start the new flow by calling runWithPermissions() { } again."
+            )
         }
     }
 
@@ -104,7 +107,10 @@ class PermissionCheckerFragment : Fragment() {
         // this can happen in case when the multiple permissions requests are sent
         // simultaneously to the system
         if (permissions.isEmpty()) {
-            Log.w(TAG, "handlePermissionResult: Permissions result discarded. You might have called multiple permissions request simultaneously")
+            Log.w(
+                TAG,
+                "handlePermissionResult: Permissions result discarded. You might have called multiple permissions request simultaneously"
+            )
             return
         }
 
@@ -143,20 +149,27 @@ class PermissionCheckerFragment : Fragment() {
                 quickPermissionsRequest?.permanentDeniedMethod?.let {
                     // get list of permanently denied methods
                     quickPermissionsRequest?.permanentlyDeniedPermissions =
-                            PermissionsUtil.getPermanentlyDeniedPermissions(this, permissions, grantResults)
+                        PermissionsUtil.getPermanentlyDeniedPermissions(this, permissions, grantResults)
                     mListener?.onPermissionsPermanentlyDenied(quickPermissionsRequest)
                     return
                 }
 
-                activity?.alert {
-                    message = quickPermissionsRequest?.permanentlyDeniedMessage.orEmpty()
-                    positiveButton("SETTINGS") {
-                        openAppSettings()
-                    }
-                    negativeButton("CANCEL") {
-                        clean()
-                    }
-                }?.apply { isCancelable = false }?.show()
+                activity?.let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.setMessage(quickPermissionsRequest?.permanentlyDeniedMessage.orEmpty())
+                        .setPositiveButton(
+                            "SETTINGS"
+                        ) { _, _ ->
+                            openAppSettings()
+                        }
+                        .setNegativeButton(
+                            "CANCEL"
+                        ) { _, _ ->
+                            clean()
+                        }
+                        .setCancelable(false)
+                    builder.create().show()
+                }
                 return
             }
 
@@ -168,15 +181,22 @@ class PermissionCheckerFragment : Fragment() {
                     return
                 }
 
-                activity?.alert {
-                    message = quickPermissionsRequest?.rationaleMessage.orEmpty()
-                    positiveButton("TRY AGAIN") {
-                        requestPermissionsFromUser()
-                    }
-                    negativeButton("CANCEL") {
-                        clean()
-                    }
-                }?.apply { isCancelable = false }?.show()
+                activity?.let {
+                    val builder = AlertDialog.Builder(it)
+                    builder.setMessage(quickPermissionsRequest?.rationaleMessage.orEmpty())
+                        .setPositiveButton(
+                            "TRY AGAIN"
+                        ) { _, _ ->
+                            requestPermissionsFromUser()
+                        }
+                        .setNegativeButton(
+                            "CANCEL"
+                        ) { _, _ ->
+                            clean()
+                        }
+                        .setCancelable(false)
+                    builder.create().show()
+                }
                 return
             }
 
@@ -188,12 +208,17 @@ class PermissionCheckerFragment : Fragment() {
 
     fun openAppSettings() {
         if (quickPermissionsRequest != null) {
-            val intent = Intent(ACTION_APPLICATION_DETAILS_SETTINGS,
-                    fromParts("package", activity?.packageName, null))
+            val intent = Intent(
+                ACTION_APPLICATION_DETAILS_SETTINGS,
+                fromParts("package", activity?.packageName, null)
+            )
             //                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(intent, PERMISSIONS_REQUEST_CODE)
         } else {
-            Log.w(TAG, "openAppSettings: QuickPermissionsRequest has already completed its flow. Cannot open app settings")
+            Log.w(
+                TAG,
+                "openAppSettings: QuickPermissionsRequest has already completed its flow. Cannot open app settings"
+            )
         }
     }
 
@@ -203,7 +228,8 @@ class PermissionCheckerFragment : Fragment() {
             val permissions = quickPermissionsRequest?.permissions ?: emptyArray()
             val grantResults = IntArray(permissions.size)
             permissions.forEachIndexed { index, s ->
-                grantResults[index] = context?.let { ActivityCompat.checkSelfPermission(it, s) } ?: PackageManager.PERMISSION_DENIED
+                grantResults[index] =
+                    context?.let { ActivityCompat.checkSelfPermission(it, s) } ?: PackageManager.PERMISSION_DENIED
             }
 
             handlePermissionResult(permissions, grantResults)

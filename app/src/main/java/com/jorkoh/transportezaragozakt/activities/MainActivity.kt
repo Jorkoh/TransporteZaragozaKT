@@ -7,13 +7,13 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
-import com.jorkoh.transportezaragozakt.navigation.Destinations
+import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.fragments.StopDetailsFragment
+import com.jorkoh.transportezaragozakt.navigation.Destinations
 import com.jorkoh.transportezaragozakt.navigation.goBackToPreviousDestination
 import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
 import com.jorkoh.transportezaragozakt.navigation.openDestination
-import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.view_models.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -91,7 +91,11 @@ class MainActivity : CyaneaAppCompatActivity() {
             .commit()
     }
 
-    fun openStopDetails(info : TagInfo){
+    //@TEST
+    fun testNotifications(@Suppress("UNUSED_PARAMETER") v: View) {
+    }
+
+    fun openStopDetails(info: TagInfo) {
         val transaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.fade_in,
