@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion buildConfig.compileSdk
@@ -7,11 +7,6 @@ android {
     defaultConfig {
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     sourceSets {
@@ -26,9 +21,9 @@ android {
 dependencies {
     implementation deps.kotlin.stdlib.jdk
     implementation deps.androidx.appCompat
-    implementation deps.androidx.preferences
+    api deps.androidx.preferences
     implementation deps.material
-    implementation deps.colorpicker
+    implementation project(':color-picker')
     testImplementation deps.junit
     testImplementation deps.mockito.core
     testImplementation deps.mockito.kotlin

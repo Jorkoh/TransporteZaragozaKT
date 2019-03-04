@@ -1,0 +1,18 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion buildConfig.compileSdk
+  resourcePrefix "cpv_"
+  defaultConfig {
+    minSdkVersion buildConfig.minSdk
+    targetSdkVersion buildConfig.targetSdk
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  implementation deps.androidx.appCompat
+  implementation deps.androidx.preferences
+}

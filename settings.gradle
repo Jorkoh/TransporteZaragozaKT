@@ -1,1 +1,1 @@
-include ':app', ':quickpermissions-kotlin', ':cyanea'
+include ':app', ':color-picker', ':cyanea', ':quickpermissions-kotlin'

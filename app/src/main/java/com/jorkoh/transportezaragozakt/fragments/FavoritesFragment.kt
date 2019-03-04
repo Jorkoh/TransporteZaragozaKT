@@ -38,7 +38,7 @@ class FavoritesFragment : Fragment() {
     }
 
     //TODO: TESTING
-    private val itemOnLongClick: (TagInfo) -> Boolean = { info ->
+    private val itemOnLongClick: (TagInfo) -> Boolean = { _ ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             Toast.makeText(context, "Long press", Toast.LENGTH_LONG).show()
         }
