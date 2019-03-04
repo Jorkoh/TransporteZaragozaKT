@@ -1,8 +1,15 @@
 package com.jorkoh.transportezaragozakt.activities
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.RemoteViews
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
@@ -16,6 +23,7 @@ import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
 import com.jorkoh.transportezaragozakt.navigation.openDestination
 import com.jorkoh.transportezaragozakt.view_models.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.destination_row.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -93,6 +101,36 @@ class MainActivity : CyaneaAppCompatActivity() {
 
     //@TEST
     fun testNotifications(@Suppress("UNUSED_PARAMETER") v: View) {
+
+
+        val testRV = RemoteViews(packageName, R.layout.custom_notification)
+//        testRV.setTextViewText(R.id.destination_text, "23")
+//        testRV.setTextViewText(R.id.first_time_text, "2")
+//        testRV.setTextViewText(R.id.second_time_text, "5")
+
+        val testNotification = NotificationCompat.Builder(this, "TestingStuff")
+            .setCustomHeadsUpContentView(testRV)
+            .setCustomContentView(testRV)
+            .setCustomBigContentView(testRV)
+            .setSmallIcon(R.drawable.ic_bus)
+            .setContentTitle("My notification")
+            .setContentText("Much longer text that cannot fit one line...")
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel("TestingStuff", "TestingStuff", importance).apply {
+                description = "TestingStuff"
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(1, testNotification.build())
+        }
     }
 
     fun openStopDetails(info: TagInfo) {
