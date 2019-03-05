@@ -10,16 +10,20 @@
 
     <TextView
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="90dp"
             android:id="@+id/line_text"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="60dp"
+            android:textColor="@color/kinda_white"
+            tools:ignore="SpUsage"/>
 
     <TextView
             android:layout_width="wrap_content"

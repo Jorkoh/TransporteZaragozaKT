@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
+import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.Resource
@@ -37,11 +38,13 @@ class StopDetailsFragment : Fragment() {
 
     private val stopDetailsAdapter: StopDetailsAdapter = StopDetailsAdapter()
 
+    private lateinit var stopType : StopType
+
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { value ->
         Log.d("TestingStuff", "OBSERVED DESTINATIONS. Status: ${value.status}")
         when (value.status) {
             Status.SUCCESS -> {
-                value.data?.let { stopDetailsAdapter.setDestinations(it)}
+                value.data?.let { stopDetailsAdapter.setDestinations(it, stopType)}
                 if(value.data?.isEmpty() != false){
                     no_data_text.visibility = View.VISIBLE
                 }else{
@@ -104,9 +107,10 @@ class StopDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        stopType = StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
         stopDetailsVM.init(
             checkNotNull(arguments?.getString(STOP_ID_KEY)),
-            StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
+            stopType
         )
     }
 }

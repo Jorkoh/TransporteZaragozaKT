@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.db.StopType
 import kotlinx.android.synthetic.main.destination_row.view.*
 
-class StopDetailsAdapter : RecyclerView.Adapter<StopDetailsAdapter.StopDetailsViewHolder>() {
+class StopDetailsAdapter() : RecyclerView.Adapter<StopDetailsAdapter.StopDetailsViewHolder>() {
 
     class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     lateinit var stopDestinations: List<StopDestination>
+
+    lateinit var stopType: StopType
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDetailsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.destination_row, parent, false) as View
@@ -24,6 +27,10 @@ class StopDetailsAdapter : RecyclerView.Adapter<StopDetailsAdapter.StopDetailsVi
     override fun onBindViewHolder(holder: StopDetailsViewHolder, position: Int) {
         holder.view.apply {
             line_text.text = stopDestinations[position].line
+            line_text.setBackgroundResource(when(stopType){
+                StopType.BUS -> R.drawable.ic_frame_bus_stop
+                StopType.TRAM -> R.drawable.ic_frame_tram_stop
+            })
             destination_text.text = stopDestinations[position].destination
             first_time_text.text = stopDestinations[position].times[0].toString()
             second_time_text.text = stopDestinations[position].times[1].toString()
@@ -32,7 +39,8 @@ class StopDetailsAdapter : RecyclerView.Adapter<StopDetailsAdapter.StopDetailsVi
 
     override fun getItemCount(): Int = if (::stopDestinations.isInitialized) stopDestinations.size else 0
 
-    fun setDestinations(newStopDestinations: List<StopDestination>) {
+    fun setDestinations(newStopDestinations: List<StopDestination>, stopType: StopType) {
+        this.stopType = stopType
         if (::stopDestinations.isInitialized) {
             val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
                 override fun getOldListSize() = stopDestinations.size
