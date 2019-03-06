@@ -5,7 +5,7 @@ buildscript {
             compileSdk  : 28,
             targetSdk   : 28,
             minSdk      : 21,
-            gradlePlugin: '3.3.1'
+            gradlePlugin: '3.3.2'
     ]
 
     ext.versions = [
@@ -16,7 +16,8 @@ buildscript {
             junit           : '4.12',
             mockito_kotlin  : '2.0.0',
             mockito_core    : '2.23.4',
-            room            : '2.1.0-alpha04'
+            room            : '2.1.0-alpha04',
+            workmanager     : '1.0.0'
     ]
 
     ext.deps = [
@@ -42,7 +43,8 @@ buildscript {
             'mockito'    : [
                     'core'  : "org.mockito:mockito-core:${versions.mockito_core}",
                     'kotlin': "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}"
-            ]
+            ],
+            'workmanager': "android.arch.work:work-runtime-ktx:${versions.workmanager}"
     ]
 
     repositories {

@@ -43,6 +43,8 @@ dependencies {
     kapt deps.androidx.room.compiler
     implementation deps.androidx.room.coroutines
 
+    implementation deps.workmanager
+
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'

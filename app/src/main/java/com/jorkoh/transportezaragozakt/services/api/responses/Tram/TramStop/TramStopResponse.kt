@@ -50,7 +50,7 @@ data class Properties(
     val icon: String,
 
     @field:Json(name = "destinos")
-    val destinos: List<Destino>,
+    val destinos: List<Destino>?,
 
     @field:Transient
     @field:Json(name = "description")
@@ -96,8 +96,8 @@ fun TramStopResponse.toStopDestinations(): List<StopDestination> {
                     destination.destino,
                     features.first().properties.id,
                     listOf(
-                        features.first().properties.destinos.getOrNull(0)?.minutos ?: -1,
-                        features.first().properties.destinos.getOrNull(1)?.minutos ?: -1
+                        features.first().properties.destinos?.getOrNull(0)?.minutos ?: -1,
+                        features.first().properties.destinos?.getOrNull(1)?.minutos ?: -1
                     ),
                     Date()
                 )
