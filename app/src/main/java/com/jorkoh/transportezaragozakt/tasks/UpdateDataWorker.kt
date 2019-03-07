@@ -10,7 +10,6 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 import java.util.concurrent.TimeUnit
 
-
 class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
 
     companion object {
@@ -45,11 +44,10 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Wo
     private fun testWork() {
         //Parse tests
         val query = ParseQuery.getQuery<ParseObject>("StopLocations")
-        query.getInBackground("tuzsa-3063") { parseObject, e ->
-
+        query.findInBackground { parseObject, e ->
             val result = if (e == null) {
                 // object will be your game score
-                parseObject.getString("result").orEmpty()
+                parseObject.first().getString("result").orEmpty()
             } else {
                 // something went wrong
                 "error"
