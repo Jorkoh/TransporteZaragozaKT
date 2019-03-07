@@ -4,7 +4,6 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.annotation.Nullable
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.services.api.ApiEmptyResponse
 import com.jorkoh.transportezaragozakt.services.api.ApiErrorResponse

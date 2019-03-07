@@ -3,11 +3,8 @@ package com.jorkoh.transportezaragozakt.repositories
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.AppDatabase
-import com.jorkoh.transportezaragozakt.db.FavoriteStop
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopsDao
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 interface FavoritesRepository{
     fun loadFavoriteStops(): LiveData<List<Stop>>

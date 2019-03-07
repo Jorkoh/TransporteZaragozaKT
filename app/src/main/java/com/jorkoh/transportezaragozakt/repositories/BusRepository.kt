@@ -9,7 +9,6 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.BusSto
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.toStopDestinations
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.BusStopLocationsResponse
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.toStops
-import com.jorkoh.transportezaragozakt.repositories.*
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>

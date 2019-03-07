@@ -24,7 +24,6 @@ android {
 }
 
 dependencies {
-    def room_version = "2.1.0-alpha04"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation deps.kotlin.stdlib.jdk
@@ -46,6 +45,8 @@ dependencies {
     implementation deps.workmanager
 
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
+
+    implementation deps.parse
 
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'

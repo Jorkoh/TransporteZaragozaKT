@@ -2,6 +2,8 @@ package com.jorkoh.transportezaragozakt.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +19,12 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.activities.MainActivity
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.view_models.MapViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
+import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 

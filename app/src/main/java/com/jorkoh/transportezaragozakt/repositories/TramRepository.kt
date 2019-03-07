@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
@@ -10,11 +9,6 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop.Tram
 import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop.toStopDestinations
 import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocations.TramStopLocationsResponse
 import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocations.toStops
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 interface TramRepository {

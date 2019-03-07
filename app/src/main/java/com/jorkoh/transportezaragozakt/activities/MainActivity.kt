@@ -10,11 +10,6 @@ import android.widget.RemoteViews
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.FragmentManager
-import androidx.room.Update
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
@@ -29,7 +24,6 @@ import com.jorkoh.transportezaragozakt.tasks.UpdateDataWorker
 import com.jorkoh.transportezaragozakt.view_models.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
 
 
 class MainActivity : CyaneaAppCompatActivity() {
@@ -76,6 +70,8 @@ class MainActivity : CyaneaAppCompatActivity() {
         //TODO: Restrict this to run only during onboarding
         //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
         setupWorkers()
+
+        setupNotificationChannels()
 
         setContentView(R.layout.activity_main)
 
@@ -171,5 +167,12 @@ class MainActivity : CyaneaAppCompatActivity() {
 
     private fun setupWorkers(){
         UpdateDataWorker.enqueueWorker()
+    }
+
+    private fun setupNotificationChannels(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("TestingStuff", "TestingStuff", NotificationManager.IMPORTANCE_HIGH)
+            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
+        }
     }
 }

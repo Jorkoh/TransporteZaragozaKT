@@ -1,10 +1,10 @@
 package com.jorkoh.transportezaragozakt.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.view_models.MoreViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

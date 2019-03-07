@@ -3,7 +3,6 @@ package com.jorkoh.transportezaragozakt.db
 import android.util.Log
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
-import java.time.Instant
 import java.util.*
 
 enum class StopType {

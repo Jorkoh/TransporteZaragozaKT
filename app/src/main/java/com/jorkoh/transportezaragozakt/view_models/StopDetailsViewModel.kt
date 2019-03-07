@@ -2,11 +2,12 @@ package com.jorkoh.transportezaragozakt.view_models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.repositories.*
+import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
+import com.jorkoh.transportezaragozakt.repositories.Resource
+import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 
 class StopDetailsViewModel(
     private val stopsRepository: StopsRepository,

@@ -1,11 +1,9 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.db.*
-import com.jorkoh.transportezaragozakt.services.api.APIService
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.db.StopType
 
 interface StopsRepository {
     fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>>

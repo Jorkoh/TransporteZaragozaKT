@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.repositories.BusRepository
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
-import com.jorkoh.transportezaragozakt.repositories.TramRepository
 
 class MapViewModel(private val stopsRepository: StopsRepository) : ViewModel() {
 

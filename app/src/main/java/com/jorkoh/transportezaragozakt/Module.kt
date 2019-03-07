@@ -8,17 +8,13 @@ import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
 import com.jorkoh.transportezaragozakt.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.view_models.*
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 
 val appModule = module {
