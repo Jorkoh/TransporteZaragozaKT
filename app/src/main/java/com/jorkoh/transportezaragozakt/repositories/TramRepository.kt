@@ -51,7 +51,7 @@ class TramRepositoryImplementation(
             }
 
             override fun shouldFetch(data: List<Stop>?): Boolean {
-                return data == null || data.isEmpty()
+                return false
             }
 
             override fun loadFromDb(): LiveData<List<Stop>> = stopsDao.getStopsByType(StopType.TRAM)

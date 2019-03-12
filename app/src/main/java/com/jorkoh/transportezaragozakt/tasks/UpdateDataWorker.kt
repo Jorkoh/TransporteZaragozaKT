@@ -42,27 +42,31 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Wo
 
     //TODO: Replace this with the actual work
     private fun testWork() {
-        //Parse tests
-        val query = ParseQuery.getQuery<ParseObject>("StopLocations")
-        query.findInBackground { parseObject, e ->
-            val result = if (e == null) {
-                // object will be your game score
-                parseObject.first().getString("result").orEmpty()
-            } else {
-                // something went wrong
-                "error"
+        //TODO: Check that version is different!!
+
+        //If it is query it
+        //TODO: Make this string a resource? or a constant?
+        with(ParseQuery.getQuery<ParseObject>("bus_stops")) {
+            orderByDescending("version")
+            limit = 1
+            getFirstInBackground { parseObject, e ->
+                if (e == null) {
+                    //TODO: What should we do here?
+                    Log.d("Testing stuff", "Retrieving new stops failed")
+                }
+
+
+                val notificationManager: NotificationManager =
+                    applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+                val builder = NotificationCompat.Builder(applicationContext, "TestingStuff")
+                    .setSmallIcon(R.drawable.ic_bus)
+                    .setContentTitle("doWork() launched")
+                    .setContentText("Result: ${parseObject.getString("_id")}")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+                notificationManager.notify(1, builder.build())
             }
-
-            val notificationManager: NotificationManager =
-                applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            val builder = NotificationCompat.Builder(applicationContext, "TestingStuff")
-                .setSmallIcon(R.drawable.ic_bus)
-                .setContentTitle("doWork() launched")
-                .setContentText("Result: $result")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-            notificationManager.notify(1, builder.build())
         }
     }
 }

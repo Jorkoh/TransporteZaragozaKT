@@ -1,6 +1,4 @@
 buildscript {
-    // ---- DEPENDENCIES ----
-    // @formatter:off
     ext.buildConfig = [
             compileSdk  : 28,
             targetSdk   : 28,
@@ -53,10 +51,12 @@ buildscript {
         google()
         jcenter()
         maven { url "http://jitpack.io/" }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${buildConfig.gradlePlugin}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
     }
 }
 
@@ -65,6 +65,7 @@ allprojects {
         google()
         jcenter()
         maven { url "http://jitpack.io/" }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
 

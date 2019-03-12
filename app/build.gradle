@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion buildConfig.compileSdk
@@ -52,6 +53,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
     implementation 'com.squareup.moshi:moshi-adapters:1.8.0'
     implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
 
     testImplementation deps.junit
     androidTestImplementation 'androidx.test:runner:1.1.1'
