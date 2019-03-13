@@ -5,4 +5,12 @@
     <string name="map_destination_title">Map</string>
     <string name="search_destination_title">Search</string>
     <string name="more_destination_title">More</string>
+
+    <!--Preferences-->
+    <string name="preferences_version_number_key" translatable="false">com.jorkoh.transportezaragozakt.PREFERENCES_VERSION_NUMBER_KEY</string>
+    <string name="saved_bus_version_number_key" translatable="false">SAVED_BUS_VERSION_NUMBER_KEY</string>
+    <string name="saved_tram_version_number_key" translatable="false">SAVED_TRAM_VERSION_NUMBER_KEY</string>
+    <!--Parse-->
+    <string name="parse_bus_stops_collection" translatable="false">bus_stops</string>
+    <string name="parse_tram_stops_collection" translatable="false">tram_stops</string>
 </resources>

@@ -22,7 +22,7 @@ import java.util.*
 
 val appModule = module {
 
-    single<AppExecutors>{
+    single {
         AppExecutors()
     }
 
@@ -44,7 +44,7 @@ val appModule = module {
 
     single {
         Room.databaseBuilder(androidApplication(), AppDatabase::class.java, AppDatabase.DATABASE_NAME)
-            .addCallback(object: RoomDatabase.Callback(){
+            .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
                     get<AppExecutors>().diskIO().execute {
@@ -55,14 +55,14 @@ val appModule = module {
             .build()
     }
 
-    single{
+    single {
         get<AppDatabase>().stopsDao()
     }
 
-    single<StopsRepository>{StopsRepositoryImplementation(get(), get())}
+    single<StopsRepository> { StopsRepositoryImplementation(get(), get()) }
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get()) }
-    single<FavoritesRepository> {FavoritesRepositoryImplementation(get(), get(), get())}
+    single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
 
     viewModel { FavoritesViewModel(get()) }
 

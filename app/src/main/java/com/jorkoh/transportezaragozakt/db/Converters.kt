@@ -8,7 +8,7 @@ import com.squareup.moshi.Types
 import org.koin.standalone.KoinComponent
 import java.util.*
 
-class Converters : KoinComponent {
+class Converters {
 
     private val intListAdapter: JsonAdapter<List<Int>> =
         Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Int::class.javaObjectType))

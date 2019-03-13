@@ -1,11 +1,10 @@
 package com.jorkoh.transportezaragozakt.db
 
 import android.content.Context
+import androidx.core.app.BundleCompat
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.jorkoh.transportezaragozakt.R
 
 @Dao
 abstract class StopsDao {
@@ -56,6 +55,9 @@ abstract class StopsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertStops(stop: List<Stop>)
 
+    @Query("DELETE FROM stops")
+    abstract fun clearStops()
+
     @Query("DELETE FROM stopDestinations WHERE stopId = :stopId")
     abstract fun deleteStopDestinations(stopId: String)
 
@@ -63,8 +65,26 @@ abstract class StopsDao {
     abstract fun insertStopDestinations(stopDestinations: List<StopDestination>)
 
     fun insertInitialData(context: Context) {
+        //TODO: make this string a resource
         val initialBusStops = getInitialBusStops(context)
         val initialTramStops = getInitialTramStops(context)
-        insertStops(initialBusStops.plus(initialTramStops))
+
+        val sharedPreferences = context.getSharedPreferences(context.getString(R.string.preferences_version_number_key), Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putInt(context.getString(R.string.saved_bus_version_number_key), initialBusStops.version)
+            putInt(context.getString(R.string.saved_bus_version_number_key), initialTramStops.version)
+            commit()
+        }
+        insertStops(initialBusStops.stops.plus(initialTramStops.stops))
+    }
+
+    fun updateStops(stops : List<Stop>){
+        stops.forEach {stop ->
+            if(stopIsFavoriteImmediate(stop.id)){
+                stop.isFavorite = true
+            }
+        }
+        clearStops()
+        insertStops(stops)
     }
 }
