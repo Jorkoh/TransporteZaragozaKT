@@ -1,6 +1,8 @@
 package com.jorkoh.transportezaragozakt
 
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
@@ -10,6 +12,7 @@ import com.jorkoh.transportezaragozakt.view_models.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
@@ -41,6 +44,14 @@ val appModule = module {
 
     single {
         Room.databaseBuilder(androidApplication(), AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+            .addCallback(object: RoomDatabase.Callback(){
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    get<AppExecutors>().diskIO().execute {
+                        get<AppDatabase>().stopsDao().insertInitialData(androidContext())
+                    }
+                }
+            })
             .build()
     }
 
