@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
+import java.util.*
 
 interface StopsRepository {
     fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>>
@@ -27,4 +28,8 @@ class StopsRepositoryImplementation(
             StopType.TRAM -> tramRepository.loadStopLocations()
         }
     }
+}
+
+fun StopDestination.isFresh(timeoutInSeconds: Int): Boolean  {
+    return ((Date().time - updatedAt.time)/1000) < timeoutInSeconds
 }

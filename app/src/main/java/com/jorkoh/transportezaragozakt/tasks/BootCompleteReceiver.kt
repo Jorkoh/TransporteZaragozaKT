@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.jorkoh.transportezaragozakt.R
 
 
 class BootCompleteReceiver : BroadcastReceiver() {
@@ -14,15 +15,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             //TODO: clean up the notification stuff
             setupNotificationChannels(context)
-            UpdateDataWorker.enqueueWorker()
-        }
-    }
-
-    private fun setupNotificationChannels(context: Context){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("TestingStuff", "TestingStuff", NotificationManager.IMPORTANCE_HIGH)
-            val notificationManager =context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+            enqueueWorker()
         }
     }
 }

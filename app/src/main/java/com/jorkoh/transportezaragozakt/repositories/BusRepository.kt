@@ -9,6 +9,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.BusSto
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.toStopDestinations
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.BusStopLocationsResponse
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.toStops
+import java.util.*
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
@@ -41,6 +42,7 @@ class BusRepositoryImplementation(
         }.asLiveData()
     }
 
+    // The list is fresh if its oldest member is fresh
     fun List<StopDestination>.isFresh(timeoutInSeconds:Int) = (this.minBy { it.updatedAt }?.isFresh(timeoutInSeconds) ?: false)
 
     override fun loadStopLocations(): LiveData<Resource<List<Stop>>> {

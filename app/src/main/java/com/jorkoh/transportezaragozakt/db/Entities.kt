@@ -9,14 +9,6 @@ enum class StopType {
     BUS, TRAM
 }
 
-//class StopAndDestinations {
-//    @Embedded
-//    var stop: Stop? = null
-//
-//    @Relation(parentColumn = "id", entityColumn = "stopId")
-//    var destinations: List<StopDestination> = listOf()
-//}
-
 @Entity(tableName = "stops")
 data class Stop(
     @ColumnInfo(name = "type")
@@ -66,7 +58,6 @@ data class StopDestination(
 
 @Entity(tableName = "favoriteStops")
 data class FavoriteStop(
-    //TODO: MAKE AN AUTO PRIMARY KEY AND MAKE THIS FOREIGN OR SOMETHING
     @PrimaryKey
     @ColumnInfo(name = "stopId")
     var stopId: String,
@@ -74,13 +65,6 @@ data class FavoriteStop(
     @ColumnInfo(name = "colorHex")
     var colorHex: String
 )
-
-//TODO: Move this
-fun StopDestination.isFresh(timeoutInSeconds: Int): Boolean  {
-    val result = ((Date().time - updatedAt.time)/1000) < timeoutInSeconds
-    Log.d("TestingStuff", "Is fresh: $result. Current time: ${Date()}, updated at: $updatedAt")
-    return result
-}
 
 //TODO: Figure this out
 data class TagInfo(val id: String, val type: StopType)

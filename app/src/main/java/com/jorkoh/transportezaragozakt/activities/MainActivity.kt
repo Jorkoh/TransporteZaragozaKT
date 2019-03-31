@@ -20,7 +20,8 @@ import com.jorkoh.transportezaragozakt.navigation.Destinations
 import com.jorkoh.transportezaragozakt.navigation.goBackToPreviousDestination
 import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
 import com.jorkoh.transportezaragozakt.navigation.openDestination
-import com.jorkoh.transportezaragozakt.tasks.UpdateDataWorker
+import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
+import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import com.jorkoh.transportezaragozakt.view_models.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -67,11 +68,8 @@ class MainActivity : CyaneaAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //TODO: Restrict this to run only during onboarding
-        //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
-        setupWorkers()
-
-        setupNotificationChannels()
+        enqueueWorker()
+        setupNotificationChannels(this)
 
         setContentView(R.layout.activity_main)
 
@@ -163,16 +161,5 @@ class MainActivity : CyaneaAppCompatActivity() {
         transaction.add(R.id.fragment_container, stopDetailsFragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    private fun setupWorkers(){
-        UpdateDataWorker.enqueueWorker()
-    }
-
-    private fun setupNotificationChannels(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("TestingStuff", "TestingStuff", NotificationManager.IMPORTANCE_HIGH)
-            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
-        }
     }
 }

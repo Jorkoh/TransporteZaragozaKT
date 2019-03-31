@@ -11,20 +11,20 @@ import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import kotlinx.android.synthetic.main.destination_row.view.*
 
-class StopDetailsAdapter() : RecyclerView.Adapter<StopDetailsAdapter.StopDetailsViewHolder>() {
+class StopDestinationsAdapter: RecyclerView.Adapter<StopDestinationsAdapter.StopDestintaionsViewHolder>() {
 
-    class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class StopDestintaionsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     lateinit var stopDestinations: List<StopDestination>
 
     lateinit var stopType: StopType
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDetailsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDestintaionsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.destination_row, parent, false) as View
-        return StopDetailsViewHolder(view)
+        return StopDestintaionsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: StopDetailsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StopDestintaionsViewHolder, position: Int) {
         holder.view.apply {
             line_text.text = stopDestinations[position].line
             line_text.setBackgroundResource(when(stopType){

@@ -65,7 +65,6 @@ abstract class StopsDao {
     abstract fun insertStopDestinations(stopDestinations: List<StopDestination>)
 
     fun insertInitialData(context: Context) {
-        //TODO: make this string a resource
         val initialBusStops = getInitialBusStops(context)
         val initialTramStops = getInitialTramStops(context)
 

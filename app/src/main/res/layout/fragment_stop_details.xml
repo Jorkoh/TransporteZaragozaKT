@@ -33,13 +33,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/no_data_text"
-            android:text="No data available :("
+            android:text="@string/no_data_available"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline" android:textAlignment="center"/>
+    <TextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_data_suggestions_text"
+            android:text="@string/no_data_available_suggestions"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/no_data_text"
+            android:layout_marginTop="16dp" android:layout_marginEnd="16dp" android:layout_marginStart="16dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/favorite_fab"

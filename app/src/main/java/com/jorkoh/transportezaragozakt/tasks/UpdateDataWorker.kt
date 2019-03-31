@@ -21,21 +21,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams),
     KoinComponent {
 
-    companion object {
-        @JvmStatic
-        fun enqueueWorker() {
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-            val updateDataRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
-                .setConstraints(constraints)
-                .build()
-
-            WorkManager.getInstance().enqueue(updateDataRequest)
-        }
-    }
-
     private val stopsDao: StopsDao by inject()
     private val executors: AppExecutors by inject()
 

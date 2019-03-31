@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.adapters.StopDetailsAdapter
+import com.jorkoh.transportezaragozakt.adapters.StopDestinationsAdapter
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.Resource
@@ -35,25 +35,27 @@ class StopDetailsFragment : Fragment() {
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
-    private val stopDetailsAdapter: StopDetailsAdapter = StopDetailsAdapter()
+    private val stopDestinationsAdapter: StopDestinationsAdapter = StopDestinationsAdapter()
 
     private lateinit var stopType : StopType
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { value ->
-        Log.d("TestingStuff", "OBSERVED DESTINATIONS. Status: ${value.status}")
         when (value.status) {
             Status.SUCCESS -> {
-                value.data?.let { stopDetailsAdapter.setDestinations(it, stopType)}
+                value.data?.let { stopDestinationsAdapter.setDestinations(it, stopType)}
                 if(value.data?.isEmpty() != false){
                     no_data_text.visibility = View.VISIBLE
+                    no_data_suggestions_text.visibility = View.VISIBLE
                 }else{
                     no_data_text.visibility = View.GONE
+                    no_data_suggestions_text.visibility = View.GONE
                 }
                 swiperefresh.isRefreshing = false
             }
             Status.ERROR -> {
                 Toast.makeText(context, "Error loading destinations!",Toast.LENGTH_LONG).show()
                 no_data_text.visibility = View.VISIBLE
+                no_data_suggestions_text.visibility = View.VISIBLE
                 swiperefresh.isRefreshing = false
             }
             Status.LOADING -> swiperefresh.isRefreshing = true
@@ -77,9 +79,8 @@ class StopDetailsFragment : Fragment() {
         stopDetailsVM.toggleStopFavorite()
     }
 
-    private val onSwipeRefresListener = SwipeRefreshLayout.OnRefreshListener {
+    private val onSwipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         stopDetailsVM.refreshStopDestinations()
-        Log.d("TestingStuff", "HIT REFRESH")
     }
 
     override fun onCreateView(
@@ -91,7 +92,7 @@ class StopDetailsFragment : Fragment() {
         rootView.recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = stopDetailsAdapter
+            adapter = stopDestinationsAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
@@ -99,7 +100,7 @@ class StopDetailsFragment : Fragment() {
         stopDetailsVM.stopIsFavorited.observe(this, stopFavoriteStatusObserver)
 
         rootView.favorite_fab.setOnClickListener(onFavoritesClickListener)
-        rootView.swiperefresh.setOnRefreshListener(onSwipeRefresListener)
+        rootView.swiperefresh.setOnRefreshListener(onSwipeRefreshListener)
 
         return rootView
     }

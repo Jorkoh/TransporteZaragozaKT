@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">Transporte Zaragoza</string>
 
+    <!--Destinations-->
     <string name="favorites_destination_title">Favorites</string>
     <string name="map_destination_title">Map</string>
     <string name="search_destination_title">Search</string>
     <string name="more_destination_title">More</string>
+
+    <string name="no_data_available">No data available :(</string>
+    <string name="no_data_available_suggestions">Please check your internet connection and try again. If the problem persists the city council service that provides this information may be undergoing maintenance.</string>
 
     <!--Preferences-->
     <string name="preferences_version_number_key" translatable="false">com.jorkoh.transportezaragozakt.PREFERENCES_VERSION_NUMBER_KEY</string>
@@ -13,4 +17,6 @@
     <!--Parse-->
     <string name="parse_bus_stops_collection" translatable="false">bus_stops</string>
     <string name="parse_tram_stops_collection" translatable="false">tram_stops</string>
+    <!--Notifications-->
+    <string name="notification_channel_id" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID</string>
 </resources>
