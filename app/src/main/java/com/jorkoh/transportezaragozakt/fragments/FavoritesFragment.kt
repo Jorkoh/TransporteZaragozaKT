@@ -16,6 +16,7 @@ import com.jorkoh.transportezaragozakt.adapters.FavoriteStopsAdapter
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.view_models.FavoritesViewModel
+import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_favorites.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -49,6 +50,13 @@ class FavoritesFragment : Fragment() {
 
     private val favoriteStopsObserver = Observer<List<Stop>> { value ->
         value?.let {
+            if(value.count() == 0){
+                no_favorites_animation.visibility = View.VISIBLE
+                no_favorites_text.visibility = View.VISIBLE
+            }else{
+                no_favorites_animation.visibility = View.GONE
+                no_favorites_text.visibility = View.GONE
+            }
             favoriteStopsAdapter.setFavoriteStops(value)
         }
     }

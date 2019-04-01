@@ -69,7 +69,7 @@ class StopDetailsFragment : Fragment() {
                 if (isFavorited) {
                     resources.getDrawable(R.drawable.ic_favorite_black_24dp, null)
                 } else {
-                    resources.getDrawable(R.drawable.ic_map_black_24dp, null)
+                    resources.getDrawable(R.drawable.ic_favorite_border_black_24dp, null)
                 }
             )
         }

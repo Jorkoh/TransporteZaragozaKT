@@ -8,7 +8,7 @@ import com.jorkoh.transportezaragozakt.db.StopsDao
 
 interface FavoritesRepository{
     fun loadFavoriteStops(): LiveData<List<Stop>>
-    fun isStopFavorited(stopId: String): LiveData<Boolean>
+    fun isFavoriteStop(stopId: String): LiveData<Boolean>
     fun toggleStopFavorite(stopId: String)
 }
 
@@ -17,7 +17,7 @@ class FavoritesRepositoryImplementation(private val stopsDao: StopsDao, private 
         return stopsDao.getFavoriteStops()
     }
 
-    override fun isStopFavorited(stopId: String): LiveData<Boolean> {
+    override fun isFavoriteStop(stopId: String): LiveData<Boolean> {
         return stopsDao.stopIsFavorite(stopId)
     }
 

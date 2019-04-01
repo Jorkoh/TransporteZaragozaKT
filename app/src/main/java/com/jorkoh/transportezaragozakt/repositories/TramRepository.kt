@@ -42,8 +42,6 @@ class TramRepositoryImplementation(
         }.asLiveData()
     }
 
-    fun List<StopDestination>.isFresh(timeoutInSeconds:Int) = (this.minBy { it.updatedAt }?.isFresh(timeoutInSeconds) ?: false)
-
     override fun loadStopLocations(): LiveData<Resource<List<Stop>>> {
         return object : NetworkBoundResource<List<Stop>, TramStopLocationsResponse>(appExecutors) {
             override fun saveCallResult(item: TramStopLocationsResponse) {

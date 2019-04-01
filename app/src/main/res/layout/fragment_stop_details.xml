@@ -36,11 +36,13 @@
             android:text="@string/no_data_available"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:visibility="gone"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline" android:textAlignment="center"/>
+            android:textAppearance="@android:style/TextAppearance.Material.Headline" android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/no_data_suggestions_text"
+            android:layout_marginBottom="16dp" app:layout_constraintVertical_chainStyle="packed"/>
     <TextView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="0dp"
@@ -51,8 +53,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/no_data_text"
-            android:layout_marginTop="16dp" android:layout_marginEnd="16dp" android:layout_marginStart="16dp"/>
+            android:layout_marginEnd="16dp" android:layout_marginStart="16dp"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/no_data_text" app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/favorite_fab"

@@ -29,7 +29,7 @@ class StopDetailsViewModel(
 
         refreshStopDestinations()
 
-        stopIsFavorited = favoritesRepository.isStopFavorited(stopID)
+        stopIsFavorited = favoritesRepository.isFavoriteStop(stopID)
     }
 
     fun toggleStopFavorite() {

@@ -30,6 +30,8 @@ class StopsRepositoryImplementation(
     }
 }
 
-fun StopDestination.isFresh(timeoutInSeconds: Int): Boolean  {
-    return ((Date().time - updatedAt.time)/1000) < timeoutInSeconds
-}
+// The list is fresh if its oldest member is fresh
+fun List<StopDestination>.isFresh(timeoutInSeconds:Int) = (this.minBy { it.updatedAt }?.isFresh(timeoutInSeconds) ?: false)
+
+// The destination is fresh if the time elapsed since the last update is less than the timeout
+fun StopDestination.isFresh(timeoutInSeconds: Int): Boolean  = ((Date().time - updatedAt.time)/1000) < timeoutInSeconds
