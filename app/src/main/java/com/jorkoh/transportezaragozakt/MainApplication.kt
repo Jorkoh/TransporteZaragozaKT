@@ -13,12 +13,11 @@ class MainApplication : Application() {
         // Koin
         startKoin(this, listOf(appModule))
 
-        //TODO: Make this a string resource or value
         //Parse
         Parse.initialize(
             Parse.Configuration.Builder(this)
-                .applicationId("transporte-zaragoza")
-                .server("https://transporte-zaragoza.herokuapp.com/parse/")
+                .applicationId(this.getString(R.string.parse_application_id))
+                .server(this.getString(R.string.parse_server))
                 .build()
         )
 

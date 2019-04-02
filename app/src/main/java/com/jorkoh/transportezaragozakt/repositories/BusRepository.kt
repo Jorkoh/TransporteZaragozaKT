@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.repositories
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
@@ -9,6 +10,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.BusSto
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.toStopDestinations
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.BusStopLocationsResponse
 import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.toStops
+import kotlin.coroutines.coroutineContext
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
@@ -19,7 +21,8 @@ class BusRepositoryImplementation(
     private val appExecutors: AppExecutors,
     private val apiService: APIService,
     private val stopsDao: StopsDao,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val context: Context
 ) : BusRepository {
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
@@ -27,7 +30,7 @@ class BusRepositoryImplementation(
             override fun saveCallResult(item: BusStopResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations())
+                    stopsDao.insertStopDestinations(item.toStopDestinations(context))
                 }
             }
 

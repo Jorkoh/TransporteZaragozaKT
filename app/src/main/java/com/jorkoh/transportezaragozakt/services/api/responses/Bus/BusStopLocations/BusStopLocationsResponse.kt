@@ -47,18 +47,15 @@ data class Geometry(
     val type: String
 )
 
-fun BusStopLocationsResponse.toStops() : List<Stop> {
-    //TODO: Generate this list without adding?
+fun BusStopLocationsResponse.toStops(): List<Stop> {
     val stops = mutableListOf<Stop>()
     locations.forEach { location ->
-        stops.add(
-            Stop(
-                StopType.BUS,
-                location.properties.id,
-                location.properties.title,
-                location.geometry.coordinates,
-                false
-            )
+        stops += Stop(
+            StopType.BUS,
+            location.properties.id,
+            location.properties.title,
+            location.geometry.coordinates,
+            false
         )
     }
     return stops

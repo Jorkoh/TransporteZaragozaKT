@@ -12,6 +12,8 @@ class Converters {
 
     private val intListAdapter: JsonAdapter<List<Int>> =
         Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Int::class.javaObjectType))
+    private val stringListAdapter: JsonAdapter<List<String>> =
+        Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, String::class.javaObjectType))
     private val doubleListAdapter: JsonAdapter<List<Double>> =
         Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Double::class.javaObjectType))
 
@@ -33,6 +35,16 @@ class Converters {
     @TypeConverter
     fun jsonToIntList(value: String): List<Int>? {
         return intListAdapter.fromJson(value)
+    }
+
+    @TypeConverter
+    fun stringListToJson(value: List<String>): String {
+        return stringListAdapter.toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToStringList(value: String): List<String>? {
+        return stringListAdapter.fromJson(value)
     }
 
     @TypeConverter

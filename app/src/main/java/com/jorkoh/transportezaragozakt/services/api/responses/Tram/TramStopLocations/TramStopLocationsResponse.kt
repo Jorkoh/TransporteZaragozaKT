@@ -80,18 +80,15 @@ data class Destino(
     val minutos: Int
 )
 
-fun TramStopLocationsResponse.toStops() : List<Stop> {
-    //TODO: Generate this list without adding?
+fun TramStopLocationsResponse.toStops(): List<Stop> {
     val stops = mutableListOf<Stop>()
     locations.forEach { location ->
-        stops.add(
-            Stop(
-                StopType.TRAM,
-                location.properties.id,
-                location.properties.title,
-                location.geometry.coordinates,
-                false
-            )
+        stops += Stop(
+            StopType.TRAM,
+            location.properties.id,
+            location.properties.title,
+            location.geometry.coordinates,
+            false
         )
     }
     return stops

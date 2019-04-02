@@ -60,8 +60,8 @@ val appModule = module {
     }
 
     single<StopsRepository> { StopsRepositoryImplementation(get(), get()) }
-    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get()) }
-    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get()) }
+    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
+    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
 
     viewModel { FavoritesViewModel(get()) }

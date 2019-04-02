@@ -1,6 +1,8 @@
 package com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop
 
+import android.content.Context
 import com.google.android.gms.maps.model.LatLng
+import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -36,7 +38,7 @@ data class Properties(
     val title: String,
 
     @field:Json(name = "destinos")
-    val destinos: List<Destino>,
+    val destinos: List<Destino>?,
 
     @field:Json(name = "lastUpdated")
     val lastUpdated: Date,
@@ -73,7 +75,7 @@ data class Geometry(
     val type: String
 )
 
-fun BusStopResponse.toStop() = Stop(
+fun BusStopResponse.toStop(): Stop = Stop(
     StopType.BUS,
     features.first().properties.id,
     features.first().properties.title,
@@ -81,22 +83,35 @@ fun BusStopResponse.toStop() = Stop(
     false
 )
 
-fun BusStopResponse.toStopDestinations(): List<StopDestination> {
-    //TODO: Generate this list without adding?
+fun BusStopResponse.toStopDestinations(context: Context): List<StopDestination> {
     val stopDestinations = mutableListOf<StopDestination>()
-    features.first().properties.destinos.forEach { destination ->
-        stopDestinations.add(
-            StopDestination(
-                destination.linea,
-                destination.destino.dropLast(1),
-                features.first().properties.id,
-                listOf(
-                    destination.primero.split(" ")[0].toIntOrNull() ?: 0,
-                    destination.segundo.split(" ")[0].toIntOrNull() ?: 0
-                ),
-                Date()
-            )
+    features.first().properties.destinos?.forEach { destination ->
+        stopDestinations += StopDestination(
+            destination.linea,
+            destination.destino.dropLast(1),
+            features.first().properties.id,
+            listOf(
+                destination.primero.toMinutes(context),
+                destination.segundo.toMinutes(context)
+            ),
+            Date()
         )
     }
     return stopDestinations
+}
+
+
+fun String.toMinutes(context: Context): String {
+    return when (this) {
+        "Sin estimacin." -> context.getString(R.string.no_estimate)
+        "En la parada." -> context.getString(R.string.at_the_stop)
+        else -> {
+            val minutes = (this.split(" ")[0].toIntOrNull() ?: -1)
+            when (minutes) {
+                -1 -> context.getString(R.string.no_estimate)
+                1 -> minutes.toString() + " ${context.getString(R.string.minute)}"
+                else -> minutes.toString() + " ${context.getString(R.string.minutes)}"
+            }
+        }
+    }
 }

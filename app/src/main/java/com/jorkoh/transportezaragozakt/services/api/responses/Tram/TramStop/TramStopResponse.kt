@@ -1,6 +1,8 @@
 package com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop
 
+import android.content.Context
 import com.google.android.gms.maps.model.LatLng
+import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -85,24 +87,30 @@ fun TramStopResponse.toStop() = Stop(
     false
 )
 
-fun TramStopResponse.toStopDestinations(): List<StopDestination> {
-    //TODO: Generate this list without adding?
+fun TramStopResponse.toStopDestinations(context: Context): List<StopDestination> {
     val stopDestinations = mutableListOf<StopDestination>()
-    features.first().properties.destinos?.let{destinations ->
+    features.first().properties.destinos?.let { destinations ->
         destinations.forEach { destination ->
-            stopDestinations.add(
-                StopDestination(
-                    destination.linea,
-                    destination.destino,
-                    features.first().properties.id,
-                    listOf(
-                        features.first().properties.destinos?.getOrNull(0)?.minutos ?: -1,
-                        features.first().properties.destinos?.getOrNull(1)?.minutos ?: -1
-                    ),
-                    Date()
-                )
+            stopDestinations += StopDestination(
+                destination.linea,
+                destination.destino,
+                features.first().properties.id,
+                listOf(
+                    (features.first().properties.destinos?.getOrNull(0)?.minutos ?: -1).toMinutes(context),
+                    (features.first().properties.destinos?.getOrNull(1)?.minutos ?: -1).toMinutes(context)
+                ),
+                Date()
             )
         }
     }
     return stopDestinations
+}
+
+
+fun Int.toMinutes(context: Context): String {
+    return when (this) {
+        -1 -> context.getString(R.string.no_estimate)
+        1 -> this.toString() + " ${context.getString(R.string.minute)}"
+        else -> this.toString() + " ${context.getString(R.string.minutes)}"
+    }
 }

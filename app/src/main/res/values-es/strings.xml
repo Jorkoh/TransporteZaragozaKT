@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Transporte Zaragoza</string>
+    <string name="favorites_destination_title">Favoritos</string>
+    <string name="map_destination_title">Mapa</string>
+    <string name="search_destination_title">Búsqueda</string>
+    <string name="more_destination_title">Más</string>
+    <string name="no_favorites">Aún no tienes paradas favoritas!</string>
+    <string name="no_data_available">Sin información disponible :(</string>
+    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo. Si el
+        problema continúa el servicio del ayuntamiento que proporciona está información puede estar de mantenimiento.
+    </string>
+    <string name="notification_channel_name_reminders">Recordatorios</string>
+    <string name="notification_channel_description_reminders">Avisos definidos por el usuario con información de una
+        parada. Administrados desde la pantalla de recordatorios.
+    </string>
+    <string name="no_estimate">Sin estimación</string>
+    <string name="minutes">minutos</string>
+    <string name="minute">minuto</string>
+    <string name="at_the_stop">En la parada</string>
+</resources>

@@ -53,7 +53,6 @@ class StopDetailsFragment : Fragment() {
                 swiperefresh.isRefreshing = false
             }
             Status.ERROR -> {
-                Toast.makeText(context, "Error loading destinations!",Toast.LENGTH_LONG).show()
                 no_data_text.visibility = View.VISIBLE
                 no_data_suggestions_text.visibility = View.VISIBLE
                 swiperefresh.isRefreshing = false

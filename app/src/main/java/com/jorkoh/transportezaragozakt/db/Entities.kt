@@ -50,7 +50,7 @@ data class StopDestination(
     var stopId: String,
 
     @ColumnInfo(name = "times")
-    var times: List<Int>,
+    var times: List<String>,
 
     @ColumnInfo(name = "updatedAt")
     var updatedAt: Date
@@ -66,5 +66,4 @@ data class FavoriteStop(
     var colorHex: String
 )
 
-//TODO: Figure this out
 data class TagInfo(val id: String, val type: StopType)
