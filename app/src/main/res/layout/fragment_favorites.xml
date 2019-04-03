@@ -5,7 +5,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.MainActivity">
+        tools:context="com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -14,9 +14,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/no_favorites_animation"
@@ -30,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone" app:layout_constraintVertical_bias="0.25"/>
+            app:layout_constraintVertical_bias="0.25"/>
     <TextView
             android:id="@+id/no_favorites_text"
             android:text="@string/no_favorites"
@@ -40,5 +38,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textAppearance="@android:style/TextAppearance.Material.Headline"
-            android:visibility="gone" android:layout_marginTop="24dp"/>
+            android:layout_marginTop="24dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

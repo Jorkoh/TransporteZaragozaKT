@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.destinations.map
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -10,19 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.activities.MainActivity
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.TagInfo
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
-import com.jorkoh.transportezaragozakt.view_models.MapViewModel
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -79,7 +80,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         marker?.let {
             val markerInfo = marker.tag
             if (markerInfo is TagInfo) {
-                (activity as MainActivity).openStopDetails(markerInfo)
+                val bundle = Bundle().apply {
+                    putString(StopDetailsFragment.STOP_ID_KEY, markerInfo.id)
+                    putString(StopDetailsFragment.STOP_TYPE_KEY, markerInfo.type.name)
+                }
+                findNavController().navigate(R.id.action_map_to_stopDetails, bundle)
             }
         }
     }
@@ -150,28 +155,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun createBaseMarkers() {
         val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
-        val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap, ICON_SIZE, ICON_SIZE, false)
+        val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap,
+            ICON_SIZE,
+            ICON_SIZE, false)
         busMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(busBitmap))
             .anchor(0.5f, 0.5f)
 
         val busFavoriteDrawable = resources.getDrawable(R.drawable.marker_bus_favorite, null) as BitmapDrawable
         val busFavoriteBitmap =
-            Bitmap.createScaledBitmap(busFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
+            Bitmap.createScaledBitmap(busFavoriteDrawable.bitmap,
+                ICON_FAV_SIZE,
+                ICON_FAV_SIZE, false)
         busFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(busFavoriteBitmap))
             .anchor(0.5f, 0.5f)
 
 
         val tramDrawable = resources.getDrawable(R.drawable.marker_tram, null) as BitmapDrawable
-        val tramBitmap = Bitmap.createScaledBitmap(tramDrawable.bitmap, ICON_SIZE, ICON_SIZE, false)
+        val tramBitmap = Bitmap.createScaledBitmap(tramDrawable.bitmap,
+            ICON_SIZE,
+            ICON_SIZE, false)
         tramMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(tramBitmap))
             .anchor(0.5f, 0.5f)
 
         val tramFavoriteDrawable = resources.getDrawable(R.drawable.marker_tram_favorite, null) as BitmapDrawable
         val tramFavoriteBitmap =
-            Bitmap.createScaledBitmap(tramFavoriteDrawable.bitmap, ICON_FAV_SIZE, ICON_FAV_SIZE, false)
+            Bitmap.createScaledBitmap(tramFavoriteDrawable.bitmap,
+                ICON_FAV_SIZE,
+                ICON_FAV_SIZE, false)
         tramFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap))
             .anchor(0.5f, 0.5f)

@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.util
+package com.jorkoh.transportezaragozakt.repositories.util
 
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.services.api.ApiResponse

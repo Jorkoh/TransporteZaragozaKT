@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.adapters
+package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,23 +1,19 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.destinations.stop_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.adapters.StopDestinationsAdapter
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
-import com.jorkoh.transportezaragozakt.view_models.StopDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_stop_details.*
 import kotlinx.android.synthetic.main.fragment_stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,7 +31,8 @@ class StopDetailsFragment : Fragment() {
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
-    private val stopDestinationsAdapter: StopDestinationsAdapter = StopDestinationsAdapter()
+    private val stopDestinationsAdapter: StopDestinationsAdapter =
+        StopDestinationsAdapter()
 
     private lateinit var stopType : StopType
 

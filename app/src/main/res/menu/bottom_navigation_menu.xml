@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/navigation_favorites"
+            android:id="@+id/favorites_destination"
             android:icon="@drawable/animation_favorites"
             android:title="@string/favorites_destination_title"/>
     <item
-            android:id="@+id/navigation_map"
+            android:id="@+id/map_destination"
             android:icon="@drawable/animation_map"
             android:title="@string/map_destination_title"/>
     <item
-            android:id="@+id/navigation_search"
+            android:id="@+id/search_destination"
             android:icon="@drawable/animation_search"
             android:title="@string/search_destination_title"/>
     <item
-            android:id="@+id/navigation_more"
+            android:id="@+id/more_destination"
             android:icon="@drawable/animation_more"
             android:title="@string/more_destination_title"/>
 </menu>

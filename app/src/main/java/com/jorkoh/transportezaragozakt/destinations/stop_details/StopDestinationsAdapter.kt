@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.adapters
+package com.jorkoh.transportezaragozakt.destinations.stop_details
 
 import android.util.Log
 import android.view.LayoutInflater

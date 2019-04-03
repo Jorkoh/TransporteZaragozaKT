@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.view_models
+package com.jorkoh.transportezaragozakt.destinations.stop_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData

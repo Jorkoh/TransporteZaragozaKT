@@ -1,12 +1,13 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.destinations.more
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.view_models.MoreViewModel
+import kotlinx.android.synthetic.main.fragment_more.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoreFragment : Fragment() {
@@ -26,6 +27,12 @@ class MoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_more, container, false)
+        val view = inflater.inflate(R.layout.fragment_more, container, false)
+
+        view.themes_button.setOnClickListener{
+            findNavController().navigate(R.id.action_more_to_cyaneaSettings)
+        }
+
+        return view
     }
 }

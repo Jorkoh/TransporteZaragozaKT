@@ -15,6 +15,7 @@ buildscript {
             mockito_kotlin  : '2.0.0',
             mockito_core    : '2.23.4',
             room            : '2.1.0-alpha04',
+            navigation      : '2.1.0-alpha01',
             workmanager     : '1.0.0',
             parse           : '1.19.0',
             lottie          : '3.0.0'
@@ -22,14 +23,19 @@ buildscript {
 
     ext.deps = [
             'androidx'   : [
-                    'appCompat'       : "androidx.appcompat:appcompat:${versions.androidx}",
-                    'constraintLayout': "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
-                    'preferences'     : "androidx.preference:preference:${versions.androidx}",
-                    'recyclerView'    : "androidx.recyclerview:recyclerview:${versions.androidx}",
-                    'room'            : [
-                            'runtime'   : "androidx.room:room-runtime:${versions.room}",
-                            'compiler'  : "androidx.room:room-compiler:${versions.room}",
-                            'coroutines': "androidx.room:room-coroutines:${versions.room}"
+                    'appCompat'         : "androidx.appcompat:appcompat:${versions.androidx}",
+                    'constraintLayout'  : "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
+                    'preferences'       : "androidx.preference:preference:${versions.androidx}",
+                    'recyclerView'      : "androidx.recyclerview:recyclerview:${versions.androidx}",
+                    'room'              : [
+                            'runtime'       : "androidx.room:room-runtime:${versions.room}",
+                            'compiler'      : "androidx.room:room-compiler:${versions.room}",
+                            'coroutines'    : "androidx.room:room-coroutines:${versions.room}"
+                    ],
+                    'navigation'        : [
+                            'runtime'       : "androidx.navigation:navigation-runtime-ktx:${versions.navigation}",
+                            'fragment'      : "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
+                            'ui'            : "androidx.navigation:navigation-ui-ktx:${versions.navigation}"
                     ]
             ],
             'kotlin'     : [
@@ -37,16 +43,16 @@ buildscript {
                             'jdk': "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
                     ]
             ],
-            'material'   : "com.google.android.material:material:${versions.androidx}",
-            'colorpicker': "com.jaredrummler:colorpicker-compat:${versions.colorpicker}",
-            'junit'      : "junit:junit:${versions.junit}",
-            'mockito'    : [
-                    'core'  : "org.mockito:mockito-core:${versions.mockito_core}",
-                    'kotlin': "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}"
+            'material'      : "com.google.android.material:material:${versions.androidx}",
+            'colorpicker'   : "com.jaredrummler:colorpicker-compat:${versions.colorpicker}",
+            'junit'         : "junit:junit:${versions.junit}",
+            'mockito'       : [
+                    'core'      : "org.mockito:mockito-core:${versions.mockito_core}",
+                    'kotlin'    : "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockito_kotlin}"
             ],
-            'workmanager': "android.arch.work:work-runtime-ktx:${versions.workmanager}",
-            'parse': "com.github.parse-community.Parse-SDK-Android:parse:${versions.parse}",
-            'lottie': "com.airbnb.android:lottie:${versions.lottie}"
+            'workmanager'   : "android.arch.work:work-runtime-ktx:${versions.workmanager}",
+            'parse'         : "com.github.parse-community.Parse-SDK-Android:parse:${versions.parse}",
+            'lottie'        : "com.airbnb.android:lottie:${versions.lottie}"
     ]
 
     repositories {

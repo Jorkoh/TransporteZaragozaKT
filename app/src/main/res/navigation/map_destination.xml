@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map_destination"
+            app:startDestination="@+id/map">
+
+    <fragment
+            android:id="@+id/map"
+            android:name="com.jorkoh.transportezaragozakt.destinations.map.MapFragment"
+            android:label="MapFragment"
+            tools:layout="@layout/fragment_map">
+        <action
+                android:id="@+id/action_map_to_stopDetails"
+                app:destination="@id/stopDetails"/>
+    </fragment>
+    <fragment
+            android:id="@+id/stopDetails"
+            android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
+            android:label="StopDetails"
+            tools:layout="@layout/fragment_stop_details">
+        <argument
+                android:name="stopType"
+                app:argType="string"/>
+        <argument
+                android:name="stopId"
+                app:argType="string"/>
+    </fragment>
+</navigation>

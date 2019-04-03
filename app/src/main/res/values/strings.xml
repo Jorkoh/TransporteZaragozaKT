@@ -6,6 +6,7 @@
     <string name="map_destination_title" translatable="true">Map</string>
     <string name="search_destination_title" translatable="true">Search</string>
     <string name="more_destination_title" translatable="true">More</string>
+    <string name="stop_details_title" translatable="true">Stop Details</string>
 
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>

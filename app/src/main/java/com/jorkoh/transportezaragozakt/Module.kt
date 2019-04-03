@@ -4,11 +4,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
+import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
+import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
+import com.jorkoh.transportezaragozakt.destinations.more.MoreViewModel
+import com.jorkoh.transportezaragozakt.destinations.search.SearchViewModel
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
-import com.jorkoh.transportezaragozakt.util.LiveDataCallAdapterFactory
-import com.jorkoh.transportezaragozakt.view_models.*
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsViewModel
+import com.jorkoh.transportezaragozakt.repositories.util.LiveDataCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import org.koin.android.ext.koin.androidApplication

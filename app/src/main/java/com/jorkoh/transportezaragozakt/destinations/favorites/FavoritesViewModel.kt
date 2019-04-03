@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.view_models
+package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.fragments
+package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.activities.MainActivity
-import com.jorkoh.transportezaragozakt.adapters.FavoriteStopsAdapter
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.TagInfo
-import com.jorkoh.transportezaragozakt.view_models.FavoritesViewModel
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_favorites.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,7 +34,11 @@ class FavoritesFragment : Fragment() {
 
     private val itemOnClick: (TagInfo) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            (activity as MainActivity).openStopDetails(info)
+            val bundle = Bundle().apply {
+                putString(StopDetailsFragment.STOP_ID_KEY, info.id)
+                putString(StopDetailsFragment.STOP_TYPE_KEY, info.type.name)
+            }
+            findNavController().navigate(R.id.action_favorites_to_stopDetails, bundle)
         }
     }
 
@@ -46,18 +50,16 @@ class FavoritesFragment : Fragment() {
         true
     }
 
-    private val favoriteStopsAdapter: FavoriteStopsAdapter = FavoriteStopsAdapter(itemOnClick, itemOnLongClick)
+    private val favoriteStopsAdapter: FavoriteStopsAdapter =
+        FavoriteStopsAdapter(itemOnClick, itemOnLongClick)
 
-    private val favoriteStopsObserver = Observer<List<Stop>> { value ->
-        value?.let {
-            if(value.count() == 0){
-                no_favorites_animation.visibility = View.VISIBLE
-                no_favorites_text.visibility = View.VISIBLE
-            }else{
+    private val favoriteStopsObserver = Observer<List<Stop>> { favorites ->
+        favorites?.let {
+            if (favorites.isNotEmpty()) {
                 no_favorites_animation.visibility = View.GONE
                 no_favorites_text.visibility = View.GONE
             }
-            favoriteStopsAdapter.setFavoriteStops(value)
+            favoriteStopsAdapter.setFavoriteStops(favorites)
         }
     }
 

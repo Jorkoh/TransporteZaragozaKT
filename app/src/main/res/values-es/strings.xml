@@ -18,4 +18,5 @@
     <string name="minutes">minutos</string>
     <string name="minute">minuto</string>
     <string name="at_the_stop">En la parada</string>
+    <string name="stop_details_title">Información de la parada</string>
 </resources>
