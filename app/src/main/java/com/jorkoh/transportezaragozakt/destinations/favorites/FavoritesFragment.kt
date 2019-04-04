@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
@@ -55,12 +54,19 @@ class FavoritesFragment : Fragment() {
 
     private val favoriteStopsObserver = Observer<List<Stop>> { favorites ->
         favorites?.let {
-            if (favorites.isNotEmpty()) {
-                no_favorites_animation.visibility = View.GONE
-                no_favorites_text.visibility = View.GONE
-            }
+            updateEmptyViewVisibility(favorites.isEmpty(), view)
             favoriteStopsAdapter.setFavoriteStops(favorites)
         }
+    }
+
+    private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView : View?) {
+        val newVisibility = if (isEmpty) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        rootView?.no_favorites_animation?.visibility = newVisibility
+        rootView?.no_favorites_text?.visibility = newVisibility
     }
 
 
@@ -79,6 +85,7 @@ class FavoritesFragment : Fragment() {
         }
 
         favoritesVM.getFavoriteStops().observe(this, favoriteStopsObserver)
+        updateEmptyViewVisibility(favoritesVM.getFavoriteStops().value.isNullOrEmpty(), rootView)
         return rootView
     }
 
