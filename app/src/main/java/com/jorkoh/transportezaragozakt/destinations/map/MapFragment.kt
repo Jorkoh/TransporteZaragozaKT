@@ -30,8 +30,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     companion object {
-        const val DESTINATION_TAG = "MAP"
-
         const val ICON_SIZE = 55
         const val ICON_FAV_SIZE = 70
         const val MAX_ZOOM = 17.5f

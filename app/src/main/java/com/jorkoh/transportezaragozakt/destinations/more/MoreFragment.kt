@@ -13,8 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MoreFragment : Fragment() {
 
     companion object {
-        const val DESTINATION_TAG = "MORE"
-
         @JvmStatic
         fun newInstance(): MoreFragment =
             MoreFragment()

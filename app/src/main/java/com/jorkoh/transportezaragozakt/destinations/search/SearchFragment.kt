@@ -11,8 +11,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SearchFragment : Fragment() {
 
     companion object {
-        const val DESTINATION_TAG = "SEARCH"
-
         @JvmStatic
         fun newInstance(): SearchFragment =
             SearchFragment()

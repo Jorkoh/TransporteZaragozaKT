@@ -22,8 +22,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class FavoritesFragment : Fragment() {
 
     companion object {
-        const val DESTINATION_TAG = "FAVORITES"
-
         @JvmStatic
         fun newInstance(): FavoritesFragment =
             FavoritesFragment()
@@ -59,17 +57,6 @@ class FavoritesFragment : Fragment() {
         }
     }
 
-    private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView : View?) {
-        val newVisibility = if (isEmpty) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-        rootView?.no_favorites_animation?.visibility = newVisibility
-        rootView?.no_favorites_text?.visibility = newVisibility
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -94,4 +81,13 @@ class FavoritesFragment : Fragment() {
         favoritesVM.init()
     }
 
+    private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView : View?) {
+        val newVisibility = if (isEmpty) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        rootView?.no_favorites_animation?.visibility = newVisibility
+        rootView?.no_favorites_text?.visibility = newVisibility
+    }
 }

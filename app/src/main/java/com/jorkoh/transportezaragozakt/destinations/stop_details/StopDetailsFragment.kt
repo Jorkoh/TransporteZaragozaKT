@@ -34,41 +34,14 @@ class StopDetailsFragment : Fragment() {
     private val stopDestinationsAdapter: StopDestinationsAdapter =
         StopDestinationsAdapter()
 
-    private lateinit var stopType : StopType
+    private lateinit var stopType: StopType
 
-    private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { value ->
-        when (value.status) {
-            Status.SUCCESS -> {
-                value.data?.let { stopDestinationsAdapter.setDestinations(it, stopType)}
-                if(value.data?.isEmpty() != false){
-                    no_data_text.visibility = View.VISIBLE
-                    no_data_suggestions_text.visibility = View.VISIBLE
-                }else{
-                    no_data_text.visibility = View.GONE
-                    no_data_suggestions_text.visibility = View.GONE
-                }
-                swiperefresh.isRefreshing = false
-            }
-            Status.ERROR -> {
-                no_data_text.visibility = View.VISIBLE
-                no_data_suggestions_text.visibility = View.VISIBLE
-                swiperefresh.isRefreshing = false
-            }
-            Status.LOADING -> swiperefresh.isRefreshing = true
-        }
-
+    private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
+        updateStopDestinationsUI(stopDestinations, view)
     }
 
     private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->
-        isFavorited?.let {
-            favorite_fab.setImageDrawable(
-                if (isFavorited) {
-                    resources.getDrawable(R.drawable.ic_favorite_black_24dp, null)
-                } else {
-                    resources.getDrawable(R.drawable.ic_favorite_border_black_24dp, null)
-                }
-            )
-        }
+        updateIsFavoritedUI(isFavorited, view)
     }
 
     private val onFavoritesClickListener = View.OnClickListener {
@@ -92,7 +65,10 @@ class StopDetailsFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
+        updateStopDestinationsUI(stopDetailsVM.getStopDestinations().value, rootView)
         stopDetailsVM.getStopDestinations().observe(this, stopDestinationsObserver)
+
+        updateIsFavoritedUI(stopDetailsVM.stopIsFavorited.value, rootView)
         stopDetailsVM.stopIsFavorited.observe(this, stopFavoriteStatusObserver)
 
         rootView.favorite_fab.setOnClickListener(onFavoritesClickListener)
@@ -108,5 +84,46 @@ class StopDetailsFragment : Fragment() {
             checkNotNull(arguments?.getString(STOP_ID_KEY)),
             stopType
         )
+    }
+
+    private fun updateIsFavoritedUI(isFavorited: Boolean?, rootView: View?) {
+        rootView?.let {
+            it.favorite_fab.setImageDrawable(
+                if (isFavorited == true) {
+                    resources.getDrawable(R.drawable.ic_favorite_black_24dp, null)
+                } else {
+                    resources.getDrawable(R.drawable.ic_favorite_border_black_24dp, null)
+                }
+            )
+        }
+    }
+
+    private fun updateStopDestinationsUI(stopDestinations: Resource<List<StopDestination>>?, rootView: View?) {
+        if(stopDestinations == null){
+            return
+        }
+
+        val newVisibility = when (stopDestinations.status) {
+            Status.SUCCESS -> {
+                stopDestinations.data?.let { stopDestinationsAdapter.setDestinations(it, stopType) }
+                rootView?.swiperefresh?.isRefreshing = false
+                if (stopDestinations.data.isNullOrEmpty()) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+            Status.ERROR -> {
+                rootView?.swiperefresh?.isRefreshing = false
+                View.VISIBLE
+            }
+            Status.LOADING -> {
+                rootView?.swiperefresh?.isRefreshing = true
+                View.GONE
+            }
+        }
+
+        rootView?.no_data_suggestions_text?.visibility = newVisibility
+        rootView?.no_data_text?.visibility = newVisibility
     }
 }
