@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt
 
+import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -63,6 +64,14 @@ val appModule = module {
         get<AppDatabase>().stopsDao()
     }
 
+    single {
+        androidContext().getSharedPreferences(
+            androidContext().getString(R.string.preferences_version_number_key),
+            Context.MODE_PRIVATE
+        )
+    }
+
+    single<SettingsRepository> { SettingsRepositoryImplementation(get(), androidContext()) }
     single<StopsRepository> { StopsRepositoryImplementation(get(), get()) }
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
@@ -70,7 +79,7 @@ val appModule = module {
 
     viewModel { FavoritesViewModel(get()) }
 
-    viewModel { MapViewModel(get()) }
+    viewModel { MapViewModel(get(), get()) }
 
     viewModel { SearchViewModel() }
 

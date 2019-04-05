@@ -28,7 +28,7 @@ class MoreFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_more, container, false)
 
         view.themes_button.setOnClickListener{
-            findNavController().navigate(R.id.action_more_to_cyaneaSettings)
+            findNavController().navigate(R.id.action_more_to_cyaneaThemePicker)
         }
 
         return view

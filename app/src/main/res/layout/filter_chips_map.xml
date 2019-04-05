@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.ChipGroup
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/filter_chips_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="top"
+        style="@style/Widget.MaterialComponents.ChipGroup"
+        app:chipSpacingHorizontal="16dp">
+
+    <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:id="@+id/bus_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BUS"
+            android:textAppearance="@android:style/TextAppearance.Material.Widget"
+            app:chipIconVisible="true"
+            app:checkedIconVisible="false"
+            app:chipIcon="@drawable/animation_chip"/>
+
+    <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:id="@+id/tram_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TRAM"
+            android:textAppearance="@android:style/TextAppearance.Material.Widget"
+            app:chipIconVisible="true"
+            app:checkedIconVisible="false"
+            app:chipIcon="@drawable/animation_chip"/>
+</com.google.android.material.chip.ChipGroup>

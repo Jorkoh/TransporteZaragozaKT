@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.tasks
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.*
@@ -15,7 +16,6 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import java.util.concurrent.TimeUnit
 
 class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams),
@@ -23,6 +23,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
     private val stopsDao: StopsDao by inject()
     private val executors: AppExecutors by inject()
+    private val sharedPreferences : SharedPreferences by inject()
 
     override fun doWork(): Result {
         Log.d("TestingStuff", "DO WORK FIRED!!")
@@ -102,10 +103,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun isNewBusVersion(busStopDocument: ParseObject): Boolean {
-        val sharedPreferences = applicationContext.getSharedPreferences(
-            applicationContext.getString(R.string.preferences_version_number_key),
-            Context.MODE_PRIVATE
-        )
         return busStopDocument.getInt("version") > sharedPreferences.getInt(
             applicationContext.getString(R.string.saved_bus_version_number_key),
             1
@@ -113,10 +110,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun isNewTramVersion(tramStopDocument: ParseObject): Boolean {
-        val sharedPreferences = applicationContext.getSharedPreferences(
-            applicationContext.getString(R.string.preferences_version_number_key),
-            Context.MODE_PRIVATE
-        )
         return tramStopDocument.getInt("version") > sharedPreferences.getInt(
             applicationContext.getString(R.string.saved_tram_version_number_key),
             1
@@ -144,10 +137,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             stopsDao.updateStops(busStopEntities)
         }
 
-        val sharedPreferences = applicationContext.getSharedPreferences(
-            applicationContext.getString(R.string.preferences_version_number_key),
-            Context.MODE_PRIVATE
-        )
         with(sharedPreferences.edit()) {
             putInt(
                 applicationContext.getString(R.string.saved_bus_version_number_key),
@@ -178,10 +167,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             stopsDao.updateStops(tramStopEntities)
         }
 
-        val sharedPreferences = applicationContext.getSharedPreferences(
-            applicationContext.getString(R.string.preferences_version_number_key),
-            Context.MODE_PRIVATE
-        )
         with(sharedPreferences.edit()) {
             putInt(
                 applicationContext.getString(R.string.saved_tram_version_number_key),

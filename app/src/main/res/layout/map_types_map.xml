@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map_types_map"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="end|bottom">
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:id="@+id/map_type_button"
+            android:src="@drawable/ic_satellite_black_24dp"
+            android:background="@drawable/mapbutton_background"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

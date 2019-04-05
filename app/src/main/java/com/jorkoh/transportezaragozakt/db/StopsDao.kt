@@ -72,6 +72,7 @@ abstract class StopsDao {
         with(sharedPreferences.edit()) {
             putInt(context.getString(R.string.saved_bus_version_number_key), initialBusStops.version)
             putInt(context.getString(R.string.saved_bus_version_number_key), initialTramStops.version)
+            putInt(context.getString(R.string.map_type_key), 1)
             commit()
         }
         insertStops(initialBusStops.stops.plus(initialTramStops.stops))

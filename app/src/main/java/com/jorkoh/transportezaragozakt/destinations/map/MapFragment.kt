@@ -11,13 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.TagInfo
@@ -25,7 +21,7 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFrag
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -44,7 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             MapFragment()
     }
 
-    private val mapVM: MapViewModel by viewModel()
+    private val mapVM: MapViewModel by sharedViewModel()
 
     private lateinit var busMarker: MarkerOptions
     private lateinit var busFavoriteMarker: MarkerOptions
@@ -53,9 +49,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapStopsMarkers = mutableMapOf<String, Marker>()
 
-    private val stopLocationsObserver: (Resource<List<Stop>?>) -> Unit = { value: Resource<List<Stop>?> ->
-        if (value.status == Status.SUCCESS) {
-            value.data?.let { stops ->
+    private val stopLocationsObserver: (Resource<List<Stop>?>) -> Unit = { stopsResource ->
+        if (stopsResource.status == Status.SUCCESS) {
+            stopsResource.data?.let { stops ->
                 stops.forEach { stop ->
                     val baseMarker = when (stop.type) {
                         StopType.BUS -> if (stop.isFavorite) busFavoriteMarker else busMarker
@@ -72,6 +68,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    private val mapTypeObserver: (Int) -> Unit = { mapType ->
+        map.mapType = mapType
     }
 
     private val onInfoWindowClickListener = GoogleMap.OnInfoWindowClickListener { marker ->
@@ -96,6 +96,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map.setOnInfoWindowClickListener(onInfoWindowClickListener)
         mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
+        mapVM.getMapType().observe(this, Observer(mapTypeObserver))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,9 +114,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Get and (if needed) initialize the map fragment programmatically
-        var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as SupportMapFragment?
+        var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = SupportMapFragment()
+            mapFragment = CustomSupportMapFragment()
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, "mapFragment")
                 .commit()
@@ -153,36 +154,48 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun createBaseMarkers() {
         val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
-        val busBitmap = Bitmap.createScaledBitmap(busDrawable.bitmap,
+        val busBitmap = Bitmap.createScaledBitmap(
+            busDrawable.bitmap,
             ICON_SIZE,
-            ICON_SIZE, false)
+            ICON_SIZE,
+            false
+        )
         busMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(busBitmap))
             .anchor(0.5f, 0.5f)
 
         val busFavoriteDrawable = resources.getDrawable(R.drawable.marker_bus_favorite, null) as BitmapDrawable
         val busFavoriteBitmap =
-            Bitmap.createScaledBitmap(busFavoriteDrawable.bitmap,
+            Bitmap.createScaledBitmap(
+                busFavoriteDrawable.bitmap,
                 ICON_FAV_SIZE,
-                ICON_FAV_SIZE, false)
+                ICON_FAV_SIZE,
+                false
+            )
         busFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(busFavoriteBitmap))
             .anchor(0.5f, 0.5f)
 
 
         val tramDrawable = resources.getDrawable(R.drawable.marker_tram, null) as BitmapDrawable
-        val tramBitmap = Bitmap.createScaledBitmap(tramDrawable.bitmap,
+        val tramBitmap = Bitmap.createScaledBitmap(
+            tramDrawable.bitmap,
             ICON_SIZE,
-            ICON_SIZE, false)
+            ICON_SIZE,
+            false
+        )
         tramMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(tramBitmap))
             .anchor(0.5f, 0.5f)
 
         val tramFavoriteDrawable = resources.getDrawable(R.drawable.marker_tram_favorite, null) as BitmapDrawable
         val tramFavoriteBitmap =
-            Bitmap.createScaledBitmap(tramFavoriteDrawable.bitmap,
+            Bitmap.createScaledBitmap(
+                tramFavoriteDrawable.bitmap,
                 ICON_FAV_SIZE,
-                ICON_FAV_SIZE, false)
+                ICON_FAV_SIZE,
+                false
+            )
         tramFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap))
             .anchor(0.5f, 0.5f)
