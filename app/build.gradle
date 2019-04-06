@@ -52,8 +52,9 @@ dependencies {
     //WorkManager
     implementation deps.workmanager
 
-    //Google Maps
-    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    //Google Play Services
+    implementation deps.playServices.maps
+    implementation deps.playServices.location
 
     //Parse
     implementation deps.parse

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.jorkoh.transportezaragozakt.R
@@ -32,7 +35,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         const val MIN_ZOOM = 12f
         const val DEFAULT_ZOOM = 15f
         val ZARAGOZA_BOUNDS = LatLngBounds(
-            LatLng(41.6078, -0.9786), LatLng(41.6969, -0.8003)
+            LatLng(41.6000, -1.08125), LatLng(41.774594, -0.7933)
         )
 
         @JvmStatic
@@ -42,12 +45,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapVM: MapViewModel by sharedViewModel()
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var map: GoogleMap
+
     private lateinit var busMarker: MarkerOptions
     private lateinit var busFavoriteMarker: MarkerOptions
     private lateinit var tramMarker: MarkerOptions
     private lateinit var tramFavoriteMarker: MarkerOptions
 
-    private val mapStopsMarkers = mutableMapOf<String, Marker>()
+    private val mapBusStopsMarkers = mutableMapOf<String, Marker>()
+    private val mapTramStopsMarkers = mutableMapOf<String, Marker>()
 
     private val stopLocationsObserver: (Resource<List<Stop>?>) -> Unit = { stopsResource ->
         if (stopsResource.status == Status.SUCCESS) {
@@ -57,14 +64,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         StopType.BUS -> if (stop.isFavorite) busFavoriteMarker else busMarker
                         StopType.TRAM -> if (stop.isFavorite) tramFavoriteMarker else tramMarker
                     }
+                    val markerCollection = when (stop.type) {
+                        StopType.BUS -> mapBusStopsMarkers
+                        StopType.TRAM -> mapTramStopsMarkers
+                    }
 
                     val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
                     newMarker.tag = TagInfo(stop.id, stop.type)
-                    if (mapStopsMarkers[stop.id]?.isInfoWindowShown == true) {
+                    if (markerCollection[stop.id]?.isInfoWindowShown == true) {
                         newMarker.showInfoWindow()
                     }
-                    mapStopsMarkers[stop.id]?.remove()
-                    mapStopsMarkers[stop.id] = newMarker
+                    markerCollection[stop.id]?.remove()
+                    markerCollection[stop.id] = newMarker
                 }
             }
         }
@@ -72,6 +83,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapTypeObserver: (Int) -> Unit = { mapType ->
         map.mapType = mapType
+    }
+
+    private val busFilterEnabledObserver: (Boolean) -> Unit = { visibility ->
+        mapBusStopsMarkers.forEach { mapBusStopsMarker ->
+            mapBusStopsMarker.value.isVisible = visibility
+        }
+    }
+
+    private val tramFilterEnabledObserver: (Boolean) -> Unit = { visibility ->
+        mapTramStopsMarkers.forEach { mapTramStopsMarker ->
+            mapTramStopsMarker.value.isVisible = visibility
+        }
     }
 
     private val onInfoWindowClickListener = GoogleMap.OnInfoWindowClickListener { marker ->
@@ -87,21 +110,28 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private lateinit var map: GoogleMap
-
-    override fun onMapReady(googleMap: GoogleMap?) {
-        map = checkNotNull(googleMap)
-
-        styleMap()
-        map.setOnInfoWindowClickListener(onInfoWindowClickListener)
-        mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
-        mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
-        mapVM.getMapType().observe(this, Observer(mapTypeObserver))
+    @SuppressLint("MissingPermission")
+    private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
+        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null && ZARAGOZA_BOUNDS.contains(location.toLatLng())) {
+                    val cameraPosition = CameraPosition.builder()
+                        .target(location.toLatLng())
+                        .zoom(DEFAULT_ZOOM)
+                        .bearing(0f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
+            }
+        }
+        true
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mapVM.init()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
     }
 
     override fun onCreateView(
@@ -125,6 +155,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
+    override fun onMapReady(googleMap: GoogleMap?) {
+        map = checkNotNull(googleMap)
+
+        styleMap()
+        map.setOnInfoWindowClickListener(onInfoWindowClickListener)
+        mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
+        mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
+        mapVM.getMapType().observe(this, Observer(mapTypeObserver))
+        mapVM.getBusFilterEnabled().observe(this, Observer(busFilterEnabledObserver))
+        mapVM.getTramFilterEnabled().observe(this, Observer(tramFilterEnabledObserver))
+    }
+
     private fun styleMap() {
         createBaseMarkers()
         setStyle()
@@ -143,13 +185,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     DEFAULT_ZOOM
                 )
             )
-            mapVM.mapHasBeenStyled = true
         }
 
         runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
             @SuppressLint("MissingPermission")
             map.isMyLocationEnabled = true
+            map.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener)
+            if (!mapVM.mapHasBeenStyled) {
+                onMyLocationButtonClickListener.onMyLocationButtonClick()
+            }
         }
+
+        mapVM.mapHasBeenStyled = true
     }
 
     private fun createBaseMarkers() {
