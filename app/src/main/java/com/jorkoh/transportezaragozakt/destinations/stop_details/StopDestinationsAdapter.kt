@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.stop_details
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +31,8 @@ class StopDestinationsAdapter: RecyclerView.Adapter<StopDestinationsAdapter.Stop
                 StopType.TRAM -> R.drawable.ic_frame_tram_stop
             })
             destination_text.text = stopDestinations[position].destination
-            first_time_text.text = stopDestinations[position].times[0].toString()
-            second_time_text.text = stopDestinations[position].times[1].toString()
+            first_time_text.text = stopDestinations[position].times[0]
+            second_time_text.text = stopDestinations[position].times[1]
         }
     }
 
@@ -48,16 +47,12 @@ class StopDestinationsAdapter: RecyclerView.Adapter<StopDestinationsAdapter.Stop
                 override fun getNewListSize() = newStopDestinations.size
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    val result = stopDestinations[oldItemPosition].line == newStopDestinations[newItemPosition].line
-                            && stopDestinations[oldItemPosition].destination == newStopDestinations[newItemPosition].destination
-                    Log.d("TestingStuff", "Are items the same: $result")
-                    return result
+                    return (stopDestinations[oldItemPosition].line == newStopDestinations[newItemPosition].line
+                            && stopDestinations[oldItemPosition].destination == newStopDestinations[newItemPosition].destination)
                 }
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    val result = stopDestinations[oldItemPosition].times == newStopDestinations[newItemPosition].times
-                    Log.d("TestingStuff", "Are contents the same: $result")
-                    return result
+                    return stopDestinations[oldItemPosition].times == newStopDestinations[newItemPosition].times
                 }
             })
             stopDestinations = newStopDestinations

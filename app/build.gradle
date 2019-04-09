@@ -78,4 +78,5 @@ dependencies {
 
     implementation project(':quickpermissions-kotlin')
     implementation project(':cyanea')
+    implementation project(':color-picker')
 }

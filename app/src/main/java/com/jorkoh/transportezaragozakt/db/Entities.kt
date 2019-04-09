@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.db
 
-import android.util.Log
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
@@ -62,8 +61,19 @@ data class FavoriteStop(
     @ColumnInfo(name = "stopId")
     var stopId: String,
 
+    @ColumnInfo(name = "alias")
+    var alias: String,
+
     @ColumnInfo(name = "colorHex")
     var colorHex: String
+)
+
+data class FavoriteStopExtended(
+    val stopId: String,
+    val type: StopType,
+    val title: String,
+    val alias: String,
+    val colorHex: String
 )
 
 data class TagInfo(val id: String, val type: StopType)

@@ -146,11 +146,11 @@ public class ColorPreference extends Preference implements ColorPickerDialogList
     return a.getInteger(index, Color.BLACK);
   }
 
-  @Override public void onColorSelected(int dialogId, @ColorInt int color) {
+  @Override public void onColorSelected(String dialogId, @ColorInt int color) {
     saveValue(color);
   }
 
-  @Override public void onDialogDismissed(int dialogId) {
+  @Override public void onDialogDismissed(String dialogId) {
     // no-op
   }
 

@@ -29,12 +29,12 @@ public interface ColorPickerDialogListener {
    * @param dialogId The dialog id used to create the dialog instance.
    * @param color The selected color
    */
-  void onColorSelected(int dialogId, @ColorInt int color);
+  void onColorSelected(String dialogId, @ColorInt int color);
 
   /**
    * Callback that is invoked when the color picker dialog was dismissed.
    *
    * @param dialogId The dialog id used to create the dialog instance.
    */
-  void onDialogDismissed(int dialogId);
+  void onDialogDismissed(String dialogId);
 }

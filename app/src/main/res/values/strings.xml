@@ -10,6 +10,7 @@
 
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
+    <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
 
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available :(</string>

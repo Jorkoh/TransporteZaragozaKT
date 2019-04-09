@@ -8,12 +8,7 @@ import com.jorkoh.transportezaragozakt.R
 
 @Dao
 abstract class StopsDao {
-    @Query("SELECT * FROM stops WHERE type = :stopType")
-    abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
-
-    @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
-    abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
-
+    //Favorite stuff
     @Query("SELECT isFavorite FROM stops WHERE id = :stopId")
     abstract fun stopIsFavorite(stopId: String): LiveData<Boolean>
 
@@ -22,13 +17,10 @@ abstract class StopsDao {
             deleteFavorite(stopId)
             updateIsFavorite(stopId, false)
         } else {
-            insertFavoriteStop(FavoriteStop(stopId, "000000"))
+            insertFavoriteStop(FavoriteStop(stopId, getStopTitleInmediate(stopId), ""))
             updateIsFavorite(stopId, true)
         }
     }
-
-    @Query("SELECT title FROM stops WHERE id = :stopId")
-    abstract fun getStopTitle(stopId: String): LiveData<String>
 
     @Query("SELECT isFavorite FROM stops WHERE id = :stopId")
     abstract fun stopIsFavoriteImmediate(stopId: String): Boolean
@@ -42,8 +34,24 @@ abstract class StopsDao {
     @Query("UPDATE stops SET isFavorite = :isFavorite WHERE id = :stopId")
     abstract fun updateIsFavorite(stopId: String, isFavorite: Boolean)
 
-    @Query("SELECT stops.* FROM stops INNER JOIN favoriteStops ON stops.id = favoriteStops.stopId")
-    abstract fun getFavoriteStops(): LiveData<List<Stop>>
+    @Query("SELECT favoriteStops.stopId, stops.type, stops.title, favoriteStops.alias, favoriteStops.colorHex FROM stops INNER JOIN favoriteStops ON stops.id = favoriteStops.stopId")
+    abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
+
+    @Query("UPDATE favoriteStops SET colorHex = :colorHex WHERE stopId = :stopId")
+    abstract fun updateFavoriteColor(colorHex: String, stopId: String)
+
+    //Other stuff
+    @Query("SELECT * FROM stops WHERE type = :stopType")
+    abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
+
+    @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
+    abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
+
+    @Query("SELECT title FROM stops WHERE id = :stopId")
+    abstract fun getStopTitle(stopId: String): LiveData<String>
+
+    @Query("SELECT title FROM stops WHERE id = :stopId")
+    abstract fun getStopTitleInmediate(stopId: String): String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertStops(stop: List<Stop>)
@@ -61,7 +69,10 @@ abstract class StopsDao {
         val initialBusStops = getInitialBusStops(context)
         val initialTramStops = getInitialTramStops(context)
 
-        val sharedPreferences = context.getSharedPreferences(context.getString(R.string.preferences_version_number_key), Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(
+            context.getString(R.string.preferences_version_number_key),
+            Context.MODE_PRIVATE
+        )
         with(sharedPreferences.edit()) {
             putInt(context.getString(R.string.saved_bus_version_number_key), initialBusStops.version)
             putInt(context.getString(R.string.saved_bus_version_number_key), initialTramStops.version)
@@ -73,9 +84,9 @@ abstract class StopsDao {
         insertStops(initialBusStops.stops.plus(initialTramStops.stops))
     }
 
-    fun updateStops(stops : List<Stop>){
-        stops.forEach {stop ->
-            if(stopIsFavoriteImmediate(stop.id)){
+    fun updateStops(stops: List<Stop>) {
+        stops.forEach { stop ->
+            if (stopIsFavoriteImmediate(stop.id)) {
                 stop.isFavorite = true
             }
         }

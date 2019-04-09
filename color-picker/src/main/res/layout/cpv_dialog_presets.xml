@@ -13,6 +13,26 @@
       android:padding="16dp"
       >
 
+    <TextView
+            android:text="ALIAS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cpv_textview"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:selectAllOnFocus="true"
+            android:id="@+id/cpv_alias"/>
+
+    <TextView
+            android:text="COLOR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cpv_textview2"/>
+
     <com.jaredrummler.android.colorpicker.NestedGridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
