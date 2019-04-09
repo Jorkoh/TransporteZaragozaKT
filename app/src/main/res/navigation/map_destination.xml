@@ -17,7 +17,6 @@
     <fragment
             android:id="@+id/stopDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
-            android:label="StopDetails"
             tools:layout="@layout/fragment_stop_details">
         <argument
                 android:name="stopType"

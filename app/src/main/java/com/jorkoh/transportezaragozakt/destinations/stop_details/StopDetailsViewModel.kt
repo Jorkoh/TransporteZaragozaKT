@@ -22,6 +22,7 @@ class StopDetailsViewModel(
     private val mediatorStopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()
     private lateinit var stopDestinations: LiveData<Resource<List<StopDestination>>>
     lateinit var stopIsFavorited: LiveData<Boolean>
+    lateinit var stopTitle: LiveData<String>
 
     fun init(stopID: String, stopType: StopType) {
         this.stopID = stopID
@@ -30,6 +31,7 @@ class StopDetailsViewModel(
         refreshStopDestinations()
 
         stopIsFavorited = favoritesRepository.isFavoriteStop(stopID)
+        stopTitle = stopsRepository.loadStopTitle(stopID)
     }
 
     fun toggleStopFavorite() {

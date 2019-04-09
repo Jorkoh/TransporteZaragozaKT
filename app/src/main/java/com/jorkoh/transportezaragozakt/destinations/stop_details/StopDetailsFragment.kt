@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -37,11 +39,15 @@ class StopDetailsFragment : Fragment() {
     private lateinit var stopType: StopType
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
-        updateStopDestinationsUI(stopDestinations, view)
+        updateStopDestinationsUI(stopDestinations, checkNotNull(view))
     }
 
     private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->
-        updateIsFavoritedUI(isFavorited, view)
+        updateIsFavoritedUI(isFavorited, checkNotNull(view))
+    }
+
+    private val stopTitleObserver = Observer<String> { stopTitle ->
+        updateStopTitleUI(stopTitle)
     }
 
     private val onFavoritesClickListener = View.OnClickListener {
@@ -71,6 +77,9 @@ class StopDetailsFragment : Fragment() {
         updateIsFavoritedUI(stopDetailsVM.stopIsFavorited.value, rootView)
         stopDetailsVM.stopIsFavorited.observe(this, stopFavoriteStatusObserver)
 
+        updateStopTitleUI(stopDetailsVM.stopTitle.value)
+        stopDetailsVM.stopTitle.observe(this, stopTitleObserver)
+
         rootView.favorite_fab.setOnClickListener(onFavoritesClickListener)
         rootView.swiperefresh.setOnRefreshListener(onSwipeRefreshListener)
 
@@ -86,27 +95,25 @@ class StopDetailsFragment : Fragment() {
         )
     }
 
-    private fun updateIsFavoritedUI(isFavorited: Boolean?, rootView: View?) {
-        rootView?.let {
-            it.favorite_fab.setImageDrawable(
-                if (isFavorited == true) {
-                    resources.getDrawable(R.drawable.ic_favorite_black_24dp, null)
-                } else {
-                    resources.getDrawable(R.drawable.ic_favorite_border_black_24dp, null)
-                }
-            )
-        }
+    private fun updateIsFavoritedUI(isFavorited: Boolean?, rootView: View) {
+        rootView.favorite_fab.setImageDrawable(
+            if (isFavorited == true) {
+                resources.getDrawable(R.drawable.ic_favorite_black_24dp, null)
+            } else {
+                resources.getDrawable(R.drawable.ic_favorite_border_black_24dp, null)
+            }
+        )
     }
 
-    private fun updateStopDestinationsUI(stopDestinations: Resource<List<StopDestination>>?, rootView: View?) {
-        if(stopDestinations == null){
+    private fun updateStopDestinationsUI(stopDestinations: Resource<List<StopDestination>>?, rootView: View) {
+        if (stopDestinations == null) {
             return
         }
 
         val newVisibility = when (stopDestinations.status) {
             Status.SUCCESS -> {
                 stopDestinations.data?.let { stopDestinationsAdapter.setDestinations(it, stopType) }
-                rootView?.swiperefresh?.isRefreshing = false
+                rootView.swiperefresh?.isRefreshing = false
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
                 } else {
@@ -114,16 +121,20 @@ class StopDetailsFragment : Fragment() {
                 }
             }
             Status.ERROR -> {
-                rootView?.swiperefresh?.isRefreshing = false
+                rootView.swiperefresh?.isRefreshing = false
                 View.VISIBLE
             }
             Status.LOADING -> {
-                rootView?.swiperefresh?.isRefreshing = true
+                rootView.swiperefresh?.isRefreshing = true
                 View.GONE
             }
         }
 
-        rootView?.no_data_suggestions_text?.visibility = newVisibility
-        rootView?.no_data_text?.visibility = newVisibility
+        rootView.no_data_suggestions_text?.visibility = newVisibility
+        rootView.no_data_text?.visibility = newVisibility
+    }
+
+    private fun updateStopTitleUI(stopTitle : String?){
+        (requireActivity() as MainActivity).setActionBarTitle(stopTitle ?: "")
     }
 }

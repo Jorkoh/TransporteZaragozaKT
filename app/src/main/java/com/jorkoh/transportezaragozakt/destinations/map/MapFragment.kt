@@ -37,6 +37,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val ZARAGOZA_BOUNDS = LatLngBounds(
             LatLng(41.6000, -1.08125), LatLng(41.774594, -0.7933)
         )
+        val ZARAGOZA_CENTER = LatLng(41.656362, -0.878920)
 
         @JvmStatic
         fun newInstance(): MapFragment =
@@ -181,7 +182,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         if (!mapVM.mapHasBeenStyled) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                    ZARAGOZA_BOUNDS.center,
+                    ZARAGOZA_CENTER,
                     DEFAULT_ZOOM
                 )
             )

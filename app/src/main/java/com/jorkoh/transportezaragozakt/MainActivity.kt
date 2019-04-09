@@ -132,4 +132,8 @@ class MainActivity : CyaneaAppCompatActivity() {
 
         notificationManager.notify(1, testNotification.build())
     }
+
+    fun setActionBarTitle(title : String){
+        supportActionBar?.title = title
+    }
 }

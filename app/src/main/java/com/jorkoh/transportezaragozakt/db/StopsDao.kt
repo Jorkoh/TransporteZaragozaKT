@@ -8,16 +8,6 @@ import com.jorkoh.transportezaragozakt.R
 
 @Dao
 abstract class StopsDao {
-//    @Transaction
-//    @Query("SELECT * FROM stops WHERE id = :stopId")
-//    fun getStopAndDestinations(stopId: String): LiveData<StopAndDestinations>
-//
-//    @Query("SELECT * FROM stops WHERE id = :stopId LIMIT 1")
-//    fun getStop(stopId: String): LiveData<Stop>
-//
-//    @Query("SELECT * FROM stops")
-//    fun getStops(): LiveData<List<Stop>>
-
     @Query("SELECT * FROM stops WHERE type = :stopType")
     abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
@@ -36,6 +26,9 @@ abstract class StopsDao {
             updateIsFavorite(stopId, true)
         }
     }
+
+    @Query("SELECT title FROM stops WHERE id = :stopId")
+    abstract fun getStopTitle(stopId: String): LiveData<String>
 
     @Query("SELECT isFavorite FROM stops WHERE id = :stopId")
     abstract fun stopIsFavoriteImmediate(stopId: String): Boolean
