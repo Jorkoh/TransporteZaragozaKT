@@ -13,8 +13,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
 import com.jorkoh.transportezaragozakt.db.TagInfo
@@ -30,7 +32,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MainActivity : CyaneaAppCompatActivity() {
+class MainActivity : CyaneaAppCompatActivity(), ColorPickerDialogListener {
+
     private val mainActivityVM: MainActivityViewModel by viewModel()
 
     private var currentNavController: LiveData<NavController>? = null
@@ -133,7 +136,20 @@ class MainActivity : CyaneaAppCompatActivity() {
         notificationManager.notify(1, testNotification.build())
     }
 
-    fun setActionBarTitle(title : String){
+    fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    // Unfortunately the color picker dialog doesn't work well with fragments and orientation changes
+    // so this has to be here
+    override fun onColorSelected(dialogId: String?, color: Int) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_container)
+            ?.childFragmentManager?.primaryNavigationFragment
+        if (currentFragment is ColorPickerDialogListener) {
+            currentFragment.onColorSelected(dialogId, color)
+        }
+    }
+
+    override fun onDialogDismissed(dialogId: String?) {
     }
 }

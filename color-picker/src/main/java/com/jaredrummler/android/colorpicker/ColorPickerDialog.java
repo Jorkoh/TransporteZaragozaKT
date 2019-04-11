@@ -386,7 +386,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
         }
     }
 
-    private void setAlias(String alias){
+    private void setAlias(String alias) {
         aliasEditText.setText(alias);
     }
 
