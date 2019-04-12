@@ -9,17 +9,29 @@
         android:background="?android:attr/selectableItemBackground"
         tools:context=".MainActivity">
 
+    <View
+            android:id="@+id/favorite_color"
+            android:layout_width="10dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     <ImageView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/type_image"
-            android:contentDescription="Stop type"
-            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/stop_type_content_description"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toEndOf="@id/favorite_color"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView

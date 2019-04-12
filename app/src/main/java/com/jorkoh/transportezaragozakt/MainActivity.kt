@@ -7,21 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
-import androidx.activity.OnBackPressedCallback
 import androidx.core.app.NotificationCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
-import com.jaredrummler.cyanea.prefs.CyaneaSettingsFragment
-import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 //import com.jorkoh.transportezaragozakt.navigation.Destinations
 //import com.jorkoh.transportezaragozakt.navigation.goBackToPreviousDestination
 //import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
@@ -142,11 +135,19 @@ class MainActivity : CyaneaAppCompatActivity(), ColorPickerDialogListener {
 
     // Unfortunately the color picker dialog doesn't work well with fragments and orientation changes
     // so this has to be here
-    override fun onColorSelected(dialogId: String?, color: Int) {
+    override fun onDialogAccepted(dialogId: String?, alias: String, color: Int) {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_container)
             ?.childFragmentManager?.primaryNavigationFragment
         if (currentFragment is ColorPickerDialogListener) {
-            currentFragment.onColorSelected(dialogId, color)
+            currentFragment.onDialogAccepted(dialogId, alias, color)
+        }
+    }
+
+    override fun onDialogRestore(dialogId: String?) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_container)
+            ?.childFragmentManager?.primaryNavigationFragment
+        if (currentFragment is ColorPickerDialogListener) {
+            currentFragment.onDialogRestore(dialogId)
         }
     }
 

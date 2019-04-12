@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,14 @@ class FavoriteStopsAdapter(
                     }
                 )
                 title_text.text = favorite.alias
+                if (favorite.colorHex.isNotEmpty()) {
+                    favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
+                    favorite_color.visibility = View.VISIBLE
+                } else {
+                    favorite_color.setBackgroundColor(Color.TRANSPARENT)
+                    favorite_color.visibility = View.GONE
+                }
+
                 setOnClickListener { clickListener(TagInfo(favorite.stopId, favorite.type)) }
                 setOnLongClickListener { longClickListener(favorite) }
             }

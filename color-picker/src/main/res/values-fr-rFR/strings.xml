@@ -17,4 +17,7 @@
   <string name="cpv_custom">Personnalisée</string>
   <string name="cpv_select">Valider</string>
   <string name="cpv_transparency">Transparence</string>
+    <string name="cpv_alias">ALIAS</string>
+  <string name="cpv_color">COLOR</string>
+    <string name="cpv_new_alias_hint">New Alias</string>
 </resources>

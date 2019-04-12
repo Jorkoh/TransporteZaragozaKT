@@ -12,12 +12,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoreFragment : Fragment() {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(): MoreFragment =
-            MoreFragment()
-    }
-
     private val moreVM: MoreViewModel by viewModel()
 
     override fun onCreateView(

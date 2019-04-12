@@ -38,10 +38,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             LatLng(41.6000, -1.08125), LatLng(41.774594, -0.7933)
         )
         val ZARAGOZA_CENTER = LatLng(41.656362, -0.878920)
-
-        @JvmStatic
-        fun newInstance(): MapFragment =
-            MapFragment()
     }
 
     private val mapVM: MapViewModel by sharedViewModel()

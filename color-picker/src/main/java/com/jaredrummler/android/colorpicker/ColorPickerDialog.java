@@ -196,7 +196,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
                 .setPositiveButton(selectedButtonStringRes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        onColorSelected(color);
+                        onColorSelected(aliasEditText.getText().toString(), color);
                     }
                 });
 
@@ -241,18 +241,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
             neutralButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    rootView.removeAllViews();
-                    switch (dialogType) {
-                        case TYPE_CUSTOM:
-                            dialogType = TYPE_PRESETS;
-                            ((Button) v).setText(customButtonStringRes != 0 ? customButtonStringRes : R.string.cpv_custom);
-                            rootView.addView(createPresetsView());
-                            break;
-                        case TYPE_PRESETS:
-                            dialogType = TYPE_CUSTOM;
-                            ((Button) v).setText(presetsButtonStringRes != 0 ? presetsButtonStringRes : R.string.cpv_presets);
-                            rootView.addView(createPickerView());
-                    }
+                    onDialogRestore();
+                    dismiss();
                 }
             });
         }
@@ -317,7 +307,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
             @Override
             public void onClick(View v) {
                 if (newColorPanel.getColor() == color) {
-                    onColorSelected(color);
+                    onColorSelected(aliasEditText.getText().toString(), color);
                     dismiss();
                 }
             }
@@ -453,7 +443,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
         shadesLayout = (LinearLayout) contentView.findViewById(R.id.shades_layout);
         transparencySeekBar = (SeekBar) contentView.findViewById(R.id.transparency_seekbar);
         transparencyPercText = (TextView) contentView.findViewById(R.id.transparency_text);
-        aliasEditText = (EditText) contentView.findViewById(R.id.cpv_alias);
+        aliasEditText = (EditText) contentView.findViewById(R.id.cpv_alias_edittext);
         GridView gridView = (GridView) contentView.findViewById(R.id.gridView);
         setAlias(dialogAlias);
 
@@ -471,7 +461,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
             public void onColorSelected(int newColor) {
                 if (color == newColor) {
                     // Double tab selects the color
-                    ColorPickerDialog.this.onColorSelected(color);
+                    ColorPickerDialog.this.onColorSelected(aliasEditText.getText().toString(), color);
                     dismiss();
                     return;
                 }
@@ -495,7 +485,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
     }
 
     private void loadPresets() {
-        int alpha = Color.alpha(color);
+        int alpha = 255;
         presets = getArguments().getIntArray(ARG_PRESETS);
         if (presets == null) presets = MATERIAL_COLORS;
         boolean isMaterialColors = presets == MATERIAL_COLORS;
@@ -517,8 +507,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
             presets = unshiftIfNotExists(presets, initialColor);
         }
         if (isMaterialColors && presets.length == 19) {
-            // Add black to have a total of 20 colors if the current color is in the material color palette
-            presets = pushIfNotExists(presets, Color.argb(alpha, 0, 0, 0));
+            // Add transparent to have a total of 20 colors if the current color is in the material color palette
+            presets = pushIfNotExists(presets, Color.TRANSPARENT);
         }
     }
 
@@ -568,7 +558,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
                 @Override
                 public void onClick(View v) {
                     if (v.getTag() instanceof Boolean && (Boolean) v.getTag()) {
-                        onColorSelected(ColorPickerDialog.this.color);
+                        onColorSelected(aliasEditText.getText().toString(), ColorPickerDialog.this.color);
                         dismiss();
                         return; // already selected
                     }
@@ -599,15 +589,15 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
         }
     }
 
-    private void onColorSelected(int color) {
+    private void onColorSelected(String alias, int color) {
         if (colorPickerDialogListener != null) {
             Log.w(TAG, "Using deprecated listener which may be remove in future releases");
-            colorPickerDialogListener.onColorSelected(dialogId, color);
+            colorPickerDialogListener.onDialogAccepted(dialogId, alias, color);
             return;
         }
         Activity activity = getActivity();
         if (activity instanceof ColorPickerDialogListener) {
-            ((ColorPickerDialogListener) activity).onColorSelected(dialogId, color);
+            ((ColorPickerDialogListener) activity).onDialogAccepted(dialogId, alias, color);
         } else {
             throw new IllegalStateException("The activity must implement ColorPickerDialogListener");
         }
@@ -622,6 +612,18 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
         Activity activity = getActivity();
         if (activity instanceof ColorPickerDialogListener) {
             ((ColorPickerDialogListener) activity).onDialogDismissed(dialogId);
+        }
+    }
+
+    private void onDialogRestore(){
+        if (colorPickerDialogListener != null) {
+            Log.w(TAG, "Using deprecated listener which may be remove in future releases");
+            colorPickerDialogListener.onDialogRestore(dialogId);
+            return;
+        }
+        Activity activity = getActivity();
+        if (activity instanceof ColorPickerDialogListener) {
+            ((ColorPickerDialogListener) activity).onDialogRestore(dialogId);
         }
     }
 
@@ -745,8 +747,8 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
         }
         if (!present) {
             int[] newArray = new int[array.length + 1];
-            newArray[newArray.length - 1] = value;
-            System.arraycopy(array, 0, newArray, 0, newArray.length - 1);
+            newArray[0] = value;
+            System.arraycopy(array, 0, newArray, 1, newArray.length - 1);
             return newArray;
         }
         return array;
@@ -786,7 +788,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerView
         int dialogType = TYPE_PRESETS;
         int[] presets = MATERIAL_COLORS;
         @ColorInt
-        int color = Color.BLACK;
+        int color = Color.TRANSPARENT;
         String dialogId = "";
         boolean showAlphaSlider = false;
         boolean allowPresets = true;

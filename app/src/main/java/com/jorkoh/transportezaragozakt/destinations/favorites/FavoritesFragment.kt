@@ -31,12 +31,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : Fragment(), ColorPickerDialogListener {
 
-    companion object {
-        @JvmStatic
-        fun newInstance(): FavoritesFragment =
-            FavoritesFragment()
-    }
-
     private val favoritesVM: FavoritesViewModel by viewModel()
 
     private val itemOnClick: (TagInfo) -> Unit = { info ->
@@ -55,12 +49,13 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
             val editFavoriteDialog = ColorPickerDialog.newBuilder().apply {
                 setShowColorShades(false)
                 setShowAlphaSlider(false)
-                setAllowCustom(false)
+                setAllowCustom(true)
                 setColorShape(ColorShape.CIRCLE)
                 setDialogId(favorite.stopId)
                 setDialogType(ColorPickerDialog.TYPE_PRESETS)
                 setDialogTitle(R.string.edit_favorite_dialog_title)
                 setAlias(favorite.alias)
+                setCustomButtonText(R.string.edit_favorite_dialog_restore)
                 if(favorite.colorHex.isNotEmpty()){
                     setColor(Color.parseColor(favorite.colorHex))
                 }
@@ -71,13 +66,15 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
         true
     }
 
-    override fun onDialogDismissed(dialogId: String) {
+    override fun onDialogDismissed(dialogId: String) { }
+
+    override fun onDialogAccepted(favoriteId: String, alias : String, color: Int) {
+        val hexColor = if(color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
+        favoritesVM.updateFavorite(alias, hexColor, favoriteId)
     }
 
-    override fun onColorSelected(favoriteId: String, color: Int) {
-        //TODO UPDATE THE ALIAS TOO
-
-        favoritesVM.updateFavorite(String.format("#%06X", 0xFFFFFF and color), favoriteId)
+    override fun onDialogRestore(dialogId: String) {
+        favoritesVM.restoreFavorite(dialogId)
     }
 
 
@@ -116,11 +113,11 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView: View?) {
-        val newVisibility = if (isEmpty) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
+            val newVisibility = if (isEmpty) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         rootView?.no_favorites_animation?.visibility = newVisibility
         rootView?.no_favorites_text?.visibility = newVisibility
     }

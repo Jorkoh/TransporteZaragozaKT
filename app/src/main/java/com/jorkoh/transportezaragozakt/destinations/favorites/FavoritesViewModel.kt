@@ -2,9 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.common.util.Hex
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
-import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 
 
@@ -20,7 +18,11 @@ class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): 
         return favoriteStops
     }
 
-    fun updateFavorite(colorHex: String, stopId : String){
-        favoritesRepository.setFavoriteColor(colorHex, stopId)
+    fun updateFavorite(alias : String, colorHex: String, stopId : String){
+        favoritesRepository.updateFavorite(alias, colorHex, stopId)
+    }
+
+    fun restoreFavorite(stopId: String){
+        favoritesRepository.restoreFavorite(stopId)
     }
 }

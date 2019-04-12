@@ -11,6 +11,8 @@
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
     <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
+    <string name="stop_type_content_description" translatable="true">Stop type</string>
+    <string name="edit_favorite_dialog_restore" translatable="true">Restore</string>
 
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available :(</string>

@@ -15,8 +15,8 @@ class StopDetailsViewModel(
 ) :
     ViewModel() {
 
-    private lateinit var stopID: String
-    private lateinit var stopType: StopType
+    lateinit var stopID: String
+    lateinit var stopType: StopType
 
     //Not quite sold on this but I trust this guy https://medium.com/@BladeCoder/to-implement-a-manual-refresh-without-modifying-your-existing-livedata-logic-i-suggest-that-your-7db1b8414c0e
     private val mediatorStopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()

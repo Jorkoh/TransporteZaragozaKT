@@ -37,8 +37,8 @@ abstract class StopsDao {
     @Query("SELECT favoriteStops.stopId, stops.type, stops.title, favoriteStops.alias, favoriteStops.colorHex FROM stops INNER JOIN favoriteStops ON stops.id = favoriteStops.stopId")
     abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
 
-    @Query("UPDATE favoriteStops SET colorHex = :colorHex WHERE stopId = :stopId")
-    abstract fun updateFavoriteColor(colorHex: String, stopId: String)
+    @Query("UPDATE favoriteStops SET alias = :alias, colorHex = :colorHex WHERE stopId = :stopId")
+    abstract fun updateFavorite(alias : String, colorHex: String, stopId: String)
 
     //Other stuff
     @Query("SELECT * FROM stops WHERE type = :stopType")

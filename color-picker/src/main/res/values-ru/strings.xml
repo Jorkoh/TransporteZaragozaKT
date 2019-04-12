@@ -20,4 +20,7 @@
   <string name="cpv_custom">Особый</string>
   <string name="cpv_select">Выбрать</string>
   <string name="cpv_transparency">Прозрачность</string>
+    <string name="cpv_alias">ALIAS</string>
+  <string name="cpv_color">COLOR</string>
+    <string name="cpv_new_alias_hint">New Alias</string>
 </resources>

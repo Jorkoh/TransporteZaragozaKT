@@ -20,4 +20,7 @@
   <string name="cpv_custom">ألوان معدلة</string>
   <string name="cpv_select">اختر</string>
   <string name="cpv_transparency">الشفافية</string>
+    <string name="cpv_alias">ALIAS</string>
+  <string name="cpv_color">COLOR</string>
+    <string name="cpv_new_alias_hint">New Alias</string>
 </resources>

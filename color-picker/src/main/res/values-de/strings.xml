@@ -20,4 +20,7 @@
   <string name="cpv_custom">Benutzerdefiniert</string>
   <string name="cpv_select">Auswählen</string>
   <string name="cpv_transparency">Transparenz</string>
+    <string name="cpv_alias">ALIAS</string>
+  <string name="cpv_color">COLOR</string>
+    <string name="cpv_new_alias_hint">New Alias</string>
 </resources>

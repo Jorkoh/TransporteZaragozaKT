@@ -25,18 +25,12 @@ class StopDetailsFragment : Fragment() {
     companion object : Serializable {
         const val STOP_ID_KEY = "STOP_ID_KEY"
         const val STOP_TYPE_KEY = "STOP_TYPE_KEY"
-
-        @JvmStatic
-        fun newInstance(): StopDetailsFragment =
-            StopDetailsFragment()
     }
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
     private val stopDestinationsAdapter: StopDestinationsAdapter =
         StopDestinationsAdapter()
-
-    private lateinit var stopType: StopType
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
         updateStopDestinationsUI(stopDestinations, checkNotNull(view))
@@ -88,10 +82,9 @@ class StopDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        stopType = StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
         stopDetailsVM.init(
             checkNotNull(arguments?.getString(STOP_ID_KEY)),
-            stopType
+            StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
         )
     }
 
@@ -112,7 +105,7 @@ class StopDetailsFragment : Fragment() {
 
         val newVisibility = when (stopDestinations.status) {
             Status.SUCCESS -> {
-                stopDestinations.data?.let { stopDestinationsAdapter.setDestinations(it, stopType) }
+                stopDestinations.data?.let { stopDestinationsAdapter.setDestinations(it, stopDetailsVM.stopType) }
                 rootView.swiperefresh?.isRefreshing = false
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
