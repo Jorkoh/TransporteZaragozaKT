@@ -33,7 +33,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         const val ICON_FAV_SIZE = 70
         const val MAX_ZOOM = 17.5f
         const val MIN_ZOOM = 12f
-        const val DEFAULT_ZOOM = 15f
+        const val DEFAULT_ZOOM = 15.5f
         val ZARAGOZA_BOUNDS = LatLngBounds(
             LatLng(41.6000, -1.08125), LatLng(41.774594, -0.7933)
         )
@@ -80,6 +80,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val mapTypeObserver: (Int) -> Unit = { mapType ->
         map.mapType = mapType
+    }
+
+    private val trafficEnabledObserver: (Boolean) -> Unit = { enabled ->
+        map.isTrafficEnabled = enabled
     }
 
     private val busFilterEnabledObserver: (Boolean) -> Unit = { visibility ->
@@ -160,6 +164,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getMapType().observe(this, Observer(mapTypeObserver))
+        mapVM.getTrafficEnabled().observe(this, Observer(trafficEnabledObserver))
         mapVM.getBusFilterEnabled().observe(this, Observer(busFilterEnabledObserver))
         mapVM.getTramFilterEnabled().observe(this, Observer(tramFilterEnabledObserver))
     }

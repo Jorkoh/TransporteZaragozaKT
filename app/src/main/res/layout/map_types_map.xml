@@ -20,7 +20,17 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="8dp"
+            android:id="@+id/traffic_button"
+            android:src="@drawable/ic_traffic_black_24dp"
+            android:background="@drawable/mapbutton_background"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
             android:id="@+id/map_type_button"
             android:src="@drawable/ic_satellite_black_24dp"
             android:background="@drawable/mapbutton_background"/>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

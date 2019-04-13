@@ -29,7 +29,11 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     private val mapTypesObserver: (Int) -> Unit = { enabled ->
-        updateMapTypesUI(enabled, view)
+        updateMapTypesUI(enabled, null, view)
+    }
+
+    private val trafficObserver: (Boolean) -> Unit = { enabled ->
+        updateMapTypesUI(null, enabled, view)
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedState: Bundle?): View? {
@@ -60,6 +64,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     private fun setupMapTypesControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
+        //TODO:  RENAME THIS STUFF, IS MORE THAN MAP TYPES
         val mapTypesView = layoutInflater.inflate(R.layout.map_types_map, wrapper, false)
         mapTypesView.map_type_button.setOnClickListener {
             if (mapVM.getMapType().value == GoogleMap.MAP_TYPE_NORMAL) {
@@ -68,10 +73,14 @@ class CustomSupportMapFragment : SupportMapFragment() {
                 mapVM.setMapType(GoogleMap.MAP_TYPE_NORMAL)
             }
         }
+        mapTypesView.traffic_button.setOnClickListener {
+            mapVM.setTrafficEnabled(mapVM.getTrafficEnabled().value != true)
+        }
         wrapper.addView(mapTypesView)
 
-        updateMapTypesUI(mapVM.getMapType().value, wrapper)
+        updateMapTypesUI(mapVM.getMapType().value, mapVM.getTrafficEnabled().value, wrapper)
         mapVM.getMapType().observe(this, Observer(mapTypesObserver))
+        mapVM.getTrafficEnabled().observe(this, Observer(trafficObserver))
     }
 
     private fun updateFiltersUI(isBusFilterEnabled: Boolean?, isTramFilterEnabled: Boolean?, rootView: View?) {
@@ -85,13 +94,16 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
     }
 
-    private fun updateMapTypesUI(mapType : Int?, rootView: View?){
-        rootView?.let{
-            if(mapType != null){
-                when(mapType){
+    private fun updateMapTypesUI(mapType: Int?, trafficEnabled: Boolean?, rootView: View?) {
+        rootView?.let {
+            if (mapType != null) {
+                when (mapType) {
                     GoogleMap.MAP_TYPE_NORMAL -> it.map_type_button.setImageResource(R.drawable.ic_satellite_black_24dp)
                     GoogleMap.MAP_TYPE_SATELLITE -> it.map_type_button.setImageResource(R.drawable.ic_map_black_24dp)
                 }
+            }
+            if (trafficEnabled != null) {
+                it.traffic_button.setImageResource(if (trafficEnabled) R.drawable.ic_layers_clear_black_24dp else R.drawable.ic_traffic_black_24dp)
             }
         }
     }

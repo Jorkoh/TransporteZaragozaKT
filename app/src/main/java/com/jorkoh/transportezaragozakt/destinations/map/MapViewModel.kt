@@ -18,6 +18,7 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
 
     //Settings
     private lateinit var mapType: LiveData<Int>
+    private lateinit var trafficEnabled: LiveData<Boolean>
     private lateinit var busFilterEnabled: LiveData<Boolean>
     private lateinit var tramFilterEnabled: LiveData<Boolean>
 
@@ -29,6 +30,7 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
         busStopLocations = stopsRepository.loadStopLocations(StopType.BUS)
         tramStopLocations = stopsRepository.loadStopLocations(StopType.TRAM)
         mapType = settingsRepository.loadMapType()
+        trafficEnabled = settingsRepository.loadTrafficEnabled()
         busFilterEnabled = settingsRepository.loadBusFilterEnabled()
         tramFilterEnabled = settingsRepository.loadTramFilterEnabled()
     }
@@ -47,6 +49,14 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
 
     fun setMapType(mapType: Int) {
         settingsRepository.setMapType(mapType)
+    }
+
+    fun getTrafficEnabled(): LiveData<Boolean> {
+        return trafficEnabled
+    }
+
+    fun setTrafficEnabled(enabled: Boolean) {
+        settingsRepository.setTrafficEnabled(enabled)
     }
 
     fun getBusFilterEnabled(): LiveData<Boolean> {

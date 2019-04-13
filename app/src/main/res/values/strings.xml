@@ -26,6 +26,7 @@
     <string name="saved_bus_version_number_key" translatable="false">SAVED_BUS_VERSION_NUMBER_KEY</string>
     <string name="saved_tram_version_number_key" translatable="false">SAVED_TRAM_VERSION_NUMBER_KEY</string>
     <string name="map_type_key" translatable="false">MAP_TYPE_KEY</string>
+    <string name="traffic_key" translatable="false">TRAFFIC_KEY</string>
     <string name="bus_filter_key" translatable="false">BUS_FILTER_KEY</string>
     <string name="tram_filter_key" translatable="false">TRAM_FILTER_KEY</string>
 
