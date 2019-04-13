@@ -25,4 +25,8 @@ class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): 
     fun restoreFavorite(stopId: String){
         favoritesRepository.restoreFavorite(stopId)
     }
+
+    fun moveFavorite(from : Int, to : Int){
+        favoritesRepository.moveFavorite(from, to)
+    }
 }

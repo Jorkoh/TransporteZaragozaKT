@@ -12,6 +12,7 @@ interface FavoritesRepository{
     fun toggleStopFavorite(stopId: String)
     fun updateFavorite(alias : String, colorHex: String, stopId : String)
     fun restoreFavorite(stopId : String)
+    fun moveFavorite(from : Int, to : Int)
 }
 
 class FavoritesRepositoryImplementation(private val stopsDao: StopsDao, private val db: AppDatabase, private val appExecutors: AppExecutors) : FavoritesRepository{
@@ -33,13 +34,21 @@ class FavoritesRepositoryImplementation(private val stopsDao: StopsDao, private 
 
     override fun updateFavorite(alias : String, colorHex: String, stopId : String) {
         appExecutors.diskIO().execute {
-            stopsDao.updateFavorite(alias, colorHex, stopId)
+            stopsDao.updateFavorite(stopId, colorHex, alias)
         }
     }
 
     override fun restoreFavorite(stopId: String) {
         appExecutors.diskIO().execute {
-            stopsDao.updateFavorite(stopsDao.getStopTitleInmediate(stopId), "", stopId)
+            stopsDao.updateFavorite(stopId, "", stopsDao.getStopTitleImmediate(stopId))
+        }
+    }
+
+    override fun moveFavorite(from: Int, to: Int) {
+        appExecutors.diskIO().execute {
+            db.runInTransaction {
+                stopsDao.moveFavorite(from, to)
+            }
         }
     }
 }

@@ -2,24 +2,27 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
-import kotlinx.android.synthetic.main.stop_row.view.*
+import kotlinx.android.synthetic.main.favorite_row.view.*
 
 class FavoriteStopsAdapter(
     private val clickListener: (TagInfo) -> Unit,
-    private val longClickListener: (FavoriteStopExtended) -> Boolean
+    private val editClickListener: (FavoriteStopExtended) -> Unit,
+    private val reorderClickListener: (RecyclerView.ViewHolder) -> Unit
 ) : RecyclerView.Adapter<FavoriteStopsAdapter.StopDetailsViewHolder>() {
 
     class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
             favorite: FavoriteStopExtended,
             clickListener: (TagInfo) -> Unit,
-            longClickListener: (FavoriteStopExtended) -> Boolean
+            editClickListener: (FavoriteStopExtended) -> Unit,
+            reorderClickListener: (RecyclerView.ViewHolder) -> Unit
         ) {
             itemView.apply {
                 type_image.setImageResource(
@@ -38,7 +41,13 @@ class FavoriteStopsAdapter(
                 }
 
                 setOnClickListener { clickListener(TagInfo(favorite.stopId, favorite.type)) }
-                setOnLongClickListener { longClickListener(favorite) }
+                edit_view.setOnClickListener { editClickListener(favorite) }
+                reorder_view.setOnTouchListener { _, event ->
+                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        reorderClickListener(this@StopDetailsViewHolder)
+                    }
+                    return@setOnTouchListener true
+                }
             }
         }
     }
@@ -46,38 +55,45 @@ class FavoriteStopsAdapter(
     lateinit var favorites: List<FavoriteStopExtended>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDetailsViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.stop_row, parent, false) as View
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_row, parent, false) as View
         return StopDetailsViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: StopDetailsViewHolder, position: Int) {
-        holder.bind(favorites[position], clickListener, longClickListener)
+        holder.bind(favorites[position], clickListener, editClickListener, reorderClickListener)
     }
 
     override fun getItemCount(): Int = if (::favorites.isInitialized) favorites.size else 0
 
     fun setFavoriteStops(newFavorites: List<FavoriteStopExtended>) {
         if (::favorites.isInitialized) {
-            val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                override fun getOldListSize() = favorites.size
+            if (isOnlyPositionChange(newFavorites)) {
+                favorites = newFavorites
+            } else {
+                val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+                    override fun getOldListSize() = favorites.size
 
-                override fun getNewListSize() = newFavorites.size
+                    override fun getNewListSize() = newFavorites.size
 
-                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return favorites[oldItemPosition].stopId == newFavorites[newItemPosition].stopId
-                }
+                    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                        return favorites[oldItemPosition].stopId == newFavorites[newItemPosition].stopId
+                    }
 
-                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return favorites[oldItemPosition].type == newFavorites[newItemPosition].type
-                            && favorites[oldItemPosition].alias == newFavorites[newItemPosition].alias
-                            && favorites[oldItemPosition].colorHex == newFavorites[newItemPosition].colorHex
-                }
-            })
-            favorites = newFavorites
-            result.dispatchUpdatesTo(this)
+                    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                        return favorites[oldItemPosition].type == newFavorites[newItemPosition].type
+                                && favorites[oldItemPosition].alias == newFavorites[newItemPosition].alias
+                                && favorites[oldItemPosition].colorHex == newFavorites[newItemPosition].colorHex
+                    }
+                })
+                favorites = newFavorites
+                result.dispatchUpdatesTo(this)
+            }
         } else {
             favorites = newFavorites
             notifyItemRangeInserted(0, favorites.size)
         }
     }
+
+    private fun isOnlyPositionChange(newFavorites: List<FavoriteStopExtended>) =
+        newFavorites.count() == favorites.count() && newFavorites.containsAll(favorites)
 }

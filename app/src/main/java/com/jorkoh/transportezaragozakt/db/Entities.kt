@@ -65,7 +65,15 @@ data class FavoriteStop(
     var alias: String,
 
     @ColumnInfo(name = "colorHex")
-    var colorHex: String
+    var colorHex: String,
+
+    @ColumnInfo(name = "position")
+    var position: Int
+)
+
+data class FavoritePositions(
+    val stopId: String,
+    val position: Int
 )
 
 data class FavoriteStopExtended(

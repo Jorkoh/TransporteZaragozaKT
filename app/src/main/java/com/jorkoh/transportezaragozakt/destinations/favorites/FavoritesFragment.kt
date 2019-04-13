@@ -2,26 +2,22 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.graphics.toColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.parser.IntegerParser
+import androidx.recyclerview.widget.RecyclerView
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
-import com.jaredrummler.android.colorpicker.ColorPickerView
 import com.jaredrummler.android.colorpicker.ColorShape
-import com.jaredrummler.cyanea.Cyanea
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
-import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 import kotlinx.android.synthetic.main.fragment_favorites.*
@@ -43,8 +39,23 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
         }
     }
 
-    //TODO: TESTING
-    private val itemOnLongClick: (FavoriteStopExtended) -> Boolean = { favorite ->
+    private val itemTouchHelper by lazy {
+        val simpleItemTouchCallback = ItemGestureHelper(object : ItemGestureHelper.OnItemGestureListener {
+            override fun onItemDrag(fromPosition: Int, toPosition: Int): Boolean {
+                recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
+                return true
+            }
+
+            override fun onItemDragged(fromPosition: Int, toPosition: Int) {
+                favoritesVM.moveFavorite(fromPosition, toPosition)
+            }
+
+            override fun onItemSwiped(position: Int) {}
+        })
+        ItemTouchHelper(simpleItemTouchCallback)
+    }
+
+    private val onEditClick: (FavoriteStopExtended) -> Unit = { favorite ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             val editFavoriteDialog = ColorPickerDialog.newBuilder().apply {
                 setShowColorShades(false)
@@ -56,20 +67,23 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
                 setDialogTitle(R.string.edit_favorite_dialog_title)
                 setAlias(favorite.alias)
                 setCustomButtonText(R.string.edit_favorite_dialog_restore)
-                if(favorite.colorHex.isNotEmpty()){
+                if (favorite.colorHex.isNotEmpty()) {
                     setColor(Color.parseColor(favorite.colorHex))
                 }
             }.create()
             editFavoriteDialog.setColorPickerDialogListener(this)
             editFavoriteDialog.show(requireFragmentManager(), "EditFavoriteDialog")
         }
-        true
     }
 
-    override fun onDialogDismissed(dialogId: String) { }
+    private val onReorderClick: (RecyclerView.ViewHolder) -> Unit = { viewHolder ->
+        itemTouchHelper.startDrag(viewHolder)
+    }
 
-    override fun onDialogAccepted(favoriteId: String, alias : String, color: Int) {
-        val hexColor = if(color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
+    override fun onDialogDismissed(dialogId: String) {}
+
+    override fun onDialogAccepted(favoriteId: String, alias: String, color: Int) {
+        val hexColor = if (color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
         favoritesVM.updateFavorite(alias, hexColor, favoriteId)
     }
 
@@ -79,10 +93,11 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
 
 
     private val favoriteStopsAdapter: FavoriteStopsAdapter =
-        FavoriteStopsAdapter(itemOnClick, itemOnLongClick)
+        FavoriteStopsAdapter(itemOnClick, onEditClick, onReorderClick)
 
     private val favoriteStopsObserver = Observer<List<FavoriteStopExtended>> { favorites ->
         favorites?.let {
+            Log.d("TESTING STUFF", "setting favorites")
             updateEmptyViewVisibility(favorites.isEmpty(), view)
             favoriteStopsAdapter.setFavoriteStops(favorites)
         }
@@ -99,8 +114,10 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteStopsAdapter
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+//            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
+
+        itemTouchHelper.attachToRecyclerView(rootView.recycler_view)
 
         favoritesVM.getFavoriteStops().observe(this, favoriteStopsObserver)
         updateEmptyViewVisibility(favoritesVM.getFavoriteStops().value.isNullOrEmpty(), rootView)
@@ -113,11 +130,11 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView: View?) {
-            val newVisibility = if (isEmpty) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        val newVisibility = if (isEmpty) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
         rootView?.no_favorites_animation?.visibility = newVisibility
         rootView?.no_favorites_text?.visibility = newVisibility
     }
