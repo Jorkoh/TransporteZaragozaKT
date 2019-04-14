@@ -22,4 +22,5 @@
     <string name="edit_favorite_dialog_title">Editar favorito</string>
     <string name="stop_type_content_description">Tipo de parada</string>
     <string name="edit_favorite_dialog_restore">Restaurar</string>
+    <string name="location_rationale">Este permiso es usado para mostrar tu localización en el mapa y encontrar paradas cercanas. La información de localización nunca será usada para otro propósito</string>
 </resources>

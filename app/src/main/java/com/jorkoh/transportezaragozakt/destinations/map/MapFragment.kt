@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFrag
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -147,11 +149,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // Get and (if needed) initialize the map fragment programmatically
         var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as CustomSupportMapFragment?
         if (mapFragment == null) {
+            //TODO: REMOVE THIS TESTING THING
+            Log.d("TESTING STUFF", "Creating new map")
+            Log.d("TESTING STUFF", "Styled: ${mapVM.mapHasBeenStyled}")
+
             mapFragment = CustomSupportMapFragment()
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, "mapFragment")
                 .commit()
             childFragmentManager.executePendingTransactions()
+        } else {
+            //TODO: REMOVE THIS TESTING THING
+            Log.d("TESTING STUFF", "Map already exists")
+            Log.d("TESTING STUFF", "Styled: ${mapVM.mapHasBeenStyled}")
         }
         mapFragment.getMapAsync(this)
     }
@@ -171,8 +181,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun styleMap() {
         createBaseMarkers()
-        setStyle()
 
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
         map.setMaxZoomPreference(MAX_ZOOM)
         map.setMinZoomPreference(MIN_ZOOM)
         map.uiSettings.isTiltGesturesEnabled = false
@@ -189,16 +199,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             )
         }
 
-        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
+        runWithPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            options = QuickPermissionsOptions(
+                handleRationale = true,
+                rationaleMessage = getString(R.string.location_rationale),
+                handlePermanentlyDenied = false,
+                permissionsDeniedMethod = {
+                    mapVM.mapHasBeenStyled = true
+                },
+                permanentDeniedMethod = {
+                    mapVM.mapHasBeenStyled = true
+                })
+        ) {
             @SuppressLint("MissingPermission")
             map.isMyLocationEnabled = true
             map.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener)
             if (!mapVM.mapHasBeenStyled) {
                 onMyLocationButtonClickListener.onMyLocationButtonClick()
             }
+            mapVM.mapHasBeenStyled = true
         }
-
-        mapVM.mapHasBeenStyled = true
     }
 
     private fun createBaseMarkers() {
@@ -248,9 +269,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         tramFavoriteMarker = MarkerOptions()
             .icon(BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap))
             .anchor(0.5f, 0.5f)
-    }
-
-    private fun setStyle() {
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
     }
 }

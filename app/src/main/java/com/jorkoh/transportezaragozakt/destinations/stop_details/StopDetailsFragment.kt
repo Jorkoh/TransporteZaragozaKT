@@ -62,7 +62,6 @@ class StopDetailsFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = stopDestinationsAdapter
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         updateStopDestinationsUI(stopDetailsVM.getStopDestinations().value, rootView)
