@@ -53,8 +53,10 @@ fun BusStopLocationsResponse.toStops(): List<Stop> {
         stops += Stop(
             StopType.BUS,
             location.properties.id,
+            location.properties.id.split("-")[1],
             location.properties.title,
             location.geometry.coordinates,
+            location.properties.title.split("Líneas: ")[1].split(", "),
             false
         )
     }

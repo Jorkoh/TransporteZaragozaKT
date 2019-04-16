@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.jorkoh.transportezaragozakt.R
-import kotlinx.android.synthetic.main.fragment_more.view.*
+import kotlinx.android.synthetic.main.more_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoreFragment : Fragment() {
@@ -19,7 +19,7 @@ class MoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_more, container, false)
+        val view = inflater.inflate(R.layout.more_destination, container, false)
 
         view.themes_button.setOnClickListener{
             findNavController().navigate(R.id.action_more_to_cyaneaThemePicker)

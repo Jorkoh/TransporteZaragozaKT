@@ -9,7 +9,7 @@
             android:id="@+id/more"
             android:name="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment"
             android:label="More"
-            tools:layout="@layout/fragment_more">
+            tools:layout="@layout/more_destination">
         <action
                 android:id="@+id/action_more_to_cyaneaThemePicker"
                 app:destination="@id/cyaneaThemePicker"/>

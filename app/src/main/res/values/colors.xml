@@ -3,4 +3,6 @@
     <color name="cyanea_primary_reference">#0288D1</color>
     <color name="cyanea_accent_reference">#FFA000</color>
     <color name="kinda_white">#ECECEC</color>
+    <color name="bus_color">#2c82c9</color>
+    <color name="tram_color">#232828</color>
 </resources>

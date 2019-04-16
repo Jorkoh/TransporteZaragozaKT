@@ -20,8 +20,8 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
-import kotlinx.android.synthetic.main.fragment_favorites.*
-import kotlinx.android.synthetic.main.fragment_favorites.view.*
+import kotlinx.android.synthetic.main.favorites_destination.*
+import kotlinx.android.synthetic.main.favorites_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -108,7 +108,7 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        val rootView = inflater.inflate(R.layout.fragment_favorites, container, false)
+        val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
 
         rootView.recycler_view.apply {
             setHasFixedSize(true)

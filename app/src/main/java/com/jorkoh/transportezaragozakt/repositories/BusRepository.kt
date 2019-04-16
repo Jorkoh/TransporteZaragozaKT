@@ -50,6 +50,7 @@ class BusRepositoryImplementation(
                 stopsDao.insertStops(item.toStops())
             }
 
+            //TODO: Maybe this should be true if it's unable to load data from db for some reason
             override fun shouldFetch(data: List<Stop>?): Boolean {
                 return false
             }

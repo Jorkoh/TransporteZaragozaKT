@@ -25,13 +25,13 @@ class FavoriteStopsAdapter(
             reorderClickListener: (RecyclerView.ViewHolder) -> Unit
         ) {
             itemView.apply {
-                type_image.setImageResource(
+                type_image_favorite.setImageResource(
                     when (favorite.type) {
                         StopType.BUS -> R.drawable.ic_bus
                         StopType.TRAM -> R.drawable.ic_tram
                     }
                 )
-                title_text.text = favorite.alias
+                title_text_favorite.text = favorite.alias
                 if (favorite.colorHex.isNotEmpty()) {
                     favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
                     favorite_color.visibility = View.VISIBLE
@@ -41,8 +41,8 @@ class FavoriteStopsAdapter(
                 }
 
                 setOnClickListener { clickListener(TagInfo(favorite.stopId, favorite.type)) }
-                edit_view.setOnClickListener { editClickListener(favorite) }
-                reorder_view.setOnTouchListener { _, event ->
+                edit_view_favorite.setOnClickListener { editClickListener(favorite) }
+                reorder_view_favorite.setOnTouchListener { _, event ->
                     if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                         reorderClickListener(this@StopDetailsViewHolder)
                     }

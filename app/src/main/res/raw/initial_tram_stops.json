@@ -4,6 +4,7 @@
   "stops": [
     {
       "id": "1001",
+      "number": "1001",
       "title": "LA CHIMENEA",
       "location": [
         -0.8828475648052913,
@@ -15,6 +16,7 @@
     },
     {
       "id": "1002",
+      "number": "1002",
       "title": "LA CHIMENEA",
       "location": [
         -0.8828393320565395,
@@ -26,6 +28,7 @@
     },
     {
       "id": "101",
+      "number": "101",
       "title": "AVENIDA DE LA ACADEMIA",
       "location": [
         -0.8708043196472608,
@@ -37,6 +40,7 @@
     },
     {
       "id": "102",
+      "number": "102",
       "title": "AVENIDA DE LA ACADEMIA",
       "location": [
         -0.8707787699110215,
@@ -48,6 +52,7 @@
     },
     {
       "id": "1101",
+      "number": "1101",
       "title": "PLAZA DEL PILAR - MURALLAS",
       "location": [
         -0.8821748834915281,
@@ -59,6 +64,7 @@
     },
     {
       "id": "1102",
+      "number": "1102",
       "title": "PLAZA DEL PILAR - MURALLAS",
       "location": [
         -0.8820733181164175,
@@ -70,6 +76,7 @@
     },
     {
       "id": "1201",
+      "number": "1201",
       "title": "CESAR AUGUSTO",
       "location": [
         -0.8840714551015636,
@@ -81,6 +88,7 @@
     },
     {
       "id": "1202",
+      "number": "1202",
       "title": "CESAR AUGUSTO",
       "location": [
         -0.8838796425078432,
@@ -92,6 +100,7 @@
     },
     {
       "id": "1301",
+      "number": "1301",
       "title": "PLAZA ESPANA",
       "location": [
         -0.8815944840350631,
@@ -103,6 +112,7 @@
     },
     {
       "id": "1302",
+      "number": "1302",
       "title": "PLAZA ESPANA",
       "location": [
         -0.8815219475629344,
@@ -114,6 +124,7 @@
     },
     {
       "id": "1311",
+      "number": "1311",
       "title": "PLAZA ARAGON",
       "location": [
         -0.8852391476851216,
@@ -125,6 +136,7 @@
     },
     {
       "id": "1312",
+      "number": "1312",
       "title": "PLAZA ARAGON",
       "location": [
         -0.8851639361683451,
@@ -136,6 +148,7 @@
     },
     {
       "id": "1401",
+      "number": "1401",
       "title": "GRAN VIA",
       "location": [
         -0.8871558438886694,
@@ -147,6 +160,7 @@
     },
     {
       "id": "1402",
+      "number": "1402",
       "title": "GRAN VIA",
       "location": [
         -0.887116640612462,
@@ -158,6 +172,7 @@
     },
     {
       "id": "1501",
+      "number": "1501",
       "title": "FERNANDO EL CATOLICO - GOYA",
       "location": [
         -0.892257594225223,
@@ -169,6 +184,7 @@
     },
     {
       "id": "1502",
+      "number": "1502",
       "title": "FERNANDO EL CATOLICO - GOYA",
       "location": [
         -0.8921749197012053,
@@ -180,6 +196,7 @@
     },
     {
       "id": "1601",
+      "number": "1601",
       "title": "PLAZA SAN FRANCISCO",
       "location": [
         -0.8950562849629533,
@@ -191,6 +208,7 @@
     },
     {
       "id": "1602",
+      "number": "1602",
       "title": "PLAZA SAN FRANCISCO",
       "location": [
         -0.894952294641248,
@@ -202,6 +220,7 @@
     },
     {
       "id": "1701",
+      "number": "1701",
       "title": "EMPERADOR CARLOS V",
       "location": [
         -0.8976905835811019,
@@ -213,6 +232,7 @@
     },
     {
       "id": "1702",
+      "number": "1702",
       "title": "EMPERADOR CARLOS V",
       "location": [
         -0.8976101497735137,
@@ -224,6 +244,7 @@
     },
     {
       "id": "1801",
+      "number": "1801",
       "title": "ROMAREDA",
       "location": [
         -0.9006698186054948,
@@ -235,6 +256,7 @@
     },
     {
       "id": "1802",
+      "number": "1802",
       "title": "ROMAREDA",
       "location": [
         -0.9006075797755985,
@@ -246,6 +268,7 @@
     },
     {
       "id": "1901",
+      "number": "1901",
       "title": "CASABLANCA",
       "location": [
         -0.9055989921154052,
@@ -257,6 +280,7 @@
     },
     {
       "id": "1902",
+      "number": "1902",
       "title": "CASABLANCA",
       "location": [
         -0.9055700550541702,
@@ -268,6 +292,7 @@
     },
     {
       "id": "2001",
+      "number": "2001",
       "title": "ARGUALAS",
       "location": [
         -0.9096155388996879,
@@ -279,6 +304,7 @@
     },
     {
       "id": "2002",
+      "number": "2002",
       "title": "ARGUALAS",
       "location": [
         -0.9095584654201042,
@@ -290,6 +316,7 @@
     },
     {
       "id": "201",
+      "number": "201",
       "title": "PARQUE GOYA",
       "location": [
         -0.878704035935457,
@@ -301,6 +328,7 @@
     },
     {
       "id": "202",
+      "number": "202",
       "title": "PARQUE GOYA",
       "location": [
         -0.8787101785601839,
@@ -312,6 +340,7 @@
     },
     {
       "id": "2101",
+      "number": "2101",
       "title": "PASEO DE LOS OLVIDADOS",
       "location": [
         -0.9188084399278142,
@@ -323,6 +352,7 @@
     },
     {
       "id": "2102",
+      "number": "2102",
       "title": "PASEO DE LOS OLVIDADOS",
       "location": [
         -0.9187275283019417,
@@ -334,6 +364,7 @@
     },
     {
       "id": "2301",
+      "number": "2301",
       "title": "LOS PAJAROS",
       "location": [
         -0.9236692178629906,
@@ -345,6 +376,7 @@
     },
     {
       "id": "2322",
+      "number": "2322",
       "title": "LA VENTANA INDISCRETA",
       "location": [
         -0.9241035084006295,
@@ -356,6 +388,7 @@
     },
     {
       "id": "2401",
+      "number": "2401",
       "title": "CANTANDO BAJO LA LLUVIA",
       "location": [
         -0.930185492587926,
@@ -367,6 +400,7 @@
     },
     {
       "id": "2422",
+      "number": "2422",
       "title": "UN AMERICANO EN PARIS",
       "location": [
         -0.9304910897725164,
@@ -378,6 +412,7 @@
     },
     {
       "id": "2501",
+      "number": "2501",
       "title": "MAGO DE OZ",
       "location": [
         -0.9363805520582271,
@@ -389,6 +424,7 @@
     },
     {
       "id": "2502",
+      "number": "2502",
       "title": "MAGO DE OZ",
       "location": [
         -0.936450897480926,
@@ -400,6 +436,7 @@
     },
     {
       "id": "301",
+      "number": "301",
       "title": "JUSLIBOL",
       "location": [
         -0.8846278141287558,
@@ -411,6 +448,7 @@
     },
     {
       "id": "302",
+      "number": "302",
       "title": "JUSLIBOL",
       "location": [
         -0.884626111810379,
@@ -422,6 +460,7 @@
     },
     {
       "id": "401",
+      "number": "401",
       "title": "CAMPUS RIO EBRO",
       "location": [
         -0.8897943413131593,
@@ -433,6 +472,7 @@
     },
     {
       "id": "402",
+      "number": "402",
       "title": "CAMPUS RIO EBRO",
       "location": [
         -0.8896794932980542,
@@ -444,6 +484,7 @@
     },
     {
       "id": "501",
+      "number": "501",
       "title": "MARGARITA XIRGU",
       "location": [
         -0.8908045204522034,
@@ -455,6 +496,7 @@
     },
     {
       "id": "502",
+      "number": "502",
       "title": "GARCIA ABRIL",
       "location": [
         -0.8892311116916783,
@@ -466,6 +508,7 @@
     },
     {
       "id": "601",
+      "number": "601",
       "title": "LEGAZ LACAMBRA",
       "location": [
         -0.8908393900410567,
@@ -477,6 +520,7 @@
     },
     {
       "id": "602",
+      "number": "602",
       "title": "ADOLFO AZNAR",
       "location": [
         -0.8892597165910525,
@@ -488,6 +532,7 @@
     },
     {
       "id": "701",
+      "number": "701",
       "title": "CLARA CAMPOAMOR",
       "location": [
         -0.8906840108247296,
@@ -499,6 +544,7 @@
     },
     {
       "id": "702",
+      "number": "702",
       "title": "PABLO NERUDA",
       "location": [
         -0.8888424674967174,
@@ -510,6 +556,7 @@
     },
     {
       "id": "801",
+      "number": "801",
       "title": "ROSALIA DE CASTRO",
       "location": [
         -0.8873440573059242,
@@ -521,6 +568,7 @@
     },
     {
       "id": "802",
+      "number": "802",
       "title": "LEON FELIPE",
       "location": [
         -0.8866449039219496,
@@ -532,6 +580,7 @@
     },
     {
       "id": "901",
+      "number": "901",
       "title": "MARTINEZ SORIA",
       "location": [
         -0.8846435357078465,
@@ -543,6 +592,7 @@
     },
     {
       "id": "902",
+      "number": "902",
       "title": "MARIA MONTESSORI",
       "location": [
         -0.883606049577144,

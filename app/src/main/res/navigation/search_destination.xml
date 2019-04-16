@@ -9,5 +9,5 @@
             android:id="@+id/search"
             android:name="com.jorkoh.transportezaragozakt.destinations.search.SearchFragment"
             android:label="Search"
-            tools:layout="@layout/fragment_search"/>
+            tools:layout="@layout/search_destination"/>
 </navigation>

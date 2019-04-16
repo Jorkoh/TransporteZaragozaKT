@@ -79,14 +79,6 @@ data class Geometry(
     val type: String
 )
 
-fun TramStopResponse.toStop() = Stop(
-    StopType.TRAM,
-    features.first().properties.id,
-    features.first().properties.title,
-    LatLng(features.first().geometry.coordinates[0], features.first().geometry.coordinates[1]),
-    false
-)
-
 fun TramStopResponse.toStopDestinations(context: Context): List<StopDestination> {
     val stopDestinations = mutableListOf<StopDestination>()
     features.first().properties.destinos?.let { destinations ->

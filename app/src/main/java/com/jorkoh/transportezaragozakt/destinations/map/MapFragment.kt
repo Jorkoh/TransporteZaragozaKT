@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.destinations.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -20,12 +23,12 @@ import com.google.android.gms.maps.model.*
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.db.TagInfo
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import kotlinx.android.synthetic.main.map_info_window.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -69,7 +72,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
 
                     val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
-                    newMarker.tag = TagInfo(stop.id, stop.type)
+                    newMarker.tag = stop
                     if (markerCollection[stop.id]?.isInfoWindowShown == true) {
                         newMarker.showInfoWindow()
                     }
@@ -102,11 +105,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val onInfoWindowClickListener = GoogleMap.OnInfoWindowClickListener { marker ->
         marker?.let {
-            val markerInfo = marker.tag
-            if (markerInfo is TagInfo) {
+            val stop = marker.tag
+            if (stop is Stop) {
                 val bundle = Bundle().apply {
-                    putString(StopDetailsFragment.STOP_ID_KEY, markerInfo.id)
-                    putString(StopDetailsFragment.STOP_TYPE_KEY, markerInfo.type.name)
+                    putString(StopDetailsFragment.STOP_ID_KEY, stop.id)
+                    putString(StopDetailsFragment.STOP_TYPE_KEY, stop.type.name)
                 }
                 findNavController().navigate(R.id.action_map_to_stopDetails, bundle)
             }
@@ -130,6 +133,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         true
     }
 
+    internal inner class StopInfoWindowAdapter : GoogleMap.InfoWindowAdapter{
+        override fun getInfoWindow(marker: Marker?): View? {
+            return null
+        }
+
+        override fun getInfoContents(marker: Marker?): View? {
+            if(marker == null) return null
+
+            val stop = marker.tag as Stop
+            val content = layoutInflater.inflate(R.layout.map_info_window, null)
+
+            content.title_text_info_window.text = stop.title
+            content.number_text_info_window.text = stop.number
+            content.type_image_info_window.setImageResource(
+                when (stop.type) {
+                    StopType.BUS -> R.drawable.ic_bus
+                    StopType.TRAM -> R.drawable.ic_tram
+                }
+            )
+            stop.lines.forEachIndexed { index, line ->
+                layoutInflater.inflate(R.layout.map_info_window_line, content.lines_layout)
+                val lineView = content.lines_layout.getChildAt(index) as TextView
+
+                val lineColor = if(stop.type == StopType.BUS) R.color.bus_color else R.color.tram_color
+                lineView.background.setColorFilter(ContextCompat.getColor(requireContext(), lineColor), PorterDuff.Mode.SRC_IN)
+                lineView.text = line
+            }
+            return content
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,7 +174,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        return inflater.inflate(R.layout.map_destination, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -171,6 +204,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         styleMap()
         map.setOnInfoWindowClickListener(onInfoWindowClickListener)
+        map.setInfoWindowAdapter(StopInfoWindowAdapter())
         mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getMapType().observe(this, Observer(mapTypeObserver))

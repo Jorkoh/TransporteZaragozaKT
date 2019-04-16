@@ -17,11 +17,17 @@ data class Stop(
     @ColumnInfo(name = "id")
     var id: String,
 
+    @ColumnInfo(name = "number")
+    var number: String,
+
     @ColumnInfo(name = "title")
     var title: String,
 
     @ColumnInfo(name = "location")
     var location: LatLng,
+
+    @ColumnInfo(name = "lines")
+    var lines: List<String>,
 
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean

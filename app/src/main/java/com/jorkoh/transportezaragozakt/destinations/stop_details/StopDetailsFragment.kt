@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jorkoh.transportezaragozakt.MainActivity
@@ -16,8 +14,7 @@ import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
-import kotlinx.android.synthetic.main.fragment_stop_details.*
-import kotlinx.android.synthetic.main.fragment_stop_details.view.*
+import kotlinx.android.synthetic.main.stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
@@ -56,7 +53,7 @@ class StopDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_stop_details, container, false)
+        val rootView = inflater.inflate(R.layout.stop_details, container, false)
 
         rootView.recycler_view.apply {
             setHasFixedSize(true)

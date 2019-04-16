@@ -21,7 +21,7 @@ import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
 //import com.jorkoh.transportezaragozakt.navigation.openDestination
 import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -35,7 +35,7 @@ class MainActivity : CyaneaAppCompatActivity(), ColorPickerDialogListener {
         super.onCreate(savedInstanceState)
         enqueueWorker()
         setupNotificationChannels(this)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main_container)
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         } // Else, need to wait for onRestoreInstanceState

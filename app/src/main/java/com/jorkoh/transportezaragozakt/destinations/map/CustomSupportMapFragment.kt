@@ -8,11 +8,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import android.widget.FrameLayout
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMapOptions
 import com.jorkoh.transportezaragozakt.R
-import kotlinx.android.synthetic.main.filter_chips_map.view.*
-import kotlinx.android.synthetic.main.map_types_map.view.*
-import kotlinx.android.synthetic.main.notification_custom.view.*
+import kotlinx.android.synthetic.main.map_filters.view.*
+import kotlinx.android.synthetic.main.map_types.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -49,7 +47,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     private fun setupFiltersControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
-        val filterChipsView = layoutInflater.inflate(R.layout.filter_chips_map, wrapper, false)
+        val filterChipsView = layoutInflater.inflate(R.layout.map_filters, wrapper, false)
         filterChipsView.bus_chip.setOnClickListener {
             mapVM.setBusFilterEnabled(it.bus_chip.isChecked)
         }
@@ -65,7 +63,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
 
     private fun setupMapTypesControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
         //TODO:  RENAME THIS STUFF, IS MORE THAN MAP TYPES
-        val mapTypesView = layoutInflater.inflate(R.layout.map_types_map, wrapper, false)
+        val mapTypesView = layoutInflater.inflate(R.layout.map_types, wrapper, false)
         mapTypesView.map_type_button.setOnClickListener {
             if (mapVM.getMapType().value == GoogleMap.MAP_TYPE_NORMAL) {
                 mapVM.setMapType(GoogleMap.MAP_TYPE_SATELLITE)

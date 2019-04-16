@@ -17,6 +17,8 @@ import com.parse.ParseQuery
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
+
+
 class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams),
     KoinComponent {
@@ -124,11 +126,19 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             val location = stopJson.getJSONArray("location")?.let { locationJsonArray ->
                 LatLng(locationJsonArray[1] as Double, locationJsonArray[0] as Double)
             }
+            val linesJson = stopJson.getJSONArray("lines")
+            val lines = mutableListOf<String>()
+            for (j in 0 until linesJson.length()) {
+                lines.add(linesJson.getString(i))
+            }
+
             val stopEntity = Stop(
                 StopType.BUS,
-                checkNotNull(stopJson.getString("id")),
-                checkNotNull(stopJson.getString("title")),
+                stopJson.getString("id"),
+                stopJson.getString("number"),
+                stopJson.getString("title"),
                 checkNotNull(location),
+                lines,
                 false
             )
             busStopEntities.add(stopEntity)
@@ -154,11 +164,19 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             val location = stopJson.getJSONArray("location")?.let { locationJsonArray ->
                 LatLng(locationJsonArray[1] as Double, locationJsonArray[0] as Double)
             }
+            val linesJson = stopJson.getJSONArray("lines")
+            val lines = mutableListOf<String>()
+            for (j in 0 until linesJson.length()) {
+                lines.add(linesJson.getString(j))
+            }
+
             val stopEntity = Stop(
                 StopType.TRAM,
-                checkNotNull(stopJson.getString("id")),
-                checkNotNull(stopJson.getString("title")),
+                stopJson.getString("id"),
+                stopJson.getString("number"),
+                stopJson.getString("title"),
                 checkNotNull(location),
+                lines,
                 false
             )
             tramStopEntities.add(stopEntity)
