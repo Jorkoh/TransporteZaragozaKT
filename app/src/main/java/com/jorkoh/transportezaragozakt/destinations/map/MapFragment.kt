@@ -144,8 +144,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val stop = marker.tag as Stop
             val content = layoutInflater.inflate(R.layout.map_info_window, null)
 
-            content.title_text_info_window.text = stop.title
-            content.number_text_info_window.text = stop.number
             content.type_image_info_window.setImageResource(
                 when (stop.type) {
                     StopType.BUS -> R.drawable.ic_bus
@@ -160,6 +158,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 lineView.background.setColorFilter(ContextCompat.getColor(requireContext(), lineColor), PorterDuff.Mode.SRC_IN)
                 lineView.text = line
             }
+
+            content.title_text_info_window.text = stop.title
+            content.title_text_info_window.requestLayout()
+            content.number_text_info_window.text = stop.number
+            content.number_text_info_window.requestLayout()
             return content
         }
     }
