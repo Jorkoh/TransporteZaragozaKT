@@ -34,7 +34,7 @@ data class Properties(
     @field:Json(name = "id")
     val id: String,
 
-    @field:Json(name = "title")
+    @field:Json(name = "stopTitle")
     val title: String,
 
     @field:Json(name = "destinos")

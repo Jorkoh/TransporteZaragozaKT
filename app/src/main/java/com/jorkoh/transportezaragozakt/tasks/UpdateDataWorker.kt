@@ -136,7 +136,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
                 StopType.BUS,
                 stopJson.getString("id"),
                 stopJson.getString("number"),
-                stopJson.getString("title"),
+                stopJson.getString("stopTitle"),
                 checkNotNull(location),
                 lines,
                 false
@@ -174,7 +174,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
                 StopType.TRAM,
                 stopJson.getString("id"),
                 stopJson.getString("number"),
-                stopJson.getString("title"),
+                stopJson.getString("stopTitle"),
                 checkNotNull(location),
                 lines,
                 false

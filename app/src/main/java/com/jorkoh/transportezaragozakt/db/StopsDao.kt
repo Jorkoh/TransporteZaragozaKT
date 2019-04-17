@@ -52,7 +52,7 @@ abstract class StopsDao {
     @Query("UPDATE stops SET isFavorite = :isFavorite WHERE id = :stopId")
     abstract fun updateIsFavorite(stopId: String, isFavorite: Boolean)
 
-    @Query("SELECT favoriteStops.stopId, stops.type, stops.title, favoriteStops.alias, favoriteStops.colorHex, favoriteStops.position FROM stops INNER JOIN favoriteStops ON stops.id = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
+    @Query("SELECT favoriteStops.stopId, stops.type, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.id = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
     abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
 
     @Query("SELECT stopId, position FROM favoriteStops ORDER BY favoriteStops.position ASC")
@@ -68,10 +68,10 @@ abstract class StopsDao {
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
     abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
 
-    @Query("SELECT title FROM stops WHERE id = :stopId")
+    @Query("SELECT stopTitle FROM stops WHERE id = :stopId")
     abstract fun getStopTitle(stopId: String): LiveData<String>
 
-    @Query("SELECT title FROM stops WHERE id = :stopId")
+    @Query("SELECT stopTitle FROM stops WHERE id = :stopId")
     abstract fun getStopTitleImmediate(stopId: String): String
 
     @Query("SELECT IFNULL(position, 0)+1 'position' FROM favoriteStops ORDER BY position LIMIT 1")

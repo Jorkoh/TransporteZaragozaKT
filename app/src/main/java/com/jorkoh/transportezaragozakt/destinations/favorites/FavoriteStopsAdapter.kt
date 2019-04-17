@@ -1,10 +1,13 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
@@ -38,6 +41,19 @@ class FavoriteStopsAdapter(
                 } else {
                     favorite_color.setBackgroundColor(Color.TRANSPARENT)
                     favorite_color.visibility = View.GONE
+                }
+
+                val layoutInflater = LayoutInflater.from(context)
+                favorite.lines.forEachIndexed { index, line ->
+                    layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout)
+                    val lineView = itemView.lines_layout.getChildAt(index) as TextView
+
+                    val lineColor = if (favorite.type == StopType.BUS) R.color.bus_color else R.color.tram_color
+                    lineView.background.setColorFilter(
+                        ContextCompat.getColor(context, lineColor),
+                        PorterDuff.Mode.SRC_IN
+                    )
+                    lineView.text = line
                 }
 
                 setOnClickListener { clickListener(TagInfo(favorite.stopId, favorite.type)) }

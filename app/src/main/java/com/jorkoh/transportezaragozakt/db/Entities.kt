@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.db
 
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterItem
 import java.util.*
 
 enum class StopType {
@@ -20,8 +21,8 @@ data class Stop(
     @ColumnInfo(name = "number")
     var number: String,
 
-    @ColumnInfo(name = "title")
-    var title: String,
+    @ColumnInfo(name = "stopTitle")
+    var stopTitle: String,
 
     @ColumnInfo(name = "location")
     var location: LatLng,
@@ -31,7 +32,17 @@ data class Stop(
 
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean
-)
+) : ClusterItem {
+    override fun getSnippet(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getTitle(): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getPosition(): LatLng = location
+}
 
 @Entity(
     tableName = "stopDestinations",
@@ -85,9 +96,10 @@ data class FavoritePositions(
 data class FavoriteStopExtended(
     val stopId: String,
     val type: StopType,
-    val title: String,
+    val stopTitle: String,
     val alias: String,
-    val colorHex: String
+    val colorHex: String,
+    val lines : List<String>
 )
 
 data class TagInfo(val id: String, val type: StopType)

@@ -34,7 +34,7 @@ data class Properties(
     @field:Json(name = "uri")
     val link: String,
 
-    @field:Json(name = "title")
+    @field:Json(name = "stopTitle")
     val title: String,
 
     @field:Transient

@@ -87,6 +87,20 @@
                 />
 
 
+        <GridLayout
+                android:layout_width="0dp"
+                android:columnCount="7"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@+id/type_image_favorite"
+                app:layout_constraintEnd_toStartOf="@+id/edit_view_favorite"
+                app:layout_constraintTop_toBottomOf="@+id/title_text_favorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:id="@+id/lines_layout"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="4dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

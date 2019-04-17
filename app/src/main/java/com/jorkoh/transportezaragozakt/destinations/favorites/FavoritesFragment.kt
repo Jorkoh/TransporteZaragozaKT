@@ -114,7 +114,6 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteStopsAdapter
-//            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         itemTouchHelper.attachToRecyclerView(rootView.recycler_view)

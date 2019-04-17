@@ -7,7 +7,6 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -48,6 +48,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val mapVM: MapViewModel by sharedViewModel()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var clusterManager: ClusterManager<Stop>
     private lateinit var map: GoogleMap
 
     private lateinit var busMarker: MarkerOptions
@@ -71,7 +72,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         StopType.TRAM -> mapTramStopsMarkers
                     }
 
-                    val newMarker = map.addMarker(baseMarker.title(stop.title).position(stop.location))
+                    val newMarker = map.addMarker(baseMarker.title(stop.stopTitle).position(stop.location))
                     newMarker.tag = stop
                     if (markerCollection[stop.id]?.isInfoWindowShown == true) {
                         newMarker.showInfoWindow()
@@ -121,6 +122,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null && ZARAGOZA_BOUNDS.contains(location.toLatLng())) {
+                    //Smoothly pan the user towards their position, reset the zoom level and bearing
                     val cameraPosition = CameraPosition.builder()
                         .target(location.toLatLng())
                         .zoom(DEFAULT_ZOOM)
@@ -150,9 +152,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     StopType.TRAM -> R.drawable.ic_tram
                 }
             )
+
+            //If the stopTitle is longer we can fit more lines while keeping a nice ratio
             content.lines_layout.columnCount = when{
-                stop.title.length >= 24 -> 8
-                stop.title.length >= 18 -> 6
+                stop.stopTitle.length >= 24 -> 8
+                stop.stopTitle.length >= 18 -> 6
                 else -> 4
             }
             stop.lines.forEachIndexed { index, line ->
@@ -163,11 +167,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 lineView.background.setColorFilter(ContextCompat.getColor(requireContext(), lineColor), PorterDuff.Mode.SRC_IN)
                 lineView.text = line
             }
-
             content.number_text_info_window.text = stop.number
-            content.number_text_info_window.requestLayout()
-            content.title_text_info_window.text = stop.title
-            content.title_text_info_window.requestLayout()
+            content.title_text_info_window.text = stop.stopTitle
+
             return content
         }
     }
@@ -190,19 +192,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // Get and (if needed) initialize the map fragment programmatically
         var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as CustomSupportMapFragment?
         if (mapFragment == null) {
-            //TODO: REMOVE THIS TESTING THING
-            Log.d("TESTING STUFF", "Creating new map")
-            Log.d("TESTING STUFF", "Styled: ${mapVM.mapHasBeenStyled}")
 
             mapFragment = CustomSupportMapFragment()
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, "mapFragment")
                 .commit()
             childFragmentManager.executePendingTransactions()
-        } else {
-            //TODO: REMOVE THIS TESTING THING
-            Log.d("TESTING STUFF", "Map already exists")
-            Log.d("TESTING STUFF", "Styled: ${mapVM.mapHasBeenStyled}")
         }
         mapFragment.getMapAsync(this)
     }
@@ -213,6 +208,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         styleMap()
         map.setOnInfoWindowClickListener(onInfoWindowClickListener)
         map.setInfoWindowAdapter(StopInfoWindowAdapter())
+        clusterManager = ClusterManager(context, map)
+        map.setOnCameraIdleListener(clusterManager)
+        map.setOnMarkerClickListener(clusterManager)
+
         mapVM.getBusStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getTramStopLocations().observe(this, Observer(stopLocationsObserver))
         mapVM.getMapType().observe(this, Observer(mapTypeObserver))
