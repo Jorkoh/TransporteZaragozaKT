@@ -150,6 +150,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     StopType.TRAM -> R.drawable.ic_tram
                 }
             )
+            content.lines_layout.columnCount = when{
+                stop.title.length >= 24 -> 8
+                stop.title.length >= 18 -> 6
+                else -> 4
+            }
             stop.lines.forEachIndexed { index, line ->
                 layoutInflater.inflate(R.layout.map_info_window_line, content.lines_layout)
                 val lineView = content.lines_layout.getChildAt(index) as TextView
@@ -159,10 +164,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 lineView.text = line
             }
 
-            content.title_text_info_window.text = stop.title
-            content.title_text_info_window.requestLayout()
             content.number_text_info_window.text = stop.number
             content.number_text_info_window.requestLayout()
+            content.title_text_info_window.text = stop.title
+            content.title_text_info_window.requestLayout()
             return content
         }
     }
