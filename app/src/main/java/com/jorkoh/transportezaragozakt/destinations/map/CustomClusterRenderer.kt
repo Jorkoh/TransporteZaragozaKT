@@ -15,7 +15,7 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
 
-class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterManager: ClusterManager<Stop>?) :
+class CustomClusterRenderer(val context: Context, val map: GoogleMap, val clusterManager: ClusterManager<Stop>) :
     DefaultClusterRenderer<Stop>(context, map, clusterManager), GoogleMap.OnCameraIdleListener {
 
     private lateinit var busMarkerIcon: BitmapDescriptor
@@ -36,12 +36,11 @@ class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterMan
 
 
     override fun shouldRenderAsCluster(cluster: Cluster<Stop>): Boolean {
-        return if (currentZoom >= 17) {
+        return if (currentZoom >= 16) {
             false
         } else {
             cluster.size > 1
         }
-//        return cluster.size > 1
     }
 
     override fun onBeforeClusterItemRendered(stop: Stop?, markerOptions: MarkerOptions?) {
