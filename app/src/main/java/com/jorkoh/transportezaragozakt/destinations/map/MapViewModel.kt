@@ -23,7 +23,7 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
     private lateinit var tramFilterEnabled: LiveData<Boolean>
 
     // @TODO: investigate how to do this properly
-    var mapHasBeenStyled = false
+//    var mapHasBeenStyled = false
 
     fun init() {
         //Repository already injected by DI thanks to Koin

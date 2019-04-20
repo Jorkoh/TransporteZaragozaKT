@@ -34,11 +34,11 @@ data class Stop(
     var isFavorite: Boolean
 ) : ClusterItem {
     override fun getSnippet(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return "wtf is this snippet"
     }
 
     override fun getTitle(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return "wtf is this title"
     }
 
     override fun getPosition(): LatLng = location

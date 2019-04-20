@@ -9,7 +9,6 @@
         android:maxWidth="300dp">
 
     <ImageView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/type_image_info_window"
@@ -28,6 +27,8 @@
             android:id="@+id/title_text_info_window"
             android:layout_marginTop="6dp"
             android:maxWidth="240dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
             android:gravity="center_horizontal"

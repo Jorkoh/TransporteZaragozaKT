@@ -43,6 +43,7 @@ class FavoriteStopsAdapter(
                     favorite_color.visibility = View.GONE
                 }
 
+                itemView.lines_layout.removeAllViews()
                 val layoutInflater = LayoutInflater.from(context)
                 favorite.lines.forEachIndexed { index, line ->
                     layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout)
