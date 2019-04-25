@@ -10,7 +10,7 @@
     <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo. Si el
         problema continúa el servicio del ayuntamiento que proporciona está información puede estar de mantenimiento.
     </string>
-    <string name="notification_channel_name_reminders">Recordatorios</string>
+    <string name="notification_channel_name_reminders">Notificaciones</string>
     <string name="notification_channel_description_reminders">Avisos definidos por el usuario con información de una
         parada. Administrados desde la pantalla de recordatorios.
     </string>
@@ -23,4 +23,9 @@
     <string name="stop_type_content_description">Tipo de parada</string>
     <string name="edit_favorite_dialog_restore">Restaurar</string>
     <string name="location_rationale">Este permiso es usado para mostrar tu localización en el mapa y encontrar paradas cercanas. La información de localización nunca será usada para otro propósito</string>
+    <string name="no_reminders">Aún no tienes notificaciones!</string>
+    <string name="reminders_destination_title">Notificaciones</string>
+    <string name="fab_add_favorite">Añadir a favoritos</string>
+    <string name="fab_remove_favorite">Eliminar de favoritos</string>
+    <string name="fab_reminder">Crear notificación</string>
 </resources>

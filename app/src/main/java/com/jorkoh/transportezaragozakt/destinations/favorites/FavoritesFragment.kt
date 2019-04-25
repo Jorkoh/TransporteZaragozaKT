@@ -42,7 +42,7 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
     private val itemTouchHelper by lazy {
         val simpleItemTouchCallback = ItemGestureHelper(object : ItemGestureHelper.OnItemGestureListener {
             override fun onItemDrag(fromPosition: Int, toPosition: Int): Boolean {
-                recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
+                favorites_recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
                 return true
             }
 
@@ -110,13 +110,13 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
 
         val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
 
-        rootView.recycler_view.apply {
+        rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteStopsAdapter
         }
 
-        itemTouchHelper.attachToRecyclerView(rootView.recycler_view)
+        itemTouchHelper.attachToRecyclerView(rootView.favorites_recycler_view)
 
         favoritesVM.getFavoriteStops().observe(this, favoriteStopsObserver)
         updateEmptyViewVisibility(favoritesVM.getFavoriteStops().value.isNullOrEmpty(), rootView)

@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -15,10 +16,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
-//import com.jorkoh.transportezaragozakt.navigation.Destinations
-//import com.jorkoh.transportezaragozakt.navigation.goBackToPreviousDestination
-//import com.jorkoh.transportezaragozakt.navigation.needsCustomBackHandling
-//import com.jorkoh.transportezaragozakt.navigation.openDestination
 import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import kotlinx.android.synthetic.main.main_container.*
@@ -58,6 +55,7 @@ class MainActivity : CyaneaAppCompatActivity(), ColorPickerDialogListener {
             R.navigation.favorites_destination,
             R.navigation.map_destination,
             R.navigation.search_destination,
+            R.navigation.reminders_destination,
             R.navigation.more_destination
         )
 

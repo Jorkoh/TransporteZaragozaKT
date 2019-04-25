@@ -19,16 +19,16 @@ interface APIService{
     }
 
     @Headers("Accept: application/geo+json")
-    @GET("poste-autobus/{id}")
-    fun getBusStop(@Path("id") id: String): LiveData<ApiResponse<BusStopResponse>>
+    @GET("poste-autobus/{stopId}")
+    fun getBusStop(@Path("stopId") id: String): LiveData<ApiResponse<BusStopResponse>>
 
     @Headers("Accept: application/geo+json")
     @GET("poste-autobus?removeproperties")
     fun getBusStopsLocations() : LiveData<ApiResponse<BusStopLocationsResponse>>
 
     @Headers("Accept: application/geo+json")
-    @GET("parada-tranvia/{id}")
-    fun getTramStop(@Path("id") id: String): LiveData<ApiResponse<TramStopResponse>>
+    @GET("parada-tranvia/{stopId}")
+    fun getTramStop(@Path("stopId") id: String): LiveData<ApiResponse<TramStopResponse>>
 
     @Headers("Accept: application/geo+json")
     @GET("parada-tranvia?removeproperties")

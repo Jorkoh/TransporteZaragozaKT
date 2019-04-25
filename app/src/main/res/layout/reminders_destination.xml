@@ -5,10 +5,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragment">
+        tools:context="com.jorkoh.transportezaragozakt.destinations.reminders.RemindersFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favorites_recycler_view"
+            android:id="@+id/reminders_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="4dp"
@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/no_favorites_animation"
+            android:id="@+id/no_reminders_animation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:lottie_rawRes="@raw/tumbleweed"
@@ -35,11 +35,11 @@
             android:visibility="gone"/>
 
     <TextView
-            android:id="@+id/no_favorites_text"
-            android:text="@string/no_favorites"
+            android:id="@+id/no_reminders_text"
+            android:text="@string/no_reminders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/no_favorites_animation"
+            app:layout_constraintTop_toBottomOf="@+id/no_reminders_animation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textAppearance="@android:style/TextAppearance.Material.Headline"

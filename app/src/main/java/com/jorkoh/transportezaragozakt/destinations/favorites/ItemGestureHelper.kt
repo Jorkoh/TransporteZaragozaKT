@@ -41,11 +41,11 @@ class ItemGestureHelper(private val listener: OnItemGestureListener) : ItemTouch
         super.onSelectedChanged(viewHolder, actionState)
 
         when (actionState) {
-            ItemTouchHelper.ACTION_STATE_DRAG -> {
+            ACTION_STATE_DRAG -> {
                 viewHolder?.also { dragFromPosition = it.adapterPosition }
                 viewHolder?.itemView?.alpha = 0.65f
             }
-            ItemTouchHelper.ACTION_STATE_IDLE -> {
+            ACTION_STATE_IDLE -> {
                 if (dragFromPosition != -1 && dragToPosition != -1 && dragFromPosition != dragToPosition) {
                     // Item successfully dragged
                     listener.onItemDragged(dragFromPosition, dragToPosition)

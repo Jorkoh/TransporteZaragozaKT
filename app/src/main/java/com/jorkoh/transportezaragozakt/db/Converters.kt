@@ -11,7 +11,9 @@ import java.util.*
 class Converters {
 
     private val intListAdapter: JsonAdapter<List<Int>> =
-        Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Int::class.javaObjectType))
+            Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Int::class.javaObjectType))
+    private val booleanListAdapter: JsonAdapter<List<Boolean>> =
+        Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, Boolean::class.javaObjectType))
     private val stringListAdapter: JsonAdapter<List<String>> =
         Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, String::class.javaObjectType))
     private val doubleListAdapter: JsonAdapter<List<Double>> =
@@ -35,6 +37,16 @@ class Converters {
     @TypeConverter
     fun jsonToIntList(value: String): List<Int>? {
         return intListAdapter.fromJson(value)
+    }
+
+    @TypeConverter
+    fun booleanListToJson(value: List<Boolean>): String {
+        return booleanListAdapter.toJson(value)
+    }
+
+    @TypeConverter
+    fun jsonToBooleanList(value: String): List<Boolean>? {
+        return booleanListAdapter.fromJson(value)
     }
 
     @TypeConverter

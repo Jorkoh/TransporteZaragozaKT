@@ -19,10 +19,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
-import com.google.maps.android.clustering.view.ClusterRenderer
-import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -42,7 +39,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         const val ICON_FAV_SIZE = 70
         const val MAX_ZOOM = 17.5f
         const val MIN_ZOOM = 12f
-        const val DEFAULT_ZOOM = 15.5f
+        const val DEFAULT_ZOOM = 16f
         val ZARAGOZA_BOUNDS = LatLngBounds(
             LatLng(41.6000, -1.08125), LatLng(41.774594, -0.7933)
         )
@@ -270,7 +267,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
             val bundle = Bundle().apply {
-                putString(StopDetailsFragment.STOP_ID_KEY, stop.id)
+                putString(StopDetailsFragment.STOP_ID_KEY, stop.stopId)
                 putString(StopDetailsFragment.STOP_TYPE_KEY, stop.type.name)
             }
             findNavController().navigate(R.id.action_map_to_stopDetails, bundle)

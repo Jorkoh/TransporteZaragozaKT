@@ -15,8 +15,8 @@ data class Stop(
     var type: StopType,
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
-    var id: String,
+    @ColumnInfo(name = "stopId")
+    var stopId: String,
 
     @ColumnInfo(name = "number")
     var number: String,
@@ -34,11 +34,11 @@ data class Stop(
     var isFavorite: Boolean
 ) : ClusterItem {
     override fun getSnippet(): String {
-        return "wtf is this snippet"
+        return ""
     }
 
     override fun getTitle(): String {
-        return "wtf is this title"
+        return ""
     }
 
     override fun getPosition(): LatLng = location
@@ -49,7 +49,7 @@ data class Stop(
     primaryKeys = ["line", "destination", "stopId"],
     foreignKeys = [ForeignKey(
         entity = Stop::class,
-        parentColumns = ["id"],
+        parentColumns = ["stopId"],
         childColumns = ["stopId"],
         onDelete = ForeignKey.CASCADE
     )],
@@ -88,6 +88,34 @@ data class FavoriteStop(
     var position: Int
 )
 
+@Entity(
+    tableName = "reminders",
+    foreignKeys = [ForeignKey(
+        entity = Stop::class,
+        parentColumns = ["stopId"],
+        childColumns = ["stopId"],
+        onDelete = ForeignKey.CASCADE
+    )],
+    indices = [Index("stopId")]
+)
+data class Reminder(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "reminderId")
+    var reminderId: String,
+
+    @ColumnInfo(name = "stopId")
+    var stopId: String,
+
+    @ColumnInfo(name = "daysOfWeek")
+    var daysOfWeek: List<Boolean>,
+
+    @ColumnInfo(name = "hourOfDay")
+    var hourOfDay: Int,
+
+    @ColumnInfo(name = "minute")
+    var minute: Int
+)
+
 data class FavoritePositions(
     val stopId: String,
     val position: Int
@@ -99,7 +127,7 @@ data class FavoriteStopExtended(
     val stopTitle: String,
     val alias: String,
     val colorHex: String,
-    val lines : List<String>
+    val lines: List<String>
 )
 
 data class TagInfo(val id: String, val type: StopType)

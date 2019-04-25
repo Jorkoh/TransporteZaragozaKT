@@ -28,7 +28,7 @@ data class Locations(
 )
 
 data class Properties(
-    @field:Json(name = "id")
+    @field:Json(name = "stopId")
     val id: String,
 
     @field:Json(name = "uri")

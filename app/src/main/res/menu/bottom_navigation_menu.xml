@@ -13,6 +13,10 @@
             android:icon="@drawable/animation_search"
             android:title="@string/search_destination_title"/>
     <item
+            android:id="@+id/reminders_destination"
+            android:icon="@drawable/animation_search"
+            android:title="@string/reminders_destination_title"/>
+    <item
             android:id="@+id/more_destination"
             android:icon="@drawable/animation_more"
             android:title="@string/more_destination_title"/>

@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+                android:id="@+id/favorites_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="4dp"
@@ -30,7 +30,6 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/no_data_text"
@@ -45,7 +44,6 @@
             app:layout_constraintBottom_toTopOf="@+id/no_data_suggestions_text"
             android:layout_marginBottom="16dp" app:layout_constraintVertical_chainStyle="packed"/>
     <TextView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/no_data_suggestions_text"
@@ -59,15 +57,26 @@
             app:layout_constraintTop_toBottomOf="@+id/no_data_text" app:layout_constraintHorizontal_bias="0.5"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/favorite_fab"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+            <!--style="@style/Widget.MaterialComponents.FloatingActionButton"-->
+            <!--android:id="@+id/stop_details_fab"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_margin="16dp"-->
+            <!--app:fabSize="normal"-->
+            <!--app:srcCompat="@drawable/ic_favorite_border_black_24dp"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+    <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/stop_details_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            app:fabSize="normal"
-            app:srcCompat="@drawable/ic_favorite_border_black_24dp"
+            app:sdMainFabClosedSrc="@drawable/ic_add_black_24dp"
+            app:sdMainFabOpenedSrc="@drawable/ic_clear_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

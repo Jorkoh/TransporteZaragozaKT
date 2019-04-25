@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/reminders_destination"
+            app:startDestination="@+id/reminders"
+            tools:ignore="UnusedNavigation">
+
+    <fragment
+            android:id="@+id/reminders"
+            android:name="com.jorkoh.transportezaragozakt.destinations.reminders.RemindersFragment"
+            android:label="Reminders"
+            tools:layout="@layout/reminders_destination"/>
+</navigation>

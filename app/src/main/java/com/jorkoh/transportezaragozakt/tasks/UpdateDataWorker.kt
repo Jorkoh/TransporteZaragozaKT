@@ -134,7 +134,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             val stopEntity = Stop(
                 StopType.BUS,
-                stopJson.getString("id"),
+                stopJson.getString("stopId"),
                 stopJson.getString("number"),
                 stopJson.getString("stopTitle"),
                 checkNotNull(location),
@@ -172,7 +172,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             val stopEntity = Stop(
                 StopType.TRAM,
-                stopJson.getString("id"),
+                stopJson.getString("stopId"),
                 stopJson.getString("number"),
                 stopJson.getString("stopTitle"),
                 checkNotNull(location),

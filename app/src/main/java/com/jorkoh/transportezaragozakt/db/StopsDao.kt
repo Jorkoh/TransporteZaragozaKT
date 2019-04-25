@@ -8,7 +8,7 @@ import com.jorkoh.transportezaragozakt.R
 @Dao
 abstract class StopsDao {
     //Favorite stuff
-    @Query("SELECT isFavorite FROM stops WHERE id = :stopId")
+    @Query("SELECT isFavorite FROM stops WHERE stopId = :stopId")
     abstract fun stopIsFavorite(stopId: String): LiveData<Boolean>
 
     fun toggleFavorite(stopId: String) {
@@ -40,7 +40,7 @@ abstract class StopsDao {
     @Query("UPDATE favoriteStops SET position = :newPosition WHERE stopId = :stopId")
     abstract fun updatePosition(stopId: String, newPosition: Int)
 
-    @Query("SELECT isFavorite FROM stops WHERE id = :stopId")
+    @Query("SELECT isFavorite FROM stops WHERE stopId = :stopId")
     abstract fun stopIsFavoriteImmediate(stopId: String): Boolean
 
     @Query("DELETE FROM favoriteStops WHERE stopId = :stopId")
@@ -49,10 +49,10 @@ abstract class StopsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertFavoriteStop(favoriteStop: FavoriteStop)
 
-    @Query("UPDATE stops SET isFavorite = :isFavorite WHERE id = :stopId")
+    @Query("UPDATE stops SET isFavorite = :isFavorite WHERE stopId = :stopId")
     abstract fun updateIsFavorite(stopId: String, isFavorite: Boolean)
 
-    @Query("SELECT favoriteStops.stopId, stops.type, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.id = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
+    @Query("SELECT favoriteStops.stopId, stops.type, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.stopId = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
     abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
 
     @Query("SELECT stopId, position FROM favoriteStops ORDER BY favoriteStops.position ASC")
@@ -68,10 +68,10 @@ abstract class StopsDao {
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
     abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
 
-    @Query("SELECT stopTitle FROM stops WHERE id = :stopId")
+    @Query("SELECT stopTitle FROM stops WHERE stopId = :stopId")
     abstract fun getStopTitle(stopId: String): LiveData<String>
 
-    @Query("SELECT stopTitle FROM stops WHERE id = :stopId")
+    @Query("SELECT stopTitle FROM stops WHERE stopId = :stopId")
     abstract fun getStopTitleImmediate(stopId: String): String
 
     @Query("SELECT IFNULL(position, 0)+1 'position' FROM favoriteStops ORDER BY position LIMIT 1")
@@ -111,7 +111,7 @@ abstract class StopsDao {
 
     fun updateStops(stops: List<Stop>) {
         stops.forEach { stop ->
-            if (stopIsFavoriteImmediate(stop.id)) {
+            if (stopIsFavoriteImmediate(stop.stopId)) {
                 stop.isFavorite = true
             }
         }

@@ -7,8 +7,13 @@ buildscript {
     ]
 
     ext.versions = [
-            kotlin          : '1.3.21',
-            androidx        : '1.1.0-alpha02',
+            kotlin          : '1.3.30',
+            androidx        : '1.0.0',
+            appCompat       : '1.1.0-alpha04',
+            recyclerView    : '1.1.0-alpha01',
+            preference     : '1.1.0-alpha04',
+            cardView        : '1.0.0',
+            material        : '1.0.0',
             maps            : '16.1.0',
             location        : '16.0.0',
             constraintlayout: '1.1.3',
@@ -25,10 +30,11 @@ buildscript {
 
     ext.deps = [
             'androidx'    : [
-                    'appCompat'       : "androidx.appcompat:appcompat:${versions.androidx}",
+                    'appCompat'       : "androidx.appcompat:appcompat:${versions.appCompat}",
                     'constraintLayout': "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
-                    'preferences'     : "androidx.preference:preference:${versions.androidx}",
-                    'recyclerView'    : "androidx.recyclerview:recyclerview:${versions.androidx}",
+                    'cardView'        : "androidx.cardview:cardview:${versions.cardView}",
+                    'preference'     : "androidx.preference:preference:${versions.preference}",
+                    'recyclerView'    : "androidx.recyclerview:recyclerview:${versions.recyclerView}",
                     'room'            : [
                             'runtime'   : "androidx.room:room-runtime:${versions.room}",
                             'compiler'  : "androidx.room:room-compiler:${versions.room}",
@@ -49,7 +55,7 @@ buildscript {
                     'maps'    : "com.google.android.gms:play-services-maps:${versions.maps}",
                     'location': "com.google.android.gms:play-services-location:${versions.location}"
             ],
-            'material'    : "com.google.android.material:material:${versions.androidx}",
+            'material'    : "com.google.android.material:material:${versions.material}",
             'colorpicker' : "com.jaredrummler:colorpicker-compat:${versions.colorpicker}",
             'junit'       : "junit:junit:${versions.junit}",
             'mockito'     : [

@@ -5,6 +5,7 @@
     <string name="favorites_destination_title" translatable="true">Favorites</string>
     <string name="map_destination_title" translatable="true">Map</string>
     <string name="search_destination_title" translatable="true">Search</string>
+    <string name="reminders_destination_title" translatable="true">Reminders</string>
     <string name="more_destination_title" translatable="true">More</string>
     <string name="stop_details_title" translatable="true">Stop Details</string>
 
@@ -13,7 +14,7 @@
     <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
     <string name="stop_type_content_description" translatable="true">Stop type</string>
     <string name="edit_favorite_dialog_restore" translatable="true">Restore</string>
-    
+
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available :(</string>
     <string name="no_data_available_suggestions" translatable="true">Please check your internet connection and try again. If the problem persists the city council service that provides this information may be undergoing maintenance.</string>
@@ -21,10 +22,16 @@
     <string name="minutes" translatable="true">minutes</string>
     <string name="minute" translatable="true">minute</string>
     <string name="at_the_stop" translatable="true">At the stop</string>
-    
+    <string name="fab_add_favorite" translatable="true">Add to favorites</string>
+    <string name="fab_remove_favorite" translatable="true">Remove from favorites</string>
+    <string name="fab_reminder" translatable="true">Create reminder</string>
+
+    <!--Reminders-->
+    <string name="no_reminders" translatable="true">No reminders yet!</string>
+
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>
-    
+
     <!--Preferences-->
     <string name="preferences_version_number_key" translatable="false">com.jorkoh.transportezaragozakt.PREFERENCES_VERSION_NUMBER_KEY</string>
     <string name="saved_bus_version_number_key" translatable="false">SAVED_BUS_VERSION_NUMBER_KEY</string>
@@ -44,4 +51,5 @@
     <string name="notification_channel_id_reminders" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_REMINDERS</string>
     <string name="notification_channel_name_reminders" translatable="true">Reminders</string>
     <string name="notification_channel_description_reminders" translatable="true">User defined notices with stop information. Manage and setup them at the reminders tab.</string>
+
 </resources>
