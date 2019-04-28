@@ -14,21 +14,22 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
-import com.jaredrummler.cyanea.app.CyaneaAppCompatActivity
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
 import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
+import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MainActivity : CyaneaAppCompatActivity(), ColorPickerDialogListener {
+class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     private val mainActivityVM: MainActivityViewModel by viewModel()
 
     private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        matchDressCode()
         super.onCreate(savedInstanceState)
         enqueueWorker()
         setupNotificationChannels(this)

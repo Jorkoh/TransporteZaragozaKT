@@ -76,7 +76,9 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             app:sdMainFabClosedSrc="@drawable/ic_add_black_24dp"
-            app:sdMainFabOpenedSrc="@drawable/ic_clear_black_24dp"
+
+            app:sdMainFabOpenedBackgroundColor="@color/colorSecondaryOne"
+            app:sdMainFabClosedBackgroundColor="@color/colorSecondaryDarkOne"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

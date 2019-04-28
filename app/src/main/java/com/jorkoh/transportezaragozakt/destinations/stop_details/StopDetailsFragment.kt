@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
@@ -45,10 +46,6 @@ class StopDetailsFragment : Fragment() {
         updateStopTitleUI(stopTitle)
     }
 
-    private val onFavoritesClickListener = View.OnClickListener {
-        stopDetailsVM.toggleStopFavorite()
-    }
-
     private val onSwipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
         stopDetailsVM.refreshStopDestinations()
     }
@@ -76,7 +73,6 @@ class StopDetailsFragment : Fragment() {
         updateStopTitleUI(stopDetailsVM.stopTitle.value)
         stopDetailsVM.stopTitle.observe(this, stopTitleObserver)
 
-        rootView.stop_details_fab.setOnClickListener(onFavoritesClickListener)
         rootView.swiperefresh.setOnRefreshListener(onSwipeRefreshListener)
 
         return rootView
@@ -129,9 +125,15 @@ class StopDetailsFragment : Fragment() {
             R.drawable.ic_favorite_border_black_24dp
         }
 
+        val newLabel= if (isFavorited == true) {
+            R.string.fab_remove_favorite
+        } else {
+            R.string.fab_add_favorite
+        }
+
         rootView.stop_details_fab.replaceActionItem(
             SpeedDialActionItem.Builder(R.id.stop_details_fab_favorite, newIcon)
-                .setLabel(R.string.fab_add_favorite)
+                .setLabel(newLabel)
                 .create(),
             FAVORITE_ITEM_FAB_POSITION
         )

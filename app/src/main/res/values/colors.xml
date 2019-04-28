@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="cyanea_primary_reference">#0288D1</color>
-    <color name="cyanea_accent_reference">#FFA000</color>
+    <!-- MISC -->
+    <color name="colorLineText">#FAFAFA</color>
+
+    <!-- THEME ONE -->
+    <color name="colorPrimaryOne">#2196f3</color>
+    <color name="colorPrimaryDarkOne">#0069c0</color>
+    <color name="colorOnPrimaryOne">#212121</color>
+
+    <color name="colorSecondaryOne">#37474f</color>
+    <color name="colorSecondaryDarkOne">#101f27</color>
+    <color name="colorOnSecondaryOne">#FAFAFA</color>
+
+    <color name="colorErrorOne">#F44336</color>
+    <color name="colorOnErrorOne">#FAFAFA</color>
+    <color name="colorSurfaceOne">#FFFFFF</color>
+    <color name="colorOnSurfaceOne">#212121</color>
+    <color name="colorBackgroundOne">#FAFAFA</color>
+    <color name="colorOnBackgroundOne">#212121</color>
+
+    <!-- THEME TWO -->
+    <color name="colorPrimaryThemeTwo">#3A3D3A</color>
+    <color name="colorPrimaryDarkThemeTwo">#28282B</color>
+    <color name="colorAccentThemeTwo">#26BA99</color>
+    <color name="fadedColorAccentThemeTwo">#6626BA99</color>
+    <color name="colorBackgroundThemeTwo">#2D2D30</color>
+    <color name="colorPrimaryTextThemeTwo">#DDE0E0</color>
+    <color name="colorSecondaryTextThemeTwo">#757575</color>
+    <color name="colorDividerThemeTwo">#444442</color>
+
     <color name="kinda_white">#ECECEC</color>
     <color name="bus_color">#2c82c9</color>
     <color name="tram_color">#232828</color>

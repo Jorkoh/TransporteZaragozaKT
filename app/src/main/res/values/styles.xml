@@ -1,6 +1,33 @@
+<!--<resources>-->
+<!--<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />-->
+<!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--<style name="AppTheme" parent="Theme.Cyanea.Light.DarkActionBar" />-->
+<!--<style name="AppTheme.NoActionBar" parent="Theme.Cyanea.Light.NoActionBar" />-->
+<!--</resources>-->
+
+
 <resources>
-    <!--<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />-->
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-    <style name="AppTheme" parent="Theme.Cyanea.Light.DarkActionBar" />
-    <style name="AppTheme.NoActionBar" parent="Theme.Cyanea.Light.NoActionBar" />
+    <!-- Base application theme. -->
+    <style name="ThemeOne" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryOne</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOne</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryOne</item>
+        <item name="colorSecondary">@color/colorSecondaryOne</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDarkOne</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryOne</item>
+        <item name="colorError">@color/colorErrorOne</item>
+        <item name="colorOnError">@color/colorOnErrorOne</item>
+        <item name="colorSurface">@color/colorSurfaceOne</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceOne</item>
+        <item name="android:colorBackground">@color/colorBackgroundOne</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundOne</item>
+    </style>
+
+    <style name="ThemeTwo" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryThemeTwo</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkThemeTwo</item>
+        <item name="colorAccent">@color/colorAccentThemeTwo</item>
+    </style>
 </resources>

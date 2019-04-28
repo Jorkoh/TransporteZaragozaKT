@@ -1,8 +1,9 @@
 package com.jorkoh.transportezaragozakt
 
 import android.app.Application
-import com.jaredrummler.cyanea.Cyanea
 import com.parse.Parse
+import daio.io.dresscode.DressCode
+import daio.io.dresscode.declareDressCode
 import org.koin.android.ext.android.startKoin
 
 class MainApplication : Application() {
@@ -21,7 +22,10 @@ class MainApplication : Application() {
                 .build()
         )
 
-        // Cyanea
-        Cyanea.init(this, resources)
+        //Dresscode
+        declareDressCode(
+            DressCode("ThemeOne", R.style.ThemeOne),
+            DressCode("ThemeTwo", R.style.ThemeTwo)
+        )
     }
 }

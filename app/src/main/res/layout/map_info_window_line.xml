@@ -7,7 +7,7 @@
           android:background="@drawable/map_info_window_rounded_edges"
           style="@android:style/TextAppearance.Material.Small"
           android:textStyle="bold"
-          android:textColor="@color/cyanea_background_light"
+          android:textColor="@color/colorLineText"
           android:textAlignment="center"
           android:layout_marginEnd="4dp"
           android:layout_marginBottom="4dp"
