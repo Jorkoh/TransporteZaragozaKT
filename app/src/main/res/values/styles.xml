@@ -1,11 +1,3 @@
-<!--<resources>-->
-<!--<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />-->
-<!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-<!--<style name="AppTheme" parent="Theme.Cyanea.Light.DarkActionBar" />-->
-<!--<style name="AppTheme.NoActionBar" parent="Theme.Cyanea.Light.NoActionBar" />-->
-<!--</resources>-->
-
-
 <resources>
     <!-- Base application theme. -->
     <style name="ThemeOne" parent="Theme.MaterialComponents.Light">

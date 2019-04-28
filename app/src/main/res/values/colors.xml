@@ -2,6 +2,8 @@
 <resources>
     <!-- MISC -->
     <color name="colorLineText">#FAFAFA</color>
+    <color name="colorThemeSelected">#FF689F38</color>
+    <color name="colorThemeNotSelected">#CC37474F</color>
 
     <!-- THEME ONE -->
     <color name="colorPrimaryOne">#2196f3</color>

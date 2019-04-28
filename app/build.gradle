@@ -73,7 +73,7 @@ dependencies {
     implementation project(':speedDial')
 
     //Dresscode
-    implementation 'com.github.Daio-io:dresscode:1.0.0'
+    implementation project(':dresscode')
 
     //Color Picker
     implementation project(':color-picker')

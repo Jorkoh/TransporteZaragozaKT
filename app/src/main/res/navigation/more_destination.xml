@@ -11,11 +11,11 @@
             android:label="More"
             tools:layout="@layout/more_destination">
         <action
-                android:id="@+id/action_more_to_cyaneaThemePicker"
-                app:destination="@id/cyaneaThemePicker"/>
+                android:id="@+id/action_more_to_ThemePicker"
+                app:destination="@id/ThemePicker"/>
     </fragment>
     <fragment
-            android:id="@+id/cyaneaThemePicker"
-            android:name="com.jaredrummler.cyanea.prefs.CyaneaThemePickerFragment"
-            android:label="CyaneaThemePicker"/>
+            android:id="@+id/ThemePicker"
+            android:name="com.jorkoh.transportezaragozakt.destinations.more.ThemePickerFragment"
+            android:label="ThemePicker"/>
 </navigation>

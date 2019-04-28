@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import daio.io.dresscode.dressCodeStyleId
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.more_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,8 +22,8 @@ class MoreFragment : Fragment() {
         val view = inflater.inflate(R.layout.more_destination, container, false)
 
         view.themes_button.setOnClickListener{
-//            findNavController().navigate(R.id.action_more_to_cyaneaThemePicker)
-            requireActivity().dressCodeStyleId = if (requireActivity().dressCodeStyleId == R.style.ThemeOne) R.style.ThemeTwo else R.style.ThemeOne
+            findNavController().navigate(R.id.action_more_to_ThemePicker)
+//            requireActivity().dressCodeStyleId = if (requireActivity().dressCodeStyleId == R.style.ThemeOne) R.style.ThemeTwo else R.style.ThemeOne
         }
 
         return view
