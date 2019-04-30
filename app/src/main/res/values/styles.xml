@@ -1,25 +1,870 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="ThemeOne" parent="Theme.MaterialComponents.Light">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryOne</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkOne</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryOne</item>
-        <item name="colorSecondary">@color/colorSecondaryOne</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryDarkOne</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryOne</item>
-        <item name="colorError">@color/colorErrorOne</item>
-        <item name="colorOnError">@color/colorOnErrorOne</item>
-        <item name="colorSurface">@color/colorSurfaceOne</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceOne</item>
-        <item name="android:colorBackground">@color/colorBackgroundOne</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundOne</item>
+    <style name="ActionBarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:textColorPrimary">?colorOnPrimary</item>
+        <item name="android:background">?colorPrimary</item>
     </style>
 
-    <style name="ThemeTwo" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryThemeTwo</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkThemeTwo</item>
-        <item name="colorAccent">@color/colorAccentThemeTwo</item>
+    <style name="Cyanea" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryCyanea</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCyanea</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCyanea</item>
+        <item name="colorSecondary">@color/colorSecondaryCyanea</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCyanea</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCyanea</item>
+        <item name="colorError">@color/colorErrorCyanea</item>
+        <item name="colorOnError">@color/colorOnErrorCyanea</item>
+        <item name="colorSurface">@color/colorSurfaceCyanea</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceCyanea</item>
+        <item name="android:colorBackground">@color/colorBackgroundCyanea</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCyanea</item>
+    </style>
+
+    <style name="Rio" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryRio</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkRio</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryRio</item>
+        <item name="colorSecondary">@color/colorSecondaryRio</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRio</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryRio</item>
+        <item name="colorError">@color/colorErrorRio</item>
+        <item name="colorOnError">@color/colorOnErrorRio</item>
+        <item name="colorSurface">@color/colorSurfaceRio</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceRio</item>
+        <item name="android:colorBackground">@color/colorBackgroundRio</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundRio</item>
+    </style>
+
+    <style name="VitaminSea" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryVitaminSea</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkVitaminSea</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryVitaminSea</item>
+        <item name="colorSecondary">@color/colorSecondaryVitaminSea</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantVitaminSea</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryVitaminSea</item>
+        <item name="colorError">@color/colorErrorVitaminSea</item>
+        <item name="colorOnError">@color/colorOnErrorVitaminSea</item>
+        <item name="colorSurface">@color/colorSurfaceVitaminSea</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceVitaminSea</item>
+        <item name="android:colorBackground">@color/colorBackgroundVitaminSea</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundVitaminSea</item>
+    </style>
+
+    <style name="TextileDyes" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryTextileDyes</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkTextileDyes</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryTextileDyes</item>
+        <item name="colorSecondary">@color/colorSecondaryTextileDyes</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTextileDyes</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryTextileDyes</item>
+        <item name="colorError">@color/colorErrorTextileDyes</item>
+        <item name="colorOnError">@color/colorOnErrorTextileDyes</item>
+        <item name="colorSurface">@color/colorSurfaceTextileDyes</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceTextileDyes</item>
+        <item name="android:colorBackground">@color/colorBackgroundTextileDyes</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundTextileDyes</item>
+    </style>
+
+    <style name="Brave" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryBrave</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBrave</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryBrave</item>
+        <item name="colorSecondary">@color/colorSecondaryBrave</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantBrave</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryBrave</item>
+        <item name="colorError">@color/colorErrorBrave</item>
+        <item name="colorOnError">@color/colorOnErrorBrave</item>
+        <item name="colorSurface">@color/colorSurfaceBrave</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceBrave</item>
+        <item name="android:colorBackground">@color/colorBackgroundBrave</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundBrave</item>
+    </style>
+
+    <style name="Ashen" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryAshen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAshen</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryAshen</item>
+        <item name="colorSecondary">@color/colorSecondaryAshen</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantAshen</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryAshen</item>
+        <item name="colorError">@color/colorErrorAshen</item>
+        <item name="colorOnError">@color/colorOnErrorAshen</item>
+        <item name="colorSurface">@color/colorSurfaceAshen</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceAshen</item>
+        <item name="android:colorBackground">@color/colorBackgroundAshen</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundAshen</item>
+    </style>
+
+    <style name="RecognEyes" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryRecognEyes</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkRecognEyes</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryRecognEyes</item>
+        <item name="colorSecondary">@color/colorSecondaryRecognEyes</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRecognEyes</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryRecognEyes</item>
+        <item name="colorError">@color/colorErrorRecognEyes</item>
+        <item name="colorOnError">@color/colorOnErrorRecognEyes</item>
+        <item name="colorSurface">@color/colorSurfaceRecognEyes</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceRecognEyes</item>
+        <item name="android:colorBackground">@color/colorBackgroundRecognEyes</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundRecognEyes</item>
+    </style>
+
+    <style name="Monokai" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryMonokai</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMonokai</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMonokai</item>
+        <item name="colorSecondary">@color/colorSecondaryMonokai</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMonokai</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMonokai</item>
+        <item name="colorError">@color/colorErrorMonokai</item>
+        <item name="colorOnError">@color/colorOnErrorMonokai</item>
+        <item name="colorSurface">@color/colorSurfaceMonokai</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceMonokai</item>
+        <item name="android:colorBackground">@color/colorBackgroundMonokai</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMonokai</item>
+    </style>
+
+    <style name="SigFig" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimarySigFig</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSigFig</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySigFig</item>
+        <item name="colorSecondary">@color/colorSecondarySigFig</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSigFig</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySigFig</item>
+        <item name="colorError">@color/colorErrorSigFig</item>
+        <item name="colorOnError">@color/colorOnErrorSigFig</item>
+        <item name="colorSurface">@color/colorSurfaceSigFig</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceSigFig</item>
+        <item name="android:colorBackground">@color/colorBackgroundSigFig</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSigFig</item>
+    </style>
+
+    <style name="SoundCloud" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimarySoundCloud</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSoundCloud</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySoundCloud</item>
+        <item name="colorSecondary">@color/colorSecondarySoundCloud</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSoundCloud</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySoundCloud</item>
+        <item name="colorError">@color/colorErrorSoundCloud</item>
+        <item name="colorOnError">@color/colorOnErrorSoundCloud</item>
+        <item name="colorSurface">@color/colorSurfaceSoundCloud</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceSoundCloud</item>
+        <item name="android:colorBackground">@color/colorBackgroundSoundCloud</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSoundCloud</item>
+    </style>
+
+    <style name="Materiallight" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryMateriallight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMateriallight</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMateriallight</item>
+        <item name="colorSecondary">@color/colorSecondaryMateriallight</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMateriallight</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMateriallight</item>
+        <item name="colorError">@color/colorErrorMateriallight</item>
+        <item name="colorOnError">@color/colorOnErrorMateriallight</item>
+        <item name="colorSurface">@color/colorSurfaceMateriallight</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceMateriallight</item>
+        <item name="android:colorBackground">@color/colorBackgroundMateriallight</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMateriallight</item>
+    </style>
+
+    <style name="Hololight" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryHololight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkHololight</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryHololight</item>
+        <item name="colorSecondary">@color/colorSecondaryHololight</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantHololight</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryHololight</item>
+        <item name="colorError">@color/colorErrorHololight</item>
+        <item name="colorOnError">@color/colorOnErrorHololight</item>
+        <item name="colorSurface">@color/colorSurfaceHololight</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceHololight</item>
+        <item name="android:colorBackground">@color/colorBackgroundHololight</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundHololight</item>
+    </style>
+
+    <style name="Materialdark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryMaterialdark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMaterialdark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMaterialdark</item>
+        <item name="colorSecondary">@color/colorSecondaryMaterialdark</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMaterialdark</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMaterialdark</item>
+        <item name="colorError">@color/colorErrorMaterialdark</item>
+        <item name="colorOnError">@color/colorOnErrorMaterialdark</item>
+        <item name="colorSurface">@color/colorSurfaceMaterialdark</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceMaterialdark</item>
+        <item name="android:colorBackground">@color/colorBackgroundMaterialdark</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMaterialdark</item>
+    </style>
+
+    <style name="Holodark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryHolodark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkHolodark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryHolodark</item>
+        <item name="colorSecondary">@color/colorSecondaryHolodark</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantHolodark</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryHolodark</item>
+        <item name="colorError">@color/colorErrorHolodark</item>
+        <item name="colorOnError">@color/colorOnErrorHolodark</item>
+        <item name="colorSurface">@color/colorSurfaceHolodark</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceHolodark</item>
+        <item name="android:colorBackground">@color/colorBackgroundHolodark</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundHolodark</item>
+    </style>
+
+    <style name="Cherrypie" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryCherrypie</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCherrypie</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCherrypie</item>
+        <item name="colorSecondary">@color/colorSecondaryCherrypie</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCherrypie</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCherrypie</item>
+        <item name="colorError">@color/colorErrorCherrypie</item>
+        <item name="colorOnError">@color/colorOnErrorCherrypie</item>
+        <item name="colorSurface">@color/colorSurfaceCherrypie</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceCherrypie</item>
+        <item name="android:colorBackground">@color/colorBackgroundCherrypie</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCherrypie</item>
+    </style>
+
+    <style name="Olive" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryOlive</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOlive</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryOlive</item>
+        <item name="colorSecondary">@color/colorSecondaryOlive</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantOlive</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryOlive</item>
+        <item name="colorError">@color/colorErrorOlive</item>
+        <item name="colorOnError">@color/colorOnErrorOlive</item>
+        <item name="colorSurface">@color/colorSurfaceOlive</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceOlive</item>
+        <item name="android:colorBackground">@color/colorBackgroundOlive</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundOlive</item>
+    </style>
+
+    <style name="Tasty" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryTasty</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkTasty</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryTasty</item>
+        <item name="colorSecondary">@color/colorSecondaryTasty</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTasty</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryTasty</item>
+        <item name="colorError">@color/colorErrorTasty</item>
+        <item name="colorOnError">@color/colorOnErrorTasty</item>
+        <item name="colorSurface">@color/colorSurfaceTasty</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceTasty</item>
+        <item name="android:colorBackground">@color/colorBackgroundTasty</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundTasty</item>
+    </style>
+
+    <style name="Desert" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryDesert</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDesert</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDesert</item>
+        <item name="colorSecondary">@color/colorSecondaryDesert</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantDesert</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryDesert</item>
+        <item name="colorError">@color/colorErrorDesert</item>
+        <item name="colorOnError">@color/colorOnErrorDesert</item>
+        <item name="colorSurface">@color/colorSurfaceDesert</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceDesert</item>
+        <item name="android:colorBackground">@color/colorBackgroundDesert</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundDesert</item>
+    </style>
+
+    <style name="Weber" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryWeber</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkWeber</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryWeber</item>
+        <item name="colorSecondary">@color/colorSecondaryWeber</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWeber</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryWeber</item>
+        <item name="colorError">@color/colorErrorWeber</item>
+        <item name="colorOnError">@color/colorOnErrorWeber</item>
+        <item name="colorSurface">@color/colorSurfaceWeber</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceWeber</item>
+        <item name="android:colorBackground">@color/colorBackgroundWeber</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundWeber</item>
+    </style>
+
+    <style name="Philips" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryPhilips</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkPhilips</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryPhilips</item>
+        <item name="colorSecondary">@color/colorSecondaryPhilips</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantPhilips</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryPhilips</item>
+        <item name="colorError">@color/colorErrorPhilips</item>
+        <item name="colorOnError">@color/colorOnErrorPhilips</item>
+        <item name="colorSurface">@color/colorSurfacePhilips</item>
+        <item name="colorOnSurface">@color/colorOnSurfacePhilips</item>
+        <item name="android:colorBackground">@color/colorBackgroundPhilips</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundPhilips</item>
+    </style>
+
+    <style name="Instagram" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryInstagram</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInstagram</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryInstagram</item>
+        <item name="colorSecondary">@color/colorSecondaryInstagram</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantInstagram</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryInstagram</item>
+        <item name="colorError">@color/colorErrorInstagram</item>
+        <item name="colorOnError">@color/colorOnErrorInstagram</item>
+        <item name="colorSurface">@color/colorSurfaceInstagram</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceInstagram</item>
+        <item name="android:colorBackground">@color/colorBackgroundInstagram</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundInstagram</item>
+    </style>
+
+    <style name="Reddit" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryReddit</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkReddit</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryReddit</item>
+        <item name="colorSecondary">@color/colorSecondaryReddit</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantReddit</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryReddit</item>
+        <item name="colorError">@color/colorErrorReddit</item>
+        <item name="colorOnError">@color/colorOnErrorReddit</item>
+        <item name="colorSurface">@color/colorSurfaceReddit</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceReddit</item>
+        <item name="android:colorBackground">@color/colorBackgroundReddit</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundReddit</item>
+    </style>
+
+    <style name="Waaark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryWaaark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkWaaark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryWaaark</item>
+        <item name="colorSecondary">@color/colorSecondaryWaaark</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWaaark</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryWaaark</item>
+        <item name="colorError">@color/colorErrorWaaark</item>
+        <item name="colorOnError">@color/colorOnErrorWaaark</item>
+        <item name="colorSurface">@color/colorSurfaceWaaark</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceWaaark</item>
+        <item name="android:colorBackground">@color/colorBackgroundWaaark</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundWaaark</item>
+    </style>
+
+    <style name="Flax" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryFlax</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkFlax</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryFlax</item>
+        <item name="colorSecondary">@color/colorSecondaryFlax</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantFlax</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryFlax</item>
+        <item name="colorError">@color/colorErrorFlax</item>
+        <item name="colorOnError">@color/colorOnErrorFlax</item>
+        <item name="colorSurface">@color/colorSurfaceFlax</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceFlax</item>
+        <item name="android:colorBackground">@color/colorBackgroundFlax</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundFlax</item>
+    </style>
+
+    <style name="Bing" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryBing</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBing</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryBing</item>
+        <item name="colorSecondary">@color/colorSecondaryBing</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantBing</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryBing</item>
+        <item name="colorError">@color/colorErrorBing</item>
+        <item name="colorOnError">@color/colorOnErrorBing</item>
+        <item name="colorSurface">@color/colorSurfaceBing</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceBing</item>
+        <item name="android:colorBackground">@color/colorBackgroundBing</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundBing</item>
+    </style>
+
+    <style name="Meetup" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryMeetup</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMeetup</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMeetup</item>
+        <item name="colorSecondary">@color/colorSecondaryMeetup</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMeetup</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMeetup</item>
+        <item name="colorError">@color/colorErrorMeetup</item>
+        <item name="colorOnError">@color/colorOnErrorMeetup</item>
+        <item name="colorSurface">@color/colorSurfaceMeetup</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceMeetup</item>
+        <item name="android:colorBackground">@color/colorBackgroundMeetup</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMeetup</item>
+    </style>
+
+    <style name="Coffee" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryCoffee</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCoffee</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCoffee</item>
+        <item name="colorSecondary">@color/colorSecondaryCoffee</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCoffee</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCoffee</item>
+        <item name="colorError">@color/colorErrorCoffee</item>
+        <item name="colorOnError">@color/colorOnErrorCoffee</item>
+        <item name="colorSurface">@color/colorSurfaceCoffee</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceCoffee</item>
+        <item name="android:colorBackground">@color/colorBackgroundCoffee</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCoffee</item>
+    </style>
+
+    <style name="Sepia" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimarySepia</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSepia</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySepia</item>
+        <item name="colorSecondary">@color/colorSecondarySepia</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSepia</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySepia</item>
+        <item name="colorError">@color/colorErrorSepia</item>
+        <item name="colorOnError">@color/colorOnErrorSepia</item>
+        <item name="colorSurface">@color/colorSurfaceSepia</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceSepia</item>
+        <item name="android:colorBackground">@color/colorBackgroundSepia</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSepia</item>
+    </style>
+
+    <style name="Oblivion" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryOblivion</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkOblivion</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryOblivion</item>
+        <item name="colorSecondary">@color/colorSecondaryOblivion</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantOblivion</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryOblivion</item>
+        <item name="colorError">@color/colorErrorOblivion</item>
+        <item name="colorOnError">@color/colorOnErrorOblivion</item>
+        <item name="colorSurface">@color/colorSurfaceOblivion</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceOblivion</item>
+        <item name="android:colorBackground">@color/colorBackgroundOblivion</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundOblivion</item>
+    </style>
+
+    <style name="Obsidian" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryObsidian</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkObsidian</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryObsidian</item>
+        <item name="colorSecondary">@color/colorSecondaryObsidian</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantObsidian</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryObsidian</item>
+        <item name="colorError">@color/colorErrorObsidian</item>
+        <item name="colorOnError">@color/colorOnErrorObsidian</item>
+        <item name="colorSurface">@color/colorSurfaceObsidian</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceObsidian</item>
+        <item name="android:colorBackground">@color/colorBackgroundObsidian</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundObsidian</item>
+    </style>
+
+    <style name="Forrest" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryForrest</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkForrest</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryForrest</item>
+        <item name="colorSecondary">@color/colorSecondaryForrest</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantForrest</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryForrest</item>
+        <item name="colorError">@color/colorErrorForrest</item>
+        <item name="colorOnError">@color/colorOnErrorForrest</item>
+        <item name="colorSurface">@color/colorSurfaceForrest</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceForrest</item>
+        <item name="android:colorBackground">@color/colorBackgroundForrest</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundForrest</item>
+    </style>
+
+    <style name="Dawn" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryDawn</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDawn</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDawn</item>
+        <item name="colorSecondary">@color/colorSecondaryDawn</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantDawn</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryDawn</item>
+        <item name="colorError">@color/colorErrorDawn</item>
+        <item name="colorOnError">@color/colorOnErrorDawn</item>
+        <item name="colorSurface">@color/colorSurfaceDawn</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceDawn</item>
+        <item name="android:colorBackground">@color/colorBackgroundDawn</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundDawn</item>
+    </style>
+
+    <style name="Twitter" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryTwitter</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitter</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryTwitter</item>
+        <item name="colorSecondary">@color/colorSecondaryTwitter</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTwitter</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryTwitter</item>
+        <item name="colorError">@color/colorErrorTwitter</item>
+        <item name="colorOnError">@color/colorOnErrorTwitter</item>
+        <item name="colorSurface">@color/colorSurfaceTwitter</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceTwitter</item>
+        <item name="android:colorBackground">@color/colorBackgroundTwitter</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundTwitter</item>
+    </style>
+
+    <style name="Periscope" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryPeriscope</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkPeriscope</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryPeriscope</item>
+        <item name="colorSecondary">@color/colorSecondaryPeriscope</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantPeriscope</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryPeriscope</item>
+        <item name="colorError">@color/colorErrorPeriscope</item>
+        <item name="colorOnError">@color/colorOnErrorPeriscope</item>
+        <item name="colorSurface">@color/colorSurfacePeriscope</item>
+        <item name="colorOnSurface">@color/colorOnSurfacePeriscope</item>
+        <item name="android:colorBackground">@color/colorBackgroundPeriscope</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundPeriscope</item>
+    </style>
+
+    <style name="Subdued" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimarySubdued</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSubdued</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySubdued</item>
+        <item name="colorSecondary">@color/colorSecondarySubdued</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSubdued</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySubdued</item>
+        <item name="colorError">@color/colorErrorSubdued</item>
+        <item name="colorOnError">@color/colorOnErrorSubdued</item>
+        <item name="colorSurface">@color/colorSurfaceSubdued</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceSubdued</item>
+        <item name="android:colorBackground">@color/colorBackgroundSubdued</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSubdued</item>
+    </style>
+
+    <style name="MistyGreen" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryMistyGreen</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMistyGreen</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMistyGreen</item>
+        <item name="colorSecondary">@color/colorSecondaryMistyGreen</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMistyGreen</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMistyGreen</item>
+        <item name="colorError">@color/colorErrorMistyGreen</item>
+        <item name="colorOnError">@color/colorOnErrorMistyGreen</item>
+        <item name="colorSurface">@color/colorSurfaceMistyGreen</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceMistyGreen</item>
+        <item name="android:colorBackground">@color/colorBackgroundMistyGreen</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMistyGreen</item>
+    </style>
+
+    <style name="Waterfall" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryWaterfall</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkWaterfall</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryWaterfall</item>
+        <item name="colorSecondary">@color/colorSecondaryWaterfall</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWaterfall</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryWaterfall</item>
+        <item name="colorError">@color/colorErrorWaterfall</item>
+        <item name="colorOnError">@color/colorOnErrorWaterfall</item>
+        <item name="colorSurface">@color/colorSurfaceWaterfall</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceWaterfall</item>
+        <item name="android:colorBackground">@color/colorBackgroundWaterfall</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundWaterfall</item>
+    </style>
+
+    <style name="Retro" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryRetro</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkRetro</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryRetro</item>
+        <item name="colorSecondary">@color/colorSecondaryRetro</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRetro</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryRetro</item>
+        <item name="colorError">@color/colorErrorRetro</item>
+        <item name="colorOnError">@color/colorOnErrorRetro</item>
+        <item name="colorSurface">@color/colorSurfaceRetro</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceRetro</item>
+        <item name="android:colorBackground">@color/colorBackgroundRetro</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundRetro</item>
+    </style>
+
+    <style name="Inkpot" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryInkpot</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkInkpot</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryInkpot</item>
+        <item name="colorSecondary">@color/colorSecondaryInkpot</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantInkpot</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryInkpot</item>
+        <item name="colorError">@color/colorErrorInkpot</item>
+        <item name="colorOnError">@color/colorOnErrorInkpot</item>
+        <item name="colorSurface">@color/colorSurfaceInkpot</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceInkpot</item>
+        <item name="android:colorBackground">@color/colorBackgroundInkpot</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundInkpot</item>
+    </style>
+
+    <style name="VibrantInk" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryVibrantInk</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkVibrantInk</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryVibrantInk</item>
+        <item name="colorSecondary">@color/colorSecondaryVibrantInk</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantVibrantInk</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryVibrantInk</item>
+        <item name="colorError">@color/colorErrorVibrantInk</item>
+        <item name="colorOnError">@color/colorOnErrorVibrantInk</item>
+        <item name="colorSurface">@color/colorSurfaceVibrantInk</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceVibrantInk</item>
+        <item name="android:colorBackground">@color/colorBackgroundVibrantInk</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundVibrantInk</item>
+    </style>
+
+    <style name="Fresh" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryFresh</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkFresh</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryFresh</item>
+        <item name="colorSecondary">@color/colorSecondaryFresh</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantFresh</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryFresh</item>
+        <item name="colorError">@color/colorErrorFresh</item>
+        <item name="colorOnError">@color/colorOnErrorFresh</item>
+        <item name="colorSurface">@color/colorSurfaceFresh</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceFresh</item>
+        <item name="android:colorBackground">@color/colorBackgroundFresh</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundFresh</item>
+    </style>
+
+    <style name="Coteazur" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryCoteazur</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCoteazur</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCoteazur</item>
+        <item name="colorSecondary">@color/colorSecondaryCoteazur</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCoteazur</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCoteazur</item>
+        <item name="colorError">@color/colorErrorCoteazur</item>
+        <item name="colorOnError">@color/colorOnErrorCoteazur</item>
+        <item name="colorSurface">@color/colorSurfaceCoteazur</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceCoteazur</item>
+        <item name="android:colorBackground">@color/colorBackgroundCoteazur</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCoteazur</item>
+    </style>
+
+    <style name="QED" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryQED</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkQED</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryQED</item>
+        <item name="colorSecondary">@color/colorSecondaryQED</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantQED</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryQED</item>
+        <item name="colorError">@color/colorErrorQED</item>
+        <item name="colorOnError">@color/colorOnErrorQED</item>
+        <item name="colorSurface">@color/colorSurfaceQED</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceQED</item>
+        <item name="android:colorBackground">@color/colorBackgroundQED</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundQED</item>
+    </style>
+
+    <style name="Vintage" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryVintage</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkVintage</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryVintage</item>
+        <item name="colorSecondary">@color/colorSecondaryVintage</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantVintage</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryVintage</item>
+        <item name="colorError">@color/colorErrorVintage</item>
+        <item name="colorOnError">@color/colorOnErrorVintage</item>
+        <item name="colorSurface">@color/colorSurfaceVintage</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceVintage</item>
+        <item name="android:colorBackground">@color/colorBackgroundVintage</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundVintage</item>
+    </style>
+
+    <style name="Spotify" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimarySpotify</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSpotify</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySpotify</item>
+        <item name="colorSecondary">@color/colorSecondarySpotify</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSpotify</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySpotify</item>
+        <item name="colorError">@color/colorErrorSpotify</item>
+        <item name="colorOnError">@color/colorOnErrorSpotify</item>
+        <item name="colorSurface">@color/colorSurfaceSpotify</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceSpotify</item>
+        <item name="android:colorBackground">@color/colorBackgroundSpotify</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSpotify</item>
+    </style>
+
+    <style name="Xbox" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryXbox</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkXbox</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryXbox</item>
+        <item name="colorSecondary">@color/colorSecondaryXbox</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantXbox</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryXbox</item>
+        <item name="colorError">@color/colorErrorXbox</item>
+        <item name="colorOnError">@color/colorOnErrorXbox</item>
+        <item name="colorSurface">@color/colorSurfaceXbox</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceXbox</item>
+        <item name="android:colorBackground">@color/colorBackgroundXbox</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundXbox</item>
+    </style>
+
+    <style name="Sublime" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimarySublime</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSublime</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySublime</item>
+        <item name="colorSecondary">@color/colorSecondarySublime</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSublime</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySublime</item>
+        <item name="colorError">@color/colorErrorSublime</item>
+        <item name="colorOnError">@color/colorOnErrorSublime</item>
+        <item name="colorSurface">@color/colorSurfaceSublime</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceSublime</item>
+        <item name="android:colorBackground">@color/colorBackgroundSublime</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSublime</item>
+    </style>
+
+    <style name="Zenburn" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryZenburn</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkZenburn</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryZenburn</item>
+        <item name="colorSecondary">@color/colorSecondaryZenburn</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantZenburn</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryZenburn</item>
+        <item name="colorError">@color/colorErrorZenburn</item>
+        <item name="colorOnError">@color/colorOnErrorZenburn</item>
+        <item name="colorSurface">@color/colorSurfaceZenburn</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceZenburn</item>
+        <item name="android:colorBackground">@color/colorBackgroundZenburn</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundZenburn</item>
+    </style>
+
+    <style name="Starbucks" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryStarbucks</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkStarbucks</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryStarbucks</item>
+        <item name="colorSecondary">@color/colorSecondaryStarbucks</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantStarbucks</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryStarbucks</item>
+        <item name="colorError">@color/colorErrorStarbucks</item>
+        <item name="colorOnError">@color/colorOnErrorStarbucks</item>
+        <item name="colorSurface">@color/colorSurfaceStarbucks</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceStarbucks</item>
+        <item name="android:colorBackground">@color/colorBackgroundStarbucks</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundStarbucks</item>
+    </style>
+
+    <style name="Amazon" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryAmazon</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkAmazon</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryAmazon</item>
+        <item name="colorSecondary">@color/colorSecondaryAmazon</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantAmazon</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryAmazon</item>
+        <item name="colorError">@color/colorErrorAmazon</item>
+        <item name="colorOnError">@color/colorOnErrorAmazon</item>
+        <item name="colorSurface">@color/colorSurfaceAmazon</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceAmazon</item>
+        <item name="android:colorBackground">@color/colorBackgroundAmazon</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundAmazon</item>
+    </style>
+
+    <style name="Twitch" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryTwitch</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitch</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryTwitch</item>
+        <item name="colorSecondary">@color/colorSecondaryTwitch</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTwitch</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryTwitch</item>
+        <item name="colorError">@color/colorErrorTwitch</item>
+        <item name="colorOnError">@color/colorOnErrorTwitch</item>
+        <item name="colorSurface">@color/colorSurfaceTwitch</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceTwitch</item>
+        <item name="android:colorBackground">@color/colorBackgroundTwitch</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundTwitch</item>
+    </style>
+
+    <style name="Robinhood" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryRobinhood</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkRobinhood</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryRobinhood</item>
+        <item name="colorSecondary">@color/colorSecondaryRobinhood</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRobinhood</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryRobinhood</item>
+        <item name="colorError">@color/colorErrorRobinhood</item>
+        <item name="colorOnError">@color/colorOnErrorRobinhood</item>
+        <item name="colorSurface">@color/colorSurfaceRobinhood</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceRobinhood</item>
+        <item name="android:colorBackground">@color/colorBackgroundRobinhood</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundRobinhood</item>
+    </style>
+
+    <style name="Facebook" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryFacebook</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkFacebook</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryFacebook</item>
+        <item name="colorSecondary">@color/colorSecondaryFacebook</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantFacebook</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryFacebook</item>
+        <item name="colorError">@color/colorErrorFacebook</item>
+        <item name="colorOnError">@color/colorOnErrorFacebook</item>
+        <item name="colorSurface">@color/colorSurfaceFacebook</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceFacebook</item>
+        <item name="android:colorBackground">@color/colorBackgroundFacebook</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundFacebook</item>
+    </style>
+
+    <style name="Mint" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="colorPrimary">@color/colorPrimaryMint</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMint</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMint</item>
+        <item name="colorSecondary">@color/colorSecondaryMint</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMint</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMint</item>
+        <item name="colorError">@color/colorErrorMint</item>
+        <item name="colorOnError">@color/colorOnErrorMint</item>
+        <item name="colorSurface">@color/colorSurfaceMint</item>
+        <item name="colorOnSurface">@color/colorOnSurfaceMint</item>
+        <item name="android:colorBackground">@color/colorBackgroundMint</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMint</item>
     </style>
 </resources>

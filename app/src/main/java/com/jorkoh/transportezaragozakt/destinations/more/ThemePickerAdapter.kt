@@ -46,7 +46,7 @@ class ThemePickerAdapter(private val themes: List<ThemePickerFragment.CustomThem
 
         holder = if (convertView == null) {
             val inflater = LayoutInflater.from(parent.context)
-            val view = inflater.inflate(R.layout.item_theme, parent, false)
+            val view = inflater.inflate(R.layout.theme_item, parent, false)
             ViewHolder(view)
         } else {
             convertView.tag as ViewHolder

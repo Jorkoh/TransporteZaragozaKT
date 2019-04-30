@@ -18,7 +18,6 @@
             android:layout_height="wrap_content">
 
         <TextView
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="120dp"
                 android:layout_height="90dp"
                 android:id="@+id/line_text"
@@ -31,7 +30,6 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="60dp"
-                android:textColor="@color/kinda_white"
                 tools:ignore="SpUsage"
                 android:textAlignment="center"/>
 

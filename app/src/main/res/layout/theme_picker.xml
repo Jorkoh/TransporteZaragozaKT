@@ -17,5 +17,5 @@
     android:paddingTop="8dp"
     android:scrollbarStyle="outsideOverlay"
     android:verticalSpacing="8dp"
-    tools:listitem="@layout/item_theme"
+    tools:listitem="@layout/theme_item"
     />

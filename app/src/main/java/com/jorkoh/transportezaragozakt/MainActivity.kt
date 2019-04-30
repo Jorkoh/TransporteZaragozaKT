@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
             intent = intent
         )
 
+        setSupportActionBar(toolbar)
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)

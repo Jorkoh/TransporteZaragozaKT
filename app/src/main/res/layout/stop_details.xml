@@ -57,18 +57,6 @@
             app:layout_constraintTop_toBottomOf="@+id/no_data_text" app:layout_constraintHorizontal_bias="0.5"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--style="@style/Widget.MaterialComponents.FloatingActionButton"-->
-            <!--android:id="@+id/stop_details_fab"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="bottom|end"-->
-            <!--android:layout_margin="16dp"-->
-            <!--app:fabSize="normal"-->
-            <!--app:srcCompat="@drawable/ic_favorite_border_black_24dp"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
-
     <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/stop_details_fab"
             android:layout_width="wrap_content"
@@ -76,9 +64,6 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             app:sdMainFabClosedSrc="@drawable/ic_add_black_24dp"
-
-            app:sdMainFabOpenedBackgroundColor="@color/colorSecondaryOne"
-            app:sdMainFabClosedBackgroundColor="@color/colorSecondaryDarkOne"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
