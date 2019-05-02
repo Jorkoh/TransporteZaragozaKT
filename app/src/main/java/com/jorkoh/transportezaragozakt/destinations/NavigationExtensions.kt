@@ -18,6 +18,7 @@ package com.jorkoh.transportezaragozakt.destinations
 
 import android.content.Intent
 import android.util.SparseArray
+import android.view.View
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.fragment.app.FragmentManager

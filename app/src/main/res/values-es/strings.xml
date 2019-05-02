@@ -28,4 +28,6 @@
     <string name="fab_add_favorite">Añadir a favoritos</string>
     <string name="fab_remove_favorite">Eliminar de favoritos</string>
     <string name="fab_reminder">Crear notificación</string>
+    <string name="fab_shortcut">Crear acceso directo</string>
+    <string name="shortcut_pinning_not_supported">Accesos directos no disponibles en tu dispositivo</string>
 </resources>

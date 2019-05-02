@@ -4,8 +4,16 @@
         <item name="android:background">?colorPrimary</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:textColorPrimary">?colorOnBackground</item>
+        <item name="android:background">?android:colorBackground</item>
+        <item name="colorSurface">?colorSurface</item>
+        <item name="colorOnSurface">?colorOnSurface</item>
+    </style>
+
     <style name="Cyanea" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCyanea</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCyanea</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCyanea</item>
@@ -22,6 +30,7 @@
 
     <style name="Rio" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRio</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRio</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRio</item>
@@ -38,6 +47,7 @@
 
     <style name="VitaminSea" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryVitaminSea</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVitaminSea</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVitaminSea</item>
@@ -54,6 +64,7 @@
 
     <style name="TextileDyes" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTextileDyes</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTextileDyes</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTextileDyes</item>
@@ -70,6 +81,7 @@
 
     <style name="Brave" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryBrave</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBrave</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryBrave</item>
@@ -86,6 +98,7 @@
 
     <style name="Ashen" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryAshen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkAshen</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryAshen</item>
@@ -102,6 +115,7 @@
 
     <style name="RecognEyes" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRecognEyes</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRecognEyes</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRecognEyes</item>
@@ -118,6 +132,7 @@
 
     <style name="Monokai" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMonokai</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMonokai</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMonokai</item>
@@ -134,6 +149,7 @@
 
     <style name="SigFig" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimarySigFig</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSigFig</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySigFig</item>
@@ -150,6 +166,7 @@
 
     <style name="SoundCloud" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimarySoundCloud</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSoundCloud</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySoundCloud</item>
@@ -166,6 +183,7 @@
 
     <style name="Materiallight" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMateriallight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMateriallight</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMateriallight</item>
@@ -182,6 +200,7 @@
 
     <style name="Hololight" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryHololight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkHololight</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryHololight</item>
@@ -198,6 +217,7 @@
 
     <style name="Materialdark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMaterialdark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMaterialdark</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMaterialdark</item>
@@ -214,6 +234,7 @@
 
     <style name="Holodark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryHolodark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkHolodark</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryHolodark</item>
@@ -230,6 +251,7 @@
 
     <style name="Cherrypie" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCherrypie</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCherrypie</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCherrypie</item>
@@ -246,6 +268,7 @@
 
     <style name="Olive" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryOlive</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOlive</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryOlive</item>
@@ -262,6 +285,7 @@
 
     <style name="Tasty" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTasty</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTasty</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTasty</item>
@@ -278,6 +302,7 @@
 
     <style name="Desert" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryDesert</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDesert</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryDesert</item>
@@ -294,6 +319,7 @@
 
     <style name="Weber" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryWeber</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkWeber</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryWeber</item>
@@ -310,6 +336,7 @@
 
     <style name="Philips" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryPhilips</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkPhilips</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryPhilips</item>
@@ -326,6 +353,7 @@
 
     <style name="Instagram" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryInstagram</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkInstagram</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryInstagram</item>
@@ -342,6 +370,7 @@
 
     <style name="Reddit" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryReddit</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkReddit</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryReddit</item>
@@ -358,6 +387,7 @@
 
     <style name="Waaark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryWaaark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkWaaark</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryWaaark</item>
@@ -374,6 +404,7 @@
 
     <style name="Flax" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryFlax</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFlax</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFlax</item>
@@ -390,6 +421,7 @@
 
     <style name="Bing" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryBing</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBing</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryBing</item>
@@ -406,6 +438,7 @@
 
     <style name="Meetup" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMeetup</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMeetup</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMeetup</item>
@@ -422,6 +455,7 @@
 
     <style name="Coffee" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCoffee</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCoffee</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCoffee</item>
@@ -438,6 +472,7 @@
 
     <style name="Sepia" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimarySepia</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSepia</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySepia</item>
@@ -454,6 +489,7 @@
 
     <style name="Oblivion" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryOblivion</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOblivion</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryOblivion</item>
@@ -470,6 +506,7 @@
 
     <style name="Obsidian" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryObsidian</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkObsidian</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryObsidian</item>
@@ -486,6 +523,7 @@
 
     <style name="Forrest" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryForrest</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkForrest</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryForrest</item>
@@ -502,6 +540,7 @@
 
     <style name="Dawn" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryDawn</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDawn</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryDawn</item>
@@ -518,6 +557,7 @@
 
     <style name="Twitter" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTwitter</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitter</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTwitter</item>
@@ -534,6 +574,7 @@
 
     <style name="Periscope" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryPeriscope</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkPeriscope</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryPeriscope</item>
@@ -550,6 +591,7 @@
 
     <style name="Subdued" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimarySubdued</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSubdued</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySubdued</item>
@@ -566,6 +608,7 @@
 
     <style name="MistyGreen" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMistyGreen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMistyGreen</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMistyGreen</item>
@@ -582,6 +625,7 @@
 
     <style name="Waterfall" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryWaterfall</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkWaterfall</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryWaterfall</item>
@@ -598,6 +642,7 @@
 
     <style name="Retro" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRetro</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRetro</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRetro</item>
@@ -614,6 +659,7 @@
 
     <style name="Inkpot" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryInkpot</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkInkpot</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryInkpot</item>
@@ -630,6 +676,7 @@
 
     <style name="VibrantInk" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryVibrantInk</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVibrantInk</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVibrantInk</item>
@@ -646,6 +693,7 @@
 
     <style name="Fresh" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryFresh</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFresh</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFresh</item>
@@ -662,6 +710,7 @@
 
     <style name="Coteazur" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCoteazur</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCoteazur</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCoteazur</item>
@@ -678,6 +727,7 @@
 
     <style name="QED" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryQED</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkQED</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryQED</item>
@@ -694,6 +744,7 @@
 
     <style name="Vintage" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryVintage</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVintage</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVintage</item>
@@ -710,6 +761,7 @@
 
     <style name="Spotify" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimarySpotify</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSpotify</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySpotify</item>
@@ -726,6 +778,7 @@
 
     <style name="Xbox" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryXbox</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkXbox</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryXbox</item>
@@ -742,6 +795,7 @@
 
     <style name="Sublime" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimarySublime</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSublime</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySublime</item>
@@ -758,6 +812,7 @@
 
     <style name="Zenburn" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryZenburn</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkZenburn</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryZenburn</item>
@@ -774,6 +829,7 @@
 
     <style name="Starbucks" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryStarbucks</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkStarbucks</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryStarbucks</item>
@@ -790,6 +846,7 @@
 
     <style name="Amazon" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryAmazon</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkAmazon</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryAmazon</item>
@@ -806,6 +863,7 @@
 
     <style name="Twitch" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTwitch</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitch</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTwitch</item>
@@ -822,6 +880,7 @@
 
     <style name="Robinhood" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRobinhood</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRobinhood</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRobinhood</item>
@@ -838,6 +897,7 @@
 
     <style name="Facebook" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryFacebook</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFacebook</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFacebook</item>
@@ -854,6 +914,7 @@
 
     <style name="Mint" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMint</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMint</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMint</item>

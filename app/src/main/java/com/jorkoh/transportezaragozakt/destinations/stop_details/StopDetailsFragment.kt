@@ -1,5 +1,8 @@
 package com.jorkoh.transportezaragozakt.destinations.stop_details
 
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
@@ -18,14 +20,23 @@ import com.jorkoh.transportezaragozakt.repositories.Status
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import kotlinx.android.synthetic.main.stop_details.*
 import kotlinx.android.synthetic.main.stop_details.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
+import android.content.Intent
+import android.graphics.drawable.Icon
+import android.net.Uri
+import android.os.Build.VERSION_CODES.O
+import com.google.android.material.snackbar.Snackbar
+import android.R.string.cancel
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.shortcut_label_dialog.view.*
+
 
 class StopDetailsFragment : Fragment() {
     companion object : Serializable {
-        const val STOP_ID_KEY = "STOP_ID_KEY"
-        const val STOP_TYPE_KEY = "STOP_TYPE_KEY"
-
         const val FAVORITE_ITEM_FAB_POSITION = 0
     }
 
@@ -58,6 +69,13 @@ class StopDetailsFragment : Fragment() {
 
         setupFab(rootView)
 
+        GlobalScope.launch {
+            delay(100)
+            stop_details_fab.animate()
+                .alpha(1f)
+                .duration = 600
+        }
+
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
@@ -80,11 +98,10 @@ class StopDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        stopDetailsVM.init(
-            checkNotNull(arguments?.getString(STOP_ID_KEY)),
-            StopType.valueOf(checkNotNull(arguments?.getString(STOP_TYPE_KEY)))
-        )
+        val args = StopDetailsFragmentArgs.fromBundle(requireArguments())
+        stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
     }
+
 
     private fun setupFab(rootView: View) {
         rootView.stop_details_fab.apply {
@@ -104,6 +121,16 @@ class StopDetailsFragment : Fragment() {
                     .setLabel(R.string.fab_reminder)
                     .create()
             )
+            if (SDK_INT >= O) {
+                addActionItem(
+                    SpeedDialActionItem.Builder(
+                        R.id.stop_details_fab_shortcut,
+                        R.drawable.ic_launch_black_24dp
+                    )
+                        .setLabel(R.string.fab_shortcut)
+                        .create()
+                )
+            }
 
             setOnActionSelectedListener { actionItem ->
                 when (actionItem.id) {
@@ -112,8 +139,60 @@ class StopDetailsFragment : Fragment() {
                         true
                     }
                     R.id.stop_details_fab_reminder -> true
+                    R.id.stop_details_fab_shortcut -> {
+                        getShortcutLabel()
+                        true
+                    }
                     else -> true
                 }
+            }
+        }
+    }
+
+    private fun getShortcutLabel() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Title")
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.shortcut_label_dialog, view as ViewGroup?, false)
+
+        view.input.setText(stopDetailsVM.stopTitle.value)
+        builder.setView(view)
+        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+            dialog.dismiss()
+            createShortcut(view.input.text.toString())
+        }
+        builder.setNegativeButton(cancel) { dialog, _ -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun createShortcut(label: String) {
+        if (SDK_INT >= O) {
+            val shortcutManager = requireContext().getSystemService(ShortcutManager::class.java)
+            val shortcut = ShortcutInfo.Builder(requireContext(), stopDetailsVM.stopID)
+                .setShortLabel(label)
+                .setIcon(
+                    Icon.createWithResource(
+                        requireContext(),
+                        when (stopDetailsVM.stopType) {
+                            StopType.BUS -> R.mipmap.ic_bus_launcher
+                            StopType.TRAM -> R.mipmap.ic_tram_launcher
+                        }
+                    )
+                )
+                .setIntent(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("launchTZ://viewStop/${stopDetailsVM.stopType.name}/${stopDetailsVM.stopID}/")
+                    )
+                ).build()
+            if (shortcutManager.isRequestPinShortcutSupported) {
+                shortcutManager.requestPinShortcut(shortcut, null)
+            } else {
+                Snackbar.make(
+                    stop_details_fab,
+                    R.string.shortcut_pinning_not_supported,
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -125,7 +204,7 @@ class StopDetailsFragment : Fragment() {
             R.drawable.ic_favorite_border_black_24dp
         }
 
-        val newLabel= if (isFavorited == true) {
+        val newLabel = if (isFavorited == true) {
             R.string.fab_remove_favorite
         } else {
             R.string.fab_add_favorite
@@ -147,6 +226,7 @@ class StopDetailsFragment : Fragment() {
         val newVisibility = when (stopDestinations.status) {
             Status.SUCCESS -> {
                 rootView.swiperefresh?.isRefreshing = false
+                stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType)
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
                 } else {
@@ -155,14 +235,15 @@ class StopDetailsFragment : Fragment() {
             }
             Status.ERROR -> {
                 rootView.swiperefresh?.isRefreshing = false
+                stopDestinationsAdapter.setDestinations(listOf(), stopDetailsVM.stopType)
                 View.VISIBLE
+
             }
             Status.LOADING -> {
                 rootView.swiperefresh?.isRefreshing = true
                 View.GONE
             }
         }
-        stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType)
 
         rootView.no_data_suggestions_text?.visibility = newVisibility
         rootView.no_data_text?.visibility = newVisibility

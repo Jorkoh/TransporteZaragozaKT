@@ -266,11 +266,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             false
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
-            val bundle = Bundle().apply {
-                putString(StopDetailsFragment.STOP_ID_KEY, stop.stopId)
-                putString(StopDetailsFragment.STOP_TYPE_KEY, stop.type.name)
-            }
-            findNavController().navigate(R.id.action_map_to_stopDetails, bundle)
+            findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
         }
     }
 

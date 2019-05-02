@@ -3,12 +3,15 @@ package com.jorkoh.transportezaragozakt
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Interpolator
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -19,6 +22,7 @@ import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
+import kotlinx.android.synthetic.main.stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -36,22 +40,15 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
         setContentView(R.layout.main_container)
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
-        } // Else, need to wait for onRestoreInstanceState
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        // Now that BottomNavigationBar has restored its instance state
-        // and its selectedItemId, we can proceed with setting up the
-        // BottomNavigationBar with Navigation
         setupBottomNavigationBar()
     }
 
-    /**
-     * Called on first creation and when restoring state.
-     */
     private fun setupBottomNavigationBar() {
-        //TODO: Add the rest of the destination graphs
         val navGraphIds = listOf(
             R.navigation.favorites_destination,
             R.navigation.map_destination,
@@ -60,7 +57,6 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
             R.navigation.more_destination
         )
 
-        // Setup the bottom navigation view with a list of navigation graphs
         val controller = bottom_navigation.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
@@ -69,9 +65,33 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
         )
 
         setSupportActionBar(toolbar)
-        // Whenever the selected controller changes, setup the action bar.
+
         controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.stopDetails -> {
+                        with(bottom_navigation) {
+                            if (visibility == View.VISIBLE && alpha == 1f) {
+                                animate()
+                                    .translationY(resources.getDimension(R.dimen.design_bottom_navigation_height))
+                                    .withEndAction { visibility = View.GONE }
+                                    .setInterpolator(FastOutLinearInInterpolator())
+                                    .duration = 150
+                            }
+                        }
+                    }
+                    else -> {
+                        with(bottom_navigation) {
+                            visibility = View.VISIBLE
+                            animate()
+                                .translationY(0f)
+                                .setInterpolator(LinearOutSlowInInterpolator())
+                                .duration = 150
+                        }
+                    }
+                }
+            }
         })
         currentNavController = controller
     }
@@ -91,6 +111,15 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     //@TEST
     fun testNotifications(@Suppress("UNUSED_PARAMETER") v: View) {
+//        val pendingIntent = NavDeepLinkBuilder(context)
+//            .setGraph(R.navigation.favorites_destination)
+//            .setDestination(R.id.stopDetails)
+//            .setArguments(
+//                StopDetailsFragmentArgs(
+//                    stopDetailsVM.stopID,
+//                    stopDetailsVM.stopType.name
+//                ).toBundle()
+//            ).createPendingIntent()
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

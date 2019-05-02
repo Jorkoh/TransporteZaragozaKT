@@ -22,8 +22,7 @@ class MoreFragment : Fragment() {
         val view = inflater.inflate(R.layout.more_destination, container, false)
 
         view.themes_button.setOnClickListener{
-            findNavController().navigate(R.id.action_more_to_ThemePicker)
-//            requireActivity().dressCodeStyleId = if (requireActivity().dressCodeStyleId == R.style.ThemeOne) R.style.ThemeTwo else R.style.ThemeOne
+            findNavController().navigate(MoreFragmentDirections.actionMoreToThemePicker())
         }
 
         return view

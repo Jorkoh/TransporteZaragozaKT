@@ -5,6 +5,7 @@
     <color name="colorThemeSelected">#FF689F38</color>
     <color name="colorThemeNotSelected">#CC37474F</color>
     <color name="kinda_white">#ECECEC</color>
+    <color name="kinda_black">#1D1D24</color>
     <color name="bus_color">#2c82c9</color>
     <color name="tram_color">#232828</color>
 
@@ -43,7 +44,7 @@
     <color name="colorOnSecondaryVitaminSea">#FAFAFA</color>
     <color name="colorErrorVitaminSea">#F44336</color>
     <color name="colorOnErrorVitaminSea">#FAFAFA</color>
-    <color name="colorSurfaceVitaminSea">#EEE8DE</color>
+    <color name="colorSurfaceVitaminSea">#EBE5D9</color>
     <color name="colorOnSurfaceVitaminSea">#1D1D24</color>
     <color name="colorBackgroundVitaminSea">#EBE5D9</color>
     <color name="colorOnBackgroundVitaminSea">#1D1D24</color>
@@ -56,7 +57,7 @@
     <color name="colorOnSecondaryTextileDyes">#FAFAFA</color>
     <color name="colorErrorTextileDyes">#F44336</color>
     <color name="colorOnErrorTextileDyes">#FAFAFA</color>
-    <color name="colorSurfaceTextileDyes">#FDE1D1</color>
+    <color name="colorSurfaceTextileDyes">#FDDCCA</color>
     <color name="colorOnSurfaceTextileDyes">#1D1D24</color>
     <color name="colorBackgroundTextileDyes">#FDDCCA</color>
     <color name="colorOnBackgroundTextileDyes">#1D1D24</color>
@@ -69,7 +70,7 @@
     <color name="colorOnSecondaryBrave">#FAFAFA</color>
     <color name="colorErrorBrave">#F44336</color>
     <color name="colorOnErrorBrave">#FAFAFA</color>
-    <color name="colorSurfaceBrave">#3E3E44</color>
+    <color name="colorSurfaceBrave">#1D1D24</color>
     <color name="colorOnSurfaceBrave">#FAFAFA</color>
     <color name="colorBackgroundBrave">#1D1D24</color>
     <color name="colorOnBackgroundBrave">#FAFAFA</color>
@@ -82,7 +83,7 @@
     <color name="colorOnSecondaryAshen">#FAFAFA</color>
     <color name="colorErrorAshen">#F44336</color>
     <color name="colorOnErrorAshen">#FAFAFA</color>
-    <color name="colorSurfaceAshen">#383B3B</color>
+    <color name="colorSurfaceAshen">#151919</color>
     <color name="colorOnSurfaceAshen">#FAFAFA</color>
     <color name="colorBackgroundAshen">#151919</color>
     <color name="colorOnBackgroundAshen">#FAFAFA</color>
@@ -95,7 +96,7 @@
     <color name="colorOnSecondaryRecognEyes">#FAFAFA</color>
     <color name="colorErrorRecognEyes">#F44336</color>
     <color name="colorOnErrorRecognEyes">#FAFAFA</color>
-    <color name="colorSurfaceRecognEyes">#333341</color>
+    <color name="colorSurfaceRecognEyes">#101020</color>
     <color name="colorOnSurfaceRecognEyes">#FAFAFA</color>
     <color name="colorBackgroundRecognEyes">#101020</color>
     <color name="colorOnBackgroundRecognEyes">#FAFAFA</color>
@@ -108,7 +109,7 @@
     <color name="colorOnSecondaryMonokai">#FAFAFA</color>
     <color name="colorErrorMonokai">#F44336</color>
     <color name="colorOnErrorMonokai">#FAFAFA</color>
-    <color name="colorSurfaceMonokai">#474843</color>
+    <color name="colorSurfaceMonokai">#272822</color>
     <color name="colorOnSurfaceMonokai">#FAFAFA</color>
     <color name="colorBackgroundMonokai">#272822</color>
     <color name="colorOnBackgroundMonokai">#FAFAFA</color>
@@ -121,7 +122,7 @@
     <color name="colorOnSecondarySigFig">#FAFAFA</color>
     <color name="colorErrorSigFig">#F44336</color>
     <color name="colorOnErrorSigFig">#FAFAFA</color>
-    <color name="colorSurfaceSigFig">#F2F0EB</color>
+    <color name="colorSurfaceSigFig">#F0EEE8</color>
     <color name="colorOnSurfaceSigFig">#1D1D24</color>
     <color name="colorBackgroundSigFig">#F0EEE8</color>
     <color name="colorOnBackgroundSigFig">#1D1D24</color>
@@ -147,7 +148,7 @@
     <color name="colorOnSecondaryMateriallight">#FAFAFA</color>
     <color name="colorErrorMateriallight">#F44336</color>
     <color name="colorOnErrorMateriallight">#FAFAFA</color>
-    <color name="colorSurfaceMateriallight">#F4F4F4</color>
+    <color name="colorSurfaceMateriallight">#F3F3F3</color>
     <color name="colorOnSurfaceMateriallight">#1D1D24</color>
     <color name="colorBackgroundMateriallight">#F3F3F3</color>
     <color name="colorOnBackgroundMateriallight">#1D1D24</color>
@@ -160,7 +161,7 @@
     <color name="colorOnSecondaryHololight">#FAFAFA</color>
     <color name="colorErrorHololight">#F44336</color>
     <color name="colorOnErrorHololight">#FAFAFA</color>
-    <color name="colorSurfaceHololight">#F4F4F4</color>
+    <color name="colorSurfaceHololight">#F3F3F3</color>
     <color name="colorOnSurfaceHololight">#1D1D24</color>
     <color name="colorBackgroundHololight">#F3F3F3</color>
     <color name="colorOnBackgroundHololight">#1D1D24</color>
@@ -173,7 +174,7 @@
     <color name="colorOnSecondaryMaterialdark">#FAFAFA</color>
     <color name="colorErrorMaterialdark">#F44336</color>
     <color name="colorOnErrorMaterialdark">#FAFAFA</color>
-    <color name="colorSurfaceMaterialdark">#262626</color>
+    <color name="colorSurfaceMaterialdark">#000000</color>
     <color name="colorOnSurfaceMaterialdark">#FAFAFA</color>
     <color name="colorBackgroundMaterialdark">#000000</color>
     <color name="colorOnBackgroundMaterialdark">#FAFAFA</color>
@@ -186,7 +187,7 @@
     <color name="colorOnSecondaryHolodark">#FAFAFA</color>
     <color name="colorErrorHolodark">#F44336</color>
     <color name="colorOnErrorHolodark">#FAFAFA</color>
-    <color name="colorSurfaceHolodark">#262626</color>
+    <color name="colorSurfaceHolodark">#000000</color>
     <color name="colorOnSurfaceHolodark">#FAFAFA</color>
     <color name="colorBackgroundHolodark">#000000</color>
     <color name="colorOnBackgroundHolodark">#FAFAFA</color>
@@ -199,7 +200,7 @@
     <color name="colorOnSecondaryCherrypie">#FAFAFA</color>
     <color name="colorErrorCherrypie">#F44336</color>
     <color name="colorOnErrorCherrypie">#FAFAFA</color>
-    <color name="colorSurfaceCherrypie">#2B2626</color>
+    <color name="colorSurfaceCherrypie">#060000</color>
     <color name="colorOnSurfaceCherrypie">#FAFAFA</color>
     <color name="colorBackgroundCherrypie">#060000</color>
     <color name="colorOnBackgroundCherrypie">#FAFAFA</color>
@@ -212,7 +213,7 @@
     <color name="colorOnSecondaryOlive">#FAFAFA</color>
     <color name="colorErrorOlive">#F44336</color>
     <color name="colorOnErrorOlive">#FAFAFA</color>
-    <color name="colorSurfaceOlive">#3D3E2F</color>
+    <color name="colorSurfaceOlive">#1B1C0B</color>
     <color name="colorOnSurfaceOlive">#FAFAFA</color>
     <color name="colorBackgroundOlive">#1B1C0B</color>
     <color name="colorOnBackgroundOlive">#FAFAFA</color>
@@ -225,7 +226,7 @@
     <color name="colorOnSecondaryTasty">#FAFAFA</color>
     <color name="colorErrorTasty">#F44336</color>
     <color name="colorOnErrorTasty">#FAFAFA</color>
-    <color name="colorSurfaceTasty">#FEF8EB</color>
+    <color name="colorSurfaceTasty">#FEF7E8</color>
     <color name="colorOnSurfaceTasty">#1D1D24</color>
     <color name="colorBackgroundTasty">#FEF7E8</color>
     <color name="colorOnBackgroundTasty">#1D1D24</color>
@@ -238,7 +239,7 @@
     <color name="colorOnSecondaryDesert">#FAFAFA</color>
     <color name="colorErrorDesert">#F44336</color>
     <color name="colorOnErrorDesert">#FAFAFA</color>
-    <color name="colorSurfaceDesert">#F4F0E8</color>
+    <color name="colorSurfaceDesert">#F3EEE4</color>
     <color name="colorOnSurfaceDesert">#1D1D24</color>
     <color name="colorBackgroundDesert">#F3EEE4</color>
     <color name="colorOnBackgroundDesert">#1D1D24</color>
@@ -251,7 +252,7 @@
     <color name="colorOnSecondaryWeber">#FAFAFA</color>
     <color name="colorErrorWeber">#F44336</color>
     <color name="colorOnErrorWeber">#FAFAFA</color>
-    <color name="colorSurfaceWeber">#F2EEEE</color>
+    <color name="colorSurfaceWeber">#F0ECEB</color>
     <color name="colorOnSurfaceWeber">#1D1D24</color>
     <color name="colorBackgroundWeber">#F0ECEB</color>
     <color name="colorOnBackgroundWeber">#1D1D24</color>
@@ -264,7 +265,7 @@
     <color name="colorOnSecondaryPhilips">#FAFAFA</color>
     <color name="colorErrorPhilips">#F44336</color>
     <color name="colorOnErrorPhilips">#FAFAFA</color>
-    <color name="colorSurfacePhilips">#EEEEEE</color>
+    <color name="colorSurfacePhilips">#ECECEC</color>
     <color name="colorOnSurfacePhilips">#1D1D24</color>
     <color name="colorBackgroundPhilips">#ECECEC</color>
     <color name="colorOnBackgroundPhilips">#1D1D24</color>
@@ -277,7 +278,7 @@
     <color name="colorOnSecondaryInstagram">#FAFAFA</color>
     <color name="colorErrorInstagram">#F44336</color>
     <color name="colorOnErrorInstagram">#FAFAFA</color>
-    <color name="colorSurfaceInstagram">#383A3B</color>
+    <color name="colorSurfaceInstagram">#161819</color>
     <color name="colorOnSurfaceInstagram">#FAFAFA</color>
     <color name="colorBackgroundInstagram">#161819</color>
     <color name="colorOnBackgroundInstagram">#FAFAFA</color>
@@ -290,7 +291,7 @@
     <color name="colorOnSecondaryReddit">#FAFAFA</color>
     <color name="colorErrorReddit">#F44336</color>
     <color name="colorOnErrorReddit">#FAFAFA</color>
-    <color name="colorSurfaceReddit">#424242</color>
+    <color name="colorSurfaceReddit">#212121</color>
     <color name="colorOnSurfaceReddit">#FAFAFA</color>
     <color name="colorBackgroundReddit">#212121</color>
     <color name="colorOnBackgroundReddit">#FAFAFA</color>
@@ -303,7 +304,7 @@
     <color name="colorOnSecondaryWaaark">#FAFAFA</color>
     <color name="colorErrorWaaark">#F44336</color>
     <color name="colorOnErrorWaaark">#FAFAFA</color>
-    <color name="colorSurfaceWaaark">#444F76</color>
+    <color name="colorSurfaceWaaark">#24305E</color>
     <color name="colorOnSurfaceWaaark">#FAFAFA</color>
     <color name="colorBackgroundWaaark">#24305E</color>
     <color name="colorOnBackgroundWaaark">#FAFAFA</color>
@@ -316,7 +317,7 @@
     <color name="colorOnSecondaryFlax">#FAFAFA</color>
     <color name="colorErrorFlax">#F44336</color>
     <color name="colorOnErrorFlax">#FAFAFA</color>
-    <color name="colorSurfaceFlax">#424657</color>
+    <color name="colorSurfaceFlax">#21263A</color>
     <color name="colorOnSurfaceFlax">#FAFAFA</color>
     <color name="colorBackgroundFlax">#21263A</color>
     <color name="colorOnBackgroundFlax">#FAFAFA</color>
@@ -355,7 +356,7 @@
     <color name="colorOnSecondaryCoffee">#FAFAFA</color>
     <color name="colorErrorCoffee">#F44336</color>
     <color name="colorOnErrorCoffee">#FAFAFA</color>
-    <color name="colorSurfaceCoffee">#F0E3DD</color>
+    <color name="colorSurfaceCoffee">#EEDFD8</color>
     <color name="colorOnSurfaceCoffee">#1D1D24</color>
     <color name="colorBackgroundCoffee">#EEDFD8</color>
     <color name="colorOnBackgroundCoffee">#1D1D24</color>
@@ -368,7 +369,7 @@
     <color name="colorOnSecondarySepia">#FAFAFA</color>
     <color name="colorErrorSepia">#F44336</color>
     <color name="colorOnErrorSepia">#FAFAFA</color>
-    <color name="colorSurfaceSepia">#F3F9EC</color>
+    <color name="colorSurfaceSepia">#F2F8E9</color>
     <color name="colorOnSurfaceSepia">#1D1D24</color>
     <color name="colorBackgroundSepia">#F2F8E9</color>
     <color name="colorOnBackgroundSepia">#1D1D24</color>
@@ -381,7 +382,7 @@
     <color name="colorOnSecondaryOblivion">#FAFAFA</color>
     <color name="colorErrorOblivion">#F44336</color>
     <color name="colorOnErrorOblivion">#FAFAFA</color>
-    <color name="colorSurfaceOblivion">#3F3F3F</color>
+    <color name="colorSurfaceOblivion">#1E1E1E</color>
     <color name="colorOnSurfaceOblivion">#FAFAFA</color>
     <color name="colorBackgroundOblivion">#1E1E1E</color>
     <color name="colorOnBackgroundOblivion">#FAFAFA</color>
@@ -394,7 +395,7 @@
     <color name="colorOnSecondaryObsidian">#FAFAFA</color>
     <color name="colorErrorObsidian">#F44336</color>
     <color name="colorOnErrorObsidian">#FAFAFA</color>
-    <color name="colorSurfaceObsidian">#494F52</color>
+    <color name="colorSurfaceObsidian">#293134</color>
     <color name="colorOnSurfaceObsidian">#FAFAFA</color>
     <color name="colorBackgroundObsidian">#293134</color>
     <color name="colorOnBackgroundObsidian">#FAFAFA</color>
@@ -407,7 +408,7 @@
     <color name="colorOnSecondaryForrest">#FAFAFA</color>
     <color name="colorErrorForrest">#F44336</color>
     <color name="colorOnErrorForrest">#FAFAFA</color>
-    <color name="colorSurfaceForrest">#303326</color>
+    <color name="colorSurfaceForrest">#0C1000</color>
     <color name="colorOnSurfaceForrest">#FAFAFA</color>
     <color name="colorBackgroundForrest">#0C1000</color>
     <color name="colorOnBackgroundForrest">#FAFAFA</color>
@@ -420,7 +421,7 @@
     <color name="colorOnSecondaryDawn">#FAFAFA</color>
     <color name="colorErrorDawn">#F44336</color>
     <color name="colorOnErrorDawn">#FAFAFA</color>
-    <color name="colorSurfaceDawn">#30262B</color>
+    <color name="colorSurfaceDawn">#0C0006</color>
     <color name="colorOnSurfaceDawn">#FAFAFA</color>
     <color name="colorBackgroundDawn">#0C0006</color>
     <color name="colorOnBackgroundDawn">#FAFAFA</color>
@@ -459,7 +460,7 @@
     <color name="colorOnSecondarySubdued">#FAFAFA</color>
     <color name="colorErrorSubdued">#F44336</color>
     <color name="colorOnErrorSubdued">#FAFAFA</color>
-    <color name="colorSurfaceSubdued">#E6EDEC</color>
+    <color name="colorSurfaceSubdued">#E2EAE9</color>
     <color name="colorOnSurfaceSubdued">#1D1D24</color>
     <color name="colorBackgroundSubdued">#E2EAE9</color>
     <color name="colorOnBackgroundSubdued">#1D1D24</color>
@@ -472,7 +473,7 @@
     <color name="colorOnSecondaryMistyGreen">#FAFAFA</color>
     <color name="colorErrorMistyGreen">#F44336</color>
     <color name="colorOnErrorMistyGreen">#FAFAFA</color>
-    <color name="colorSurfaceMistyGreen">#D7EFE5</color>
+    <color name="colorSurfaceMistyGreen">#D1EDE1</color>
     <color name="colorOnSurfaceMistyGreen">#1D1D24</color>
     <color name="colorBackgroundMistyGreen">#D1EDE1</color>
     <color name="colorOnBackgroundMistyGreen">#1D1D24</color>
@@ -485,7 +486,7 @@
     <color name="colorOnSecondaryWaterfall">#FAFAFA</color>
     <color name="colorErrorWaterfall">#F44336</color>
     <color name="colorOnErrorWaterfall">#FAFAFA</color>
-    <color name="colorSurfaceWaterfall">#2D363A</color>
+    <color name="colorSurfaceWaterfall">#091318</color>
     <color name="colorOnSurfaceWaterfall">#FAFAFA</color>
     <color name="colorBackgroundWaterfall">#091318</color>
     <color name="colorOnBackgroundWaterfall">#FAFAFA</color>
@@ -498,7 +499,7 @@
     <color name="colorOnSecondaryRetro">#FAFAFA</color>
     <color name="colorErrorRetro">#F44336</color>
     <color name="colorOnErrorRetro">#FAFAFA</color>
-    <color name="colorSurfaceRetro">#3E3931</color>
+    <color name="colorSurfaceRetro">#1C170D</color>
     <color name="colorOnSurfaceRetro">#FAFAFA</color>
     <color name="colorBackgroundRetro">#1C170D</color>
     <color name="colorOnBackgroundRetro">#FAFAFA</color>
@@ -511,7 +512,7 @@
     <color name="colorOnSecondaryInkpot">#FAFAFA</color>
     <color name="colorErrorInkpot">#F44336</color>
     <color name="colorOnErrorInkpot">#FAFAFA</color>
-    <color name="colorSurfaceInkpot">#404047</color>
+    <color name="colorSurfaceInkpot">#1F1F27</color>
     <color name="colorOnSurfaceInkpot">#FAFAFA</color>
     <color name="colorBackgroundInkpot">#1F1F27</color>
     <color name="colorOnBackgroundInkpot">#FAFAFA</color>
@@ -524,7 +525,7 @@
     <color name="colorOnSecondaryVibrantInk">#FAFAFA</color>
     <color name="colorErrorVibrantInk">#F44336</color>
     <color name="colorOnErrorVibrantInk">#FAFAFA</color>
-    <color name="colorSurfaceVibrantInk">#3B3B3B</color>
+    <color name="colorSurfaceVibrantInk">#191919</color>
     <color name="colorOnSurfaceVibrantInk">#FAFAFA</color>
     <color name="colorBackgroundVibrantInk">#191919</color>
     <color name="colorOnBackgroundVibrantInk">#FAFAFA</color>
@@ -537,7 +538,7 @@
     <color name="colorOnSecondaryFresh">#FAFAFA</color>
     <color name="colorErrorFresh">#F44336</color>
     <color name="colorOnErrorFresh">#FAFAFA</color>
-    <color name="colorSurfaceFresh">#FFFCF3</color>
+    <color name="colorSurfaceFresh">#FFFCF1</color>
     <color name="colorOnSurfaceFresh">#1D1D24</color>
     <color name="colorBackgroundFresh">#FFFCF1</color>
     <color name="colorOnBackgroundFresh">#1D1D24</color>
@@ -563,7 +564,7 @@
     <color name="colorOnSecondaryQED">#FAFAFA</color>
     <color name="colorErrorQED">#F44336</color>
     <color name="colorOnErrorQED">#FAFAFA</color>
-    <color name="colorSurfaceQED">#EBEFF4</color>
+    <color name="colorSurfaceQED">#E8EDF3</color>
     <color name="colorOnSurfaceQED">#1D1D24</color>
     <color name="colorBackgroundQED">#E8EDF3</color>
     <color name="colorOnBackgroundQED">#1D1D24</color>
@@ -576,7 +577,7 @@
     <color name="colorOnSecondaryVintage">#FAFAFA</color>
     <color name="colorErrorVintage">#F44336</color>
     <color name="colorOnErrorVintage">#FAFAFA</color>
-    <color name="colorSurfaceVintage">#F8F8F8</color>
+    <color name="colorSurfaceVintage">#FBF9E9</color>
     <color name="colorOnSurfaceVintage">#1D1D24</color>
     <color name="colorBackgroundVintage">#FBF9E9</color>
     <color name="colorOnBackgroundVintage">#1D1D24</color>
@@ -589,7 +590,7 @@
     <color name="colorOnSecondarySpotify">#FAFAFA</color>
     <color name="colorErrorSpotify">#F44336</color>
     <color name="colorOnErrorSpotify">#FAFAFA</color>
-    <color name="colorSurfaceSpotify">#262626</color>
+    <color name="colorSurfaceSpotify">#000000</color>
     <color name="colorOnSurfaceSpotify">#FAFAFA</color>
     <color name="colorBackgroundSpotify">#000000</color>
     <color name="colorOnBackgroundSpotify">#FAFAFA</color>
@@ -602,7 +603,7 @@
     <color name="colorOnSecondaryXbox">#FAFAFA</color>
     <color name="colorErrorXbox">#F44336</color>
     <color name="colorOnErrorXbox">#FAFAFA</color>
-    <color name="colorSurfaceXbox">#575757</color>
+    <color name="colorSurfaceXbox">#3A3A3A</color>
     <color name="colorOnSurfaceXbox">#FAFAFA</color>
     <color name="colorBackgroundXbox">#3A3A3A</color>
     <color name="colorOnBackgroundXbox">#FAFAFA</color>
@@ -615,7 +616,7 @@
     <color name="colorOnSecondarySublime">#FAFAFA</color>
     <color name="colorErrorSublime">#F44336</color>
     <color name="colorOnErrorSublime">#FAFAFA</color>
-    <color name="colorSurfaceSublime">#474843</color>
+    <color name="colorSurfaceSublime">#272822</color>
     <color name="colorOnSurfaceSublime">#FAFAFA</color>
     <color name="colorBackgroundSublime">#272822</color>
     <color name="colorOnBackgroundSublime">#FAFAFA</color>
@@ -628,7 +629,7 @@
     <color name="colorOnSecondaryZenburn">#FAFAFA</color>
     <color name="colorErrorZenburn">#F44336</color>
     <color name="colorOnErrorZenburn">#FAFAFA</color>
-    <color name="colorSurfaceZenburn">#5C5C5C</color>
+    <color name="colorSurfaceZenburn">#404040</color>
     <color name="colorOnSurfaceZenburn">#FAFAFA</color>
     <color name="colorBackgroundZenburn">#404040</color>
     <color name="colorOnBackgroundZenburn">#FAFAFA</color>
@@ -641,7 +642,7 @@
     <color name="colorOnSecondaryStarbucks">#FAFAFA</color>
     <color name="colorErrorStarbucks">#F44336</color>
     <color name="colorOnErrorStarbucks">#FAFAFA</color>
-    <color name="colorSurfaceStarbucks">#FFFFFF</color>
+    <color name="colorSurfaceStarbucks">#FFFCFC</color>
     <color name="colorOnSurfaceStarbucks">#1D1D24</color>
     <color name="colorBackgroundStarbucks">#FFFCFC</color>
     <color name="colorOnBackgroundStarbucks">#1D1D24</color>
@@ -667,7 +668,7 @@
     <color name="colorOnSecondaryTwitch">#FAFAFA</color>
     <color name="colorErrorTwitch">#F44336</color>
     <color name="colorOnErrorTwitch">#FAFAFA</color>
-    <color name="colorSurfaceTwitch">#F1F0F3</color>
+    <color name="colorSurfaceTwitch">#EFEEF1</color>
     <color name="colorOnSurfaceTwitch">#1D1D24</color>
     <color name="colorBackgroundTwitch">#EFEEF1</color>
     <color name="colorOnBackgroundTwitch">#1D1D24</color>
@@ -693,7 +694,7 @@
     <color name="colorOnSecondaryFacebook">#FAFAFA</color>
     <color name="colorErrorFacebook">#F44336</color>
     <color name="colorOnErrorFacebook">#FAFAFA</color>
-    <color name="colorSurfaceFacebook">#F8F8F8</color>
+    <color name="colorSurfaceFacebook">#F7F7F7</color>
     <color name="colorOnSurfaceFacebook">#1D1D24</color>
     <color name="colorBackgroundFacebook">#F7F7F7</color>
     <color name="colorOnBackgroundFacebook">#1D1D24</color>
@@ -710,4 +711,5 @@
     <color name="colorOnSurfaceMint">#1D1D24</color>
     <color name="colorBackgroundMint">#FFFFFF</color>
     <color name="colorOnBackgroundMint">#1D1D24</color>
+
 </resources>

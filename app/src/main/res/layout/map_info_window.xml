@@ -22,9 +22,10 @@
             />
 
     <TextView
+            android:id="@+id/title_text_info_window"
+            android:textColor="@color/kinda_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/title_text_info_window"
             android:layout_marginTop="6dp"
             android:maxWidth="240dp"
             android:maxLines="2"
@@ -63,6 +64,7 @@
     </GridLayout>
 
     <TextView
+            android:textColor="@color/kinda_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/number_text_info_window"

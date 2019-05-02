@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.destinations.stop_details
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
@@ -26,11 +27,13 @@ class StopDestinationsAdapter : RecyclerView.Adapter<StopDestinationsAdapter.Sto
     override fun onBindViewHolder(holder: StopDestinationsViewHolder, position: Int) {
         holder.view.apply {
             line_text.text = stopDestinations[position].line
-            line_text.setBackgroundResource(
-                when (stopType) {
-                    StopType.BUS -> R.drawable.ic_frame_bus_stop
-                    StopType.TRAM -> R.drawable.ic_frame_tram_stop
-                }
+            line_text.setBackgroundColor(
+                ContextCompat.getColor(
+                    context, when (stopType) {
+                        StopType.BUS -> R.color.bus_color
+                        StopType.TRAM -> R.color.tram_color
+                    }
+                )
             )
             destination_text.text = stopDestinations[position].destination
             first_time_text.text = stopDestinations[position].times[0]
@@ -58,6 +61,5 @@ class StopDestinationsAdapter : RecyclerView.Adapter<StopDestinationsAdapter.Sto
         })
         stopDestinations = newStopDestinations
         result.dispatchUpdatesTo(this)
-
     }
 }

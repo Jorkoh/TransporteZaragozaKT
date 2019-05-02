@@ -8,7 +8,7 @@
     <fragment
             android:id="@+id/map"
             android:name="com.jorkoh.transportezaragozakt.destinations.map.MapFragment"
-            android:label="MapFragment"
+            android:label="Map"
             tools:layout="@layout/map_destination">
         <action
                 android:id="@+id/action_map_to_stopDetails"

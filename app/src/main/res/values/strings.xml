@@ -25,6 +25,8 @@
     <string name="fab_add_favorite" translatable="true">Add to favorites</string>
     <string name="fab_remove_favorite" translatable="true">Remove from favorites</string>
     <string name="fab_reminder" translatable="true">Create reminder</string>
+    <string name="fab_shortcut" translatable="true">Create shortcut</string>
+    <string name="shortcut_pinning_not_supported" translatable="true">Shortcuts not support in your device</string>
 
     <!--Reminders-->
     <string name="no_reminders" translatable="true">No reminders yet!</string>

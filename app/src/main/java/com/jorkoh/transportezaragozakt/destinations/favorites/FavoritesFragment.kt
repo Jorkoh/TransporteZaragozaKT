@@ -31,11 +31,7 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
 
     private val itemOnClick: (TagInfo) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            val bundle = Bundle().apply {
-                putString(StopDetailsFragment.STOP_ID_KEY, info.id)
-                putString(StopDetailsFragment.STOP_TYPE_KEY, info.type.name)
-            }
-            findNavController().navigate(R.id.action_favorites_to_stopDetails, bundle)
+            findNavController().navigate(FavoritesFragmentDirections.actionFavoritesToStopDetails(info.type.name, info.id))
         }
     }
 
