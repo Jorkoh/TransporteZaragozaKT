@@ -26,13 +26,14 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 import android.content.Intent
+import android.graphics.Color.*
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build.VERSION_CODES.O
 import com.google.android.material.snackbar.Snackbar
-import android.R.string.cancel
-import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.shortcut_label_dialog.view.*
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.color.colorChooser
+import com.afollestad.materialdialogs.input.input
 
 
 class StopDetailsFragment : Fragment() {
@@ -138,7 +139,10 @@ class StopDetailsFragment : Fragment() {
                         stopDetailsVM.toggleStopFavorite()
                         true
                     }
-                    R.id.stop_details_fab_reminder -> true
+                    R.id.stop_details_fab_reminder -> {
+
+                        true
+                    }
                     R.id.stop_details_fab_shortcut -> {
                         getShortcutLabel()
                         true
@@ -150,19 +154,14 @@ class StopDetailsFragment : Fragment() {
     }
 
     private fun getShortcutLabel() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Title")
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.shortcut_label_dialog, view as ViewGroup?, false)
-
-        view.input.setText(stopDetailsVM.stopTitle.value)
-        builder.setView(view)
-        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
-            dialog.dismiss()
-            createShortcut(view.input.text.toString())
-        }
-        builder.setNegativeButton(cancel) { dialog, _ -> dialog.cancel() }
-        builder.show()
+        MaterialDialog(requireContext())
+            .show {
+                title(R.string.create_shortcut)
+                input(prefill = stopDetailsVM.stopTitle.value) { _, text ->
+                    createShortcut(text.toString())
+                }
+                positiveButton(R.string.create_button)
+            }
     }
 
     private fun createShortcut(label: String) {

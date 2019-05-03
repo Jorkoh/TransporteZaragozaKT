@@ -13,13 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.color.colorChooser
+import com.afollestad.materialdialogs.input.input
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
-import com.jaredrummler.android.colorpicker.ColorShape
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.TagInfo
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 import kotlinx.android.synthetic.main.favorites_destination.*
 import kotlinx.android.synthetic.main.favorites_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,7 +31,12 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
 
     private val itemOnClick: (TagInfo) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            findNavController().navigate(FavoritesFragmentDirections.actionFavoritesToStopDetails(info.type.name, info.id))
+            findNavController().navigate(
+                FavoritesFragmentDirections.actionFavoritesToStopDetails(
+                    info.type.name,
+                    info.id
+                )
+            )
         }
     }
 
@@ -51,24 +56,48 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
         ItemTouchHelper(simpleItemTouchCallback)
     }
 
-    private val onEditClick: (FavoriteStopExtended) -> Unit = { favorite ->
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            val editFavoriteDialog = ColorPickerDialog.newBuilder().apply {
-                setShowColorShades(false)
-                setShowAlphaSlider(false)
-                setAllowCustom(true)
-                setColorShape(ColorShape.CIRCLE)
-                setDialogId(favorite.stopId)
-                setDialogType(ColorPickerDialog.TYPE_PRESETS)
-                setDialogTitle(R.string.edit_favorite_dialog_title)
-                setAlias(favorite.alias)
-                setCustomButtonText(R.string.edit_favorite_dialog_restore)
-                if (favorite.colorHex.isNotEmpty()) {
-                    setColor(Color.parseColor(favorite.colorHex))
+    private val onEditAlias: (FavoriteStopExtended) -> Unit = { favorite ->
+        MaterialDialog(requireContext())
+            .show {
+                title(R.string.create_shortcut)
+                input(prefill = favorite.alias) { _, newAlias ->
+                    favoritesVM.updateFavorite(newAlias.toString(), favorite.colorHex, favorite.stopId)
                 }
-            }.create()
-            editFavoriteDialog.setColorPickerDialogListener(this)
-            editFavoriteDialog.show(requireFragmentManager(), "EditFavoriteDialog")
+                positiveButton(R.string.edit_button)
+            }
+    }
+
+
+    private val onEditColor: (FavoriteStopExtended) -> Unit = { favorite ->
+        val colors = intArrayOf(
+            Color.TRANSPARENT,
+            -0xbbcca,
+            -0x16e19d,
+            -0xd36d,
+            -0x63d850,
+            -0x98c549,
+            -0xc0ae4b,
+            -0xde690d,
+            -0xfc560c,
+            -0xff432c,
+            -0xff6978,
+            -0xb350b0,
+            -0x743cb6,
+            -0x3223c7,
+            -0x14c5,
+            -0x3ef9,
+            -0x6800,
+            -0x86aab8,
+            -0x9f8275,
+            Color.BLACK
+        )
+        MaterialDialog(requireContext()).show {
+            title(R.string.edit_favorite_dialog_title)
+            colorChooser(colors) { _, color ->
+                val hexColor = if (color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
+                favoritesVM.updateFavorite(favorite.alias, hexColor, favorite.stopId)
+            }
+            positiveButton(R.string.edit_button)
         }
     }
 
@@ -87,9 +116,8 @@ class FavoritesFragment : Fragment(), ColorPickerDialogListener {
         favoritesVM.restoreFavorite(dialogId)
     }
 
-
     private val favoriteStopsAdapter: FavoriteStopsAdapter =
-        FavoriteStopsAdapter(itemOnClick, onEditClick, onReorderClick)
+        FavoriteStopsAdapter(itemOnClick, onEditAlias, onEditColor, onReorderClick)
 
     private val favoriteStopsObserver = Observer<List<FavoriteStopExtended>> { favorites ->
         favorites?.let {

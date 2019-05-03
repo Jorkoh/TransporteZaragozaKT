@@ -14,7 +14,8 @@
                 android:id="@+id/action_favorites_to_stopDetails"
                 app:destination="@id/stopDetails"
                 app:enterAnim="@anim/fade_in"
-                app:exitAnim="@anim/fade_out"/>
+                app:exitAnim="@anim/fade_out"
+                />
     </fragment>
     <fragment
             android:id="@+id/stopDetails"

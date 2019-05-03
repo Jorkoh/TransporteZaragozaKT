@@ -12,8 +12,11 @@
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
     <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
+    <string name="edit_button" translatable="true">Edit</string>
     <string name="stop_type_content_description" translatable="true">Stop type</string>
     <string name="edit_favorite_dialog_restore" translatable="true">Restore</string>
+    <string name="alias" translatable="true">Alias</string>
+    <string name="color" translatable="true">Color</string>
 
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available :(</string>
@@ -26,6 +29,8 @@
     <string name="fab_remove_favorite" translatable="true">Remove from favorites</string>
     <string name="fab_reminder" translatable="true">Create reminder</string>
     <string name="fab_shortcut" translatable="true">Create shortcut</string>
+    <string name="create_shortcut" translatable="true">Create shortcut</string>
+    <string name="create_button" translatable="true">Create</string>
     <string name="shortcut_pinning_not_supported" translatable="true">Shortcuts not support in your device</string>
 
     <!--Reminders-->

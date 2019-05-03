@@ -2,10 +2,8 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -16,7 +14,8 @@ import kotlinx.android.synthetic.main.favorite_row.view.*
 
 class FavoriteStopsAdapter(
     private val clickListener: (TagInfo) -> Unit,
-    private val editClickListener: (FavoriteStopExtended) -> Unit,
+    private val onEditAlias: (FavoriteStopExtended) -> Unit,
+    private val onEditColor: (FavoriteStopExtended) -> Unit,
     private val reorderClickListener: (RecyclerView.ViewHolder) -> Unit
 ) : RecyclerView.Adapter<FavoriteStopsAdapter.StopDetailsViewHolder>() {
 
@@ -24,7 +23,8 @@ class FavoriteStopsAdapter(
         fun bind(
             favorite: FavoriteStopExtended,
             clickListener: (TagInfo) -> Unit,
-            editClickListener: (FavoriteStopExtended) -> Unit,
+            onEditAlias: (FavoriteStopExtended) -> Unit,
+            onEditColor: (FavoriteStopExtended) -> Unit,
             reorderClickListener: (RecyclerView.ViewHolder) -> Unit
         ) {
             itemView.apply {
@@ -58,7 +58,21 @@ class FavoriteStopsAdapter(
                 }
 
                 setOnClickListener { clickListener(TagInfo(favorite.stopId, favorite.type)) }
-                edit_view_favorite.setOnClickListener { editClickListener(favorite) }
+                edit_view_favorite.setOnClickListener {
+                    PopupMenu(context, it).apply {
+                        menu.apply {
+                            add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
+                                onEditAlias(favorite)
+                                true
+                            }
+                            add(context.resources.getString(R.string.color)).setOnMenuItemClickListener {
+                                onEditColor(favorite)
+                                true
+                            }
+                        }
+                        show()
+                    }
+                }
                 reorder_view_favorite.setOnTouchListener { _, event ->
                     if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                         reorderClickListener(this@StopDetailsViewHolder)
@@ -77,7 +91,7 @@ class FavoriteStopsAdapter(
     }
 
     override fun onBindViewHolder(holder: StopDetailsViewHolder, position: Int) {
-        holder.bind(favorites[position], clickListener, editClickListener, reorderClickListener)
+        holder.bind(favorites[position], clickListener, onEditAlias, onEditColor, reorderClickListener)
     }
 
     override fun getItemCount(): Int = if (::favorites.isInitialized) favorites.size else 0

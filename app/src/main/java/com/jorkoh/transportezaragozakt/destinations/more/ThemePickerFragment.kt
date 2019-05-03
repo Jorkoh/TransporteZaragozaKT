@@ -38,7 +38,6 @@ open class ThemePickerFragment : Fragment(), OnItemClickListener {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val theme = (gridView.adapter as ThemePickerAdapter).getItem(position)
-        val themeName = theme.name
         requireActivity().dressCodeStyleId = theme.themeId
     }
 

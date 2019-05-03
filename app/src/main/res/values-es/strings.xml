@@ -30,4 +30,9 @@
     <string name="fab_reminder">Crear notificación</string>
     <string name="fab_shortcut">Crear acceso directo</string>
     <string name="shortcut_pinning_not_supported">Accesos directos no disponibles en tu dispositivo</string>
+    <string name="create_button">Crear</string>
+    <string name="create_shortcut">Crear acceso directo</string>
+    <string name="edit_button">Editar</string>
+    <string name="color">Color</string>
+    <string name="alias">Alias</string>
 </resources>

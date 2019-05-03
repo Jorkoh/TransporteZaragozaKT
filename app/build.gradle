@@ -76,8 +76,10 @@ dependencies {
     //Dresscode
     implementation project(':dresscode')
 
-    //Color Picker
-    implementation project(':color-picker')
+    //Material Dialogs
+    implementation 'com.afollestad.material-dialogs:core:2.8.1'
+    implementation 'com.afollestad.material-dialogs:input:2.8.1'
+    implementation 'com.afollestad.material-dialogs:color:2.8.1'
 
     //Quick Permissions
     implementation project(':quickpermissions-kotlin')

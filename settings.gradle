@@ -1,1 +1,1 @@
-include ':app', ':color-picker', ':quickpermissions-kotlin', ':speedDial', ':dresscode'
+include ':app', ':quickpermissions-kotlin', ':speedDial', ':dresscode'
