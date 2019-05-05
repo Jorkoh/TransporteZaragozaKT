@@ -51,7 +51,7 @@ class RemindersFragment : Fragment() {
 
         MaterialDialog(requireContext()).show {
             title(R.string.edit_reminder_dialog_title)
-            timePicker(show24HoursView = false, currentTime = time, daysOfWeek = reminder.daysOfWeek) { _, time, daysOfWeek ->
+            timePicker(show24HoursView = false, currentTime = time, daysOfWeek = reminder.daysOfWeek.days) { _, time, daysOfWeek ->
                 remindersVM.updateReminder(reminder.reminderId, daysOfWeek, time)
             }
             positiveButton(R.string.edit_button)
@@ -90,7 +90,7 @@ class RemindersFragment : Fragment() {
             title(R.string.restore_reminder_title)
             message(R.string.restore_reminder_message)
             positiveButton(R.string.restore) {
-                remindersVM.restoreReminder(reminder.stopId, reminder.stopId)
+                remindersVM.restoreReminder(reminder.reminderId, reminder.stopId)
             }
             negativeButton(R.string.cancel)
         }

@@ -36,13 +36,13 @@ class RemindersAdapter(
                 @SuppressLint("SetTextI18n")
                 reminder_time_text.text = "${"%02d".format(reminder.hourOfDay)}:${"%02d".format(reminder.minute)}"
 
-                reminder_monday.isChecked = reminder.daysOfWeek[0]
-                reminder_tuesday.isChecked = reminder.daysOfWeek[1]
-                reminder_wednesday.isChecked = reminder.daysOfWeek[2]
-                reminder_thursday.isChecked = reminder.daysOfWeek[3]
-                reminder_friday.isChecked = reminder.daysOfWeek[4]
-                reminder_saturday.isChecked = reminder.daysOfWeek[5]
-                reminder_sunday.isChecked = reminder.daysOfWeek[6]
+                reminder_monday.isChecked = reminder.daysOfWeek.days[0]
+                reminder_tuesday.isChecked = reminder.daysOfWeek.days[1]
+                reminder_wednesday.isChecked = reminder.daysOfWeek.days[2]
+                reminder_thursday.isChecked = reminder.daysOfWeek.days[3]
+                reminder_friday.isChecked = reminder.daysOfWeek.days[4]
+                reminder_saturday.isChecked = reminder.daysOfWeek.days[5]
+                reminder_sunday.isChecked = reminder.daysOfWeek.days[6]
 
                 type_image_reminder.setImageResource(
                     when (reminder.type) {

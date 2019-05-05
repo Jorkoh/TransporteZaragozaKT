@@ -81,7 +81,7 @@ val appModule = module {
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
-    single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get()) }
+    single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get()) }
 
     viewModel { FavoritesViewModel(get()) }
 

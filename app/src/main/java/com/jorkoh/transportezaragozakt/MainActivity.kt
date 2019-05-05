@@ -21,7 +21,7 @@ import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
-import kotlinx.android.synthetic.main.stop_details.view.*
+import kotlinx.android.synthetic.main.stop_details_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

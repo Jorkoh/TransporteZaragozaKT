@@ -6,16 +6,20 @@ import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.StopsDao
 
-interface FavoritesRepository{
+interface FavoritesRepository {
     fun loadFavoriteStops(): LiveData<List<FavoriteStopExtended>>
     fun isFavoriteStop(stopId: String): LiveData<Boolean>
     fun toggleStopFavorite(stopId: String)
-    fun updateFavorite(stopId : String, alias : String, colorHex: String)
-    fun restoreFavorite(stopId : String)
-    fun moveFavorite(from : Int, to : Int)
+    fun updateFavorite(stopId: String, alias: String, colorHex: String)
+    fun restoreFavorite(stopId: String)
+    fun moveFavorite(from: Int, to: Int)
 }
 
-class FavoritesRepositoryImplementation(private val stopsDao: StopsDao, private val db: AppDatabase, private val appExecutors: AppExecutors) : FavoritesRepository{
+class FavoritesRepositoryImplementation(
+    private val stopsDao: StopsDao,
+    private val db: AppDatabase,
+    private val appExecutors: AppExecutors
+) : FavoritesRepository {
     override fun loadFavoriteStops(): LiveData<List<FavoriteStopExtended>> {
         return stopsDao.getFavoriteStops()
     }
@@ -32,7 +36,7 @@ class FavoritesRepositoryImplementation(private val stopsDao: StopsDao, private 
         }
     }
 
-    override fun updateFavorite(stopId : String, alias : String, colorHex: String) {
+    override fun updateFavorite(stopId: String, alias: String, colorHex: String) {
         appExecutors.diskIO().execute {
             stopsDao.updateFavorite(stopId, colorHex, alias)
         }

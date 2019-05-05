@@ -107,9 +107,8 @@ data class Reminder(
     @ColumnInfo(name = "stopId")
     var stopId: String,
 
-    //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
     @ColumnInfo(name = "daysOfWeek")
-    var daysOfWeek: ArrayList<Boolean>,
+    var daysOfWeek: DaysOfWeek,
 
     @ColumnInfo(name = "hourOfDay")
     var hourOfDay: Int,
@@ -141,10 +140,15 @@ data class FavoriteStopExtended(
     val lines: List<String>
 )
 
+data class ReminderPositions(
+    val reminderId: String,
+    val position: Int
+)
+
 data class ReminderExtended(
     val reminderId: String,
     val stopId: String,
-    val daysOfWeek: ArrayList<Boolean>,
+    val daysOfWeek: DaysOfWeek,
     val hourOfDay: Int,
     val minute: Int,
     val type: StopType,
@@ -155,3 +159,6 @@ data class ReminderExtended(
 )
 
 data class TagInfo(val id: String, val type: StopType)
+
+//https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
+data class DaysOfWeek(val days : List<Boolean>)

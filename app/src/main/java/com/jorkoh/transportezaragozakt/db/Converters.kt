@@ -46,9 +46,9 @@ object Converters {
     //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
     @TypeConverter
     @JvmStatic
-    fun booleanListToJson(value: ArrayList<Boolean>): String {
+    fun daysOfWeekToJson(value: DaysOfWeek): String {
         val sb = StringBuilder()
-        value.forEach {
+        value.days.forEach {
             sb.append(if(it) 'T' else 'F')
         }
         return sb.toString()
@@ -57,12 +57,12 @@ object Converters {
     //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
     @TypeConverter
     @JvmStatic
-    fun jsonToBooleanList(value: String): ArrayList<Boolean>? {
-        val result = ArrayList<Boolean>()
+    fun jsonToDaysOfWeek(value: String): DaysOfWeek? {
+        val result = mutableListOf<Boolean>()
         value.forEach {
             result.add(it == 'T')
         }
-        return result
+        return DaysOfWeek(result)
     }
 
     @TypeConverter

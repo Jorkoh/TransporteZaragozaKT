@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.stop_details
 
-import android.app.TimePickerDialog
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.os.Build.VERSION.SDK_INT
@@ -19,15 +18,14 @@ import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.Resource
 import com.jorkoh.transportezaragozakt.repositories.Status
 import com.leinardi.android.speeddial.SpeedDialActionItem
-import kotlinx.android.synthetic.main.stop_details.*
-import kotlinx.android.synthetic.main.stop_details.view.*
+import kotlinx.android.synthetic.main.stop_details_destination.*
+import kotlinx.android.synthetic.main.stop_details_destination.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 import android.content.Intent
-import android.graphics.Color.*
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build.VERSION_CODES.O
@@ -67,7 +65,7 @@ class StopDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.stop_details, container, false)
+        val rootView = inflater.inflate(R.layout.stop_details_destination, container, false)
 
         setupFab(rootView)
 

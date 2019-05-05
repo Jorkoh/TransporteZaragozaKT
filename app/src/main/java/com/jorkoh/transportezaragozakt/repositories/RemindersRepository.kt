@@ -17,6 +17,7 @@ interface RemindersRepository {
 class RemindersRepositoryImplementation(
     private val remindersDao: RemindersDao,
     private val stopsDao: StopsDao,
+    private val db: AppDatabase,
     private val appExecutors: AppExecutors
 ) : RemindersRepository {
     override fun loadReminders(): LiveData<List<ReminderExtended>> {
@@ -25,13 +26,13 @@ class RemindersRepositoryImplementation(
 
     override fun insertReminder(stopId: String, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int) {
         appExecutors.diskIO().execute {
-            remindersDao.insertReminder(Reminder(-1, stopId, ArrayList(daysOfWeek), hourOfDay, minute, stopsDao.getStopTitleImmediate(stopId), "", remindersDao.getLastPositionImmediate()))
+            remindersDao.insertReminder(Reminder(0, stopId, DaysOfWeek(daysOfWeek), hourOfDay, minute, stopsDao.getStopTitleImmediate(stopId), "", remindersDao.getLastPositionImmediate()))
         }
     }
 
     override fun updateReminder(reminderId: String, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int) {
         appExecutors.diskIO().execute {
-            remindersDao.updateReminder(reminderId, ArrayList(daysOfWeek), hourOfDay, minute)
+            remindersDao.updateReminder(reminderId, DaysOfWeek(daysOfWeek), hourOfDay, minute)
         }
     }
 
@@ -48,7 +49,11 @@ class RemindersRepositoryImplementation(
     }
 
     override fun moveReminder(from: Int, to: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        appExecutors.diskIO().execute {
+            db.runInTransaction {
+                remindersDao.moveReminder(from, to)
+            }
+        }
     }
 
     override fun deleteReminder(reminderId: String) {
