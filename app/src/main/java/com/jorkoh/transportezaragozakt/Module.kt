@@ -8,6 +8,7 @@ import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
 import com.jorkoh.transportezaragozakt.destinations.more.MoreViewModel
+import com.jorkoh.transportezaragozakt.destinations.reminders.RemindersViewModel
 import com.jorkoh.transportezaragozakt.destinations.search.SearchViewModel
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.api.APIService
@@ -65,6 +66,10 @@ val appModule = module {
     }
 
     single {
+        get<AppDatabase>().remindersDao()
+    }
+
+    single {
         androidContext().getSharedPreferences(
             androidContext().getString(R.string.preferences_version_number_key),
             Context.MODE_PRIVATE
@@ -76,6 +81,7 @@ val appModule = module {
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
+    single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get()) }
 
     viewModel { FavoritesViewModel(get()) }
 
@@ -83,9 +89,11 @@ val appModule = module {
 
     viewModel { SearchViewModel() }
 
+    viewModel { RemindersViewModel(get()) }
+
     viewModel { MoreViewModel() }
 
-    viewModel { StopDetailsViewModel(get(), get()) }
+    viewModel { StopDetailsViewModel(get(), get(), get()) }
 
     viewModel { MainActivityViewModel() }
 }

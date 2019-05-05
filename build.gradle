@@ -11,6 +11,7 @@ buildscript {
             androidx        : '1.0.0',
             appCompat       : '1.1.0-alpha04',
             recyclerView    : '1.1.0-alpha04',
+            annotation      : '1.0.0-alpha1',
             preference      : '1.1.0-alpha04',
             cardView        : '1.0.0',
             material        : '1.1.0-alpha05',
@@ -37,6 +38,7 @@ buildscript {
                     'cardView'        : "androidx.cardview:cardview:${versions.cardView}",
                     'preference'      : "androidx.preference:preference:${versions.preference}",
                     'recyclerView'    : "androidx.recyclerview:recyclerview:${versions.recyclerView}",
+                    'annotation'      : "androidx.annotation:annotation:${versions.annotation}",
                     'room'            : [
                             'runtime'   : "androidx.room:room-runtime:${versions.roomRuntime}",
                             'compiler'  : "androidx.room:room-compiler:${versions.roomCompiler}",

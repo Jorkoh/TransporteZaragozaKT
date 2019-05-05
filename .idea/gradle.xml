@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/datetime" />
             <option value="$PROJECT_DIR$/dresscode" />
             <option value="$PROJECT_DIR$/quickpermissions-kotlin" />
             <option value="$PROJECT_DIR$/speedDial" />

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTimePickerTheme" parent="@android:style/Widget.Material.TimePicker">
+        <item name="android:headerBackground">?colorSecondary</item>
+        <item name="android:numbersTextColor">?colorOnPrimary</item>
+        <item name="android:numbersSelectorColor">?colorPrimary</item>
+        <item name="android:numbersBackgroundColor">?colorPrimaryDark</item>
+        <item name="android:amPmTextColor">?colorOnSecondary</item>
+    </style>
+</resources>

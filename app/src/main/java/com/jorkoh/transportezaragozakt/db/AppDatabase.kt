@@ -8,7 +8,8 @@ import androidx.room.TypeConverters
     entities = [
         Stop::class,
         StopDestination::class,
-        FavoriteStop::class
+        FavoriteStop::class,
+        Reminder::class
     ],
     exportSchema = false,
     version = 1
@@ -20,4 +21,5 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     abstract fun stopsDao(): StopsDao
+    abstract fun remindersDao() : RemindersDao
 }

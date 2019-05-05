@@ -17,6 +17,10 @@
     <string name="edit_favorite_dialog_restore" translatable="true">Restore</string>
     <string name="alias" translatable="true">Alias</string>
     <string name="color" translatable="true">Color</string>
+    <string name="restore" translatable="true">Restore</string>
+    <string name="restore_favorite_title" translatable="true">Restore favorite stop?</string>
+    <string name="restore_favorite_message" translatable="true">Restore the original alias and color of this favorite.</string>
+    <string name="cancel" translatable="true">Cancel</string>
 
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available :(</string>
@@ -30,11 +34,16 @@
     <string name="fab_reminder" translatable="true">Create reminder</string>
     <string name="fab_shortcut" translatable="true">Create shortcut</string>
     <string name="create_shortcut" translatable="true">Create shortcut</string>
+    <string name="create_reminder" translatable="true">Create reminder</string>
     <string name="create_button" translatable="true">Create</string>
     <string name="shortcut_pinning_not_supported" translatable="true">Shortcuts not support in your device</string>
 
     <!--Reminders-->
+    <string name="reminder" translatable="true">Reminder</string>
     <string name="no_reminders" translatable="true">No reminders yet!</string>
+    <string name="edit_reminder_dialog_title" translatable="true">Edit reminder</string>
+    <string name="restore_reminder_title" translatable="true">Restore reminder?</string>
+    <string name="restore_reminder_message" translatable="true">Restore the original alias and color of this reminder.</string>
 
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>

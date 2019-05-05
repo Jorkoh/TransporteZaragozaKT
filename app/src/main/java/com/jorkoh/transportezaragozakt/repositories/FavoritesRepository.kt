@@ -10,7 +10,7 @@ interface FavoritesRepository{
     fun loadFavoriteStops(): LiveData<List<FavoriteStopExtended>>
     fun isFavoriteStop(stopId: String): LiveData<Boolean>
     fun toggleStopFavorite(stopId: String)
-    fun updateFavorite(alias : String, colorHex: String, stopId : String)
+    fun updateFavorite(stopId : String, alias : String, colorHex: String)
     fun restoreFavorite(stopId : String)
     fun moveFavorite(from : Int, to : Int)
 }
@@ -32,7 +32,7 @@ class FavoritesRepositoryImplementation(private val stopsDao: StopsDao, private 
         }
     }
 
-    override fun updateFavorite(alias : String, colorHex: String, stopId : String) {
+    override fun updateFavorite(stopId : String, alias : String, colorHex: String) {
         appExecutors.diskIO().execute {
             stopsDao.updateFavorite(stopId, colorHex, alias)
         }

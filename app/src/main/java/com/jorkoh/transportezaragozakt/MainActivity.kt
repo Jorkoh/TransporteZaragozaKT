@@ -16,7 +16,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
 import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.stop_details.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
+class MainActivity : AppCompatActivity() {
 
     private val mainActivityVM: MainActivityViewModel by viewModel()
 
@@ -160,26 +159,5 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
-    }
-
-    // Unfortunately the color picker dialog doesn't work well with fragments and orientation changes
-    // so this has to be here
-    override fun onDialogAccepted(dialogId: String?, alias: String, color: Int) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_container)
-            ?.childFragmentManager?.primaryNavigationFragment
-        if (currentFragment is ColorPickerDialogListener) {
-            currentFragment.onDialogAccepted(dialogId, alias, color)
-        }
-    }
-
-    override fun onDialogRestore(dialogId: String?) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_container)
-            ?.childFragmentManager?.primaryNavigationFragment
-        if (currentFragment is ColorPickerDialogListener) {
-            currentFragment.onDialogRestore(dialogId)
-        }
-    }
-
-    override fun onDialogDismissed(dialogId: String?) {
     }
 }

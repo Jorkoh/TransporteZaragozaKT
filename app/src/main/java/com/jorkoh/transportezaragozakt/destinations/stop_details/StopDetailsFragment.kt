@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.stop_details
 
+import android.app.TimePickerDialog
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.os.Build.VERSION.SDK_INT
@@ -32,7 +33,7 @@ import android.net.Uri
 import android.os.Build.VERSION_CODES.O
 import com.google.android.material.snackbar.Snackbar
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.color.colorChooser
+import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
 
 
@@ -140,11 +141,26 @@ class StopDetailsFragment : Fragment() {
                         true
                     }
                     R.id.stop_details_fab_reminder -> {
-
+                        MaterialDialog(requireContext()).show {
+                            title(R.string.create_reminder)
+                            timePicker(
+                                show24HoursView = false,
+                                daysOfWeek = listOf(true, true, true, true, true, false, false)
+                            ) { _, time, daysOfWeek ->
+                                stopDetailsVM.createReminder(daysOfWeek, time)
+                            }
+                            positiveButton(R.string.create_button)
+                        }
                         true
                     }
                     R.id.stop_details_fab_shortcut -> {
-                        getShortcutLabel()
+                        MaterialDialog(requireContext()).show {
+                            title(R.string.create_shortcut)
+                            input(prefill = stopDetailsVM.stopTitle.value) { _, text ->
+                                createShortcut(text.toString())
+                            }
+                            positiveButton(R.string.create_button)
+                        }
                         true
                     }
                     else -> true
@@ -153,15 +169,8 @@ class StopDetailsFragment : Fragment() {
         }
     }
 
-    private fun getShortcutLabel() {
-        MaterialDialog(requireContext())
-            .show {
-                title(R.string.create_shortcut)
-                input(prefill = stopDetailsVM.stopTitle.value) { _, text ->
-                    createShortcut(text.toString())
-                }
-                positiveButton(R.string.create_button)
-            }
+    private fun createReminder() {
+
     }
 
     private fun createShortcut(label: String) {

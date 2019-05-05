@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+ext.shard = 'datetime'
+
+android {
+  compileSdkVersion buildConfig.compileSdk
+
+  defaultConfig {
+    minSdkVersion buildConfig.minSdk
+    targetSdkVersion buildConfig.targetSdk
+  }
+
+  sourceSets {
+    main.res.srcDirs = [
+        'src/main/res',
+        'src/main/res-public'
+    ]
+  }
+}
+
+dependencies {
+  api deps.androidx.appCompat
+  api deps.androidx.annotation
+
+  implementation deps.androidx.constraintLayout
+  implementation deps.androidx.recyclerView
+  implementation deps.material
+  implementation deps.kotlin.stdlib.jdk
+
+  implementation 'com.afollestad:viewpagerdots:1.0.0'
+
+  implementation 'com.afollestad.material-dialogs:core:2.8.1'
+}

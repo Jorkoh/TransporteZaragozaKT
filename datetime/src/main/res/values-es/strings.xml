@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wednesday_letter">Mié.</string>
+    <string name="friday_letter">Vie.</string>
+    <string name="saturday_letter">Sáb.</string>
+    <string name="sunday_letter">Dom.</string>
+    <string name="monday_letter">Lun.</string>
+    <string name="thursday_letter">Mar.</string>
+    <string name="tuesday_letter">Jue.</string>
+</resources>

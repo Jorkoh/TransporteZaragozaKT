@@ -4,22 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
+import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 
 
 class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): ViewModel() {
 
-    private lateinit var favoriteStops: LiveData<List<FavoriteStopExtended>>
+    lateinit var favoriteStops: LiveData<List<FavoriteStopExtended>>
 
     fun init(){
         favoriteStops = favoritesRepository.loadFavoriteStops()
     }
 
-    fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>> {
-        return favoriteStops
-    }
-
-    fun updateFavorite(alias : String, colorHex: String, stopId : String){
-        favoritesRepository.updateFavorite(alias, colorHex, stopId)
+    fun updateFavorite(stopId : String, alias : String, colorHex: String){
+        favoritesRepository.updateFavorite(stopId, alias, colorHex)
     }
 
     fun restoreFavorite(stopId: String){

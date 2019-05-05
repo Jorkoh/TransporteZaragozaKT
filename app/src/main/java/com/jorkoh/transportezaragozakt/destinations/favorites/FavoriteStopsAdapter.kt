@@ -13,19 +13,21 @@ import com.jorkoh.transportezaragozakt.db.*
 import kotlinx.android.synthetic.main.favorite_row.view.*
 
 class FavoriteStopsAdapter(
-    private val clickListener: (TagInfo) -> Unit,
-    private val onEditAlias: (FavoriteStopExtended) -> Unit,
-    private val onEditColor: (FavoriteStopExtended) -> Unit,
-    private val reorderClickListener: (RecyclerView.ViewHolder) -> Unit
+    private val openStop: (TagInfo) -> Unit,
+    private val editAlias: (FavoriteStopExtended) -> Unit,
+    private val editColor: (FavoriteStopExtended) -> Unit,
+    private val restore: (FavoriteStopExtended) -> Unit,
+    private val reorder: (RecyclerView.ViewHolder) -> Unit
 ) : RecyclerView.Adapter<FavoriteStopsAdapter.StopDetailsViewHolder>() {
 
     class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
             favorite: FavoriteStopExtended,
-            clickListener: (TagInfo) -> Unit,
-            onEditAlias: (FavoriteStopExtended) -> Unit,
-            onEditColor: (FavoriteStopExtended) -> Unit,
-            reorderClickListener: (RecyclerView.ViewHolder) -> Unit
+            openStop: (TagInfo) -> Unit,
+            editAlias: (FavoriteStopExtended) -> Unit,
+            editColor: (FavoriteStopExtended) -> Unit,
+            restore: (FavoriteStopExtended) -> Unit,
+            reorder: (RecyclerView.ViewHolder) -> Unit
         ) {
             itemView.apply {
                 type_image_favorite.setImageResource(
@@ -57,16 +59,20 @@ class FavoriteStopsAdapter(
                     lineView.text = line
                 }
 
-                setOnClickListener { clickListener(TagInfo(favorite.stopId, favorite.type)) }
+                setOnClickListener { openStop(TagInfo(favorite.stopId, favorite.type)) }
                 edit_view_favorite.setOnClickListener {
                     PopupMenu(context, it).apply {
                         menu.apply {
                             add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
-                                onEditAlias(favorite)
+                                editAlias(favorite)
                                 true
                             }
                             add(context.resources.getString(R.string.color)).setOnMenuItemClickListener {
-                                onEditColor(favorite)
+                                editColor(favorite)
+                                true
+                            }
+                            add(context.resources.getString(R.string.restore)).setOnMenuItemClickListener {
+                                restore(favorite)
                                 true
                             }
                         }
@@ -75,7 +81,7 @@ class FavoriteStopsAdapter(
                 }
                 reorder_view_favorite.setOnTouchListener { _, event ->
                     if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        reorderClickListener(this@StopDetailsViewHolder)
+                        reorder(this@StopDetailsViewHolder)
                     }
                     return@setOnTouchListener true
                 }
@@ -91,12 +97,12 @@ class FavoriteStopsAdapter(
     }
 
     override fun onBindViewHolder(holder: StopDetailsViewHolder, position: Int) {
-        holder.bind(favorites[position], clickListener, onEditAlias, onEditColor, reorderClickListener)
+        holder.bind(favorites[position], openStop, editAlias, editColor, restore, reorder)
     }
 
     override fun getItemCount(): Int = if (::favorites.isInitialized) favorites.size else 0
 
-    fun setFavoriteStops(newFavorites: List<FavoriteStopExtended>) {
+    fun setNewFavoriteStops(newFavorites: List<FavoriteStopExtended>) {
         if (::favorites.isInitialized) {
             if (isOnlyPositionChange(newFavorites)) {
                 favorites = newFavorites

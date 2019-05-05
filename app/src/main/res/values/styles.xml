@@ -8,7 +8,11 @@
         <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorBackgroundFloating">?android:colorBackground</item>
         <item name="android:textColorPrimary">?colorOnBackground</item>
+        <item name="colorAccent">?colorSecondary</item>
+        <item name="colorSurface">?android:colorBackground</item>
+        <item name="colorOnSurface">?colorOnBackground</item>
         <item name="md_corner_radius">12dp</item>
+        <item name="md_color_button_text">?colorOnBackground</item>
     </style>
 
     <style name="Cyanea" parent="BaseTheme">
@@ -21,10 +25,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryCyanea</item>
         <item name="colorError">@color/colorErrorCyanea</item>
         <item name="colorOnError">@color/colorOnErrorCyanea</item>
-        <item name="colorSurface">@color/colorSurfaceCyanea</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceCyanea</item>
         <item name="android:colorBackground">@color/colorBackgroundCyanea</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCyanea</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCyanea</item>
     </style>
 
     <style name="Rio" parent="BaseTheme">
@@ -37,10 +40,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryRio</item>
         <item name="colorError">@color/colorErrorRio</item>
         <item name="colorOnError">@color/colorOnErrorRio</item>
-        <item name="colorSurface">@color/colorSurfaceRio</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceRio</item>
         <item name="android:colorBackground">@color/colorBackgroundRio</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRio</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRio</item>
     </style>
 
     <style name="VitaminSea" parent="BaseTheme">
@@ -53,10 +55,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryVitaminSea</item>
         <item name="colorError">@color/colorErrorVitaminSea</item>
         <item name="colorOnError">@color/colorOnErrorVitaminSea</item>
-        <item name="colorSurface">@color/colorSurfaceVitaminSea</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceVitaminSea</item>
         <item name="android:colorBackground">@color/colorBackgroundVitaminSea</item>
         <item name="colorOnBackground">@color/colorOnBackgroundVitaminSea</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVitaminSea</item>
     </style>
 
     <style name="TextileDyes" parent="BaseTheme">
@@ -69,10 +70,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryTextileDyes</item>
         <item name="colorError">@color/colorErrorTextileDyes</item>
         <item name="colorOnError">@color/colorOnErrorTextileDyes</item>
-        <item name="colorSurface">@color/colorSurfaceTextileDyes</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceTextileDyes</item>
         <item name="android:colorBackground">@color/colorBackgroundTextileDyes</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTextileDyes</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTextileDyes</item>
     </style>
 
     <style name="Brave" parent="BaseTheme">
@@ -85,10 +85,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryBrave</item>
         <item name="colorError">@color/colorErrorBrave</item>
         <item name="colorOnError">@color/colorOnErrorBrave</item>
-        <item name="colorSurface">@color/colorSurfaceBrave</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceBrave</item>
         <item name="android:colorBackground">@color/colorBackgroundBrave</item>
         <item name="colorOnBackground">@color/colorOnBackgroundBrave</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBrave</item>
     </style>
 
     <style name="Ashen" parent="BaseTheme">
@@ -101,10 +100,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryAshen</item>
         <item name="colorError">@color/colorErrorAshen</item>
         <item name="colorOnError">@color/colorOnErrorAshen</item>
-        <item name="colorSurface">@color/colorSurfaceAshen</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceAshen</item>
         <item name="android:colorBackground">@color/colorBackgroundAshen</item>
         <item name="colorOnBackground">@color/colorOnBackgroundAshen</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantAshen</item>
     </style>
 
     <style name="RecognEyes" parent="BaseTheme">
@@ -117,10 +115,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryRecognEyes</item>
         <item name="colorError">@color/colorErrorRecognEyes</item>
         <item name="colorOnError">@color/colorOnErrorRecognEyes</item>
-        <item name="colorSurface">@color/colorSurfaceRecognEyes</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceRecognEyes</item>
         <item name="android:colorBackground">@color/colorBackgroundRecognEyes</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRecognEyes</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRecognEyes</item>
     </style>
 
     <style name="Monokai" parent="BaseTheme">
@@ -133,10 +130,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryMonokai</item>
         <item name="colorError">@color/colorErrorMonokai</item>
         <item name="colorOnError">@color/colorOnErrorMonokai</item>
-        <item name="colorSurface">@color/colorSurfaceMonokai</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceMonokai</item>
         <item name="android:colorBackground">@color/colorBackgroundMonokai</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMonokai</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMonokai</item>
     </style>
 
     <style name="SigFig" parent="BaseTheme">
@@ -149,10 +145,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondarySigFig</item>
         <item name="colorError">@color/colorErrorSigFig</item>
         <item name="colorOnError">@color/colorOnErrorSigFig</item>
-        <item name="colorSurface">@color/colorSurfaceSigFig</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceSigFig</item>
         <item name="android:colorBackground">@color/colorBackgroundSigFig</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSigFig</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSigFig</item>
     </style>
 
     <style name="SoundCloud" parent="BaseTheme">
@@ -165,10 +160,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondarySoundCloud</item>
         <item name="colorError">@color/colorErrorSoundCloud</item>
         <item name="colorOnError">@color/colorOnErrorSoundCloud</item>
-        <item name="colorSurface">@color/colorSurfaceSoundCloud</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceSoundCloud</item>
         <item name="android:colorBackground">@color/colorBackgroundSoundCloud</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSoundCloud</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSoundCloud</item>
     </style>
 
     <style name="Materiallight" parent="BaseTheme">
@@ -181,10 +175,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryMateriallight</item>
         <item name="colorError">@color/colorErrorMateriallight</item>
         <item name="colorOnError">@color/colorOnErrorMateriallight</item>
-        <item name="colorSurface">@color/colorSurfaceMateriallight</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceMateriallight</item>
         <item name="android:colorBackground">@color/colorBackgroundMateriallight</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMateriallight</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMateriallight</item>
     </style>
 
     <style name="Hololight" parent="BaseTheme">
@@ -197,10 +190,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryHololight</item>
         <item name="colorError">@color/colorErrorHololight</item>
         <item name="colorOnError">@color/colorOnErrorHololight</item>
-        <item name="colorSurface">@color/colorSurfaceHololight</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceHololight</item>
         <item name="android:colorBackground">@color/colorBackgroundHololight</item>
         <item name="colorOnBackground">@color/colorOnBackgroundHololight</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantHololight</item>
     </style>
 
     <style name="Materialdark" parent="BaseTheme">
@@ -213,10 +205,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryMaterialdark</item>
         <item name="colorError">@color/colorErrorMaterialdark</item>
         <item name="colorOnError">@color/colorOnErrorMaterialdark</item>
-        <item name="colorSurface">@color/colorSurfaceMaterialdark</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceMaterialdark</item>
         <item name="android:colorBackground">@color/colorBackgroundMaterialdark</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMaterialdark</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMaterialdark</item>
     </style>
 
     <style name="Holodark" parent="BaseTheme">
@@ -229,10 +220,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryHolodark</item>
         <item name="colorError">@color/colorErrorHolodark</item>
         <item name="colorOnError">@color/colorOnErrorHolodark</item>
-        <item name="colorSurface">@color/colorSurfaceHolodark</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceHolodark</item>
         <item name="android:colorBackground">@color/colorBackgroundHolodark</item>
         <item name="colorOnBackground">@color/colorOnBackgroundHolodark</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantHolodark</item>
     </style>
 
     <style name="Cherrypie" parent="BaseTheme">
@@ -245,10 +235,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryCherrypie</item>
         <item name="colorError">@color/colorErrorCherrypie</item>
         <item name="colorOnError">@color/colorOnErrorCherrypie</item>
-        <item name="colorSurface">@color/colorSurfaceCherrypie</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceCherrypie</item>
         <item name="android:colorBackground">@color/colorBackgroundCherrypie</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCherrypie</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCherrypie</item>
     </style>
 
     <style name="Olive" parent="BaseTheme">
@@ -261,10 +250,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryOlive</item>
         <item name="colorError">@color/colorErrorOlive</item>
         <item name="colorOnError">@color/colorOnErrorOlive</item>
-        <item name="colorSurface">@color/colorSurfaceOlive</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceOlive</item>
         <item name="android:colorBackground">@color/colorBackgroundOlive</item>
         <item name="colorOnBackground">@color/colorOnBackgroundOlive</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantOlive</item>
     </style>
 
     <style name="Tasty" parent="BaseTheme">
@@ -277,10 +265,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryTasty</item>
         <item name="colorError">@color/colorErrorTasty</item>
         <item name="colorOnError">@color/colorOnErrorTasty</item>
-        <item name="colorSurface">@color/colorSurfaceTasty</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceTasty</item>
         <item name="android:colorBackground">@color/colorBackgroundTasty</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTasty</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTasty</item>
     </style>
 
     <style name="Desert" parent="BaseTheme">
@@ -293,10 +280,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryDesert</item>
         <item name="colorError">@color/colorErrorDesert</item>
         <item name="colorOnError">@color/colorOnErrorDesert</item>
-        <item name="colorSurface">@color/colorSurfaceDesert</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceDesert</item>
         <item name="android:colorBackground">@color/colorBackgroundDesert</item>
         <item name="colorOnBackground">@color/colorOnBackgroundDesert</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDesert</item>
     </style>
 
     <style name="Weber" parent="BaseTheme">
@@ -309,10 +295,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryWeber</item>
         <item name="colorError">@color/colorErrorWeber</item>
         <item name="colorOnError">@color/colorOnErrorWeber</item>
-        <item name="colorSurface">@color/colorSurfaceWeber</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceWeber</item>
         <item name="android:colorBackground">@color/colorBackgroundWeber</item>
         <item name="colorOnBackground">@color/colorOnBackgroundWeber</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWeber</item>
     </style>
 
     <style name="Philips" parent="BaseTheme">
@@ -325,10 +310,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryPhilips</item>
         <item name="colorError">@color/colorErrorPhilips</item>
         <item name="colorOnError">@color/colorOnErrorPhilips</item>
-        <item name="colorSurface">@color/colorSurfacePhilips</item>
-        <item name="colorOnSurface">@color/colorOnSurfacePhilips</item>
         <item name="android:colorBackground">@color/colorBackgroundPhilips</item>
         <item name="colorOnBackground">@color/colorOnBackgroundPhilips</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPhilips</item>
     </style>
 
     <style name="Instagram" parent="BaseTheme">
@@ -341,10 +325,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryInstagram</item>
         <item name="colorError">@color/colorErrorInstagram</item>
         <item name="colorOnError">@color/colorOnErrorInstagram</item>
-        <item name="colorSurface">@color/colorSurfaceInstagram</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceInstagram</item>
         <item name="android:colorBackground">@color/colorBackgroundInstagram</item>
         <item name="colorOnBackground">@color/colorOnBackgroundInstagram</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantInstagram</item>
     </style>
 
     <style name="Reddit" parent="BaseTheme">
@@ -357,10 +340,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryReddit</item>
         <item name="colorError">@color/colorErrorReddit</item>
         <item name="colorOnError">@color/colorOnErrorReddit</item>
-        <item name="colorSurface">@color/colorSurfaceReddit</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceReddit</item>
         <item name="android:colorBackground">@color/colorBackgroundReddit</item>
         <item name="colorOnBackground">@color/colorOnBackgroundReddit</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantReddit</item>
     </style>
 
     <style name="Waaark" parent="BaseTheme">
@@ -373,10 +355,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryWaaark</item>
         <item name="colorError">@color/colorErrorWaaark</item>
         <item name="colorOnError">@color/colorOnErrorWaaark</item>
-        <item name="colorSurface">@color/colorSurfaceWaaark</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceWaaark</item>
         <item name="android:colorBackground">@color/colorBackgroundWaaark</item>
         <item name="colorOnBackground">@color/colorOnBackgroundWaaark</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWaaark</item>
     </style>
 
     <style name="Flax" parent="BaseTheme">
@@ -389,10 +370,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryFlax</item>
         <item name="colorError">@color/colorErrorFlax</item>
         <item name="colorOnError">@color/colorOnErrorFlax</item>
-        <item name="colorSurface">@color/colorSurfaceFlax</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceFlax</item>
         <item name="android:colorBackground">@color/colorBackgroundFlax</item>
         <item name="colorOnBackground">@color/colorOnBackgroundFlax</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFlax</item>
     </style>
 
     <style name="Bing" parent="BaseTheme">
@@ -405,10 +385,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryBing</item>
         <item name="colorError">@color/colorErrorBing</item>
         <item name="colorOnError">@color/colorOnErrorBing</item>
-        <item name="colorSurface">@color/colorSurfaceBing</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceBing</item>
         <item name="android:colorBackground">@color/colorBackgroundBing</item>
         <item name="colorOnBackground">@color/colorOnBackgroundBing</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBing</item>
     </style>
 
     <style name="Meetup" parent="BaseTheme">
@@ -421,10 +400,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryMeetup</item>
         <item name="colorError">@color/colorErrorMeetup</item>
         <item name="colorOnError">@color/colorOnErrorMeetup</item>
-        <item name="colorSurface">@color/colorSurfaceMeetup</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceMeetup</item>
         <item name="android:colorBackground">@color/colorBackgroundMeetup</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMeetup</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMeetup</item>
     </style>
 
     <style name="Coffee" parent="BaseTheme">
@@ -437,10 +415,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryCoffee</item>
         <item name="colorError">@color/colorErrorCoffee</item>
         <item name="colorOnError">@color/colorOnErrorCoffee</item>
-        <item name="colorSurface">@color/colorSurfaceCoffee</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceCoffee</item>
         <item name="android:colorBackground">@color/colorBackgroundCoffee</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCoffee</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCoffee</item>
     </style>
 
     <style name="Sepia" parent="BaseTheme">
@@ -453,10 +430,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondarySepia</item>
         <item name="colorError">@color/colorErrorSepia</item>
         <item name="colorOnError">@color/colorOnErrorSepia</item>
-        <item name="colorSurface">@color/colorSurfaceSepia</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceSepia</item>
         <item name="android:colorBackground">@color/colorBackgroundSepia</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSepia</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSepia</item>
     </style>
 
     <style name="Oblivion" parent="BaseTheme">
@@ -469,10 +445,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryOblivion</item>
         <item name="colorError">@color/colorErrorOblivion</item>
         <item name="colorOnError">@color/colorOnErrorOblivion</item>
-        <item name="colorSurface">@color/colorSurfaceOblivion</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceOblivion</item>
         <item name="android:colorBackground">@color/colorBackgroundOblivion</item>
         <item name="colorOnBackground">@color/colorOnBackgroundOblivion</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantOblivion</item>
     </style>
 
     <style name="Obsidian" parent="BaseTheme">
@@ -485,10 +460,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryObsidian</item>
         <item name="colorError">@color/colorErrorObsidian</item>
         <item name="colorOnError">@color/colorOnErrorObsidian</item>
-        <item name="colorSurface">@color/colorSurfaceObsidian</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceObsidian</item>
         <item name="android:colorBackground">@color/colorBackgroundObsidian</item>
         <item name="colorOnBackground">@color/colorOnBackgroundObsidian</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantObsidian</item>
     </style>
 
     <style name="Forrest" parent="BaseTheme">
@@ -501,10 +475,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryForrest</item>
         <item name="colorError">@color/colorErrorForrest</item>
         <item name="colorOnError">@color/colorOnErrorForrest</item>
-        <item name="colorSurface">@color/colorSurfaceForrest</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceForrest</item>
         <item name="android:colorBackground">@color/colorBackgroundForrest</item>
         <item name="colorOnBackground">@color/colorOnBackgroundForrest</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantForrest</item>
     </style>
 
     <style name="Dawn" parent="BaseTheme">
@@ -517,10 +490,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryDawn</item>
         <item name="colorError">@color/colorErrorDawn</item>
         <item name="colorOnError">@color/colorOnErrorDawn</item>
-        <item name="colorSurface">@color/colorSurfaceDawn</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceDawn</item>
         <item name="android:colorBackground">@color/colorBackgroundDawn</item>
         <item name="colorOnBackground">@color/colorOnBackgroundDawn</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDawn</item>
     </style>
 
     <style name="Twitter" parent="BaseTheme">
@@ -533,10 +505,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryTwitter</item>
         <item name="colorError">@color/colorErrorTwitter</item>
         <item name="colorOnError">@color/colorOnErrorTwitter</item>
-        <item name="colorSurface">@color/colorSurfaceTwitter</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceTwitter</item>
         <item name="android:colorBackground">@color/colorBackgroundTwitter</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTwitter</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTwitter</item>
     </style>
 
     <style name="Periscope" parent="BaseTheme">
@@ -549,10 +520,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryPeriscope</item>
         <item name="colorError">@color/colorErrorPeriscope</item>
         <item name="colorOnError">@color/colorOnErrorPeriscope</item>
-        <item name="colorSurface">@color/colorSurfacePeriscope</item>
-        <item name="colorOnSurface">@color/colorOnSurfacePeriscope</item>
         <item name="android:colorBackground">@color/colorBackgroundPeriscope</item>
         <item name="colorOnBackground">@color/colorOnBackgroundPeriscope</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPeriscope</item>
     </style>
 
     <style name="Subdued" parent="BaseTheme">
@@ -565,10 +535,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondarySubdued</item>
         <item name="colorError">@color/colorErrorSubdued</item>
         <item name="colorOnError">@color/colorOnErrorSubdued</item>
-        <item name="colorSurface">@color/colorSurfaceSubdued</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceSubdued</item>
         <item name="android:colorBackground">@color/colorBackgroundSubdued</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSubdued</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSubdued</item>
     </style>
 
     <style name="MistyGreen" parent="BaseTheme">
@@ -581,10 +550,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryMistyGreen</item>
         <item name="colorError">@color/colorErrorMistyGreen</item>
         <item name="colorOnError">@color/colorOnErrorMistyGreen</item>
-        <item name="colorSurface">@color/colorSurfaceMistyGreen</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceMistyGreen</item>
         <item name="android:colorBackground">@color/colorBackgroundMistyGreen</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMistyGreen</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMistyGreen</item>
     </style>
 
     <style name="Waterfall" parent="BaseTheme">
@@ -597,10 +565,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryWaterfall</item>
         <item name="colorError">@color/colorErrorWaterfall</item>
         <item name="colorOnError">@color/colorOnErrorWaterfall</item>
-        <item name="colorSurface">@color/colorSurfaceWaterfall</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceWaterfall</item>
         <item name="android:colorBackground">@color/colorBackgroundWaterfall</item>
         <item name="colorOnBackground">@color/colorOnBackgroundWaterfall</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWaterfall</item>
     </style>
 
     <style name="Retro" parent="BaseTheme">
@@ -613,10 +580,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryRetro</item>
         <item name="colorError">@color/colorErrorRetro</item>
         <item name="colorOnError">@color/colorOnErrorRetro</item>
-        <item name="colorSurface">@color/colorSurfaceRetro</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceRetro</item>
         <item name="android:colorBackground">@color/colorBackgroundRetro</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRetro</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRetro</item>
     </style>
 
     <style name="Inkpot" parent="BaseTheme">
@@ -629,10 +595,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryInkpot</item>
         <item name="colorError">@color/colorErrorInkpot</item>
         <item name="colorOnError">@color/colorOnErrorInkpot</item>
-        <item name="colorSurface">@color/colorSurfaceInkpot</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceInkpot</item>
         <item name="android:colorBackground">@color/colorBackgroundInkpot</item>
         <item name="colorOnBackground">@color/colorOnBackgroundInkpot</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantInkpot</item>
     </style>
 
     <style name="VibrantInk" parent="BaseTheme">
@@ -645,10 +610,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryVibrantInk</item>
         <item name="colorError">@color/colorErrorVibrantInk</item>
         <item name="colorOnError">@color/colorOnErrorVibrantInk</item>
-        <item name="colorSurface">@color/colorSurfaceVibrantInk</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceVibrantInk</item>
         <item name="android:colorBackground">@color/colorBackgroundVibrantInk</item>
         <item name="colorOnBackground">@color/colorOnBackgroundVibrantInk</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVibrantInk</item>
     </style>
 
     <style name="Fresh" parent="BaseTheme">
@@ -661,10 +625,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryFresh</item>
         <item name="colorError">@color/colorErrorFresh</item>
         <item name="colorOnError">@color/colorOnErrorFresh</item>
-        <item name="colorSurface">@color/colorSurfaceFresh</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceFresh</item>
         <item name="android:colorBackground">@color/colorBackgroundFresh</item>
         <item name="colorOnBackground">@color/colorOnBackgroundFresh</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFresh</item>
     </style>
 
     <style name="Coteazur" parent="BaseTheme">
@@ -677,10 +640,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryCoteazur</item>
         <item name="colorError">@color/colorErrorCoteazur</item>
         <item name="colorOnError">@color/colorOnErrorCoteazur</item>
-        <item name="colorSurface">@color/colorSurfaceCoteazur</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceCoteazur</item>
         <item name="android:colorBackground">@color/colorBackgroundCoteazur</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCoteazur</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCoteazur</item>
     </style>
 
     <style name="QED" parent="BaseTheme">
@@ -693,10 +655,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryQED</item>
         <item name="colorError">@color/colorErrorQED</item>
         <item name="colorOnError">@color/colorOnErrorQED</item>
-        <item name="colorSurface">@color/colorSurfaceQED</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceQED</item>
         <item name="android:colorBackground">@color/colorBackgroundQED</item>
         <item name="colorOnBackground">@color/colorOnBackgroundQED</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantQED</item>
     </style>
 
     <style name="Vintage" parent="BaseTheme">
@@ -709,10 +670,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryVintage</item>
         <item name="colorError">@color/colorErrorVintage</item>
         <item name="colorOnError">@color/colorOnErrorVintage</item>
-        <item name="colorSurface">@color/colorSurfaceVintage</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceVintage</item>
         <item name="android:colorBackground">@color/colorBackgroundVintage</item>
         <item name="colorOnBackground">@color/colorOnBackgroundVintage</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVintage</item>
     </style>
 
     <style name="Spotify" parent="BaseTheme">
@@ -725,10 +685,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondarySpotify</item>
         <item name="colorError">@color/colorErrorSpotify</item>
         <item name="colorOnError">@color/colorOnErrorSpotify</item>
-        <item name="colorSurface">@color/colorSurfaceSpotify</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceSpotify</item>
         <item name="android:colorBackground">@color/colorBackgroundSpotify</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSpotify</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSpotify</item>
     </style>
 
     <style name="Xbox" parent="BaseTheme">
@@ -741,10 +700,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryXbox</item>
         <item name="colorError">@color/colorErrorXbox</item>
         <item name="colorOnError">@color/colorOnErrorXbox</item>
-        <item name="colorSurface">@color/colorSurfaceXbox</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceXbox</item>
         <item name="android:colorBackground">@color/colorBackgroundXbox</item>
         <item name="colorOnBackground">@color/colorOnBackgroundXbox</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantXbox</item>
     </style>
 
     <style name="Sublime" parent="BaseTheme">
@@ -757,10 +715,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondarySublime</item>
         <item name="colorError">@color/colorErrorSublime</item>
         <item name="colorOnError">@color/colorOnErrorSublime</item>
-        <item name="colorSurface">@color/colorSurfaceSublime</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceSublime</item>
         <item name="android:colorBackground">@color/colorBackgroundSublime</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSublime</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSublime</item>
     </style>
 
     <style name="Zenburn" parent="BaseTheme">
@@ -773,10 +730,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryZenburn</item>
         <item name="colorError">@color/colorErrorZenburn</item>
         <item name="colorOnError">@color/colorOnErrorZenburn</item>
-        <item name="colorSurface">@color/colorSurfaceZenburn</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceZenburn</item>
         <item name="android:colorBackground">@color/colorBackgroundZenburn</item>
         <item name="colorOnBackground">@color/colorOnBackgroundZenburn</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantZenburn</item>
     </style>
 
     <style name="Starbucks" parent="BaseTheme">
@@ -789,10 +745,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryStarbucks</item>
         <item name="colorError">@color/colorErrorStarbucks</item>
         <item name="colorOnError">@color/colorOnErrorStarbucks</item>
-        <item name="colorSurface">@color/colorSurfaceStarbucks</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceStarbucks</item>
         <item name="android:colorBackground">@color/colorBackgroundStarbucks</item>
         <item name="colorOnBackground">@color/colorOnBackgroundStarbucks</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantStarbucks</item>
     </style>
 
     <style name="Amazon" parent="BaseTheme">
@@ -805,10 +760,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryAmazon</item>
         <item name="colorError">@color/colorErrorAmazon</item>
         <item name="colorOnError">@color/colorOnErrorAmazon</item>
-        <item name="colorSurface">@color/colorSurfaceAmazon</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceAmazon</item>
         <item name="android:colorBackground">@color/colorBackgroundAmazon</item>
         <item name="colorOnBackground">@color/colorOnBackgroundAmazon</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantAmazon</item>
     </style>
 
     <style name="Twitch" parent="BaseTheme">
@@ -821,10 +775,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryTwitch</item>
         <item name="colorError">@color/colorErrorTwitch</item>
         <item name="colorOnError">@color/colorOnErrorTwitch</item>
-        <item name="colorSurface">@color/colorSurfaceTwitch</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceTwitch</item>
         <item name="android:colorBackground">@color/colorBackgroundTwitch</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTwitch</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTwitch</item>
     </style>
 
     <style name="Robinhood" parent="BaseTheme">
@@ -837,10 +790,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryRobinhood</item>
         <item name="colorError">@color/colorErrorRobinhood</item>
         <item name="colorOnError">@color/colorOnErrorRobinhood</item>
-        <item name="colorSurface">@color/colorSurfaceRobinhood</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceRobinhood</item>
         <item name="android:colorBackground">@color/colorBackgroundRobinhood</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRobinhood</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRobinhood</item>
     </style>
 
     <style name="Facebook" parent="BaseTheme">
@@ -853,10 +805,9 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryFacebook</item>
         <item name="colorError">@color/colorErrorFacebook</item>
         <item name="colorOnError">@color/colorOnErrorFacebook</item>
-        <item name="colorSurface">@color/colorSurfaceFacebook</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceFacebook</item>
         <item name="android:colorBackground">@color/colorBackgroundFacebook</item>
         <item name="colorOnBackground">@color/colorOnBackgroundFacebook</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFacebook</item>
     </style>
 
     <style name="Mint" parent="BaseTheme">
@@ -869,9 +820,8 @@
         <item name="colorOnSecondary">@color/colorOnSecondaryMint</item>
         <item name="colorError">@color/colorErrorMint</item>
         <item name="colorOnError">@color/colorOnErrorMint</item>
-        <item name="colorSurface">@color/colorSurfaceMint</item>
-        <item name="colorOnSurface">@color/colorOnSurfaceMint</item>
         <item name="android:colorBackground">@color/colorBackgroundMint</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMint</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMint</item>
     </style>
 </resources>
