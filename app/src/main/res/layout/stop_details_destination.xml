@@ -60,6 +60,9 @@
             app:layout_constraintTop_toBottomOf="@+id/no_data_text" app:layout_constraintHorizontal_bias="0.5"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <!-- SHADOW BUGS ON ANDROID 9 :( -->
+    <!-- https://stackoverflow.com/questions/54646927/strange-shadow-behavior-during-alpha-animation -->
+    <!-- https://stackoverflow.com/questions/55815430/recyclerview-items-shadow-clipped-when-rv-alpha-is-less-than-1-0 -->
     <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/stop_details_fab"
             android:layout_width="wrap_content"

@@ -13,8 +13,6 @@
         <action
                 android:id="@+id/action_favorites_to_stopDetails"
                 app:destination="@id/stopDetails"
-                app:enterAnim="@anim/fade_in"
-                app:exitAnim="@anim/fade_out"
                 />
     </fragment>
     <fragment
@@ -27,8 +25,5 @@
         <argument
                 android:name="stopId"
                 app:argType="string"/>
-        <deepLink
-                android:id="@+id/deepLink"
-                app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
     </fragment>
 </navigation>

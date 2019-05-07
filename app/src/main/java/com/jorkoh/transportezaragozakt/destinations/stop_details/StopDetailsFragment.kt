@@ -71,7 +71,7 @@ class StopDetailsFragment : Fragment() {
 
         GlobalScope.launch {
             delay(100)
-            stop_details_fab.animate()
+            rootView.stop_details_fab_container.animate()
                 .alpha(1f)
                 .duration = 600
         }

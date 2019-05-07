@@ -15,7 +15,7 @@
                 app:destination="@id/stopDetails"/>
     </fragment>
     <fragment
-            android:id="@+id/stopDetails"
+            android:id="@id/stopDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
             tools:layout="@layout/stop_details_destination">
         <argument
