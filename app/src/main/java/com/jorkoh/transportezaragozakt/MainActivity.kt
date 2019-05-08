@@ -100,62 +100,10 @@ class MainActivity : AppCompatActivity() {
         return currentNavController?.value?.navigateUp() ?: false
     }
 
-    /**
-     * Overriding popBackStack is necessary in this case if the app is started from the deep link.
-     */
     override fun onBackPressed() {
         if (currentNavController?.value?.popBackStack() != true) {
             super.onBackPressed()
         }
-    }
-
-    //@TEST
-    fun testNotifications(@Suppress("UNUSED_PARAMETER") v: View) {
-//        val pendingIntent = NavDeepLinkBuilder(context)
-//            .setGraph(R.navigation.favorites_destination)
-//            .setDestination(R.id.stopDetails)
-//            .setArguments(
-//                StopDetailsFragmentArgs(
-//                    stopDetailsVM.stopID,
-//                    stopDetailsVM.stopType.name
-//                ).toBundle()
-//            ).createPendingIntent()
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val testRV = RemoteViews(packageName, R.layout.notification_custom)
-        testRV.setTextViewText(R.id.notification_destination_text, "PASEO PAMPLONA")
-        testRV.setTextViewText(R.id.notification_first_time_text, "2 minutes")
-        testRV.setTextViewText(R.id.notification_second_time_text, "5 minutes")
-
-        val testBigRV = RemoteViews(packageName, R.layout.notification_custom_big)
-        testBigRV.setTextViewText(R.id.notification_destination_text, "PASEO PAMPLONA")
-        testBigRV.setTextViewText(R.id.notification_first_time_text, "2 minutes")
-        testBigRV.setTextViewText(R.id.notification_second_time_text, "5 minutes")
-        testBigRV.setTextViewText(R.id.notification_destination_text2, "PASEO PAMPLONA 2")
-        testBigRV.setTextViewText(R.id.notification_first_time_text2, "2 minutes")
-        testBigRV.setTextViewText(R.id.notification_second_time_text2, "5 minutes")
-
-        val testNotification = NotificationCompat.Builder(this, "TestingStuff")
-            .setCustomHeadsUpContentView(testRV)    //256dp max
-            .setCustomContentView(testRV)           //256dp max
-            .setCustomBigContentView(testBigRV)     //no max, should be built programmatically?
-            .setSmallIcon(R.drawable.ic_bus)
-            .setContentTitle("My notification")
-            .setContentText("Much longer text that cannot fit one line...")
-//            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-            .setDefaults(NotificationCompat.DEFAULT_SOUND)
-            .setChannelId("TestingStuff")
-//            .setOngoing(true)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("TestingStuff", "TestingStuff", NotificationManager.IMPORTANCE_HIGH)
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        notificationManager.notify(1, testNotification.build())
     }
 
     fun setActionBarTitle(title: String) {

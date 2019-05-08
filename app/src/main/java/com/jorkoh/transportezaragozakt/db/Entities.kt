@@ -107,6 +107,9 @@ data class Reminder(
     @ColumnInfo(name = "stopId")
     var stopId: String,
 
+    @ColumnInfo(name = "type")
+    var type: StopType,
+
     @ColumnInfo(name = "daysOfWeek")
     var daysOfWeek: DaysOfWeek,
 

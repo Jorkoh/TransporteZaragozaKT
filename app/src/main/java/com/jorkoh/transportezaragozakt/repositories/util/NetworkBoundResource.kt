@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.repositories
+package com.jorkoh.transportezaragozakt.repositories.util
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
@@ -81,7 +81,12 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 is ApiErrorResponse -> {
                     onFetchFailed()
                     result.addSource(dbSource) { newData ->
-                        setValue(Resource.error(response.errorMessage, newData))
+                        setValue(
+                            Resource.error(
+                                response.errorMessage,
+                                newData
+                            )
+                        )
                     }
                 }
             }

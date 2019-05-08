@@ -5,6 +5,7 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.StopsDao
+import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import java.util.*
 
 interface StopsRepository {

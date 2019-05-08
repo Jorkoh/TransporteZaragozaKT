@@ -15,8 +15,8 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.repositories.Resource
-import com.jorkoh.transportezaragozakt.repositories.Status
+import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
@@ -71,7 +71,7 @@ class StopDetailsFragment : Fragment() {
 
         GlobalScope.launch {
             delay(100)
-            rootView.stop_details_fab_container.animate()
+            rootView.stop_details_fab.animate()
                 .alpha(1f)
                 .duration = 600
         }

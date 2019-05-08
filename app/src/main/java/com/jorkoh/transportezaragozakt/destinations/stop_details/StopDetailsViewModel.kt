@@ -7,7 +7,7 @@ import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
-import com.jorkoh.transportezaragozakt.repositories.Resource
+import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import java.util.*
 
@@ -57,6 +57,6 @@ class StopDetailsViewModel(
     }
 
     fun createReminder(daysOfWeek: List<Boolean>, time : Calendar){
-        remindersRepository.insertReminder(stopID, daysOfWeek, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE))
+        remindersRepository.insertReminder(stopID, stopType, daysOfWeek, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE))
     }
 }

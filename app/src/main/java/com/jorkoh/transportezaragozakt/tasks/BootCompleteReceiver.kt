@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.core.app.AlarmManagerCompat
 import com.jorkoh.transportezaragozakt.R
 
 
@@ -15,6 +16,8 @@ class BootCompleteReceiver : BroadcastReceiver() {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             setupNotificationChannels(context)
             enqueueWorker()
+            //TODO: Setup alarms
+            
         }
     }
 }

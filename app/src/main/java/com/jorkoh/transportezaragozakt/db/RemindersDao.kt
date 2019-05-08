@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 abstract class RemindersDao{
     @Insert
-    abstract fun insertReminder(reminder: Reminder)
+    abstract fun insertReminder(reminder: Reminder) : Long
 
     @Query("SELECT reminders.reminderId, reminders.stopId, reminders.daysOfWeek, reminders.hourOfDay, reminders.minute, stops.type, stops.stopTitle, reminders.alias, reminders.colorHex, stops.lines FROM reminders INNER JOIN stops ON reminders.stopId = stops.stopId ORDER BY reminders.position ASC")
     abstract fun getReminders(): LiveData<List<ReminderExtended>>

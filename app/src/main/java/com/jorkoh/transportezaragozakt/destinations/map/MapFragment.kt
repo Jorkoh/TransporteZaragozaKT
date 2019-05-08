@@ -23,9 +23,8 @@ import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
-import com.jorkoh.transportezaragozakt.repositories.Resource
-import com.jorkoh.transportezaragozakt.repositories.Status
+import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.map_info_window.view.*
