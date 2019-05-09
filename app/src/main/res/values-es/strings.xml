@@ -11,9 +11,7 @@
         problema continúa el servicio del ayuntamiento que proporciona está información puede estar de mantenimiento.
     </string>
     <string name="notification_channel_name_reminders">Notificaciones</string>
-    <string name="notification_channel_description_reminders">Avisos definidos por el usuario con información de una
-        parada. Administrados desde la pantalla de recordatorios.
-    </string>
+    <string name="notification_channel_description_reminders">Notificaciones definidas por el usuario con información de una parada. Administradas desde la pantalla de notificaciones.</string>
     <string name="no_estimate">Sin estimación</string>
     <string name="minutes">minutos</string>
     <string name="minute">minuto</string>
@@ -43,5 +41,8 @@
     <string name="reminder">Notificación</string>
     <string name="edit_reminder_dialog_title">Editar notificación</string>
     <string name="restore_reminder_message">Restaura el alias y color original de esta notificación.</string>
-    <string name="restore_reminder_title">¿Restaurar notifiación?</string>
+    <string name="restore_reminder_title">¿Restaurar notificación?</string>
+    <string name="notification_channel_description_services">Notificaciones de servicios en primer plano.</string>
+    <string name="notification_channel_name_services">Servicios</string>
+    <string name="notification_content_services_reminders">Preparando notificaciones...</string>
 </resources>

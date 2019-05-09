@@ -66,6 +66,10 @@
     <!--Notifications-->
     <string name="notification_channel_id_reminders" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_REMINDERS</string>
     <string name="notification_channel_name_reminders" translatable="true">Reminders</string>
-    <string name="notification_channel_description_reminders" translatable="true">User defined notices with stop information. Manage and setup them at the reminders tab.</string>
+    <string name="notification_channel_description_reminders" translatable="true">User defined reminders with stop information. Manage and setup them at the reminders tab.</string>
+    <string name="notification_channel_id_services" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_SERVICES</string>
+    <string name="notification_content_services_reminders" translatable="true">Preparing reminders...</string>
+    <string name="notification_channel_name_services" translatable="true">Services</string>
+    <string name="notification_channel_description_services" translatable="true">Foreground service notifications.</string>
 
 </resources>

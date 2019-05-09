@@ -26,13 +26,24 @@ fun enqueueWorker() {
 
 fun setupNotificationChannels(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val channel = NotificationChannel(
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val reminderChannel = NotificationChannel(
             context.getString(R.string.notification_channel_id_reminders),
             context.getString(R.string.notification_channel_name_reminders),
             NotificationManager.IMPORTANCE_HIGH
-        )
-        channel.description = context.getString(R.string.notification_channel_description_reminders)
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        ).apply {
+            description = context.getString(R.string.notification_channel_description_reminders)
+        }
+
+        val foregroundChannel = NotificationChannel(
+            context.getString(R.string.notification_channel_id_services),
+            context.getString(R.string.notification_channel_name_services),
+            NotificationManager.IMPORTANCE_LOW
+        ).apply {
+            description = context.getString(R.string.notification_channel_description_services)
+        }
+        notificationManager.createNotificationChannel(reminderChannel)
+        notificationManager.createNotificationChannel(foregroundChannel)
     }
 }
