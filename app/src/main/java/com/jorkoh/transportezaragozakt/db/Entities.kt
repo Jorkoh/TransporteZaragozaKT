@@ -144,12 +144,12 @@ data class FavoriteStopExtended(
 )
 
 data class ReminderPositions(
-    val reminderId: String,
+    val reminderId: Int,
     val position: Int
 )
 
 data class ReminderExtended(
-    val reminderId: String,
+    val reminderId: Int,
     val stopId: String,
     val daysOfWeek: DaysOfWeek,
     val hourOfDay: Int,

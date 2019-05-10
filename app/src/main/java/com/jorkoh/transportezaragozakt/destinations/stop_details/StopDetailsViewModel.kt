@@ -18,7 +18,7 @@ class StopDetailsViewModel(
 ) :
     ViewModel() {
 
-    lateinit var stopID: String
+    lateinit var stopId: String
     lateinit var stopType: StopType
 
     //Not quite sold on this but I trust this guy https://medium.com/@BladeCoder/to-implement-a-manual-refresh-without-modifying-your-existing-livedata-logic-i-suggest-that-your-7db1b8414c0e
@@ -27,25 +27,25 @@ class StopDetailsViewModel(
     lateinit var stopIsFavorited: LiveData<Boolean>
     lateinit var stopTitle: LiveData<String>
 
-    fun init(stopID: String, stopType: StopType) {
-        this.stopID = stopID
+    fun init(stopId: String, stopType: StopType) {
+        this.stopId = stopId
         this.stopType = stopType
 
         refreshStopDestinations()
 
-        stopIsFavorited = favoritesRepository.isFavoriteStop(stopID)
-        stopTitle = stopsRepository.loadStopTitle(stopID)
+        stopIsFavorited = favoritesRepository.isFavoriteStop(stopId)
+        stopTitle = stopsRepository.loadStopTitle(stopId)
     }
 
     fun toggleStopFavorite() {
-        favoritesRepository.toggleStopFavorite(stopID)
+        favoritesRepository.toggleStopFavorite(stopId)
     }
 
     fun refreshStopDestinations() {
         if (::stopDestinations.isInitialized) {
             mediatorStopDestinations.removeSource(stopDestinations)
         }
-        stopDestinations = stopsRepository.loadStopDestinations(stopID, stopType)
+        stopDestinations = stopsRepository.loadStopDestinations(stopId, stopType)
         mediatorStopDestinations.addSource(stopDestinations)
         { value ->
             mediatorStopDestinations.value = value
@@ -56,7 +56,13 @@ class StopDetailsViewModel(
         return mediatorStopDestinations
     }
 
-    fun createReminder(daysOfWeek: List<Boolean>, time : Calendar){
-        remindersRepository.insertReminder(stopID, stopType, daysOfWeek, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE))
+    fun createReminder(daysOfWeek: List<Boolean>, time: Calendar) {
+        remindersRepository.insertReminder(
+            stopId,
+            stopType,
+            daysOfWeek,
+            time.get(Calendar.HOUR_OF_DAY),
+            time.get(Calendar.MINUTE)
+        )
     }
 }

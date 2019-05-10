@@ -8,4 +8,13 @@
               android:showDividers="middle"
               android:divider="@drawable/empty_divider"
               android:padding="8dp">
+
+    <TextView
+            style="@android:style/Widget.Material.TextView"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/notification_stop_title"/>
 </LinearLayout>

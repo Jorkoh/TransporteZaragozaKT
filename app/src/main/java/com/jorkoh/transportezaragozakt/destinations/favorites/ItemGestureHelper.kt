@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ItemGestureHelper(private val listener: OnItemGestureListener) : ItemTouchHelper.Callback() {
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        return makeMovementFlags(UP or DOWN or START or END, 0)
+        return makeMovementFlags(UP or DOWN or START or END, START or END)
     }
 
     interface OnItemGestureListener {

@@ -25,9 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
-import android.content.Intent
 import android.graphics.drawable.Icon
-import android.net.Uri
 import android.os.Build.VERSION_CODES.O
 import com.google.android.material.snackbar.Snackbar
 import com.afollestad.materialdialogs.MaterialDialog
@@ -167,14 +165,10 @@ class StopDetailsFragment : Fragment() {
         }
     }
 
-    private fun createReminder() {
-
-    }
-
     private fun createShortcut(label: String) {
         if (SDK_INT >= O) {
             val shortcutManager = requireContext().getSystemService(ShortcutManager::class.java)
-            val shortcut = ShortcutInfo.Builder(requireContext(), stopDetailsVM.stopID)
+            val shortcut = ShortcutInfo.Builder(requireContext(), stopDetailsVM.stopId)
                 .setShortLabel(label)
                 .setIcon(
                     Icon.createWithResource(
@@ -185,12 +179,8 @@ class StopDetailsFragment : Fragment() {
                         }
                     )
                 )
-                .setIntent(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("launchTZ://viewStop/${stopDetailsVM.stopType.name}/${stopDetailsVM.stopID}/")
-                    )
-                ).build()
+                .setIntent(createStopDetailsDeepLink(stopDetailsVM.stopId, stopDetailsVM.stopType))
+                .build()
             if (shortcutManager.isRequestPinShortcutSupported) {
                 shortcutManager.requestPinShortcut(shortcut, null)
             } else {

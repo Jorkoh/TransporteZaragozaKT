@@ -19,7 +19,7 @@ class RemindersAdapter(
     private val editColor: (ReminderExtended) -> Unit,
     private val restore: (ReminderExtended) -> Unit,
     private val reorder: (RecyclerView.ViewHolder) -> Unit,
-    private val delete: (ReminderExtended) -> Unit
+    private val delete: (ReminderExtended, Int) -> Unit
 ) : RecyclerView.Adapter<RemindersAdapter.ReminderViewHolder>() {
 
     class ReminderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -30,7 +30,7 @@ class RemindersAdapter(
             editColor: (ReminderExtended) -> Unit,
             restore: (ReminderExtended) -> Unit,
             reorder: (RecyclerView.ViewHolder) -> Unit,
-            delete: (ReminderExtended) -> Unit
+            delete: (ReminderExtended, Int) -> Unit
         ) {
             itemView.apply {
                 @SuppressLint("SetTextI18n")
@@ -91,6 +91,10 @@ class RemindersAdapter(
                             }
                             add(context.resources.getString(R.string.restore)).setOnMenuItemClickListener {
                                 restore(reminder)
+                                true
+                            }
+                            add(context.resources.getString(R.string.delete)).setOnMenuItemClickListener {
+                                delete(reminder, adapterPosition)
                                 true
                             }
                         }

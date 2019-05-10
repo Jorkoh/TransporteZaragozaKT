@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+            android:background="#232828"
+            android:id="@+id/notification_line_text"
+            android:textColor="#ECECEC"
+            android:layout_width="50dp"
+            android:layout_height="41dp"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+
+    <TextView
+            android:layout_toEndOf="@id/notification_line_text"
+            android:layout_marginStart="20dp"
+            android:layout_alignBottom="@id/notification_line_text"
+            android:id="@+id/notification_time_text"
+            android:textColor="#000000"
+            style="@android:style/Widget.Material.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+    <TextView
+            android:layout_toEndOf="@id/notification_time_text"
+            android:layout_marginStart="16dp"
+            android:layout_alignBottom="@id/notification_line_text"
+            android:id="@+id/notification_destination_text"
+            android:textColor="#000000"
+            style="@android:style/Widget.Material.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:gravity="center"/>
+</RelativeLayout>

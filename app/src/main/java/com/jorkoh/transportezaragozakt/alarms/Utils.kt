@@ -37,3 +37,21 @@ fun Reminder.createAlarm(context: Context) {
     //https://stackoverflow.com/questions/51343550/how-to-give-notifications-on-android-on-specific-time-in-android-oreo/51376922#51376922
     alarmManager.setAlarmClock(AlarmManager.AlarmClockInfo(reminderTime.timeInMillis, pendingIntent), pendingIntent)
 }
+
+fun Reminder.deleteAlarm(context: Context){
+    val notifyIntent = Intent(context, AlarmReceiver::class.java)
+    notifyIntent.putExtras(
+        StopDetailsFragmentArgs(
+            type.name,
+            stopId
+        ).toBundle())
+    val pendingIntent = PendingIntent.getBroadcast(
+        context,
+        reminderId,
+        notifyIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
+
+    val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
+    alarmManager.cancel(pendingIntent)
+}

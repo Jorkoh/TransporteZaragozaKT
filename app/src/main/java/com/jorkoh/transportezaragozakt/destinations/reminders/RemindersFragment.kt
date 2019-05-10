@@ -38,7 +38,9 @@ class RemindersFragment : Fragment() {
                 remindersVM.moveReminder(fromPosition, toPosition)
             }
 
-            override fun onItemSwiped(position: Int) {}
+            override fun onItemSwiped(position: Int) {
+                delete(remindersAdapter.reminders[position], position)
+            }
         })
         ItemTouchHelper(simpleItemTouchCallback)
     }
@@ -51,7 +53,11 @@ class RemindersFragment : Fragment() {
 
         MaterialDialog(requireContext()).show {
             title(R.string.edit_reminder_dialog_title)
-            timePicker(show24HoursView = false, currentTime = time, daysOfWeek = reminder.daysOfWeek.days) { _, time, daysOfWeek ->
+            timePicker(
+                show24HoursView = false,
+                currentTime = time,
+                daysOfWeek = reminder.daysOfWeek.days
+            ) { _, time, daysOfWeek ->
                 remindersVM.updateReminder(reminder.reminderId, daysOfWeek, time)
             }
             positiveButton(R.string.edit_button)
@@ -100,7 +106,17 @@ class RemindersFragment : Fragment() {
         itemTouchHelper.startDrag(viewHolder)
     }
 
-    private val delete: (ReminderExtended) -> Unit = { reminder ->
+    private val delete: (ReminderExtended, Int) -> Unit = { reminder, position ->
+        MaterialDialog(requireContext()).show {
+            title(R.string.delete_reminder_title)
+            message(R.string.delete_reminder_message)
+            positiveButton(R.string.delete) {
+                remindersVM.deleteReminder(reminder.reminderId)
+            }
+            negativeButton(R.string.cancel) {
+                remindersAdapter.notifyItemChanged(position)
+            }
+        }
     }
 
     private val remindersAdapter: RemindersAdapter =

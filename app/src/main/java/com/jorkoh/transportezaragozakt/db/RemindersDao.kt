@@ -10,17 +10,20 @@ abstract class RemindersDao{
     @Insert
     abstract fun insertReminder(reminder: Reminder) : Long
 
+    @Query("SELECT * FROM reminders where reminderId = :reminderId")
+    abstract fun getReminderInmediate(reminderId: Int) : Reminder
+
     @Query("SELECT reminders.reminderId, reminders.stopId, reminders.daysOfWeek, reminders.hourOfDay, reminders.minute, stops.type, stops.stopTitle, reminders.alias, reminders.colorHex, stops.lines FROM reminders INNER JOIN stops ON reminders.stopId = stops.stopId ORDER BY reminders.position ASC")
     abstract fun getReminders(): LiveData<List<ReminderExtended>>
 
     @Query("UPDATE reminders SET daysOfWeek = :daysOfWeek, hourOfDay = :hourOfDay, minute = :minute WHERE reminderId = :reminderId")
-    abstract fun updateReminder(reminderId: String, daysOfWeek: DaysOfWeek, hourOfDay: Int, minute: Int)
+    abstract fun updateReminder(reminderId: Int, daysOfWeek: DaysOfWeek, hourOfDay: Int, minute: Int)
 
     @Query("UPDATE reminders SET alias = :alias, colorHex = :colorHex WHERE reminderId = :reminderId")
-    abstract fun updateReminder(reminderId: String, colorHex: String, alias: String)
+    abstract fun updateReminder(reminderId: Int, colorHex: String, alias: String)
 
     @Query("DELETE FROM reminders WHERE reminderId = :reminderId")
-    abstract fun deleteReminder(reminderId: String)
+    abstract fun deleteReminder(reminderId: Int)
 
     @Query("SELECT IFNULL(position, 0)+1 'position' FROM reminders ORDER BY position LIMIT 1")
     abstract fun getLastPositionImmediate(): Int
@@ -29,7 +32,7 @@ abstract class RemindersDao{
     abstract fun getReminderPositions(): List<ReminderPositions>
 
     @Query("UPDATE reminders SET position = :newPosition WHERE reminderId = :reminderId")
-    abstract fun updatePosition(reminderId: String, newPosition: Int)
+    abstract fun updatePosition(reminderId: Int, newPosition: Int)
 
     fun moveReminder(from: Int, to: Int) {
         val initialPositions = getReminderPositions()

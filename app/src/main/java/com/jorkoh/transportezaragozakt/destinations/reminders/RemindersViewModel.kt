@@ -15,15 +15,15 @@ class RemindersViewModel(private val remindersRepository: RemindersRepository) :
         reminders = remindersRepository.loadReminders()
     }
 
-    fun updateReminder(reminderId : String, daysOfWeek: List<Boolean>, time : Calendar){
+    fun updateReminder(reminderId : Int, daysOfWeek: List<Boolean>, time : Calendar){
         remindersRepository.updateReminder(reminderId, daysOfWeek, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE))
     }
 
-    fun updateReminder(reminderId : String, alias : String, colorHex: String){
+    fun updateReminder(reminderId : Int, alias : String, colorHex: String){
         remindersRepository.updateReminder(reminderId, alias, colorHex)
     }
 
-    fun restoreReminder(reminderId: String, stopId : String){
+    fun restoreReminder(reminderId: Int, stopId : String){
         remindersRepository.restoreReminder(reminderId, stopId)
     }
 
@@ -31,7 +31,7 @@ class RemindersViewModel(private val remindersRepository: RemindersRepository) :
         remindersRepository.moveReminder(from, to)
     }
 
-    fun deleteReminder(reminderId : String){
+    fun deleteReminder(reminderId : Int){
         remindersRepository.deleteReminder(reminderId)
     }
 }

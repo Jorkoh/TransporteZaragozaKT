@@ -40,9 +40,12 @@
     <string name="restore_favorite_title">¿Restaurar parada favorita?</string>
     <string name="reminder">Notificación</string>
     <string name="edit_reminder_dialog_title">Editar notificación</string>
-    <string name="restore_reminder_message">Restaura el alias y color original de esta notificación.</string>
-    <string name="restore_reminder_title">¿Restaurar notificación?</string>
+    <string name="restore_reminder_message">¿Quieres restaurar el alias y color original de esta notificación?</string>
+    <string name="restore_reminder_title">Restaurar notificación</string>
     <string name="notification_channel_description_services">Notificaciones de servicios en primer plano.</string>
     <string name="notification_channel_name_services">Servicios</string>
     <string name="notification_content_services_reminders">Preparando notificaciones...</string>
+    <string name="delete_reminder_message">¿Estas seguro de que quieres borrar esta notificación? Esta operación no se puede deshacer.</string>
+    <string name="delete_reminder_title">Borrar notificación</string>
+    <string name="delete">Borrar</string>
 </resources>
