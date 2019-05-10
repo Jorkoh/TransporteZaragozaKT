@@ -26,4 +26,8 @@ class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): 
     fun moveFavorite(from : Int, to : Int){
         favoritesRepository.moveFavorite(from, to)
     }
+
+    fun deleteFavorite(stopId : String){
+        favoritesRepository.toggleStopFavorite(stopId)
+    }
 }

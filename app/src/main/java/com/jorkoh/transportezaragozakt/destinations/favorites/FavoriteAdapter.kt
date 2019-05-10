@@ -12,22 +12,24 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
 import kotlinx.android.synthetic.main.favorite_row.view.*
 
-class FavoriteStopsAdapter(
+class FavoriteAdapter(
     private val openStop: (TagInfo) -> Unit,
     private val editAlias: (FavoriteStopExtended) -> Unit,
     private val editColor: (FavoriteStopExtended) -> Unit,
     private val restore: (FavoriteStopExtended) -> Unit,
-    private val reorder: (RecyclerView.ViewHolder) -> Unit
-) : RecyclerView.Adapter<FavoriteStopsAdapter.StopDetailsViewHolder>() {
+    private val reorder: (RecyclerView.ViewHolder) -> Unit,
+    private val delete: (FavoriteStopExtended, Int) -> Unit
+) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    class StopDetailsViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class FavoriteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
             favorite: FavoriteStopExtended,
             openStop: (TagInfo) -> Unit,
             editAlias: (FavoriteStopExtended) -> Unit,
             editColor: (FavoriteStopExtended) -> Unit,
             restore: (FavoriteStopExtended) -> Unit,
-            reorder: (RecyclerView.ViewHolder) -> Unit
+            reorder: (RecyclerView.ViewHolder) -> Unit,
+            delete: (FavoriteStopExtended, Int) -> Unit
         ) {
             itemView.apply {
                 type_image_favorite.setImageResource(
@@ -75,13 +77,17 @@ class FavoriteStopsAdapter(
                                 restore(favorite)
                                 true
                             }
+                            add(context.resources.getString(R.string.delete)).setOnMenuItemClickListener {
+                                delete(favorite, adapterPosition)
+                                true
+                            }
                         }
                         show()
                     }
                 }
                 reorder_view_favorite.setOnTouchListener { _, event ->
                     if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        reorder(this@StopDetailsViewHolder)
+                        reorder(this@FavoriteViewHolder)
                     }
                     return@setOnTouchListener true
                 }
@@ -91,13 +97,13 @@ class FavoriteStopsAdapter(
 
     lateinit var favorites: List<FavoriteStopExtended>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDetailsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_row, parent, false) as View
-        return StopDetailsViewHolder(view)
+        return FavoriteViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: StopDetailsViewHolder, position: Int) {
-        holder.bind(favorites[position], openStop, editAlias, editColor, restore, reorder)
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        holder.bind(favorites[position], openStop, editAlias, editColor, restore, reorder, delete)
     }
 
     override fun getItemCount(): Int = if (::favorites.isInitialized) favorites.size else 0

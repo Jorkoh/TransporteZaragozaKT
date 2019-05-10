@@ -48,4 +48,6 @@
     <string name="delete_reminder_message">¿Estas seguro de que quieres borrar esta notificación? Esta operación no se puede deshacer.</string>
     <string name="delete_reminder_title">Borrar notificación</string>
     <string name="delete">Borrar</string>
+    <string name="delete_favorite_message">¿Estas seguro de que quieres borrar este favorito? Esta operación no se puede deshacer.</string>
+    <string name="delete_favorite_title">Borrar favorito</string>
 </resources>

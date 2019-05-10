@@ -38,7 +38,9 @@ class FavoritesFragment : Fragment() {
                 favoritesVM.moveFavorite(fromPosition, toPosition)
             }
 
-            override fun onItemSwiped(position: Int) {}
+            override fun onItemSwiped(position: Int) {
+                delete(favoriteStopsAdapter.favorites[position], position)
+            }
         })
         ItemTouchHelper(simpleItemTouchCallback)
     }
@@ -96,7 +98,20 @@ class FavoritesFragment : Fragment() {
         itemTouchHelper.startDrag(viewHolder)
     }
 
-    private val favoriteStopsAdapter = FavoriteStopsAdapter(openStop, editAlias, editColor, restore, reorder)
+    private val delete: (FavoriteStopExtended, Int) -> Unit = { favorite, position ->
+        MaterialDialog(requireContext()).show {
+            title(R.string.delete_favorite_title)
+            message(R.string.delete_favorite_message)
+            positiveButton(R.string.delete) {
+                favoritesVM.deleteFavorite(favorite.stopId)
+            }
+            negativeButton(R.string.cancel) {
+                favoriteStopsAdapter.notifyItemChanged(position)
+            }
+        }
+    }
+
+    private val favoriteStopsAdapter = FavoriteAdapter(openStop, editAlias, editColor, restore, reorder, delete)
 
     private val favoriteStopsObserver = Observer<List<FavoriteStopExtended>> { favorites ->
         favorites?.let {

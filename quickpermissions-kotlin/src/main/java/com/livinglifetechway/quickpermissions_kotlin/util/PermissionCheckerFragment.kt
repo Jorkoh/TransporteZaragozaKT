@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.afollestad.materialdialogs.MaterialDialog
 
 /**
  * This fragment holds the single permission request and holds it until the flow is completed
@@ -155,20 +156,16 @@ class PermissionCheckerFragment : Fragment() {
                 }
 
                 activity?.let {
-                    val builder = AlertDialog.Builder(it)
-                    builder.setMessage(quickPermissionsRequest?.permanentlyDeniedMessage.orEmpty())
-                        .setPositiveButton(
-                            "SETTINGS"
-                        ) { _, _ ->
+                    MaterialDialog(requireContext()).show {
+                        message(text = quickPermissionsRequest?.permanentlyDeniedMessage.orEmpty())
+                        cancelable(false)
+                        positiveButton(text = "Settings") {
                             openAppSettings()
                         }
-                        .setNegativeButton(
-                            "CANCEL"
-                        ) { _, _ ->
+                        negativeButton(text = "Cancel") {
                             clean()
                         }
-                        .setCancelable(false)
-                    builder.create().show()
+                    }
                 }
                 return
             }
@@ -182,20 +179,16 @@ class PermissionCheckerFragment : Fragment() {
                 }
 
                 activity?.let {
-                    val builder = AlertDialog.Builder(it)
-                    builder.setMessage(quickPermissionsRequest?.rationaleMessage.orEmpty())
-                        .setPositiveButton(
-                            "TRY AGAIN"
-                        ) { _, _ ->
+                    MaterialDialog(requireContext()).show {
+                        message(text = quickPermissionsRequest?.rationaleMessage.orEmpty())
+                        cancelable(false)
+                        positiveButton(text = "Try again") {
                             requestPermissionsFromUser()
                         }
-                        .setNegativeButton(
-                            "CANCEL"
-                        ) { _, _ ->
+                        negativeButton(text = "Cancel") {
                             clean()
                         }
-                        .setCancelable(false)
-                    builder.create().show()
+                    }
                 }
                 return
             }
