@@ -14,7 +14,7 @@
             android:title="@string/search_destination_title"/>
     <item
             android:id="@+id/reminders_destination"
-            android:icon="@drawable/animation_search"
+            android:icon="@drawable/animation_reminders"
             android:title="@string/reminders_destination_title"/>
     <item
             android:id="@+id/more_destination"

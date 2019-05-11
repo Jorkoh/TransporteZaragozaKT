@@ -25,78 +25,78 @@
             <set>
                 <objectAnimator
                         android:propertyName="scaleX"
-                        android:duration="233"
+                        android:duration="143"
                         android:valueFrom="1"
                         android:valueTo="0.9"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleY"
-                        android:duration="233"
+                        android:duration="143"
                         android:valueFrom="1"
                         android:valueTo="0.9"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleX"
-                        android:startOffset="233"
-                        android:duration="167"
+                        android:startOffset="143"
+                        android:duration="130"
                         android:valueFrom="0.9"
                         android:valueTo="1.2"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleY"
-                        android:startOffset="233"
-                        android:duration="167"
+                        android:startOffset="143"
+                        android:duration="130"
                         android:valueFrom="0.9"
                         android:valueTo="1.2"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleX"
-                        android:startOffset="400"
-                        android:duration="100"
+                        android:startOffset="273"
+                        android:duration="169"
                         android:valueFrom="1.2"
                         android:valueTo="0.9"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleY"
-                        android:startOffset="400"
-                        android:duration="100"
+                        android:startOffset="273"
+                        android:duration="169"
                         android:valueFrom="1.2"
                         android:valueTo="0.9"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleX"
-                        android:startOffset="500"
-                        android:duration="133"
+                        android:startOffset="486"
+                        android:duration="142"
                         android:valueFrom="0.9"
                         android:valueTo="1.2"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleY"
-                        android:startOffset="500"
-                        android:duration="133"
+                        android:startOffset="486"
+                        android:duration="142"
                         android:valueFrom="0.9"
                         android:valueTo="1.2"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleX"
-                        android:startOffset="633"
-                        android:duration="167"
+                        android:startOffset="628"
+                        android:duration="172"
                         android:valueFrom="1.2"
                         android:valueTo="1"
                         android:valueType="floatType"
                         android:interpolator="@android:interpolator/fast_out_slow_in"/>
                 <objectAnimator
                         android:propertyName="scaleY"
-                        android:startOffset="633"
-                        android:duration="167"
+                        android:startOffset="628"
+                        android:duration="172"
                         android:valueFrom="1.2"
                         android:valueTo="1"
                         android:valueType="floatType"
