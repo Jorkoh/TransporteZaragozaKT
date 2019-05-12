@@ -7,10 +7,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -202,7 +199,6 @@ class MapFragment : Fragment() {
     }
 
     private fun setupMap(googleMap: GoogleMap?, centerCamera: Boolean) {
-        Log.d("TESTING STUFF", "SETUP MAP")
         map = checkNotNull(googleMap)
 
         map.clear()

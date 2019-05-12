@@ -4,9 +4,6 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 import android.graphics.drawable.Icon
 import android.os.Build.VERSION_CODES.O
+import android.view.*
 import com.google.android.material.snackbar.Snackbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker

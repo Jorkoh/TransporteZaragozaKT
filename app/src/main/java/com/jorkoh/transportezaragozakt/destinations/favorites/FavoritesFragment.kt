@@ -2,9 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -20,6 +18,7 @@ import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.TagInfo
 import kotlinx.android.synthetic.main.favorites_destination.*
 import kotlinx.android.synthetic.main.favorites_destination.view.*
+import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

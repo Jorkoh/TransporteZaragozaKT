@@ -16,6 +16,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
 import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
@@ -32,6 +33,14 @@ class MainActivity : AppCompatActivity() {
 
     private var currentNavController: LiveData<NavController>? = null
 
+    private val onDestinationChangedListener = NavController.OnDestinationChangedListener{ _, destination, _ ->
+        Log.d("TESTING STUFF", "DESTINATION CHANGED LISTENER ${destination.id}")
+        when (destination.id) {
+            R.id.stopDetails -> hideBottomNavigation()
+            else -> showBottomNavigation()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)
@@ -40,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             enqueueWorker()
             setupNotificationChannels(this)
             setupBottomNavigationBar()
+        }else{
+//            showSearchBar()
         }
     }
 
@@ -68,30 +79,13 @@ class MainActivity : AppCompatActivity() {
 
         controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
-                    R.id.stopDetails -> {
-                        with(bottom_navigation) {
-                            if (visibility == View.VISIBLE && alpha == 1f) {
-                                animate()
-                                    .translationY(resources.getDimension(R.dimen.design_bottom_navigation_height))
-                                    .withEndAction { visibility = View.GONE }
-                                    .setInterpolator(FastOutLinearInInterpolator())
-                                    .duration = 150
-                            }
-                        }
-                    }
-                    else -> {
-                        with(bottom_navigation) {
-                            visibility = View.VISIBLE
-                            animate()
-                                .translationY(0f)
-                                .setInterpolator(LinearOutSlowInInterpolator())
-                                .duration = 150
-                        }
-                    }
-                }
+            Log.d("TESTING STUFF", "NAV CONTROLLER CHANGED ${navController.currentDestination.toString()}")
+            when(navController.graph.startDestination){
+                R.id.search -> showSearchBar()
+                else -> hideSearchBar()
             }
+            navController.removeOnDestinationChangedListener(onDestinationChangedListener)
+            navController.addOnDestinationChangedListener(onDestinationChangedListener)
         })
         currentNavController = controller
     }
@@ -102,11 +96,45 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (currentNavController?.value?.popBackStack() != true) {
+            Log.d("TESTING STUFF", "SUPER ON BACK PRESSED")
             super.onBackPressed()
         }
     }
 
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
+    }
+
+    private fun hideBottomNavigation() {
+        with(bottom_navigation) {
+            if (visibility == View.VISIBLE && alpha == 1f) {
+                animate()
+                    .translationY(resources.getDimension(R.dimen.design_bottom_navigation_height))
+                    .withEndAction { visibility = View.GONE }
+                    .setInterpolator(FastOutLinearInInterpolator())
+                    .duration = 150
+            }
+        }
+    }
+
+    private fun showBottomNavigation() {
+        with(bottom_navigation) {
+            visibility = View.VISIBLE
+            animate()
+                .translationY(0f)
+                .setInterpolator(LinearOutSlowInInterpolator())
+                .duration = 150
+        }
+    }
+
+    private fun showSearchBar() {
+        Log.d("TESTING STUFF", "SHOWING SEARCH BAR")
+        toolbar.menu.clear()
+        menuInflater.inflate(R.menu.search_destination_menu, toolbar.menu)
+    }
+
+    private fun hideSearchBar() {
+        Log.d("TESTING STUFF", "HIDING SEARCH BAR")
+        toolbar.menu.clear()
     }
 }
