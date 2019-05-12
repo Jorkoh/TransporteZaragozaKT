@@ -20,17 +20,15 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
     private lateinit var busFilterEnabled: LiveData<Boolean>
     private lateinit var tramFilterEnabled: LiveData<Boolean>
 
-    // @TODO: investigate how to do this properly
-//    var mapHasBeenStyled = false
 
     fun init() {
         //Repository already injected by DI thanks to Koin
-        busStopLocations = stopsRepository.loadStopLocations(StopType.BUS)
-        tramStopLocations = stopsRepository.loadStopLocations(StopType.TRAM)
         mapType = settingsRepository.loadMapType()
         trafficEnabled = settingsRepository.loadTrafficEnabled()
         busFilterEnabled = settingsRepository.loadBusFilterEnabled()
         tramFilterEnabled = settingsRepository.loadTramFilterEnabled()
+        busStopLocations = stopsRepository.loadStopLocations(StopType.BUS)
+        tramStopLocations = stopsRepository.loadStopLocations(StopType.TRAM)
     }
 
     fun getBusStopLocations(): LiveData<Resource<List<Stop>>> {

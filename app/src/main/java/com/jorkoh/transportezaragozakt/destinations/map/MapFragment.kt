@@ -7,6 +7,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.map_info_window.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment() {
 
     companion object {
         const val ICON_SIZE = 55
@@ -64,7 +65,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         if (stopsResource.status == Status.SUCCESS) {
             stopsResource.data?.let { stops ->
                 if (mapVM.getBusFilterEnabled().value == true) {
-                    busStops.forEach { clusterManager.removeItem(it) }
+                    stops.forEach { clusterManager.removeItem(it) }
                     clusterManager.addItems(stops)
                     clusterManager.cluster()
                 }
@@ -78,7 +79,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         if (stopsResource.status == Status.SUCCESS) {
             stopsResource.data?.let { stops ->
                 if (mapVM.getTramFilterEnabled().value == true) {
-                    tramStops.forEach { clusterManager.removeItem(it) }
+                    stops.forEach { clusterManager.removeItem(it) }
                     clusterManager.addItems(stops)
                     clusterManager.cluster()
                 }
@@ -151,14 +152,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             )
 
             //If the stopTitle is longer we can fit more lines while keeping a nice ratio
-            content.lines_layout.columnCount = when {
+            content.lines_layout_favorite.columnCount = when {
                 stop.stopTitle.length >= 24 -> 8
                 stop.stopTitle.length >= 18 -> 6
                 else -> 4
             }
             stop.lines.forEachIndexed { index, line ->
-                layoutInflater.inflate(R.layout.map_info_window_line, content.lines_layout)
-                val lineView = content.lines_layout.getChildAt(index) as TextView
+                layoutInflater.inflate(R.layout.map_info_window_line, content.lines_layout_favorite)
+                val lineView = content.lines_layout_favorite.getChildAt(index) as TextView
 
                 val lineColor = if (stop.type == StopType.BUS) R.color.bus_color else R.color.tram_color
                 lineView.background.setColorFilter(
@@ -174,12 +175,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mapVM.init()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -187,49 +182,50 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return inflater.inflate(R.layout.map_destination, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // Get and (if needed) initialize the map fragment programmatically
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        mapVM.init()
+
         var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as CustomSupportMapFragment?
         if (mapFragment == null) {
-
             mapFragment = CustomSupportMapFragment()
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, "mapFragment")
                 .commit()
             childFragmentManager.executePendingTransactions()
-            mapFragment.getMapAsync(this)
+        }
+        mapFragment.getMapAsync { map ->
+            setupMap(map, map.cameraPosition.target.run { latitude == 0.0 && longitude == 0.0 })
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    private fun setupMap(googleMap: GoogleMap?, centerCamera: Boolean) {
+        Log.d("TESTING STUFF", "SETUP MAP")
         map = checkNotNull(googleMap)
 
+        map.clear()
+        busStops.clear()
+        tramStops.clear()
         styleMap()
         setupClusterManager()
 
-        mapVM.getBusStopLocations().observe(this, Observer(busStopLocationsObserver))
-        mapVM.getTramStopLocations().observe(this, Observer(tramStopLocationsObserver))
-        mapVM.getMapType().observe(this, Observer(mapTypeObserver))
-        mapVM.getTrafficEnabled().observe(this, Observer(trafficEnabledObserver))
-        mapVM.getBusFilterEnabled().observe(this, Observer(busFilterEnabledObserver))
-        mapVM.getTramFilterEnabled().observe(this, Observer(tramFilterEnabledObserver))
-    }
+        mapVM.getMapType().observe(viewLifecycleOwner, Observer(mapTypeObserver))
+        mapVM.getTrafficEnabled().observe(viewLifecycleOwner, Observer(trafficEnabledObserver))
+        mapVM.getBusFilterEnabled().observe(viewLifecycleOwner, Observer(busFilterEnabledObserver))
+        mapVM.getTramFilterEnabled().observe(viewLifecycleOwner, Observer(tramFilterEnabledObserver))
+        mapVM.getBusStopLocations().observe(viewLifecycleOwner, Observer(busStopLocationsObserver))
+        mapVM.getTramStopLocations().observe(viewLifecycleOwner, Observer(tramStopLocationsObserver))
 
-    private fun styleMap() {
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
-        map.setMaxZoomPreference(MAX_ZOOM)
-        map.setMinZoomPreference(MIN_ZOOM)
-        map.uiSettings.isTiltGesturesEnabled = false
-        map.uiSettings.isZoomControlsEnabled = false
-        map.uiSettings.isMapToolbarEnabled = false
-        map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
-        map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                ZARAGOZA_CENTER,
-                DEFAULT_ZOOM
+        if (centerCamera) {
+            map.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    ZARAGOZA_CENTER,
+                    DEFAULT_ZOOM
+                )
             )
-        )
+        }
 
         runWithPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -242,13 +238,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             @SuppressLint("MissingPermission")
             map.isMyLocationEnabled = true
             map.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener)
-            onMyLocationButtonClickListener.onMyLocationButtonClick()
+            if (centerCamera) {
+                onMyLocationButtonClickListener.onMyLocationButtonClick()
+            }
         }
+    }
+
+    private fun styleMap() {
+        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
+        map.setMaxZoomPreference(MAX_ZOOM)
+        map.setMinZoomPreference(MIN_ZOOM)
+        map.uiSettings.isTiltGesturesEnabled = false
+        map.uiSettings.isZoomControlsEnabled = false
+        map.uiSettings.isMapToolbarEnabled = false
+        map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
     }
 
     private fun setupClusterManager() {
         clusterManager = ClusterManager(context, map)
-
 
         map.setOnMarkerClickListener(clusterManager)
         map.setInfoWindowAdapter(clusterManager.markerManager)

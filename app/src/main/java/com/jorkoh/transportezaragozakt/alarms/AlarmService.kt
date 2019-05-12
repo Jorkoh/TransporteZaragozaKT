@@ -26,7 +26,6 @@ import org.koin.android.ext.android.inject
 class AlarmService : LifecycleService() {
 
     private val stopsRepository: StopsRepository by inject()
-    private val appExecutors: AppExecutors by inject()
     private lateinit var stopId: String
     private lateinit var stopType: StopType
 
@@ -61,6 +60,7 @@ class AlarmService : LifecycleService() {
             stopType = StopType.valueOf(it.stopType)
         }
 
+        //TODO: Maybe it would make more sense to use the reminder alias instead of the stop title
         val stopInformation =
             CombinedLiveData(
                 stopsRepository.loadStopDestinations(stopId, stopType),

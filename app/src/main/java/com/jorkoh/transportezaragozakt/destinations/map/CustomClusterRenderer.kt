@@ -30,6 +30,7 @@ class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterMan
 
     init {
         createBaseMarkers()
+        currentZoom = map.cameraPosition.zoom
     }
 
     override fun onCameraIdle() {

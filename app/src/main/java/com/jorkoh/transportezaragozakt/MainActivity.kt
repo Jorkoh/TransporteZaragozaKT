@@ -35,10 +35,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)
-        enqueueWorker()
-        setupNotificationChannels(this)
         setContentView(R.layout.main_container)
         if (savedInstanceState == null) {
+            enqueueWorker()
+            setupNotificationChannels(this)
             setupBottomNavigationBar()
         }
     }

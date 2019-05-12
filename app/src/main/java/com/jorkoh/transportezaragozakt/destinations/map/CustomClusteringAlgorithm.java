@@ -232,7 +232,7 @@ public class CustomClusteringAlgorithm<T extends ClusterItem> implements Algorit
                 return false;
             }
 
-            return ((QuadItem<?>) other).mClusterItem.equals(mClusterItem);
+            return ((QuadItem<?>) other).mClusterItem.getPosition() == mClusterItem.getPosition();
         }
     }
 }

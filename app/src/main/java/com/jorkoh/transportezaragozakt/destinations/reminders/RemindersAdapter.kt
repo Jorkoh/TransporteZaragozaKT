@@ -59,11 +59,11 @@ class RemindersAdapter(
                     reminder_color.visibility = View.GONE
                 }
 
-                itemView.lines_layout.removeAllViews()
+                itemView.lines_layout_favorite.removeAllViews()
                 val layoutInflater = LayoutInflater.from(context)
                 reminder.lines.forEachIndexed { index, line ->
-                    layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout)
-                    val lineView = itemView.lines_layout.getChildAt(index) as TextView
+                    layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout_favorite)
+                    val lineView = itemView.lines_layout_favorite.getChildAt(index) as TextView
 
                     val lineColor = if (reminder.type == StopType.BUS) R.color.bus_color else R.color.tram_color
                     lineView.background.setColorFilter(
