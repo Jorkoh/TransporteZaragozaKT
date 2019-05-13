@@ -87,7 +87,7 @@ val appModule = module {
 
     viewModel { MapViewModel(get(), get()) }
 
-    viewModel { SearchViewModel() }
+    viewModel { SearchViewModel(get()) }
 
     viewModel { RemindersViewModel(get()) }
 

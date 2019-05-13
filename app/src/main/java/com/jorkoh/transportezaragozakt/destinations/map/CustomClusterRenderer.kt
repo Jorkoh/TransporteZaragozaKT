@@ -3,7 +3,6 @@ package com.jorkoh.transportezaragozakt.destinations.map
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ShapeDrawable
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -15,7 +14,6 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
-import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
 
 class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterManager: ClusterManager<Stop>) :
     DefaultClusterRenderer<Stop>(context, map, clusterManager), GoogleMap.OnCameraIdleListener {

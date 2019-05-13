@@ -2,18 +2,14 @@ package com.jorkoh.transportezaragozakt.repositories
 
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
-import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.db.StopDestination
-import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.db.StopsDao
+import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.util.*
 
 interface StopsRepository {
     fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>>
     fun loadStopLocations(stopType: StopType): LiveData<Resource<List<Stop>>>
+    fun loadStops(): LiveData<List<StopWithoutLocation>>
     fun loadStopTitle(stopId: String) : LiveData<String>
 }
 
@@ -23,6 +19,7 @@ class StopsRepositoryImplementation(
     private val stopsDao: StopsDao,
     private val appExecutors: AppExecutors
     ) : StopsRepository {
+
     override fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStopDestinations(stopId)
@@ -35,6 +32,10 @@ class StopsRepositoryImplementation(
             StopType.BUS -> busRepository.loadStopLocations()
             StopType.TRAM -> tramRepository.loadStopLocations()
         }
+    }
+
+    override fun loadStops(): LiveData<List<StopWithoutLocation>> {
+        return stopsDao.getStopsExtended()
     }
 
     override fun loadStopTitle(stopId: String): LiveData<String> {

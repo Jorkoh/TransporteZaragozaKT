@@ -17,7 +17,7 @@ import com.afollestad.materialdialogs.input.input
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
-import com.jorkoh.transportezaragozakt.db.TagInfo
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.favorites_destination.*
 import kotlinx.android.synthetic.main.favorites_destination.view.*
 import kotlinx.android.synthetic.main.main_container.*
@@ -46,12 +46,12 @@ class FavoritesFragment : Fragment() {
         ItemTouchHelper(simpleItemTouchCallback)
     }
 
-    private val openStop: (TagInfo) -> Unit = { info ->
+    private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
                 FavoritesFragmentDirections.actionFavoritesToStopDetails(
-                    info.type.name,
-                    info.id
+                    info.stopType,
+                    info.stopId
                 )
             )
         }
@@ -115,35 +115,32 @@ class FavoritesFragment : Fragment() {
     private val favoriteStopsAdapter = FavoriteAdapter(openStop, editAlias, editColor, restore, reorder, delete)
 
     private val favoriteStopsObserver = Observer<List<FavoriteStopExtended>> { favorites ->
-        favorites?.let {
-            updateEmptyViewVisibility(favorites.isEmpty(), view)
-            favoriteStopsAdapter.setNewFavoriteStops(favorites)
-        }
+        updateEmptyViewVisibility(favorites.isEmpty())
+        favoriteStopsAdapter.setNewFavoriteStops(favorites)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        favoritesVM.favoriteStops.observe(viewLifecycleOwner, favoriteStopsObserver)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
-
         setupToolbar()
-
+        val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = favoriteStopsAdapter
         }
-
         itemTouchHelper.attachToRecyclerView(rootView.favorites_recycler_view)
-
-        favoritesVM.favoriteStops.observe(this, favoriteStopsObserver)
-        updateEmptyViewVisibility(favoritesVM.favoriteStops.value.isNullOrEmpty(), rootView)
         return rootView
     }
 
     private fun setupToolbar() {
-        (requireActivity() as MainActivity).hideSearchBar()
+        requireActivity().main_toolbar.menu.clear()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,13 +148,13 @@ class FavoritesFragment : Fragment() {
         favoritesVM.init()
     }
 
-    private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView: View?) {
+    private fun updateEmptyViewVisibility(isEmpty: Boolean) {
         val newVisibility = if (isEmpty) {
             View.VISIBLE
         } else {
             View.GONE
         }
-        rootView?.no_favorites_animation?.visibility = newVisibility
-        rootView?.no_favorites_text?.visibility = newVisibility
+        view?.no_favorites_animation?.visibility = newVisibility
+        view?.no_favorites_text?.visibility = newVisibility
     }
 }

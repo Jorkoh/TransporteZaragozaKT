@@ -7,7 +7,6 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -19,7 +18,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -183,8 +181,8 @@ class MapFragment : Fragment() {
         return inflater.inflate(R.layout.map_destination, container, false)
     }
 
-    private fun setupToolbar(){
-        (requireActivity() as MainActivity).hideSearchBar()
+    private fun setupToolbar() {
+        requireActivity().main_toolbar.menu.clear()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -1,11 +1,8 @@
 package com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop
 
 import android.content.Context
-import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
-import com.jorkoh.transportezaragozakt.db.StopType
 import com.squareup.moshi.Json
 import java.util.*
 

@@ -32,7 +32,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-                android:id="@+id/title_text_favorite"
+                android:id="@+id/title_text_stop"
                 android:textColor="?colorOnSurface"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -49,15 +49,14 @@
                 android:textSize="14sp"/>
 
 
-
         <GridLayout
                 android:id="@+id/lines_layout_stop"
                 android:layout_width="0dp"
                 android:columnCount="7"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/type_image_stop"
+                app:layout_constraintStart_toEndOf="@id/type_image_stop"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title_text_favorite"
+                app:layout_constraintTop_toBottomOf="@id/title_text_stop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:orientation="horizontal"
                 android:layout_marginStart="16dp"

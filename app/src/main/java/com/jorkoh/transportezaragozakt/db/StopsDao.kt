@@ -65,6 +65,9 @@ abstract class StopsDao {
     @Query("SELECT * FROM stops WHERE type = :stopType")
     abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
+    @Query("SELECT stopId, type, stopTitle, lines FROM stops ORDER BY type, stopId")
+    abstract fun getStopsExtended(): LiveData<List<StopWithoutLocation>>
+
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
     abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
 

@@ -130,31 +130,29 @@ class RemindersFragment : Fragment() {
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        remindersVM.reminders.observe(viewLifecycleOwner, remindersObserver)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("TESTING STUFF", "REMINDERS - SET HAS OPTIONS MENU")
-        setHasOptionsMenu(true)
-        val rootView = inflater.inflate(R.layout.reminders_destination, container, false)
-
         setupToolbar()
-
+        val rootView = inflater.inflate(R.layout.reminders_destination, container, false)
         rootView.reminders_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = remindersAdapter
         }
-
         itemTouchHelper.attachToRecyclerView(rootView.reminders_recycler_view)
 
-        remindersVM.reminders.observe(this, remindersObserver)
-        updateEmptyViewVisibility(remindersVM.reminders.value.isNullOrEmpty(), rootView)
         return rootView
     }
 
     private fun setupToolbar(){
-        (requireActivity() as MainActivity).hideSearchBar()
+        requireActivity().main_toolbar.menu.clear()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

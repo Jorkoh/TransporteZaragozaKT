@@ -101,8 +101,8 @@ class StopDetailsFragment : Fragment() {
         stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
     }
 
-    private fun setupToolbar(){
-        (requireActivity() as MainActivity).hideSearchBar()
+    private fun setupToolbar() {
+        requireActivity().main_toolbar.menu.clear()
     }
 
     private fun setupFab(rootView: View) {

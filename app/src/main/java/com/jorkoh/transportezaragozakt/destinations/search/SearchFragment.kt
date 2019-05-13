@@ -14,11 +14,17 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.search_destination.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
-    private val searchVM: SearchViewModel by viewModel()
+    private val searchVM: SearchViewModel by sharedViewModel()
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        searchVM.init()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,12 +55,11 @@ class SearchFragment : Fragment() {
             (menu.findItem(R.id.item_search).actionView as SearchView).apply {
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
-                        Log.d("TESTING STUFF", "Text submit: $query")
                         return false
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        Log.d("TESTING STUFF", "Text submit: $newText")
+                        searchVM.query.value = newText
                         return false
                     }
 

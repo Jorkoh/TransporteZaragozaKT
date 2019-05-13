@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.favorite_row.view.*
 
 class FavoriteAdapter(
-    private val openStop: (TagInfo) -> Unit,
+    private val openStop: (StopDetailsFragmentArgs) -> Unit,
     private val editAlias: (FavoriteStopExtended) -> Unit,
     private val editColor: (FavoriteStopExtended) -> Unit,
     private val restore: (FavoriteStopExtended) -> Unit,
@@ -24,7 +25,7 @@ class FavoriteAdapter(
     class FavoriteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
             favorite: FavoriteStopExtended,
-            openStop: (TagInfo) -> Unit,
+            openStop: (StopDetailsFragmentArgs) -> Unit,
             editAlias: (FavoriteStopExtended) -> Unit,
             editColor: (FavoriteStopExtended) -> Unit,
             restore: (FavoriteStopExtended) -> Unit,
@@ -61,7 +62,7 @@ class FavoriteAdapter(
                     lineView.text = line
                 }
 
-                setOnClickListener { openStop(TagInfo(favorite.stopId, favorite.type)) }
+                setOnClickListener { openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId)) }
                 edit_view_favorite.setOnClickListener {
                     PopupMenu(context, it).apply {
                         menu.apply {
@@ -124,6 +125,7 @@ class FavoriteAdapter(
 
                     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                         return favorites[oldItemPosition].type == newFavorites[newItemPosition].type
+                                && favorites[oldItemPosition].lines == newFavorites[newItemPosition].lines
                                 && favorites[oldItemPosition].alias == newFavorites[newItemPosition].alias
                                 && favorites[oldItemPosition].colorHex == newFavorites[newItemPosition].colorHex
                     }

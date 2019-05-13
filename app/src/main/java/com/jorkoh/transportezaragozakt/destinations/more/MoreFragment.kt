@@ -31,6 +31,6 @@ class MoreFragment : Fragment() {
     }
 
     private fun setupToolbar(){
-        (requireActivity() as MainActivity).hideSearchBar()
+        requireActivity().main_toolbar.menu.clear()
     }
 }

@@ -107,13 +107,4 @@ class MainActivity : AppCompatActivity() {
                 .duration = 150
         }
     }
-
-//    fun showSearchBar() {
-//        main_toolbar.menu.clear()
-//        main_toolbar.inflateMenu(R.menu.search_destination_menu)
-//    }
-
-    fun hideSearchBar() {
-        main_toolbar.menu.clear()
-    }
 }

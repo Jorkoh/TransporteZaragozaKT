@@ -4,7 +4,6 @@ import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
 import java.util.*
-import kotlin.collections.ArrayList
 
 enum class StopType {
     BUS, TRAM
@@ -143,6 +142,13 @@ data class FavoriteStopExtended(
     val lines: List<String>
 )
 
+data class StopWithoutLocation(
+    val stopId : String,
+    val type: StopType,
+    val stopTitle: String,
+    val lines: List<String>
+)
+
 data class ReminderPositions(
     val reminderId: Int,
     val position: Int
@@ -160,8 +166,6 @@ data class ReminderExtended(
     val colorHex: String,
     val lines: List<String>
 )
-
-data class TagInfo(val id: String, val type: StopType)
 
 //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
 data class DaysOfWeek(val days : List<Boolean>)
