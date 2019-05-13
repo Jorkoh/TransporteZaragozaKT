@@ -1,29 +1,20 @@
 package com.jorkoh.transportezaragozakt
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.graphics.Interpolator
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
 import com.jorkoh.transportezaragozakt.tasks.enqueueWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
-import kotlinx.android.synthetic.main.stop_details_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -33,8 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private var currentNavController: LiveData<NavController>? = null
 
-    private val onDestinationChangedListener = NavController.OnDestinationChangedListener{ _, destination, _ ->
-        Log.d("TESTING STUFF", "DESTINATION CHANGED LISTENER ${destination.id}")
+    private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         when (destination.id) {
             R.id.stopDetails -> hideBottomNavigation()
             else -> showBottomNavigation()
@@ -45,12 +35,11 @@ class MainActivity : AppCompatActivity() {
         matchDressCode()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_container)
+        setSupportActionBar(main_toolbar)
         if (savedInstanceState == null) {
             enqueueWorker()
             setupNotificationChannels(this)
             setupBottomNavigationBar()
-        }else{
-//            showSearchBar()
         }
     }
 
@@ -75,15 +64,8 @@ class MainActivity : AppCompatActivity() {
             intent = intent
         )
 
-        setSupportActionBar(toolbar)
-
         controller.observe(this, Observer { navController ->
             setupActionBarWithNavController(navController)
-            Log.d("TESTING STUFF", "NAV CONTROLLER CHANGED ${navController.currentDestination.toString()}")
-            when(navController.graph.startDestination){
-                R.id.search -> showSearchBar()
-                else -> hideSearchBar()
-            }
             navController.removeOnDestinationChangedListener(onDestinationChangedListener)
             navController.addOnDestinationChangedListener(onDestinationChangedListener)
         })
@@ -96,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (currentNavController?.value?.popBackStack() != true) {
-            Log.d("TESTING STUFF", "SUPER ON BACK PRESSED")
             super.onBackPressed()
         }
     }
@@ -127,14 +108,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSearchBar() {
-        Log.d("TESTING STUFF", "SHOWING SEARCH BAR")
-        toolbar.menu.clear()
-        menuInflater.inflate(R.menu.search_destination_menu, toolbar.menu)
-    }
+//    fun showSearchBar() {
+//        main_toolbar.menu.clear()
+//        main_toolbar.inflateMenu(R.menu.search_destination_menu)
+//    }
 
-    private fun hideSearchBar() {
-        Log.d("TESTING STUFF", "HIDING SEARCH BAR")
-        toolbar.menu.clear()
+    fun hideSearchBar() {
+        main_toolbar.menu.clear()
     }
 }

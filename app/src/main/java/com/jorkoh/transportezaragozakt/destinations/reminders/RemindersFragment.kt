@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.reminders
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,10 +13,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
 import com.jorkoh.transportezaragozakt.destinations.favorites.materialColors
+import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.reminders_destination.*
 import kotlinx.android.synthetic.main.reminders_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -131,7 +134,11 @@ class RemindersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("TESTING STUFF", "REMINDERS - SET HAS OPTIONS MENU")
+        setHasOptionsMenu(true)
         val rootView = inflater.inflate(R.layout.reminders_destination, container, false)
+
+        setupToolbar()
 
         rootView.reminders_recycler_view.apply {
             setHasFixedSize(true)
@@ -144,6 +151,10 @@ class RemindersFragment : Fragment() {
         remindersVM.reminders.observe(this, remindersObserver)
         updateEmptyViewVisibility(remindersVM.reminders.value.isNullOrEmpty(), rootView)
         return rootView
+    }
+
+    private fun setupToolbar(){
+        (requireActivity() as MainActivity).hideSearchBar()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,5 +8,4 @@
             android:title="@string/search_destination_title"
             app:actionViewClass="androidx.appcompat.widget.SearchView"
             app:showAsAction="ifRoom|collapseActionView" />
-
 </menu>

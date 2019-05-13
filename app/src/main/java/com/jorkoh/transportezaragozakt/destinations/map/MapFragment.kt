@@ -7,6 +7,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -25,6 +27,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.map_info_window.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -176,9 +179,13 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setupToolbar()
         return inflater.inflate(R.layout.map_destination, container, false)
     }
 
+    private fun setupToolbar(){
+        (requireActivity() as MainActivity).hideSearchBar()
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -201,6 +208,15 @@ class MapFragment : Fragment() {
     private fun setupMap(googleMap: GoogleMap?, centerCamera: Boolean) {
         map = checkNotNull(googleMap)
 
+        if (centerCamera) {
+            map.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    ZARAGOZA_CENTER,
+                    DEFAULT_ZOOM
+                )
+            )
+        }
+
         map.clear()
         busStops.clear()
         tramStops.clear()
@@ -213,15 +229,6 @@ class MapFragment : Fragment() {
         mapVM.getTramFilterEnabled().observe(viewLifecycleOwner, Observer(tramFilterEnabledObserver))
         mapVM.getBusStopLocations().observe(viewLifecycleOwner, Observer(busStopLocationsObserver))
         mapVM.getTramStopLocations().observe(viewLifecycleOwner, Observer(tramStopLocationsObserver))
-
-        if (centerCamera) {
-            map.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    ZARAGOZA_CENTER,
-                    DEFAULT_ZOOM
-                )
-            )
-        }
 
         runWithPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,

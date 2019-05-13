@@ -24,11 +24,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 import android.graphics.drawable.Icon
 import android.os.Build.VERSION_CODES.O
+import android.util.Log
 import android.view.*
 import com.google.android.material.snackbar.Snackbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
+import kotlinx.android.synthetic.main.main_container.*
 
 
 class StopDetailsFragment : Fragment() {
@@ -63,6 +65,7 @@ class StopDetailsFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.stop_details_destination, container, false)
 
+        setupToolbar()
         setupFab(rootView)
 
         GlobalScope.launch {
@@ -98,6 +101,9 @@ class StopDetailsFragment : Fragment() {
         stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
     }
 
+    private fun setupToolbar(){
+        (requireActivity() as MainActivity).hideSearchBar()
+    }
 
     private fun setupFab(rootView: View) {
         rootView.stop_details_fab.apply {

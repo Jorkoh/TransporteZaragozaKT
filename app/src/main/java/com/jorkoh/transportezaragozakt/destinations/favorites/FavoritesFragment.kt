@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.input.input
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.TagInfo
@@ -125,6 +127,8 @@ class FavoritesFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
 
+        setupToolbar()
+
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
@@ -136,6 +140,10 @@ class FavoritesFragment : Fragment() {
         favoritesVM.favoriteStops.observe(this, favoriteStopsObserver)
         updateEmptyViewVisibility(favoritesVM.favoriteStops.value.isNullOrEmpty(), rootView)
         return rootView
+    }
+
+    private fun setupToolbar() {
+        (requireActivity() as MainActivity).hideSearchBar()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
