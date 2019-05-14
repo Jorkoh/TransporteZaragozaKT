@@ -8,7 +8,7 @@
         tools:context="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_recycler_view"
+            android:id="@+id/search_recycler_view_lines"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="4dp"
@@ -21,7 +21,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
     <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/no_search_result_animation"
+            android:id="@+id/no_search_result_animation_lines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:lottie_rawRes="@raw/tumbleweed"
@@ -36,12 +36,12 @@
             android:visibility="gone"/>
 
     <TextView
-            android:id="@+id/no_search_result_text"
+            android:id="@+id/no_search_result_text_lines"
             android:textColor="?colorOnBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_favorites"
-            app:layout_constraintTop_toBottomOf="@+id/no_search_result_animation"
+            app:layout_constraintTop_toBottomOf="@+id/no_search_result_animation_lines"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textAppearance="@android:style/TextAppearance.Material.Headline"

@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.StopWithoutLocation
+import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
-import kotlinx.android.synthetic.main.search_destination_tab.view.*
+import kotlinx.android.synthetic.main.search_destination_all_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AllStopsFragment : Fragment() {
@@ -32,7 +32,7 @@ class AllStopsFragment : Fragment() {
 
     private val allStopsAdapter = StopAdapter(openStop)
 
-    private val allStopsObserver = Observer<List<StopWithoutLocation>> { allStops ->
+    private val allStopsObserver = Observer<List<Stop>> { allStops ->
         updateEmptyViewVisibility(allStops.isEmpty())
         allStopsAdapter.setNewStops(allStops)
         allStopsAdapter.filter.filter(searchVM.query.value)
@@ -42,7 +42,7 @@ class AllStopsFragment : Fragment() {
         allStopsAdapter.filter.filter(query) { flag ->
             //If the list went from actually filtered to initial state scroll back up to the top
             if (query == "" && flag == 1) {
-                (view?.search_recycler_view?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+                (view?.search_recycler_view_all_stops?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
             }
         }
     }
@@ -57,9 +57,9 @@ class AllStopsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.search_destination_tab, container, false)
+        val rootView = inflater.inflate(R.layout.search_destination_all_stops, container, false)
 
-        rootView.search_recycler_view.apply {
+        rootView.search_recycler_view_all_stops.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = allStopsAdapter
@@ -69,12 +69,12 @@ class AllStopsFragment : Fragment() {
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {
-        val newVisibility = if (isEmpty) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-        view?.no_search_result_animation?.visibility = newVisibility
-        view?.no_search_result_text?.visibility = newVisibility
+//        val newVisibility = if (isEmpty) {
+//            View.VISIBLE
+//        } else {
+//            View.GONE
+//        }
+//        view?.no_search_result_animation_all_stops?.visibility = newVisibility
+//        view?.no_search_result_text_all_stops?.visibility = newVisibility
     }
 }

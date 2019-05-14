@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
@@ -117,6 +118,8 @@ class RemindersFragment : Fragment() {
             negativeButton(R.string.cancel) {
                 remindersAdapter.notifyItemChanged(position)
             }
+        }.onCancel {
+            remindersAdapter.notifyItemChanged(position)
         }
     }
 

@@ -15,7 +15,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocatio
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
-    fun loadStopLocations(): LiveData<Resource<List<Stop>>>
+    fun loadStops(): LiveData<List<Stop>>
 }
 
 class BusRepositoryImplementation(
@@ -45,21 +45,7 @@ class BusRepositoryImplementation(
         }.asLiveData()
     }
 
-    override fun loadStopLocations(): LiveData<Resource<List<Stop>>> {
-        return object : NetworkBoundResource<List<Stop>, BusStopLocationsResponse>(appExecutors) {
-            override fun saveCallResult(item: BusStopLocationsResponse) {
-                stopsDao.insertStops(item.toStops())
-            }
-
-            //TODO: Maybe this should be true if it's unable to load data from db for some reason
-            override fun shouldFetch(data: List<Stop>?): Boolean {
-                return false
-            }
-
-            override fun loadFromDb(): LiveData<List<Stop>> = stopsDao.getStopsByType(StopType.BUS)
-
-            override fun createCall(): LiveData<ApiResponse<BusStopLocationsResponse>> =
-                apiService.getBusStopsLocations()
-        }.asLiveData()
+    override fun loadStops(): LiveData<List<Stop>> {
+        return stopsDao.getStopsByType(StopType.BUS)
     }
 }

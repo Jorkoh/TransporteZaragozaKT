@@ -133,19 +133,17 @@ data class FavoritePositions(
     val position: Int
 )
 
+data class StopWithDistance(
+    val stop : Stop,
+    val distance: Float
+)
+
 data class FavoriteStopExtended(
     val stopId: String,
     val type: StopType,
     val stopTitle: String,
     val alias: String,
     val colorHex: String,
-    val lines: List<String>
-)
-
-data class StopWithoutLocation(
-    val stopId : String,
-    val type: StopType,
-    val stopTitle: String,
     val lines: List<String>
 )
 

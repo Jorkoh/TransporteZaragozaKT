@@ -59,32 +59,24 @@ class MapFragment : Fragment() {
     private val busStops = mutableListOf<Stop>()
     private val tramStops = mutableListOf<Stop>()
 
-    private val busStopLocationsObserver = Observer<Resource<List<Stop>?>> { stopsResource ->
-        if (stopsResource.status == Status.SUCCESS) {
-            stopsResource.data?.let { stops ->
-                if (mapVM.getBusFilterEnabled().value == true) {
-                    stops.forEach { clusterManager.removeItem(it) }
-                    clusterManager.addItems(stops)
-                    clusterManager.cluster()
-                }
-                busStops.clear()
-                busStops.addAll(stops)
-            }
+    private val busStopLocationsObserver = Observer<List<Stop>> { stops ->
+        if (mapVM.getBusFilterEnabled().value == true) {
+            stops.forEach { clusterManager.removeItem(it) }
+            clusterManager.addItems(stops)
+            clusterManager.cluster()
         }
+        busStops.clear()
+        busStops.addAll(stops)
     }
 
-    private val tramStopLocationsObserver = Observer<Resource<List<Stop>?>> { stopsResource ->
-        if (stopsResource.status == Status.SUCCESS) {
-            stopsResource.data?.let { stops ->
-                if (mapVM.getTramFilterEnabled().value == true) {
-                    stops.forEach { clusterManager.removeItem(it) }
-                    clusterManager.addItems(stops)
-                    clusterManager.cluster()
-                }
-                tramStops.clear()
-                tramStops.addAll(stops)
-            }
+    private val tramStopLocationsObserver = Observer<List<Stop>> { stops ->
+        if (mapVM.getTramFilterEnabled().value == true) {
+            stops.forEach { clusterManager.removeItem(it) }
+            clusterManager.addItems(stops)
+            clusterManager.cluster()
         }
+        tramStops.clear()
+        tramStops.addAll(stops)
     }
 
     private val mapTypeObserver = Observer<Int> { mapType ->
@@ -200,6 +192,14 @@ class MapFragment : Fragment() {
         }
         mapFragment.getMapAsync { map ->
             setupMap(map, map.cameraPosition.target.run { latitude == 0.0 && longitude == 0.0 })
+            mapVM.getIsDarkMap().observe(viewLifecycleOwner, Observer { isDarkMap ->
+                map.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                        context,
+                        if (isDarkMap) R.raw.map_style_dark else R.raw.map_style
+                    )
+                )
+            })
         }
     }
 
@@ -246,7 +246,7 @@ class MapFragment : Fragment() {
     }
 
     private fun styleMap() {
-        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
+//        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
         map.setMaxZoomPreference(MAX_ZOOM)
         map.setMinZoomPreference(MIN_ZOOM)
         map.uiSettings.isTiltGesturesEnabled = false

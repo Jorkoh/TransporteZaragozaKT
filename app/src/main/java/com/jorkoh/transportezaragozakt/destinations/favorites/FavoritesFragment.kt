@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.input.input
 import com.jorkoh.transportezaragozakt.MainActivity
@@ -109,6 +110,8 @@ class FavoritesFragment : Fragment() {
             negativeButton(R.string.cancel) {
                 favoriteStopsAdapter.notifyItemChanged(position)
             }
+        }.onCancel {
+            favoriteStopsAdapter.notifyItemChanged(position)
         }
     }
 

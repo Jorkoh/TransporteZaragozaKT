@@ -8,6 +8,8 @@ import com.jorkoh.transportezaragozakt.repositories.util.booleanLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.intLiveData
 
 interface SettingsRepository {
+    fun loadIsDarkMap(): LiveData<Boolean>
+    fun setIsDarkMap(isDarkMap: Boolean)
     fun loadMapType(): LiveData<Int>
     fun setMapType(mapType: Int)
     fun loadTrafficEnabled(): LiveData<Boolean>
@@ -24,6 +26,23 @@ class SettingsRepositoryImplementation(
     private val sharedPreferences: SharedPreferences,
     private val context: Context
 ) : SettingsRepository {
+    override fun loadIsDarkMap(): LiveData<Boolean> {
+        return sharedPreferences.booleanLiveData(
+            context.getString(com.jorkoh.transportezaragozakt.R.string.is_dark_map_key),
+            true
+        )
+    }
+
+    override fun setIsDarkMap(isDarkMap: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean(
+                context.getString(com.jorkoh.transportezaragozakt.R.string.is_dark_map_key),
+                isDarkMap
+            )
+            apply()
+        }
+    }
+
     override fun loadMapType(): LiveData<Int> {
         return sharedPreferences.intLiveData(
             context.getString(com.jorkoh.transportezaragozakt.R.string.map_type_key),

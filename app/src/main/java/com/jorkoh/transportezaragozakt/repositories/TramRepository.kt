@@ -16,7 +16,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocat
 
 interface TramRepository {
     fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>>
-    fun loadStopLocations(): LiveData<Resource<List<Stop>>>
+    fun loadStops(): LiveData<List<Stop>>
 }
 
 class TramRepositoryImplementation(
@@ -46,20 +46,7 @@ class TramRepositoryImplementation(
         }.asLiveData()
     }
 
-    override fun loadStopLocations(): LiveData<Resource<List<Stop>>> {
-        return object : NetworkBoundResource<List<Stop>, TramStopLocationsResponse>(appExecutors) {
-            override fun saveCallResult(item: TramStopLocationsResponse) {
-                stopsDao.insertStops(item.toStops())
-            }
-
-            override fun shouldFetch(data: List<Stop>?): Boolean {
-                return false
-            }
-
-            override fun loadFromDb(): LiveData<List<Stop>> = stopsDao.getStopsByType(StopType.TRAM)
-
-            override fun createCall(): LiveData<ApiResponse<TramStopLocationsResponse>> =
-                apiService.getTramStopsLocations()
-        }.asLiveData()
+    override fun loadStops(): LiveData<List<Stop>> {
+        return  stopsDao.getStopsByType(StopType.TRAM)
     }
 }

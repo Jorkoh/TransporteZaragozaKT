@@ -8,17 +8,6 @@
         android:layout_height="match_parent"
         tools:context="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment">
 
-    <TextView
-            android:id="@+id/more_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="More Fragment"
-            app:layout_constraintBottom_toTopOf="@+id/themes_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
     <com.google.android.material.button.MaterialButton
             android:id="@+id/themes_button"
             style="@style/Widget.MaterialComponents.Button.Icon"
@@ -27,9 +16,23 @@
             android:text="Themes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/more_text"
             app:layout_constraintHorizontal_bias="0.5"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dark_map_switch"/>
+
+    <Switch
+            android:text="Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dark_map_switch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/themes_button"
+            app:layout_constraintHorizontal_bias="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

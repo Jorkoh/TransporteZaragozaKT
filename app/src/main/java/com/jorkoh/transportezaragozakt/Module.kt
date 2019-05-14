@@ -91,7 +91,7 @@ val appModule = module {
 
     viewModel { RemindersViewModel(get()) }
 
-    viewModel { MoreViewModel() }
+    viewModel { MoreViewModel(get()) }
 
     viewModel { StopDetailsViewModel(get(), get(), get()) }
 

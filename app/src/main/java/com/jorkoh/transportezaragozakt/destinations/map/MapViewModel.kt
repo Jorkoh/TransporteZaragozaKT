@@ -11,10 +11,11 @@ import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 class MapViewModel(private val stopsRepository: StopsRepository, private val settingsRepository: SettingsRepository) :
     ViewModel() {
 
-    private lateinit var busStopLocations: LiveData<Resource<List<Stop>>>
-    private lateinit var tramStopLocations: LiveData<Resource<List<Stop>>>
+    private lateinit var busStopLocations: LiveData<List<Stop>>
+    private lateinit var tramStopLocations: LiveData<List<Stop>>
 
     //Settings
+    private lateinit var isDarkMap: LiveData<Boolean>
     private lateinit var mapType: LiveData<Int>
     private lateinit var trafficEnabled: LiveData<Boolean>
     private lateinit var busFilterEnabled: LiveData<Boolean>
@@ -23,20 +24,25 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
 
     fun init() {
         //Repository already injected by DI thanks to Koin
+        isDarkMap = settingsRepository.loadIsDarkMap()
         mapType = settingsRepository.loadMapType()
         trafficEnabled = settingsRepository.loadTrafficEnabled()
         busFilterEnabled = settingsRepository.loadBusFilterEnabled()
         tramFilterEnabled = settingsRepository.loadTramFilterEnabled()
-        busStopLocations = stopsRepository.loadStopLocations(StopType.BUS)
-        tramStopLocations = stopsRepository.loadStopLocations(StopType.TRAM)
+        busStopLocations = stopsRepository.loadStops(StopType.BUS)
+        tramStopLocations = stopsRepository.loadStops(StopType.TRAM)
     }
 
-    fun getBusStopLocations(): LiveData<Resource<List<Stop>>> {
+    fun getBusStopLocations(): LiveData<List<Stop>> {
         return busStopLocations
     }
 
-    fun getTramStopLocations(): LiveData<Resource<List<Stop>>> {
+    fun getTramStopLocations(): LiveData<List<Stop>> {
         return tramStopLocations
+    }
+
+    fun getIsDarkMap(): LiveData<Boolean> {
+        return isDarkMap
     }
 
     fun getMapType(): LiveData<Int> {

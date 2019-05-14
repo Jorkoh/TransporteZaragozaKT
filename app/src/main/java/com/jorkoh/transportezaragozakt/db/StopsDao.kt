@@ -65,8 +65,8 @@ abstract class StopsDao {
     @Query("SELECT * FROM stops WHERE type = :stopType")
     abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
-    @Query("SELECT stopId, type, stopTitle, lines FROM stops ORDER BY type, stopId")
-    abstract fun getStopsExtended(): LiveData<List<StopWithoutLocation>>
+    @Query("SELECT * FROM stops ORDER BY type, stopId")
+    abstract fun getStops(): LiveData<List<Stop>>
 
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
     abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
@@ -103,6 +103,7 @@ abstract class StopsDao {
         with(sharedPreferences.edit()) {
             putInt(context.getString(R.string.saved_bus_version_number_key), initialBusStops.version)
             putInt(context.getString(R.string.saved_bus_version_number_key), initialTramStops.version)
+            putBoolean(context.getString(R.string.is_dark_map_key), false)
             putInt(context.getString(R.string.map_type_key), 1)
             putBoolean(context.getString(R.string.traffic_key), false)
             putBoolean(context.getString(R.string.bus_filter_key), true)
