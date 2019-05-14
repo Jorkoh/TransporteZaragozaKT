@@ -61,6 +61,7 @@
     <string name="traffic_key" translatable="false">TRAFFIC_KEY</string>
     <string name="bus_filter_key" translatable="false">BUS_FILTER_KEY</string>
     <string name="tram_filter_key" translatable="false">TRAM_FILTER_KEY</string>
+    <string name="search_tab_position_key" translatable="false">SEARCH_TAB_POSITION_KEY</string>
 
     <!--Parse-->
     <string name="parse_application_id" translatable="false">transporte-zaragoza</string>

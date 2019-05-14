@@ -16,22 +16,33 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CustomSupportMapFragment : SupportMapFragment() {
 
+    //TODO MOVE STUFF TO ONACTIVITYCREATED
+
     private val mapVM: MapViewModel by sharedViewModel()
 
-    private val busFilterEnabledObserver: (Boolean) -> Unit = { enabled ->
+    private val busFilterEnabledObserver = Observer<Boolean> { enabled ->
         updateFiltersUI(enabled, null, view)
     }
 
-    private val tramFilterEnabledObserver: (Boolean) -> Unit = { enabled ->
+    private val tramFilterEnabledObserver = Observer<Boolean> { enabled ->
         updateFiltersUI(null, enabled, view)
     }
 
-    private val mapTypesObserver: (Int) -> Unit = { enabled ->
+    private val mapTypesObserver = Observer<Int> { enabled ->
         updateMapTypesUI(enabled, null, view)
     }
 
-    private val trafficObserver: (Boolean) -> Unit = { enabled ->
+    private val trafficObserver = Observer<Boolean> { enabled ->
         updateMapTypesUI(null, enabled, view)
+    }
+
+    override fun onActivityCreated(p0: Bundle?) {
+        super.onActivityCreated(p0)
+
+        mapVM.getBusFilterEnabled().observe(viewLifecycleOwner, busFilterEnabledObserver)
+        mapVM.getTramFilterEnabled().observe(viewLifecycleOwner, tramFilterEnabledObserver)
+        mapVM.getMapType().observe(viewLifecycleOwner, mapTypesObserver)
+        mapVM.getTrafficEnabled().observe(viewLifecycleOwner, trafficObserver)
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedState: Bundle?): View? {
@@ -56,9 +67,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
         wrapper.addView(filterChipsView)
 
-        updateFiltersUI(mapVM.getBusFilterEnabled().value, mapVM.getTramFilterEnabled().value, wrapper)
-        mapVM.getBusFilterEnabled().observe(this, Observer(busFilterEnabledObserver))
-        mapVM.getTramFilterEnabled().observe(this, Observer(tramFilterEnabledObserver))
+//        updateFiltersUI(mapVM.getBusFilterEnabled().value, mapVM.getTramFilterEnabled().value, wrapper)
+//        mapVM.getBusFilterEnabled().observe(this, Observer(busFilterEnabledObserver))
+//        mapVM.getTramFilterEnabled().observe(this, Observer(tramFilterEnabledObserver))
     }
 
     private fun setupMapTypesControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
@@ -76,9 +87,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
         wrapper.addView(mapTypesView)
 
-        updateMapTypesUI(mapVM.getMapType().value, mapVM.getTrafficEnabled().value, wrapper)
-        mapVM.getMapType().observe(this, Observer(mapTypesObserver))
-        mapVM.getTrafficEnabled().observe(this, Observer(trafficObserver))
+//        updateMapTypesUI(mapVM.getMapType().value, mapVM.getTrafficEnabled().value, wrapper)
+//        mapVM.getMapType().observe(this, Observer(mapTypesObserver))
+//        mapVM.getTrafficEnabled().observe(this, Observer(trafficObserver))
     }
 
     private fun updateFiltersUI(isBusFilterEnabled: Boolean?, isTramFilterEnabled: Boolean?, rootView: View?) {

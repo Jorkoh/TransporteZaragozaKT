@@ -38,13 +38,17 @@ class AllStopsFragment : Fragment() {
         allStopsAdapter.filter.filter(searchVM.query.value)
     }
 
-    private val queryObserver = Observer<String> { query ->
-        allStopsAdapter.filter.filter(query)
+    private val queryObserver = Observer<String?> { query ->
+        allStopsAdapter.filter.filter(query) { flag ->
+            //If the list went from actually filtered to initial state scroll back up to the top
+            if (query == "" && flag == 1) {
+                (view?.search_recycler_view?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        searchVM.adapters.add(allStopsAdapter)
         searchVM.allStops.observe(viewLifecycleOwner, allStopsObserver)
         searchVM.query.observe(viewLifecycleOwner, queryObserver)
     }

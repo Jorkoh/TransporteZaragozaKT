@@ -59,7 +59,7 @@ class MapFragment : Fragment() {
     private val busStops = mutableListOf<Stop>()
     private val tramStops = mutableListOf<Stop>()
 
-    private val busStopLocationsObserver: (Resource<List<Stop>?>) -> Unit = { stopsResource ->
+    private val busStopLocationsObserver = Observer<Resource<List<Stop>?>> { stopsResource ->
         if (stopsResource.status == Status.SUCCESS) {
             stopsResource.data?.let { stops ->
                 if (mapVM.getBusFilterEnabled().value == true) {
@@ -73,7 +73,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private val tramStopLocationsObserver: (Resource<List<Stop>?>) -> Unit = { stopsResource ->
+    private val tramStopLocationsObserver = Observer<Resource<List<Stop>?>> { stopsResource ->
         if (stopsResource.status == Status.SUCCESS) {
             stopsResource.data?.let { stops ->
                 if (mapVM.getTramFilterEnabled().value == true) {
@@ -87,15 +87,15 @@ class MapFragment : Fragment() {
         }
     }
 
-    private val mapTypeObserver: (Int) -> Unit = { mapType ->
+    private val mapTypeObserver = Observer<Int> { mapType ->
         map.mapType = mapType
     }
 
-    private val trafficEnabledObserver: (Boolean) -> Unit = { enabled ->
+    private val trafficEnabledObserver = Observer<Boolean> { enabled ->
         map.isTrafficEnabled = enabled
     }
 
-    private val busFilterEnabledObserver: (Boolean) -> Unit = { enabled ->
+    private val busFilterEnabledObserver = Observer<Boolean> { enabled ->
         if (enabled) {
             clusterManager.addItems(busStops)
         } else {
@@ -104,7 +104,7 @@ class MapFragment : Fragment() {
         clusterManager.cluster()
     }
 
-    private val tramFilterEnabledObserver: (Boolean) -> Unit = { enabled ->
+    private val tramFilterEnabledObserver = Observer<Boolean> { enabled ->
         if (enabled) {
             clusterManager.addItems(tramStops)
         } else {
@@ -221,12 +221,12 @@ class MapFragment : Fragment() {
         styleMap()
         setupClusterManager()
 
-        mapVM.getMapType().observe(viewLifecycleOwner, Observer(mapTypeObserver))
-        mapVM.getTrafficEnabled().observe(viewLifecycleOwner, Observer(trafficEnabledObserver))
-        mapVM.getBusFilterEnabled().observe(viewLifecycleOwner, Observer(busFilterEnabledObserver))
-        mapVM.getTramFilterEnabled().observe(viewLifecycleOwner, Observer(tramFilterEnabledObserver))
-        mapVM.getBusStopLocations().observe(viewLifecycleOwner, Observer(busStopLocationsObserver))
-        mapVM.getTramStopLocations().observe(viewLifecycleOwner, Observer(tramStopLocationsObserver))
+        mapVM.getMapType().observe(viewLifecycleOwner, mapTypeObserver)
+        mapVM.getTrafficEnabled().observe(viewLifecycleOwner, trafficEnabledObserver)
+        mapVM.getBusFilterEnabled().observe(viewLifecycleOwner, busFilterEnabledObserver)
+        mapVM.getTramFilterEnabled().observe(viewLifecycleOwner, tramFilterEnabledObserver)
+        mapVM.getBusStopLocations().observe(viewLifecycleOwner, busStopLocationsObserver)
+        mapVM.getTramStopLocations().observe(viewLifecycleOwner, tramStopLocationsObserver)
 
         runWithPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,

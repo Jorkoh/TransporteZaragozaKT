@@ -77,6 +77,9 @@ class StopAdapter(
                 val filterPattern = constraint.toString().trim()
                 stopsFull.filter { it.stopTitle.contains(filterPattern, ignoreCase = true) }
             }
+            @Suppress("UNCHECKED_CAST")
+            //Flag to control wheter the recycler view should scroll to the top
+            count = if((values as List<StopWithoutLocation>).count() != displayedStops.count()) 1 else 0
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {

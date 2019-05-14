@@ -10,12 +10,14 @@ import com.jorkoh.transportezaragozakt.repositories.util.intLiveData
 interface SettingsRepository {
     fun loadMapType(): LiveData<Int>
     fun setMapType(mapType: Int)
-    fun loadTrafficEnabled() : LiveData<Boolean>
+    fun loadTrafficEnabled(): LiveData<Boolean>
     fun setTrafficEnabled(enabled: Boolean)
-    fun loadBusFilterEnabled() : LiveData<Boolean>
+    fun loadBusFilterEnabled(): LiveData<Boolean>
     fun setBusFilterEnabled(enabled: Boolean)
-    fun loadTramFilterEnabled() : LiveData<Boolean>
+    fun loadTramFilterEnabled(): LiveData<Boolean>
     fun setTramFilterEnabled(enabled: Boolean)
+    fun loadSearchTabPosition(): LiveData<Int>
+    fun setSearchTabPosition(tabPosition: Int)
 }
 
 class SettingsRepositoryImplementation(
@@ -39,7 +41,7 @@ class SettingsRepositoryImplementation(
         }
     }
 
-    override fun loadTrafficEnabled() : LiveData<Boolean>{
+    override fun loadTrafficEnabled(): LiveData<Boolean> {
         return sharedPreferences.booleanLiveData(
             context.getString(com.jorkoh.transportezaragozakt.R.string.traffic_key),
             true
@@ -57,7 +59,7 @@ class SettingsRepositoryImplementation(
         }
     }
 
-    override fun loadBusFilterEnabled() : LiveData<Boolean>{
+    override fun loadBusFilterEnabled(): LiveData<Boolean> {
         return sharedPreferences.booleanLiveData(
             context.getString(com.jorkoh.transportezaragozakt.R.string.bus_filter_key),
             true
@@ -75,7 +77,7 @@ class SettingsRepositoryImplementation(
         }
     }
 
-    override fun loadTramFilterEnabled() : LiveData<Boolean>{
+    override fun loadTramFilterEnabled(): LiveData<Boolean> {
         return sharedPreferences.booleanLiveData(
             context.getString(com.jorkoh.transportezaragozakt.R.string.tram_filter_key),
             true
@@ -87,6 +89,23 @@ class SettingsRepositoryImplementation(
             putBoolean(
                 context.getString(com.jorkoh.transportezaragozakt.R.string.tram_filter_key),
                 enabled
+            )
+            apply()
+        }
+    }
+
+    override fun loadSearchTabPosition(): LiveData<Int> {
+        return sharedPreferences.intLiveData(
+            context.getString(com.jorkoh.transportezaragozakt.R.string.search_tab_position_key),
+            0
+        )
+    }
+
+    override fun setSearchTabPosition(tabPosition: Int) {
+        with(sharedPreferences.edit()) {
+            putInt(
+                context.getString(com.jorkoh.transportezaragozakt.R.string.search_tab_position_key),
+                tabPosition
             )
             apply()
         }
