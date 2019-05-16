@@ -42,7 +42,7 @@ class AllStopsFragment : Fragment() {
         allStopsAdapter.filter.filter(query) { flag ->
             //If the list went from actually filtered to initial state scroll back up to the top
             if (query == "" && flag == 1) {
-                (view?.search_recycler_view_all_stops?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
+                (view?.search_recycler_view_all_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
             }
         }
     }

@@ -97,4 +97,12 @@ object Converters {
     @TypeConverter
     @JvmStatic
     fun nameToStopType(value: String): StopType = StopType.valueOf(value)
+
+    @TypeConverter
+    @JvmStatic
+    fun lineTypeToName(value: LineType): String = value.name
+
+    @TypeConverter
+    @JvmStatic
+    fun nameToLineType(value: String): LineType = LineType.valueOf(value)
 }

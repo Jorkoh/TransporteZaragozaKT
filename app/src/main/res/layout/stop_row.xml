@@ -60,7 +60,7 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
-                app:layout_constraintEnd_toStartOf="@+id/number_text_stop"
+                app:layout_constraintEnd_toStartOf="@+id/favorite_icon_stop"
                 android:layout_marginEnd="8dp"/>
 
         <TextView
@@ -75,6 +75,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="0"
                 android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+
+        <ImageView
+                android:id="@+id/favorite_icon_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                android:tint="?colorOnSurface"
+                app:layout_constraintStart_toEndOf="@id/lines_layout_stop"
+                app:layout_constraintEnd_toStartOf="@id/number_text_stop"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="8dp"/>
 
         <TextView
                 android:id="@+id/number_text_stop"

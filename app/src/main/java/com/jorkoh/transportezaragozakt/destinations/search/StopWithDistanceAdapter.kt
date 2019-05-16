@@ -34,6 +34,9 @@ class StopWithDistanceAdapter(
                 )
                 title_text_stop.text = stop.stop.stopTitle
                 number_text_stop.text = stop.stop.number
+                favorite_icon_stop.setImageResource(
+                    if (stop.stop.isFavorite) R.drawable.ic_favorite_black_24dp else R.drawable.ic_favorite_border_black_24dp
+                )
 
                 @SuppressLint("SetTextI18n")
                 distance_text_stop.text = "${"%.2f".format(stop.distance)} m."
@@ -73,7 +76,7 @@ class StopWithDistanceAdapter(
 
     //When setting new stops we need to call filter afterwards to see the effects
     fun setNewStops(newStops: List<StopWithDistance>) {
-        stopsFull = ArrayList(newStops)
+        stopsFull = newStops
     }
 
     override fun getFilter(): Filter = object : Filter() {

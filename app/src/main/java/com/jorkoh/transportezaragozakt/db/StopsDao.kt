@@ -65,6 +65,9 @@ abstract class StopsDao {
     @Query("SELECT * FROM stops WHERE type = :stopType")
     abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
+    @Query("SELECT * FROM lines WHERE type = :lineType")
+    abstract fun getLinesByType(lineType: LineType): LiveData<List<Line>>
+
     @Query("SELECT * FROM stops ORDER BY type, stopId")
     abstract fun getStops(): LiveData<List<Stop>>
 
@@ -83,6 +86,12 @@ abstract class StopsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertStops(stop: List<Stop>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertLines(line: List<Line>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertLineLocations(line: List<LineLocation>)
+
     @Query("DELETE FROM stops")
     abstract fun clearStops()
 
@@ -95,6 +104,10 @@ abstract class StopsDao {
     fun insertInitialData(context: Context) {
         val initialBusStops = getInitialBusStops(context)
         val initialTramStops = getInitialTramStops(context)
+        val initialBusLines = getInitialBusLines(context)
+        val initialTramLines = getInitialTramLines(context)
+        val initialBusLineLocations = getInitialBusLineLocations(context)
+        val initialTramLineLocations = getInitialTramLineLocations(context)
 
         val sharedPreferences = context.getSharedPreferences(
             context.getString(R.string.preferences_version_number_key),
@@ -102,16 +115,22 @@ abstract class StopsDao {
         )
         with(sharedPreferences.edit()) {
             putInt(context.getString(R.string.saved_bus_version_number_key), initialBusStops.version)
-            putInt(context.getString(R.string.saved_bus_version_number_key), initialTramStops.version)
+            putInt(context.getString(R.string.saved_tram_version_number_key), initialTramStops.version)
+            putInt(context.getString(R.string.saved_bus_lines_version_number_key), initialBusLines.version)
+            putInt(context.getString(R.string.saved_tram_lines_version_number_key), initialTramLines.version)
+            putInt(context.getString(R.string.saved_bus_lines_locations_version_number_key), initialBusLineLocations.version)
+            putInt(context.getString(R.string.saved_tram_lines_locations_version_number_key), initialTramLineLocations.version)
             putBoolean(context.getString(R.string.is_dark_map_key), false)
             putInt(context.getString(R.string.map_type_key), 1)
             putBoolean(context.getString(R.string.traffic_key), false)
             putBoolean(context.getString(R.string.bus_filter_key), true)
             putBoolean(context.getString(R.string.tram_filter_key), true)
             putInt(context.getString(R.string.search_tab_position_key), 0)
-            commit()
+            apply()
         }
         insertStops(initialBusStops.stops.plus(initialTramStops.stops))
+        insertLines(initialBusLines.lines.plus(initialTramLines.lines))
+        insertLineLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations))
     }
 
     fun updateStops(stops: List<Stop>) {

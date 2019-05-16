@@ -31,4 +31,23 @@
                 android:id="@+id/deepLink"
                 app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
     </fragment>
+
+    <fragment
+            android:id="@+id/lineDetails"
+            android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
+            tools:layout="@layout/stop_details_destination">
+        <argument
+                android:name="lineType"
+                app:argType="string"/>
+        <argument
+                android:name="lineId"
+                app:argType="string"/>
+        <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH SO THIS IS THE BEST WE CAN DO-->
+        <deepLink
+                android:id="@+id/deepLink"
+                app:uri="launchTZ://viewLine/{lineType}/{lineId}/"/>
+    </fragment>
+    <action
+            android:id="@+id/action_global_lineDetails"
+            app:destination="@id/lineDetails"/>
 </navigation>

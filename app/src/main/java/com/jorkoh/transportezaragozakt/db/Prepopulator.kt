@@ -49,10 +49,105 @@ fun getInitialTramStops(context: Context): InitialStopsMessage {
     return InitialStopsMessage(tramStopEntities, tramStopsJson.version)
 }
 
+fun getInitialBusLines(context: Context): InitialLinesMessage {
+    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_bus_lines)))
+    val busLinesJson = parse(LinesJson.serializer(), buffer.readUtf8())
+
+    val busLinesEntities = mutableListOf<Line>()
+    for (line in busLinesJson.lines) {
+        busLinesEntities.add(
+            Line(
+                line.id,
+                LineType.BUS,
+                line.name,
+                line.destinations,
+                line.stopsFirstDestination,
+                line.stopsSecondDestination
+            )
+        )
+    }
+    return InitialLinesMessage(busLinesEntities, busLinesJson.version.toInt())
+}
+
+fun getInitialTramLines(context: Context): InitialLinesMessage {
+    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_tram_lines)))
+    val tramLinesJson = parse(LinesJson.serializer(), buffer.readUtf8())
+
+    val tramLinesEntities = mutableListOf<Line>()
+    for (line in tramLinesJson.lines) {
+        tramLinesEntities.add(
+            Line(
+                line.id,
+                LineType.TRAM,
+                line.name,
+                line.destinations,
+                line.stopsFirstDestination,
+                line.stopsSecondDestination
+            )
+        )
+    }
+    return InitialLinesMessage(tramLinesEntities, tramLinesJson.version.toInt())
+}
+
+fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
+    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_bus_lines_coordinates)))
+    val busLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
+
+    val busLinesLocationsEntities = mutableListOf<LineLocation>()
+    for (line in busLinesLocationsJson.lines) {
+        for((i, location) in line.coordinates.withIndex()){
+            busLinesLocationsEntities.add(
+                LineLocation(
+                    line.id,
+                    i+1,
+                    LatLng(location[1], location[0])
+                )
+            )
+        }
+    }
+    return InitialLineLocationsMessage(busLinesLocationsEntities, busLinesLocationsJson.version.toInt())
+}
+
+fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
+    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_tram_lines_coordinates)))
+    val tramLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
+
+    val tramLinesLocationsEntities = mutableListOf<LineLocation>()
+    for (line in tramLinesLocationsJson.lines) {
+        for((i, location) in line.coordinates.withIndex()){
+            tramLinesLocationsEntities.add(
+                LineLocation(
+                    line.id,
+                    i+1,
+                    LatLng(location[1], location[0])
+                )
+            )
+        }
+    }
+    return InitialLineLocationsMessage(tramLinesLocationsEntities, tramLinesLocationsJson.version.toInt())
+}
+
+
 data class InitialStopsMessage(val stops: List<Stop>, val version: Int)
+
+data class InitialLinesMessage(val lines: List<Line>, val version: Int)
+
+data class InitialLineLocationsMessage(val lineLocations: List<LineLocation>, val version: Int)
 
 @Serializable
 data class StopsJson(val version: Int, val recordedAt: String, val stops: List<StopJson>)
 
 @Serializable
+data class LinesJson(val version: Int, val recordedAt: String, val lines: List<LineJson>)
+
+@Serializable
+data class LinesLocationsJson(val version: Int, val recordedAt: String, val lines: List<LineLocationsJson>)
+
+@Serializable
 data class StopJson(val id: String, val number : String, val title: String, val location: List<Double>, val lines: List<String>)
+
+@Serializable
+data class LineJson(val id: String, val name : String, val destinations: List<String>, val stopsFirstDestination: List<String>, val stopsSecondDestination: List<String>)
+
+@Serializable
+data class LineLocationsJson(val id: String, val coordinates: List<List<Double>>)

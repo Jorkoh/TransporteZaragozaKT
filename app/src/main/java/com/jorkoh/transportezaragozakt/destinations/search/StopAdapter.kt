@@ -34,6 +34,9 @@ class StopAdapter(
                 )
                 title_text_stop.text = stop.stopTitle
                 number_text_stop.text = stop.number
+                favorite_icon_stop.setImageResource(
+                    if (stop.isFavorite) R.drawable.ic_favorite_black_24dp else R.drawable.ic_favorite_border_black_24dp
+                )
 
                 itemView.lines_layout_stop.removeAllViews()
                 val layoutInflater = LayoutInflater.from(context)
@@ -70,7 +73,7 @@ class StopAdapter(
 
     //When setting new stops we need to call filter afterwards to see the effects
     fun setNewStops(newStops: List<Stop>) {
-        stopsFull = ArrayList(newStops)
+        stopsFull = newStops
     }
 
     override fun getFilter(): Filter = object : Filter() {
@@ -83,7 +86,7 @@ class StopAdapter(
             }
             @Suppress("UNCHECKED_CAST")
             //Flag to control wheter the recycler view should scroll to the top
-            count = if((values as List<Stop>).count() != displayedStops.count()) 1 else 0
+            count = if ((values as List<Stop>).count() != displayedStops.count()) 1 else 0
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {

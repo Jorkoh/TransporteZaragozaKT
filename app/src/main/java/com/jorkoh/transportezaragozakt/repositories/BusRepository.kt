@@ -16,6 +16,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocatio
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStops(): LiveData<List<Stop>>
+    fun loadLines(): LiveData<List<Line>>
 }
 
 class BusRepositoryImplementation(
@@ -47,5 +48,9 @@ class BusRepositoryImplementation(
 
     override fun loadStops(): LiveData<List<Stop>> {
         return stopsDao.getStopsByType(StopType.BUS)
+    }
+
+    override fun loadLines(): LiveData<List<Line>> {
+        return stopsDao.getLinesByType(LineType.BUS)
     }
 }

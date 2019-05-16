@@ -9,6 +9,10 @@ enum class StopType {
     BUS, TRAM
 }
 
+enum class LineType {
+    BUS, TRAM
+}
+
 @Entity(tableName = "stops")
 data class Stop(
     @ColumnInfo(name = "type")
@@ -33,13 +37,9 @@ data class Stop(
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean
 ) : ClusterItem {
-    override fun getSnippet(): String {
-        return ""
-    }
+    override fun getSnippet(): String = ""
 
-    override fun getTitle(): String {
-        return ""
-    }
+    override fun getTitle(): String = ""
 
     override fun getPosition(): LatLng = location
 }
@@ -70,6 +70,50 @@ data class StopDestination(
 
     @ColumnInfo(name = "updatedAt")
     var updatedAt: Date
+)
+
+@Entity(tableName = "lines")
+data class Line(
+    @PrimaryKey
+    @ColumnInfo(name = "lineId")
+    var lineId: String,
+
+    @ColumnInfo(name = "type")
+    var type: LineType,
+
+    @ColumnInfo(name = "name")
+    var name: String,
+
+    // If the destination is unique this list will be of length one and stopIdsSecondDestination will be empty
+    @ColumnInfo(name = "destinations")
+    var destinations: List<String>,
+
+    @ColumnInfo(name = "stopIdsFirstDestination")
+    var stopIdsFirstDestination: List<String>,
+
+    @ColumnInfo(name = "stopIdsSecondDestination")
+    var stopIdsSecondDestination: List<String>
+)
+
+@Entity(
+    tableName = "lineLocations",
+    primaryKeys = ["lineId", "position"],
+    foreignKeys = [ForeignKey(
+        entity = Line::class,
+        parentColumns = ["lineId"],
+        childColumns = ["lineId"],
+        onDelete = ForeignKey.CASCADE
+    )]
+)
+data class LineLocation(
+    @ColumnInfo(name = "lineId")
+    var lineId: String,
+
+    @ColumnInfo(name = "position")
+    var position: Int,
+
+    @ColumnInfo(name = "location")
+    var location: LatLng
 )
 
 @Entity(tableName = "favoriteStops")
@@ -134,7 +178,7 @@ data class FavoritePositions(
 )
 
 data class StopWithDistance(
-    val stop : Stop,
+    val stop: Stop,
     val distance: Float
 )
 
@@ -166,4 +210,4 @@ data class ReminderExtended(
 )
 
 //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
-data class DaysOfWeek(val days : List<Boolean>)
+data class DaysOfWeek(val days: List<Boolean>)

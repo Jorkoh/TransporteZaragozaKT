@@ -107,14 +107,14 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     private fun isNewBusVersion(busStopDocument: ParseObject): Boolean {
         return busStopDocument.getInt("version") > sharedPreferences.getInt(
             applicationContext.getString(R.string.saved_bus_version_number_key),
-            1
+            2
         )
     }
 
     private fun isNewTramVersion(tramStopDocument: ParseObject): Boolean {
         return tramStopDocument.getInt("version") > sharedPreferences.getInt(
             applicationContext.getString(R.string.saved_tram_version_number_key),
-            1
+            2
         )
     }
 
@@ -129,14 +129,14 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             val linesJson = stopJson.getJSONArray("lines")
             val lines = mutableListOf<String>()
             for (j in 0 until linesJson.length()) {
-                lines.add(linesJson.getString(i))
+                lines.add(linesJson.getString(j))
             }
 
             val stopEntity = Stop(
                 StopType.BUS,
-                stopJson.getString("stopId"),
+                stopJson.getString("id"),
                 stopJson.getString("number"),
-                stopJson.getString("stopTitle"),
+                stopJson.getString("title"),
                 checkNotNull(location),
                 lines,
                 false
@@ -172,9 +172,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             val stopEntity = Stop(
                 StopType.TRAM,
-                stopJson.getString("stopId"),
+                stopJson.getString("id"),
                 stopJson.getString("number"),
-                stopJson.getString("stopTitle"),
+                stopJson.getString("title"),
                 checkNotNull(location),
                 lines,
                 false

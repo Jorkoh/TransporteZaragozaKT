@@ -17,6 +17,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocat
 interface TramRepository {
     fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStops(): LiveData<List<Stop>>
+    fun loadLines(): LiveData<List<Line>>
 }
 
 class TramRepositoryImplementation(
@@ -48,5 +49,9 @@ class TramRepositoryImplementation(
 
     override fun loadStops(): LiveData<List<Stop>> {
         return  stopsDao.getStopsByType(StopType.TRAM)
+    }
+
+    override fun loadLines(): LiveData<List<Line>> {
+        return stopsDao.getLinesByType(LineType.TRAM)
     }
 }
