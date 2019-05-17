@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
@@ -15,15 +16,13 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
     private lateinit var tramStopLocations: LiveData<List<Stop>>
 
     //Settings
-    private lateinit var isDarkMap: LiveData<Boolean>
-    private lateinit var mapType: LiveData<Int>
-    private lateinit var trafficEnabled: LiveData<Boolean>
-    private lateinit var busFilterEnabled: LiveData<Boolean>
-    private lateinit var tramFilterEnabled: LiveData<Boolean>
-
+    lateinit var isDarkMap: LiveData<Boolean>
+    lateinit var mapType: LiveData<Int>
+    lateinit var trafficEnabled: LiveData<Boolean>
+    lateinit var busFilterEnabled: LiveData<Boolean>
+    lateinit var tramFilterEnabled: LiveData<Boolean>
 
     fun init() {
-        //Repository already injected by DI thanks to Koin
         isDarkMap = settingsRepository.loadIsDarkMap()
         mapType = settingsRepository.loadMapType()
         trafficEnabled = settingsRepository.loadTrafficEnabled()
@@ -41,37 +40,19 @@ class MapViewModel(private val stopsRepository: StopsRepository, private val set
         return tramStopLocations
     }
 
-    fun getIsDarkMap(): LiveData<Boolean> {
-        return isDarkMap
-    }
-
-    fun getMapType(): LiveData<Int> {
-        return mapType
-    }
-
     fun setMapType(mapType: Int) {
         settingsRepository.setMapType(mapType)
     }
 
-    fun getTrafficEnabled(): LiveData<Boolean> {
-        return trafficEnabled
-    }
 
     fun setTrafficEnabled(enabled: Boolean) {
         settingsRepository.setTrafficEnabled(enabled)
-    }
-
-    fun getBusFilterEnabled(): LiveData<Boolean> {
-        return busFilterEnabled
     }
 
     fun setBusFilterEnabled(enabled: Boolean) {
         settingsRepository.setBusFilterEnabled(enabled)
     }
 
-    fun getTramFilterEnabled(): LiveData<Boolean> {
-        return tramFilterEnabled
-    }
 
     fun setTramFilterEnabled(enabled: Boolean) {
         settingsRepository.setTramFilterEnabled(enabled)

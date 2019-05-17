@@ -76,7 +76,7 @@ fun BusStopResponse.toStopDestinations(context: Context): List<StopDestination> 
     val stopDestinations = mutableListOf<StopDestination>()
     features.first().properties.destinos?.forEach { destination ->
         stopDestinations += StopDestination(
-            destination.linea,
+            destination.linea.correctLine(),
             destination.destino.dropLast(1),
             features.first().properties.id,
             listOf(
@@ -90,8 +90,8 @@ fun BusStopResponse.toStopDestinations(context: Context): List<StopDestination> 
 }
 
 
-fun String.toMinutes(context: Context): String {
-    return when (this) {
+fun String.toMinutes(context: Context) =
+    when (this) {
         "Sin estimacin." -> context.getString(R.string.no_estimate)
         "En la parada." -> context.getString(R.string.at_the_stop)
         else -> {
@@ -103,4 +103,10 @@ fun String.toMinutes(context: Context): String {
             }
         }
     }
-}
+
+fun String.correctLine() =
+    when (this) {
+        "CI1" -> "Ci1"
+        "CI2" -> "CI2"
+        else -> this
+    }

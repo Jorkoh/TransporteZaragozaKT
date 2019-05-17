@@ -9,12 +9,7 @@
             android:id="@+id/favorites"
             android:name="com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragment"
             android:label="@string/favorites_destination_title"
-            tools:layout="@layout/favorites_destination">
-        <action
-                android:id="@+id/action_favorites_to_stopDetails"
-                app:destination="@id/stopDetails"
-                />
-    </fragment>
+            tools:layout="@layout/favorites_destination"/>
     <fragment
             android:id="@+id/stopDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
@@ -26,4 +21,22 @@
                 android:name="stopId"
                 app:argType="string"/>
     </fragment>
+    <fragment
+            android:id="@+id/lineDetails"
+            android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
+            android:label="@string/line_details_title"
+            tools:layout="@layout/stop_details_destination">
+        <argument
+                android:name="lineType"
+                app:argType="string"/>
+        <argument
+                android:name="lineId"
+                app:argType="string"/>
+    </fragment>
+    <action
+            android:id="@+id/action_global_lineDetails"
+            app:destination="@id/lineDetails"/>
+    <action
+            android:id="@+id/action_global_stopDetails"
+            app:destination="@id/stopDetails"/>
 </navigation>

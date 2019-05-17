@@ -26,10 +26,14 @@ import android.graphics.drawable.Icon
 import android.os.Build.VERSION_CODES.O
 import android.util.Log
 import android.view.*
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
+import com.jorkoh.transportezaragozakt.FavoritesDestinationDirections
+import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import kotlinx.android.synthetic.main.main_container.*
 
 
@@ -40,19 +44,65 @@ class StopDetailsFragment : Fragment() {
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
-    private val stopDestinationsAdapter: StopDestinationsAdapter =
-        StopDestinationsAdapter()
+    private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            findNavController().navigate(
+                FavoritesDestinationDirections.actionGlobalLineDetails(
+                    info.lineType,
+                    info.lineId
+                )
+            )
+        }
+    }
+
+    private val stopDestinationsAdapter: StopDestinationsAdapter = StopDestinationsAdapter(openLine)
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
-        updateStopDestinationsUI(stopDestinations, checkNotNull(view))
+        val newVisibility = when (stopDestinations.status) {
+            Status.SUCCESS -> {
+                swiperefresh?.isRefreshing = false
+                stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType)
+                if (stopDestinations.data.isNullOrEmpty()) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+            Status.ERROR -> {
+                swiperefresh?.isRefreshing = false
+                stopDestinationsAdapter.setDestinations(listOf(), stopDetailsVM.stopType)
+                View.VISIBLE
+
+            }
+            Status.LOADING -> {
+                swiperefresh?.isRefreshing = true
+                View.GONE
+            }
+        }
+
+        no_data_suggestions_text?.visibility = newVisibility
+        no_data_text?.visibility = newVisibility
     }
 
     private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->
-        updateIsFavoritedUI(isFavorited, checkNotNull(view))
-    }
+        val newIcon = if (isFavorited) {
+            R.drawable.ic_favorite_black_24dp
+        } else {
+            R.drawable.ic_favorite_border_black_24dp
+        }
 
-    private val stopTitleObserver = Observer<String> { stopTitle ->
-        updateStopTitleUI(stopTitle)
+        val newLabel = if (isFavorited) {
+            R.string.fab_remove_favorite
+        } else {
+            R.string.fab_add_favorite
+        }
+
+        stop_details_fab.replaceActionItem(
+            SpeedDialActionItem.Builder(R.id.stop_details_fab_favorite, newIcon)
+                .setLabel(newLabel)
+                .create(),
+            FAVORITE_ITEM_FAB_POSITION
+        )
     }
 
     private val onSwipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
@@ -68,37 +118,28 @@ class StopDetailsFragment : Fragment() {
         setupToolbar()
         setupFab(rootView)
 
-        GlobalScope.launch {
-            delay(100)
-            rootView.stop_details_fab.animate()
-                .alpha(1f)
-                .duration = 600
-        }
-
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = stopDestinationsAdapter
         }
 
-        updateStopDestinationsUI(stopDetailsVM.getStopDestinations().value, rootView)
-        stopDetailsVM.getStopDestinations().observe(this, stopDestinationsObserver)
-
-        updateIsFavoritedUI(stopDetailsVM.stopIsFavorited.value, rootView)
-        stopDetailsVM.stopIsFavorited.observe(this, stopFavoriteStatusObserver)
-
-        updateStopTitleUI(stopDetailsVM.stopTitle.value)
-        stopDetailsVM.stopTitle.observe(this, stopTitleObserver)
-
         rootView.swiperefresh.setOnRefreshListener(onSwipeRefreshListener)
 
         return rootView
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         val args = StopDetailsFragmentArgs.fromBundle(requireArguments())
         stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
+
+        stopDetailsVM.stopDestinations.observe(viewLifecycleOwner, stopDestinationsObserver)
+        stopDetailsVM.refreshStopDestinations()
+        stopDetailsVM.stopIsFavorited.observe(viewLifecycleOwner, stopFavoriteStatusObserver)
+        stopDetailsVM.stopTitle.observe(viewLifecycleOwner, Observer { stopTitle ->
+            (requireActivity() as MainActivity).setActionBarTitle(stopTitle)
+        })
     }
 
     private fun setupToolbar() {
@@ -195,61 +236,5 @@ class StopDetailsFragment : Fragment() {
                 ).show()
             }
         }
-    }
-
-    private fun updateIsFavoritedUI(isFavorited: Boolean?, rootView: View) {
-        val newIcon = if (isFavorited == true) {
-            R.drawable.ic_favorite_black_24dp
-        } else {
-            R.drawable.ic_favorite_border_black_24dp
-        }
-
-        val newLabel = if (isFavorited == true) {
-            R.string.fab_remove_favorite
-        } else {
-            R.string.fab_add_favorite
-        }
-
-        rootView.stop_details_fab.replaceActionItem(
-            SpeedDialActionItem.Builder(R.id.stop_details_fab_favorite, newIcon)
-                .setLabel(newLabel)
-                .create(),
-            FAVORITE_ITEM_FAB_POSITION
-        )
-    }
-
-    private fun updateStopDestinationsUI(stopDestinations: Resource<List<StopDestination>>?, rootView: View) {
-        if (stopDestinations == null) {
-            return
-        }
-
-        val newVisibility = when (stopDestinations.status) {
-            Status.SUCCESS -> {
-                rootView.swiperefresh?.isRefreshing = false
-                stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType)
-                if (stopDestinations.data.isNullOrEmpty()) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
-            }
-            Status.ERROR -> {
-                rootView.swiperefresh?.isRefreshing = false
-                stopDestinationsAdapter.setDestinations(listOf(), stopDetailsVM.stopType)
-                View.VISIBLE
-
-            }
-            Status.LOADING -> {
-                rootView.swiperefresh?.isRefreshing = true
-                View.GONE
-            }
-        }
-
-        rootView.no_data_suggestions_text?.visibility = newVisibility
-        rootView.no_data_text?.visibility = newVisibility
-    }
-
-    private fun updateStopTitleUI(stopTitle: String?) {
-        (requireActivity() as MainActivity).setActionBarTitle(stopTitle ?: "")
     }
 }

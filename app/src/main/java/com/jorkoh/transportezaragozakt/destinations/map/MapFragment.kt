@@ -60,7 +60,7 @@ class MapFragment : Fragment() {
     private val tramStops = mutableListOf<Stop>()
 
     private val busStopLocationsObserver = Observer<List<Stop>> { stops ->
-        if (mapVM.getBusFilterEnabled().value == true) {
+        if (mapVM.busFilterEnabled.value == true) {
             stops.forEach { clusterManager.removeItem(it) }
             clusterManager.addItems(stops)
             clusterManager.cluster()
@@ -70,21 +70,13 @@ class MapFragment : Fragment() {
     }
 
     private val tramStopLocationsObserver = Observer<List<Stop>> { stops ->
-        if (mapVM.getTramFilterEnabled().value == true) {
+        if (mapVM.tramFilterEnabled.value == true) {
             stops.forEach { clusterManager.removeItem(it) }
             clusterManager.addItems(stops)
             clusterManager.cluster()
         }
         tramStops.clear()
         tramStops.addAll(stops)
-    }
-
-    private val mapTypeObserver = Observer<Int> { mapType ->
-        map.mapType = mapType
-    }
-
-    private val trafficEnabledObserver = Observer<Boolean> { enabled ->
-        map.isTrafficEnabled = enabled
     }
 
     private val busFilterEnabledObserver = Observer<Boolean> { enabled ->
@@ -182,17 +174,18 @@ class MapFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         mapVM.init()
 
-        var mapFragment = childFragmentManager.findFragmentByTag("mapFragment") as CustomSupportMapFragment?
+        var mapFragment =
+            childFragmentManager.findFragmentByTag(getString(R.string.map_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
             mapFragment = CustomSupportMapFragment()
             childFragmentManager.beginTransaction()
-                .add(R.id.map_fragment_container, mapFragment, "mapFragment")
+                .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))
                 .commit()
             childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync { map ->
             setupMap(map, map.cameraPosition.target.run { latitude == 0.0 && longitude == 0.0 })
-            mapVM.getIsDarkMap().observe(viewLifecycleOwner, Observer { isDarkMap ->
+            mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
                 map.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
                         context,
@@ -221,10 +214,14 @@ class MapFragment : Fragment() {
         styleMap()
         setupClusterManager()
 
-        mapVM.getMapType().observe(viewLifecycleOwner, mapTypeObserver)
-        mapVM.getTrafficEnabled().observe(viewLifecycleOwner, trafficEnabledObserver)
-        mapVM.getBusFilterEnabled().observe(viewLifecycleOwner, busFilterEnabledObserver)
-        mapVM.getTramFilterEnabled().observe(viewLifecycleOwner, tramFilterEnabledObserver)
+        mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->
+            map.mapType = mapType
+        })
+        mapVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+            map.isTrafficEnabled = enabled
+        })
+        mapVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
+        mapVM.tramFilterEnabled.observe(viewLifecycleOwner, tramFilterEnabledObserver)
         mapVM.getBusStopLocations().observe(viewLifecycleOwner, busStopLocationsObserver)
         mapVM.getTramStopLocations().observe(viewLifecycleOwner, tramStopLocationsObserver)
 
@@ -246,7 +243,6 @@ class MapFragment : Fragment() {
     }
 
     private fun styleMap() {
-//        map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style))
         map.setMaxZoomPreference(MAX_ZOOM)
         map.setMinZoomPreference(MIN_ZOOM)
         map.uiSettings.isTiltGesturesEnabled = false
@@ -273,7 +269,7 @@ class MapFragment : Fragment() {
             false
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
-            findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
+            findNavController().navigate(MapFragmentDirections.actionGlobalStopDetails(stop.type.name, stop.stopId))
         }
     }
 

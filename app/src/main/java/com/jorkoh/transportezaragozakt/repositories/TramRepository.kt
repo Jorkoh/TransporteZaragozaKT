@@ -18,6 +18,9 @@ interface TramRepository {
     fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStops(): LiveData<List<Stop>>
     fun loadLines(): LiveData<List<Line>>
+    fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
+    fun loadLine(lineId: String): LiveData<Line>
+    fun loadStops(stopIds: List<String>): LiveData<List<Stop>>
 }
 
 class TramRepositoryImplementation(
@@ -51,7 +54,19 @@ class TramRepositoryImplementation(
         return  stopsDao.getStopsByType(StopType.TRAM)
     }
 
+    override fun loadStops(stopIds : List<String>): LiveData<List<Stop>> {
+        return stopsDao.getStops(stopIds)
+    }
+
     override fun loadLines(): LiveData<List<Line>> {
         return stopsDao.getLinesByType(LineType.TRAM)
+    }
+
+    override fun loadLineLocations(lineId : String): LiveData<List<LineLocation>> {
+        return stopsDao.getLineLocations(lineId)
+    }
+
+    override fun loadLine(lineId : String) : LiveData<Line>{
+        return stopsDao.getLine(lineId)
     }
 }

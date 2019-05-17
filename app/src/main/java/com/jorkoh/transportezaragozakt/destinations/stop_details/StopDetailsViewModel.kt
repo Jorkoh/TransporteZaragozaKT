@@ -21,17 +21,15 @@ class StopDetailsViewModel(
     lateinit var stopId: String
     lateinit var stopType: StopType
 
-    //Not quite sold on this but I trust this guy https://medium.com/@BladeCoder/to-implement-a-manual-refresh-without-modifying-your-existing-livedata-logic-i-suggest-that-your-7db1b8414c0e
-    private val mediatorStopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()
-    private lateinit var stopDestinations: LiveData<Resource<List<StopDestination>>>
+    private lateinit var tempStopDestinations: LiveData<Resource<List<StopDestination>>>
+    val stopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()
+
     lateinit var stopIsFavorited: LiveData<Boolean>
     lateinit var stopTitle: LiveData<String>
 
     fun init(stopId: String, stopType: StopType) {
         this.stopId = stopId
         this.stopType = stopType
-
-        refreshStopDestinations()
 
         stopIsFavorited = favoritesRepository.isFavoriteStop(stopId)
         stopTitle = stopsRepository.loadStopTitle(stopId)
@@ -42,18 +40,13 @@ class StopDetailsViewModel(
     }
 
     fun refreshStopDestinations() {
-        if (::stopDestinations.isInitialized) {
-            mediatorStopDestinations.removeSource(stopDestinations)
+        if (::tempStopDestinations.isInitialized) {
+            stopDestinations.removeSource(tempStopDestinations)
         }
-        stopDestinations = stopsRepository.loadStopDestinations(stopId, stopType)
-        mediatorStopDestinations.addSource(stopDestinations)
-        { value ->
-            mediatorStopDestinations.value = value
+        tempStopDestinations = stopsRepository.loadStopDestinations(stopId, stopType)
+        stopDestinations.addSource(tempStopDestinations) { value ->
+            stopDestinations.postValue(value)
         }
-    }
-
-    fun getStopDestinations(): LiveData<Resource<List<StopDestination>>> {
-        return mediatorStopDestinations
     }
 
     fun createReminder(daysOfWeek: List<Boolean>, time: Calendar) {

@@ -50,4 +50,6 @@
     <string name="delete">Borrar</string>
     <string name="delete_favorite_message">¿Estas seguro de que quieres borrar este favorito? Esta operación no se puede deshacer.</string>
     <string name="delete_favorite_title">Borrar favorito</string>
+    <string name="line_details_title">Información de la línea</string>
+    <string name="line">Línea</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.SearchDestinationDirections
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
@@ -24,7 +25,7 @@ class NearbyStopsFragment : Fragment(){
     private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
-                SearchFragmentDirections.actionSearchToStopDetails(
+                SearchDestinationDirections.actionGlobalStopDetails(
                     info.stopType,
                     info.stopId
                 )

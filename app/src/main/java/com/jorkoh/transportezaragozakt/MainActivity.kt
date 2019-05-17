@@ -16,6 +16,14 @@ import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.R.attr.start
+import android.view.ViewGroup
+import android.animation.ValueAnimator
+import androidx.core.animation.doOnCancel
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
+import androidx.core.view.updateLayoutParams
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         when (destination.id) {
             R.id.stopDetails -> hideBottomNavigation()
+            R.id.lineDetails -> hideBottomNavigation()
             else -> showBottomNavigation()
         }
     }
@@ -86,25 +95,51 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = title
     }
 
+    private var currentAnimator: ValueAnimator? = null
+    private var showing = true
+
     private fun hideBottomNavigation() {
         with(bottom_navigation) {
-            if (visibility == View.VISIBLE && alpha == 1f) {
-                animate()
-                    .translationY(resources.getDimension(R.dimen.design_bottom_navigation_height))
-                    .withEndAction { visibility = View.GONE }
-                    .setInterpolator(FastOutLinearInInterpolator())
-                    .duration = 150
+            showing = false
+            currentAnimator?.end()
+            currentAnimator = ValueAnimator.ofInt(measuredHeight, 1).apply {
+                addUpdateListener { valueAnimator ->
+                    updateLayoutParams {
+                        height = valueAnimator.animatedValue as Int
+                    }
+                }
+                interpolator = FastOutLinearInInterpolator()
+                duration = 250
+                doOnEnd {
+                    if (!showing) {
+                        visibility = View.GONE
+                    }
+                }
+                start()
             }
         }
     }
 
     private fun showBottomNavigation() {
         with(bottom_navigation) {
-            visibility = View.VISIBLE
-            animate()
-                .translationY(0f)
-                .setInterpolator(LinearOutSlowInInterpolator())
-                .duration = 150
+            showing = true
+            currentAnimator?.end()
+            currentAnimator = ValueAnimator.ofInt(
+                measuredHeight,
+                resources.getDimension(R.dimen.design_bottom_navigation_height).toInt()
+            ).apply {
+                addUpdateListener { valueAnimator ->
+                    updateLayoutParams {
+                        height = valueAnimator.animatedValue as Int
+                    }
+                }
+                interpolator = FastOutLinearInInterpolator()
+                duration = 250
+                doOnStart {
+                    visibility = View.VISIBLE
+                }
+                start()
+            }
         }
     }
 }

@@ -1,24 +1,19 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.search_destination.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
@@ -46,7 +41,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        search_viewpager.adapter = TestPagerAdapter(childFragmentManager)
+        search_viewpager.adapter = SearchPagerAdapter(childFragmentManager)
         search_tab_layout.setupWithViewPager(search_viewpager)
         search_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {}
@@ -85,27 +80,5 @@ class SearchFragment : Fragment() {
                 imeOptions = EditorInfo.IME_ACTION_DONE
             }
         }
-    }
-
-    class TestPagerAdapter(fragmentManager: FragmentManager) :
-        FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getItem(position: Int): Fragment {
-            return when (position) {
-                0 -> NearbyStopsFragment()
-                1 -> AllStopsFragment()
-                else -> LinesFragment()
-            }
-        }
-
-        override fun getCount(): Int = 3
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return when (position) {
-                0 -> "NEARBY STOPS"
-                1 -> "ALL STOPS"
-                else -> "LINES"
-            }
-        }
-
     }
 }

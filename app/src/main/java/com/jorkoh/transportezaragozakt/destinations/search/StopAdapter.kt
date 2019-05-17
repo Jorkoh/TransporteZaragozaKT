@@ -106,6 +106,7 @@ class StopAdapter(
                     return displayedStops[oldItemPosition].type == filteredStops[newItemPosition].type
                             && displayedStops[oldItemPosition].lines == filteredStops[newItemPosition].lines
                             && displayedStops[oldItemPosition].stopTitle == filteredStops[newItemPosition].stopTitle
+                            && displayedStops[oldItemPosition].isFavorite == filteredStops[newItemPosition].isFavorite
                 }
             })
             displayedStops = filteredStops

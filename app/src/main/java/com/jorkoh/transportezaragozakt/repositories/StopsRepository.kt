@@ -20,6 +20,9 @@ interface StopsRepository {
     fun loadStopTitle(stopId: String): LiveData<String>
     fun loadLines(lineType: LineType): LiveData<List<Line>>
     fun loadLines(): MutableLiveData<List<Line>>
+    fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>
+    fun loadLine(lineType: LineType, lineId: String): LiveData<Line>
+    fun loadStops(stopType: StopType, stopIds: List<String>): LiveData<List<Stop>>
 }
 
 class StopsRepositoryImplementation(
@@ -43,10 +46,24 @@ class StopsRepositoryImplementation(
         }
     }
 
+    override fun loadStops(stopType: StopType, stopIds : List<String>): LiveData<List<Stop>> {
+        return when (stopType) {
+            StopType.BUS -> busRepository.loadStops(stopIds)
+            StopType.TRAM -> tramRepository.loadStops(stopIds)
+        }
+    }
+
     override fun loadLines(lineType: LineType): LiveData<List<Line>> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadLines()
             LineType.TRAM -> tramRepository.loadLines()
+        }
+    }
+
+    override fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>{
+        return when (lineType) {
+            LineType.BUS -> busRepository.loadLineLocations(lineId)
+            LineType.TRAM -> tramRepository.loadLineLocations(lineId)
         }
     }
     
@@ -74,6 +91,13 @@ class StopsRepositoryImplementation(
             liveData.value = (liveData.value.orEmpty().filter { it.type != LineType.TRAM } + newStops).sortedByDescending { it.type }
         }
         return liveData
+    }
+
+    override fun loadLine(lineType : LineType, lineId: String) : LiveData<Line>{
+        return when (lineType) {
+            LineType.BUS -> busRepository.loadLine(lineId)
+            LineType.TRAM -> tramRepository.loadLine(lineId)
+        }
     }
 
     override fun loadNearbyStops(

@@ -17,6 +17,9 @@ interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStops(): LiveData<List<Stop>>
     fun loadLines(): LiveData<List<Line>>
+    fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
+    fun loadLine(lineId: String): LiveData<Line>
+    fun loadStops(stopIds: List<String>): LiveData<List<Stop>>
 }
 
 class BusRepositoryImplementation(
@@ -50,7 +53,19 @@ class BusRepositoryImplementation(
         return stopsDao.getStopsByType(StopType.BUS)
     }
 
+    override fun loadStops(stopIds : List<String>): LiveData<List<Stop>> {
+        return stopsDao.getStops(stopIds)
+    }
+
     override fun loadLines(): LiveData<List<Line>> {
         return stopsDao.getLinesByType(LineType.BUS)
+    }
+
+    override fun loadLineLocations(lineId : String): LiveData<List<LineLocation>> {
+        return stopsDao.getLineLocations(lineId)
+    }
+
+    override fun loadLine(lineId : String) : LiveData<Line>{
+        return stopsDao.getLine(lineId)
     }
 }

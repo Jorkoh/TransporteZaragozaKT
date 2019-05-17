@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment">
+        tools:context="com.jorkoh.transportezaragozakt.destinations.search.SearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_recycler_view_all_stops"

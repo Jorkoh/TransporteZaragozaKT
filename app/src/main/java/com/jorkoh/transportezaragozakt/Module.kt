@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
+import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
 import com.jorkoh.transportezaragozakt.destinations.more.MoreViewModel
 import com.jorkoh.transportezaragozakt.destinations.reminders.RemindersViewModel
@@ -84,16 +85,11 @@ val appModule = module {
     single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
 
     viewModel { FavoritesViewModel(get()) }
-
     viewModel { MapViewModel(get(), get()) }
-
     viewModel { SearchViewModel(get(), get()) }
-
     viewModel { RemindersViewModel(get()) }
-
     viewModel { MoreViewModel(get()) }
-
     viewModel { StopDetailsViewModel(get(), get(), get()) }
-
+    viewModel { LineDetailsViewModel(get()) }
     viewModel { MainActivityViewModel() }
 }

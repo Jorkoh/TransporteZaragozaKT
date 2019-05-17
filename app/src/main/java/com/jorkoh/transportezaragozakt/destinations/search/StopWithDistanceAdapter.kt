@@ -110,6 +110,7 @@ class StopWithDistanceAdapter(
                             && displayedStops[oldItemPosition].stop.lines == filteredStops[newItemPosition].stop.lines
                             && displayedStops[oldItemPosition].stop.stopTitle == filteredStops[newItemPosition].stop.stopTitle
                             && displayedStops[oldItemPosition].distance == filteredStops[newItemPosition].distance
+                            && displayedStops[oldItemPosition].stop.isFavorite == filteredStops[newItemPosition].stop.isFavorite
                 }
             })
             displayedStops = filteredStops

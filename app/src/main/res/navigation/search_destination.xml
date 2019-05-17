@@ -9,11 +9,8 @@
     <fragment
             android:id="@+id/search"
             android:name="com.jorkoh.transportezaragozakt.destinations.search.SearchFragment"
-            android:label="Search"
+            android:label="@string/search_destination_title"
             tools:layout="@layout/search_destination">
-        <action
-                android:id="@+id/action_search_to_stopDetails"
-                app:destination="@id/stopDetails"/>
     </fragment>
 
     <fragment
@@ -28,13 +25,14 @@
                 app:argType="string"/>
         <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH SO THIS IS THE BEST WE CAN DO-->
         <deepLink
-                android:id="@+id/deepLink"
+                android:id="@+id/deepLinkStop"
                 app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
     </fragment>
 
     <fragment
-            android:id="@+id/lineDetails"
+            android:id="@id/lineDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
+            android:label="@string/line_details_title"
             tools:layout="@layout/stop_details_destination">
         <argument
                 android:name="lineType"
@@ -44,10 +42,13 @@
                 app:argType="string"/>
         <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH SO THIS IS THE BEST WE CAN DO-->
         <deepLink
-                android:id="@+id/deepLink"
+                android:id="@+id/deepLinkLine"
                 app:uri="launchTZ://viewLine/{lineType}/{lineId}/"/>
     </fragment>
     <action
-            android:id="@+id/action_global_lineDetails"
+            android:id="@id/action_global_lineDetails"
             app:destination="@id/lineDetails"/>
+    <action
+            android:id="@id/action_global_stopDetails"
+            app:destination="@id/stopDetails"/>
 </navigation>

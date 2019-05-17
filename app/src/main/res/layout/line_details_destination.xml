@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -8,17 +8,34 @@
         android:layout_height="match_parent"
         tools:context="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment">
 
-    <TextView
-            android:text="Line"
-            android:textColor="?colorOnBackground"
-            android:layout_width="wrap_content"
+    <FrameLayout
+            android:id="@+id/map_fragment_container_line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+            android:id="@+id/line_details_bottom_sheet"
+            android:layout_width="match_parent"
+            android:background="@drawable/rounded_dialog"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="160dp">
+
+        <androidx.viewpager.widget.ViewPager
+                android:id="@+id/line_details_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/line_details_tab_layout"
+                    app:tabMaxWidth="0dp"
+                    app:tabGravity="fill"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </androidx.viewpager.widget.ViewPager>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

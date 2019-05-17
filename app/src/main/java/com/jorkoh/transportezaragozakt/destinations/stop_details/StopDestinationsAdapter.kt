@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.db.toLineType
+import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import kotlinx.android.synthetic.main.destination_row.view.*
 
-class StopDestinationsAdapter : RecyclerView.Adapter<StopDestinationsAdapter.StopDestinationsViewHolder>() {
+class StopDestinationsAdapter(private val openLine: (LineDetailsFragmentArgs) -> Unit) : RecyclerView.Adapter<StopDestinationsAdapter.StopDestinationsViewHolder>() {
 
     class StopDestinationsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
@@ -38,6 +40,9 @@ class StopDestinationsAdapter : RecyclerView.Adapter<StopDestinationsAdapter.Sto
             destination_text.text = stopDestinations[position].destination
             first_time_text.text = stopDestinations[position].times[0]
             second_time_text.text = stopDestinations[position].times[1]
+            setOnClickListener {
+                openLine(LineDetailsFragmentArgs(stopType.toLineType().name, stopDestinations[position].line))
+            }
         }
     }
 

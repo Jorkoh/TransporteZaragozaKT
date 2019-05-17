@@ -8,6 +8,7 @@
     <string name="reminders_destination_title" translatable="true">Reminders</string>
     <string name="more_destination_title" translatable="true">More</string>
     <string name="stop_details_title" translatable="true">Stop Details</string>
+    <string name="line_details_title" translatable="true">Line Details</string>
 
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
@@ -39,6 +40,9 @@
     <string name="create_reminder" translatable="true">Create reminder</string>
     <string name="create_button" translatable="true">Create</string>
     <string name="shortcut_pinning_not_supported" translatable="true">Shortcuts not support in your device</string>
+
+    <!--Line details-->
+    <string name="line" translatable="true">Line</string>
 
     <!--Reminders-->
     <string name="reminder" translatable="true">Reminder</string>
@@ -83,4 +87,7 @@
     <string name="notification_channel_name_services" translatable="true">Services</string>
     <string name="notification_channel_description_services" translatable="true">Foreground service notifications.</string>
 
+    <!--Tags-->
+    <string name="map_destination_map_fragment_tag" translatable="false">map_destination_map_fragment_tag</string>
+    <string name="line_destination_map_fragment_tag" translatable="false">line_destination_map_fragment_tag</string>
 </resources>

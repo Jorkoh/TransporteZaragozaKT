@@ -13,6 +13,16 @@ enum class LineType {
     BUS, TRAM
 }
 
+fun StopType.toLineType() = when(this){
+    StopType.BUS -> LineType.BUS
+    StopType.TRAM -> LineType.TRAM
+}
+
+fun LineType.toStopType() = when(this){
+    LineType.BUS -> StopType.BUS
+    LineType.TRAM -> StopType.TRAM
+}
+
 @Entity(tableName = "stops")
 data class Stop(
     @ColumnInfo(name = "type")
