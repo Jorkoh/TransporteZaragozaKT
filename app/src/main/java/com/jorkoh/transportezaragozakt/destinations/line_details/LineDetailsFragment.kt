@@ -45,7 +45,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LineDetailsFragment : Fragment() {
 
     private val mapVM: MapViewModel by sharedViewModel()
-    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel()
+    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this })
 
     private lateinit var map: GoogleMap
 
@@ -85,6 +85,7 @@ class LineDetailsFragment : Fragment() {
         markers.forEach {
             it.remove()
         }
+        markers.clear()
 
         stops.forEach { stop ->
             val markerOptions = MarkerOptions()
@@ -149,7 +150,7 @@ class LineDetailsFragment : Fragment() {
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment(displayFilters = false)
+            mapFragment = CustomSupportMapFragment(displayFilters = false, extraBottomMargin = true)
             childFragmentManager.beginTransaction()
                 .add(
                     R.id.map_fragment_container_line,
@@ -193,6 +194,10 @@ class LineDetailsFragment : Fragment() {
             findNavController().navigate(MapFragmentDirections.actionGlobalStopDetails(stop.type.name, stop.stopId))
         }
         map.setInfoWindowAdapter(StopInfoWindowAdapter())
+        map.setOnMarkerClickListener { marker ->
+            lineDetailsVM.selectedStopId.value = (marker.tag as Stop).stopId
+            false
+        }
         createBaseMarkers()
 
         mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->

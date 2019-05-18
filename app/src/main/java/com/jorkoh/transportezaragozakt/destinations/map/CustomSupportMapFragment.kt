@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.maps.SupportMapFragment
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.line_details.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_filters.view.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
@@ -16,7 +19,10 @@ import kotlinx.android.synthetic.main.map_filters.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class CustomSupportMapFragment(private val displayFilters: Boolean = true) : SupportMapFragment() {
+class CustomSupportMapFragment(
+    private val displayFilters: Boolean = true,
+    private val extraBottomMargin: Boolean = false
+) : SupportMapFragment() {
 
     private val mapVM: MapViewModel by sharedViewModel()
 
@@ -56,9 +62,11 @@ class CustomSupportMapFragment(private val displayFilters: Boolean = true) : Sup
         val mapView = super.onCreateView(layoutInflater, viewGroup, savedState)
         wrapper.addView(mapView)
 
+
         if (displayFilters) {
             setupFilters(layoutInflater, wrapper)
         }
+
         setupExtraMapControls(layoutInflater, wrapper)
 
         return wrapper
@@ -88,6 +96,11 @@ class CustomSupportMapFragment(private val displayFilters: Boolean = true) : Sup
             mapVM.setTrafficEnabled(mapVM.trafficEnabled.value != true)
         }
         wrapper.addView(mapExtraControls)
+        if (extraBottomMargin) {
+            wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
+                bottomMargin = 160.toPx()
+            }
+        }
     }
 
 }

@@ -11,9 +11,23 @@ import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class StopDestinationsFragment(private val stopIds: List<String>) : Fragment() {
+class StopDestinationsFragment : Fragment() {
 
-    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel()
+    companion object {
+        const val STOP_IDS_KEY = "STOP_IDS_KEY"
+
+        fun newInstance(stopIds: List<String>): StopDestinationsFragment {
+            val instance = StopDestinationsFragment()
+            instance.arguments = Bundle().apply {
+                putStringArrayList(STOP_IDS_KEY, ArrayList(stopIds))
+            }
+            return instance
+        }
+    }
+
+    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = {
+        parentFragment ?: error("Couldn't find parent Fragment")
+    })
 
     private val selectStop: (String) -> Unit = { stopId ->
         lineDetailsVM.selectedStopId.postValue(stopId)
@@ -32,12 +46,20 @@ class StopDestinationsFragment(private val stopIds: List<String>) : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = stopsAdapter
         }
-        val stops = lineDetailsVM.stops.value?.filter { it.stopId in stopIds }
-        if (!stops.isNullOrEmpty()) {
-            stopsAdapter.setNewStops(stops)
-        }
 
         return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        arguments?.getStringArrayList(STOP_IDS_KEY)?.toList()?.let { stopIds ->
+            val stops = lineDetailsVM.stops.value?.filter { it.stopId in stopIds }
+            val orderById = stopIds.withIndex().associate { it.value to it.index }
+            val sortedStops = stops?.sortedBy { orderById[it.stopId] }
+            if (!sortedStops.isNullOrEmpty()) {
+                stopsAdapter.setNewStops(sortedStops)
+            }
+        }
     }
 
 }

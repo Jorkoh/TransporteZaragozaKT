@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             app:behavior_hideable="false"
+            app:layout_insetEdge="bottom"
             app:behavior_peekHeight="160dp">
 
         <androidx.viewpager.widget.ViewPager

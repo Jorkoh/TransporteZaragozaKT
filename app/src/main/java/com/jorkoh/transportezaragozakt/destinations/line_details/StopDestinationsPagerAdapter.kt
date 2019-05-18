@@ -16,8 +16,8 @@ class StopDestinationsPagerAdapter(val fragmentManager: FragmentManager, private
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> StopDestinationsFragment(line.stopIdsFirstDestination)
-            else -> StopDestinationsFragment(line.stopIdsSecondDestination)
+            0 -> StopDestinationsFragment.newInstance(line.stopIdsFirstDestination)
+            else -> StopDestinationsFragment.newInstance(line.stopIdsSecondDestination)
         }
 
     override fun getCount(): Int = if (line.stopIdsSecondDestination.isNotEmpty()) 2 else 1

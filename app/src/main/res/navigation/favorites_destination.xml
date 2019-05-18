@@ -35,8 +35,12 @@
     </fragment>
     <action
             android:id="@+id/action_global_lineDetails"
-            app:destination="@id/lineDetails"/>
+            app:destination="@id/lineDetails"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/lineDetails"
+            app:popUpToInclusive="true"/>
     <action
             android:id="@+id/action_global_stopDetails"
-            app:destination="@id/stopDetails"/>
+            app:destination="@id/stopDetails"
+            app:launchSingleTop="true"/>
 </navigation>

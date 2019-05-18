@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map_types_map"
@@ -33,4 +33,4 @@
             android:src="@drawable/ic_satellite_black_24dp"
             android:background="@drawable/mapbutton_background"/>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>
