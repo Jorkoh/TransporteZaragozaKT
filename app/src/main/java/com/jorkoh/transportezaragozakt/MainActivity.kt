@@ -66,11 +66,13 @@ class MainActivity : AppCompatActivity() {
             R.navigation.more_destination
         )
 
+
         val controller = bottom_navigation.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
             containerId = R.id.nav_host_container,
-            intent = intent
+            intent = intent,
+            isAnimationDisabled = { !showing }
         )
 
         controller.observe(this, Observer { navController ->
@@ -99,6 +101,9 @@ class MainActivity : AppCompatActivity() {
     private var showing = true
 
     private fun hideBottomNavigation() {
+        if(!showing){
+            return
+        }
         with(bottom_navigation) {
             showing = false
             currentAnimator?.end()
@@ -121,6 +126,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showBottomNavigation() {
+        if(showing){
+            return
+        }
         with(bottom_navigation) {
             showing = true
             currentAnimator?.end()

@@ -38,7 +38,8 @@ fun BottomNavigationView.setupWithNavController(
     navGraphIds: List<Int>,
     fragmentManager: FragmentManager,
     containerId: Int,
-    intent: Intent
+    intent: Intent,
+    isAnimationDisabled : () -> Boolean
 ): LiveData<NavController> {
 
     // Map of tags
@@ -92,7 +93,7 @@ fun BottomNavigationView.setupWithNavController(
     // When a navigation item is selected
     setOnNavigationItemSelectedListener { item ->
         // Don't do anything if the state is state has already been saved.
-        if (fragmentManager.isStateSaved) {
+        if (fragmentManager.isStateSaved || isAnimationDisabled()) {
             false
         } else {
             val newlySelectedItemTag = graphIdToTagMap[item.itemId]
