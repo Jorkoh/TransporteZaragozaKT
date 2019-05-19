@@ -4,8 +4,18 @@
         <item name="android:background">?colorPrimary</item>
     </style>
 
+
+
+    <style name="TabTest" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextColor">@color/tab_text_color</item>
+        <item name="tabIconTint">?colorSecondary</item>
+        <item name="tabRippleColor">?colorSecondary</item>
+        <item name="tabIndicatorColor">?colorSecondary</item>
+    </style>
+
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="tabStyle">@style/TabTest</item>
         <item name="colorBackgroundFloating">?android:colorBackground</item>
         <item name="android:textColorPrimary">?colorOnBackground</item>
         <item name="colorAccent">?colorSecondary</item>
