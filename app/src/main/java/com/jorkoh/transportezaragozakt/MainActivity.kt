@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_container)
         setSupportActionBar(main_toolbar)
         if (savedInstanceState == null) {
-            enqueueWorker()
+            enqueueWorker(getString(R.string.update_data_work_name))
             setupNotificationChannels(this)
             setupBottomNavigationBar()
         }
@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideBottomNavigation() {
         if(!showing){
+            //Avoid duplicating animations
             return
         }
         with(bottom_navigation) {
@@ -127,6 +128,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showBottomNavigation() {
         if(showing){
+            //Avoid duplicating animations
             return
         }
         with(bottom_navigation) {

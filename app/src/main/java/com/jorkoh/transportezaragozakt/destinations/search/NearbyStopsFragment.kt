@@ -1,5 +1,8 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +12,33 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.SearchDestinationDirections
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
+import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
+import com.jorkoh.transportezaragozakt.destinations.map.toLatLng
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NearbyStopsFragment : Fragment(){
+class NearbyStopsFragment : Fragment() {
 
     private val searchVM: SearchViewModel by sharedViewModel()
+
+    private var fusedLocationClient: FusedLocationProviderClient? = null
+
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult?) {
+            locationResult ?: return
+            for (location in locationResult.locations){
+                searchVM.position.postValue(location)
+            }
+        }
+    }
 
     private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
@@ -45,7 +63,10 @@ class NearbyStopsFragment : Fragment(){
         nearbyStopsAdapter.filter.filter(query) { flag ->
             //If the list went from actually filtered to initial state scroll back up to the top
             if (query == "" && flag == 1) {
-                (view?.search_recycler_view_nearby_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
+                (view?.search_recycler_view_nearby_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(
+                    0,
+                    0
+                )
             }
         }
     }
@@ -69,6 +90,33 @@ class NearbyStopsFragment : Fragment(){
         }
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupLocationStuff()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun setupLocationStuff() {
+        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            fusedLocationClient?.requestLocationUpdates(
+                LocationRequest.create(),
+                locationCallback,
+                null
+            )
+            fusedLocationClient?.lastLocation?.addOnSuccessListener { location: Location? ->
+                if (location != null && ZARAGOZA_BOUNDS.contains(location.toLatLng())) {
+                    searchVM.position.postValue(location)
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        fusedLocationClient?.removeLocationUpdates(locationCallback)
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {

@@ -5,6 +5,7 @@ import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
@@ -16,7 +17,7 @@ interface StopsRepository {
     fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>>
     fun loadStops(stopType: StopType): LiveData<List<Stop>>
     fun loadStops(): MediatorLiveData<List<Stop>>
-    fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): MediatorLiveData<List<StopWithDistance>>
+    fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): LiveData<List<StopWithDistance>>
     fun loadStopTitle(stopId: String): LiveData<String>
     fun loadLines(lineType: LineType): LiveData<List<Line>>
     fun loadLines(): MutableLiveData<List<Line>>
@@ -46,7 +47,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadStops(stopType: StopType, stopIds : List<String>): LiveData<List<Stop>> {
+    override fun loadStops(stopType: StopType, stopIds: List<String>): LiveData<List<Stop>> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops(stopIds)
             StopType.TRAM -> tramRepository.loadStops(stopIds)
@@ -60,40 +61,28 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>{
+    override fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadLineLocations(lineId)
             LineType.TRAM -> tramRepository.loadLineLocations(lineId)
         }
     }
-    
+
     override fun loadStops(): MediatorLiveData<List<Stop>> {
-        val liveData = MediatorLiveData<List<Stop>>()
-        liveData.addSource(loadStops(StopType.BUS)) { newStops ->
-            //Keep the old ones that were not of this type
-            liveData.value = (liveData.value.orEmpty().filter { it.type != StopType.BUS } + newStops).sortedByDescending { it.type }
-        }
-        liveData.addSource(loadStops(StopType.TRAM)) { newStops ->
-            //Keep the old ones that were not of this type
-            liveData.value = (liveData.value.orEmpty().filter { it.type != StopType.TRAM } + newStops).sortedByDescending { it.type }
-        }
-        return liveData
+        return CombinedLiveData(
+            loadStops(StopType.BUS),
+            loadStops(StopType.TRAM)
+        ) { bus, tram -> tram.orEmpty() + bus.orEmpty() }
     }
 
     override fun loadLines(): MutableLiveData<List<Line>> {
-        val liveData = MediatorLiveData<List<Line>>()
-        liveData.addSource(loadLines(LineType.BUS)) { newStops ->
-            //Keep the old ones that were not of this type
-            liveData.value = (liveData.value.orEmpty().filter { it.type != LineType.BUS } + newStops).sortedByDescending { it.type }
-        }
-        liveData.addSource(loadLines(LineType.TRAM)) { newStops ->
-            //Keep the old ones that were not of this type
-            liveData.value = (liveData.value.orEmpty().filter { it.type != LineType.TRAM } + newStops).sortedByDescending { it.type }
-        }
-        return liveData
+        return CombinedLiveData(
+            loadLines(LineType.BUS),
+            loadLines(LineType.TRAM)
+        ) { bus, tram -> tram.orEmpty() + bus.orEmpty() }
     }
 
-    override fun loadLine(lineType : LineType, lineId: String) : LiveData<Line>{
+    override fun loadLine(lineType: LineType, lineId: String): LiveData<Line> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadLine(lineId)
             LineType.TRAM -> tramRepository.loadLine(lineId)
@@ -103,10 +92,8 @@ class StopsRepositoryImplementation(
     override fun loadNearbyStops(
         location: LatLng,
         maxDistanceInMeters: Double
-    ): MediatorLiveData<List<StopWithDistance>> {
-        val stopsOG = loadStops()
-        val result = MediatorLiveData<List<StopWithDistance>>()
-        stopsOG.observeForever { stops ->
+    ): LiveData<List<StopWithDistance>> {
+        return Transformations.map(loadStops()) { stops ->
             val newStopsWithDistance = mutableListOf<StopWithDistance>()
             val distance = FloatArray(1)
             stops.forEach { stop ->
@@ -121,10 +108,8 @@ class StopsRepositoryImplementation(
                     newStopsWithDistance.add(StopWithDistance(stop, distance[0]))
                 }
             }
-            newStopsWithDistance.sortBy { it.distance }
-            result.postValue(newStopsWithDistance)
+            newStopsWithDistance.sortedBy { it.distance }
         }
-        return result
     }
 
     override fun loadStopTitle(stopId: String): LiveData<String> {

@@ -93,6 +93,7 @@ fun BottomNavigationView.setupWithNavController(
     // When a navigation item is selected
     setOnNavigationItemSelectedListener { item ->
         // Don't do anything if the state is state has already been saved.
+        // Or if bottom navigation is hidden or hiding
         if (fragmentManager.isStateSaved || isAnimationDisabled()) {
             false
         } else {

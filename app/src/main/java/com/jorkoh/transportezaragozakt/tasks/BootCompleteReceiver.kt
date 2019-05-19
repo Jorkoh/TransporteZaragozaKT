@@ -15,7 +15,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             setupNotificationChannels(context)
-            enqueueWorker()
+            enqueueWorker(context.getString(R.string.update_data_work_name))
             //TODO: Setup alarms
             
         }

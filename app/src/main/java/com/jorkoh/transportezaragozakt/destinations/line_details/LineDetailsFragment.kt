@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -137,7 +138,10 @@ class LineDetailsFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.clear()
+        requireActivity().main_toolbar.menu.apply {
+            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            clear()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

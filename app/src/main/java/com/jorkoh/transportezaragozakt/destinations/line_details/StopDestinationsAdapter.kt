@@ -73,6 +73,6 @@ class StopDestinationsAdapter(
 
     fun setNewStops(newStops: List<Stop>) {
         stops = newStops
-        notifyItemRangeInserted(0, newStops.count()-1)
+        notifyDataSetChanged()
     }
 }

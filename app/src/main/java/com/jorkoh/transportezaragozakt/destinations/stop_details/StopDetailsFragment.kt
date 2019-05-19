@@ -26,6 +26,7 @@ import android.graphics.drawable.Icon
 import android.os.Build.VERSION_CODES.O
 import android.util.Log
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -143,7 +144,10 @@ class StopDetailsFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.clear()
+        requireActivity().main_toolbar.menu.apply {
+            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            clear()
+        }
     }
 
     private fun setupFab(rootView: View) {

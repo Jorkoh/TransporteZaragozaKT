@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.more
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -42,6 +43,9 @@ class MoreFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.clear()
+        requireActivity().main_toolbar.menu.apply {
+            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            clear()
+        }
     }
 }

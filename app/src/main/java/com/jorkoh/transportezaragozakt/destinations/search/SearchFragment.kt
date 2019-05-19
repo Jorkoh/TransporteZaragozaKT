@@ -1,9 +1,12 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -27,6 +30,7 @@ class SearchFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         searchVM.init()
         searchVM.getSearchTabPosition().observeOnce(viewLifecycleOwner, searchTabPositionObserver)
+        setupToolbar()
     }
 
     override fun onCreateView(
@@ -35,7 +39,6 @@ class SearchFragment : Fragment() {
     ): View? {
         //Enables onCreateOptionsMenu() callback on activity recreation
         setHasOptionsMenu(true)
-        setupToolbar()
         return inflater.inflate(R.layout.search_destination, container, false)
     }
 
@@ -51,7 +54,6 @@ class SearchFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 searchVM.setSearchTabPosition(tab.position)
             }
-
         })
     }
 
@@ -62,22 +64,33 @@ class SearchFragment : Fragment() {
 
     //Has to be called from both onCreateView() and onCreateOptionsMenu() to avoid problems with bottom navigation
     private fun setupToolbar() {
-        requireActivity().main_toolbar.apply {
-            menu.clear()
-            inflateMenu(R.menu.search_destination_menu)
-            (menu.findItem(R.id.item_search).actionView as SearchView).apply {
+        Log.d("TESTING STUFF", "SETUP TOOLBAR")
+        requireActivity().findViewById<Toolbar>(R.id.main_toolbar)?.let { toolbar ->
+            (toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            toolbar.menu.clear()
+            toolbar.inflateMenu(R.menu.search_destination_menu)
+            (toolbar.menu.findItem(R.id.item_search).actionView as SearchView).apply {
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         return false
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        searchVM.query.value = newText
+                        if (!this@apply.isIconified && isVisible) {
+                            searchVM.query.value = newText
+                        }
                         return false
                     }
-
                 })
                 imeOptions = EditorInfo.IME_ACTION_DONE
+                if (!searchVM.query.value.isNullOrEmpty()) {
+                    // This entire mess is ridiculous, this still doesn't work for orientation changes and the
+                    // workarounds are worse than the problem. It already is hacky enough as it is
+                    // https://github.com/cbeyls/fosdem-companion-android/issues/16
+                    toolbar.menu.findItem(R.id.item_search).expandActionView()
+                    setQuery(searchVM.query.value, false)
+                    clearFocus()
+                }
             }
         }
     }

@@ -9,11 +9,13 @@ import android.location.Location
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -166,7 +168,10 @@ class MapFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.clear()
+        requireActivity().main_toolbar.menu.apply {
+            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            clear()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

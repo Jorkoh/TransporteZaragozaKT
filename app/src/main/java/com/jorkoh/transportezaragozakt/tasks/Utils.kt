@@ -4,15 +4,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.jorkoh.transportezaragozakt.R
 import java.util.concurrent.TimeUnit
 
 //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
-fun enqueueWorker() {
+fun enqueueWorker(workName : String) {
     val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.CONNECTED)
         .build()
@@ -21,7 +18,7 @@ fun enqueueWorker() {
         .setConstraints(constraints)
         .build()
 
-    WorkManager.getInstance().enqueue(updateDataRequest)
+    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataRequest)
 }
 
 fun setupNotificationChannels(context: Context) {

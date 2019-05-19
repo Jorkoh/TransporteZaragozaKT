@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jorkoh.transportezaragozakt.R
@@ -29,6 +30,8 @@ class StopDestinationsFragment : Fragment() {
         parentFragment ?: error("Couldn't find parent Fragment")
     })
 
+    private lateinit var stopIds: List<String>
+
     private val selectStop: (String) -> Unit = { stopId ->
         lineDetailsVM.selectedStopId.postValue(stopId)
     }
@@ -52,14 +55,15 @@ class StopDestinationsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        arguments?.getStringArrayList(STOP_IDS_KEY)?.toList()?.let { stopIds ->
+        stopIds = arguments?.getStringArrayList(STOP_IDS_KEY)?.toList().orEmpty()
+        lineDetailsVM.stops.observe(viewLifecycleOwner, Observer {
             val stops = lineDetailsVM.stops.value?.filter { it.stopId in stopIds }
             val orderById = stopIds.withIndex().associate { it.value to it.index }
             val sortedStops = stops?.sortedBy { orderById[it.stopId] }
             if (!sortedStops.isNullOrEmpty()) {
                 stopsAdapter.setNewStops(sortedStops)
             }
-        }
+        })
     }
 
 }

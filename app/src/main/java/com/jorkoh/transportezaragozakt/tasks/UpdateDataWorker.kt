@@ -28,13 +28,13 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     private val sharedPreferences : SharedPreferences by inject()
 
     override fun doWork(): Result {
+        // May fire multiple times?
+        // https://issuetracker.google.com/issues/119886476
         Log.d("TestingStuff", "DO WORK FIRED!!")
 
-        // Do the work here
         checkBusStopsUpdate()
         checkTramStopsUpdate()
 
-        // Indicate whether the task finished successfully with the Result
         return Result.success()
     }
 

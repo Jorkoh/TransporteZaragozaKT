@@ -77,6 +77,7 @@
     <string name="parse_server" translatable="false">https://transporte-zaragoza.herokuapp.com/parse/</string>
     <string name="parse_bus_stops_collection" translatable="false">bus_stops</string>
     <string name="parse_tram_stops_collection" translatable="false">tram_stops</string>
+    <string name="update_data_work_name" translatable="false">UPDATE_DATA_WORK_NAME</string>
 
     <!--Notifications-->
     <string name="notification_channel_id_reminders" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_REMINDERS</string>

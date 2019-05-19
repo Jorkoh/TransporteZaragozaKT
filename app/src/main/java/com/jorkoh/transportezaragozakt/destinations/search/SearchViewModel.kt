@@ -1,13 +1,12 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.location.Location
+import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
+import com.jorkoh.transportezaragozakt.destinations.map.toLatLng
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
@@ -18,17 +17,22 @@ class SearchViewModel(
 ) : ViewModel() {
 
     val query: MutableLiveData<String?> = MutableLiveData()
+
+    val position: MutableLiveData<Location> = MutableLiveData()
+
     lateinit var allStops: LiveData<List<Stop>>
-    lateinit var nearbyStops: MediatorLiveData<List<StopWithDistance>>
+    lateinit var nearbyStops: LiveData<List<StopWithDistance>>
     lateinit var lines: MutableLiveData<List<Line>>
 
     private lateinit var tabPosition: LiveData<Int>
 
     fun init() {
         allStops = stopsRepository.loadStops()
-        nearbyStops = stopsRepository.loadNearbyStops(LatLng(41.667971, -0.890905), 500.0)
         lines = stopsRepository.loadLines()
         tabPosition = settingsRepository.loadSearchTabPosition()
+        nearbyStops = Transformations.switchMap(position){
+            stopsRepository.loadNearbyStops(it.toLatLng(), 500.0)
+        }
     }
 
     fun getSearchTabPosition(): LiveData<Int> {
