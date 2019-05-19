@@ -14,6 +14,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
+import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_CLUSTERING_ZOOM
 
 class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterManager: ClusterManager<Stop>) :
     DefaultClusterRenderer<Stop>(context, map, clusterManager), GoogleMap.OnCameraIdleListener {
@@ -37,7 +38,7 @@ class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterMan
 
 
     override fun shouldRenderAsCluster(cluster: Cluster<Stop>): Boolean {
-        return if (currentZoom >= DEFAULT_ZOOM) {
+        return if (currentZoom >= MAX_CLUSTERING_ZOOM) {
             false
         } else {
             cluster.size > 1

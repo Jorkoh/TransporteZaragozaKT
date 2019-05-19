@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,8 +102,13 @@ class NearbyStopsFragment : Fragment() {
     private fun setupLocationStuff() {
         runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            // Since this is only active while the nearby stops viewpager is on the screen
+            // it shouldn't be too heavy on the battery
             fusedLocationClient?.requestLocationUpdates(
-                LocationRequest.create(),
+                LocationRequest.create()
+                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                    .setInterval(20)
+                    .setSmallestDisplacement(15f),
                 locationCallback,
                 null
             )
