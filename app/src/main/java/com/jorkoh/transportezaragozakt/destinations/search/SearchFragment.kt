@@ -64,7 +64,6 @@ class SearchFragment : Fragment() {
 
     //Has to be called from both onCreateView() and onCreateOptionsMenu() to avoid problems with bottom navigation
     private fun setupToolbar() {
-        Log.d("TESTING STUFF", "SETUP TOOLBAR")
         requireActivity().findViewById<Toolbar>(R.id.main_toolbar)?.let { toolbar ->
             (toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
             toolbar.menu.clear()

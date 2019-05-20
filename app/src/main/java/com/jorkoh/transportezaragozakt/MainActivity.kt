@@ -48,16 +48,16 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             enqueueWorker(getString(R.string.update_data_work_name))
             setupNotificationChannels(this)
-            setupBottomNavigationBar()
+            setupBottomNavigationBar(true)
         }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        setupBottomNavigationBar()
+        setupBottomNavigationBar(false)
     }
 
-    private fun setupBottomNavigationBar() {
+    private fun setupBottomNavigationBar(firstLaunch : Boolean) {
         val navGraphIds = listOf(
             R.navigation.favorites_destination,
             R.navigation.map_destination,
@@ -72,7 +72,8 @@ class MainActivity : AppCompatActivity() {
             fragmentManager = supportFragmentManager,
             containerId = R.id.nav_host_container,
             intent = intent,
-            isAnimationDisabled = { !showing }
+            isAnimationDisabled = { !showing },
+            firstLaunch = firstLaunch
         )
 
         controller.observe(this, Observer { navController ->

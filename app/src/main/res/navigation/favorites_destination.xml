@@ -9,10 +9,15 @@
             android:id="@+id/favorites"
             android:name="com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragment"
             android:label="@string/favorites_destination_title"
-            tools:layout="@layout/favorites_destination"/>
+            tools:layout="@layout/favorites_destination">
+        <action
+                android:id="@+id/action_favorites_to_stopDetails"
+                app:destination="@id/stopDetails"/>
+    </fragment>
     <fragment
-            android:id="@+id/stopDetails"
+            android:id="@id/stopDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
+            tools:layout="@layout/stop_details_destination"
             >
         <argument
                 android:name="stopType"
@@ -20,27 +25,25 @@
         <argument
                 android:name="stopId"
                 app:argType="string"/>
+        <action
+                android:id="@+id/action_stopDetails_to_lineDetails"
+                app:destination="@id/lineDetails"
+                app:popUpTo="@id/lineDetails"
+                app:popUpToInclusive="true"/>
     </fragment>
     <fragment
-            android:id="@+id/lineDetails"
+            android:id="@id/lineDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
             android:label="@string/line_details_title"
-            tools:layout="@layout/stop_details_destination">
+            tools:layout="@layout/line_details_destination">
         <argument
                 android:name="lineType"
                 app:argType="string"/>
         <argument
                 android:name="lineId"
                 app:argType="string"/>
+        <action
+                android:id="@id/action_lineDetails_to_stopDetails"
+                app:destination="@id/stopDetails"/>
     </fragment>
-    <action
-            android:id="@+id/action_global_lineDetails"
-            app:destination="@id/lineDetails"
-            app:launchSingleTop="true"
-            app:popUpTo="@+id/lineDetails"
-            app:popUpToInclusive="true"/>
-    <action
-            android:id="@+id/action_global_stopDetails"
-            app:destination="@id/stopDetails"
-            app:launchSingleTop="true"/>
 </navigation>

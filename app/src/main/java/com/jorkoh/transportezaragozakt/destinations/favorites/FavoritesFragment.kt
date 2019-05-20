@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.input.input
-import com.jorkoh.transportezaragozakt.FavoritesDestinationDirections
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
@@ -52,7 +51,7 @@ class FavoritesFragment : Fragment() {
     private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
-                FavoritesDestinationDirections.actionGlobalStopDetails(
+                FavoritesFragmentDirections.actionFavoritesToStopDetails(
                     info.stopType,
                     info.stopId
                 )

@@ -33,8 +33,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
-import com.jorkoh.transportezaragozakt.FavoritesDestinationDirections
+import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragmentDirections
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.search.SearchFragmentDirections
 import kotlinx.android.synthetic.main.main_container.*
 
 
@@ -48,7 +49,7 @@ class StopDetailsFragment : Fragment() {
     private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
-                FavoritesDestinationDirections.actionGlobalLineDetails(
+                StopDetailsFragmentDirections.actionStopDetailsToLineDetails(
                     info.lineType,
                     info.lineId
                 )

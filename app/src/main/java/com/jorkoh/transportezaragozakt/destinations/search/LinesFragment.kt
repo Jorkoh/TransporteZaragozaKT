@@ -22,7 +22,7 @@ class LinesFragment : Fragment(){
     private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
-                SearchFragmentDirections.actionGlobalLineDetails(
+                SearchFragmentDirections.actionSearchToLineDetails(
                     info.lineType,
                     info.lineId
                 )

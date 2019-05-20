@@ -275,7 +275,7 @@ class MapFragment : Fragment() {
             false
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
-            findNavController().navigate(MapFragmentDirections.actionGlobalStopDetails(stop.type.name, stop.stopId))
+            findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
         }
     }
 

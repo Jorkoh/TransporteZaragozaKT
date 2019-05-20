@@ -10,6 +10,9 @@
             android:name="com.jorkoh.transportezaragozakt.destinations.map.MapFragment"
             android:label="@string/map_destination_title"
             tools:layout="@layout/map_destination">
+        <action
+                android:id="@+id/action_map_to_stopDetails"
+                app:destination="@id/stopDetails"/>
     </fragment>
     <fragment
             android:id="@id/stopDetails"
@@ -21,6 +24,11 @@
         <argument
                 android:name="stopId"
                 app:argType="string"/>
+        <action
+                android:id="@id/action_stopDetails_to_lineDetails"
+                app:destination="@id/lineDetails"
+                app:popUpTo="@id/lineDetails"
+                app:popUpToInclusive="true"/>
     </fragment>
     <fragment
             android:id="@id/lineDetails"
@@ -33,15 +41,8 @@
         <argument
                 android:name="lineId"
                 app:argType="string"/>
+        <action
+                android:id="@+id/action_lineDetails_to_stopDetails"
+                app:destination="@id/stopDetails"/>
     </fragment>
-    <action
-            android:id="@id/action_global_lineDetails"
-            app:destination="@id/lineDetails"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/lineDetails"
-            app:popUpToInclusive="true"/>
-    <action
-            android:id="@id/action_global_stopDetails"
-            app:destination="@id/stopDetails"
-            app:launchSingleTop="true"/>
 </navigation>

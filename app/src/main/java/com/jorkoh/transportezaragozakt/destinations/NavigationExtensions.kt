@@ -17,6 +17,7 @@
 package com.jorkoh.transportezaragozakt.destinations
 
 import android.content.Intent
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import androidx.core.util.forEach
@@ -39,7 +40,8 @@ fun BottomNavigationView.setupWithNavController(
     fragmentManager: FragmentManager,
     containerId: Int,
     intent: Intent,
-    isAnimationDisabled : () -> Boolean
+    isAnimationDisabled: () -> Boolean,
+    firstLaunch: Boolean
 ): LiveData<NavController> {
 
     // Map of tags
@@ -61,7 +63,7 @@ fun BottomNavigationView.setupWithNavController(
             containerId
         )
 
-        // Obtain its stopId
+        // Obtain its id
         val graphId = navHostFragment.navController.graph.id
 
         if (index == 0) {
@@ -100,16 +102,24 @@ fun BottomNavigationView.setupWithNavController(
             val newlySelectedItemTag = graphIdToTagMap[item.itemId]
             if (selectedItemTag != newlySelectedItemTag) {
                 // Pop everything above the first fragment (the "fixed start destination")
-                fragmentManager.popBackStack(firstFragmentTag,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                fragmentManager.popBackStack(
+                    firstFragmentTag,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
                 val selectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
-                    as NavHostFragment
+                        as NavHostFragment
 
                 // Exclude the first fragment tag because it's always in the back stack.
                 if (firstFragmentTag != newlySelectedItemTag) {
                     // Commit a transaction that cleans the back stack and adds the first fragment
                     // to it, creating the fixed started destination.
                     fragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.nav_default_enter_anim,
+                            R.anim.nav_default_exit_anim,
+                            R.anim.nav_default_pop_enter_anim,
+                            R.anim.nav_default_pop_exit_anim
+                        )
                         .attach(selectedFragment)
                         .setPrimaryNavigationFragment(selectedFragment)
                         .apply {
@@ -121,11 +131,6 @@ fun BottomNavigationView.setupWithNavController(
                             }
                         }
                         .addToBackStack(firstFragmentTag)
-                        .setCustomAnimations(
-                            R.anim.nav_default_enter_anim,
-                            R.anim.nav_default_exit_anim,
-                            R.anim.nav_default_pop_enter_anim,
-                            R.anim.nav_default_pop_exit_anim)
                         .setReorderingAllowed(true)
                         .commit()
                 }
@@ -143,7 +148,9 @@ fun BottomNavigationView.setupWithNavController(
     setupItemReselected(graphIdToTagMap, fragmentManager)
 
     // Handle deep link
-    setupDeepLinks(navGraphIds, fragmentManager, containerId, intent)
+    if (firstLaunch) {
+        setupDeepLinks(navGraphIds, fragmentManager, containerId, intent)
+    }
 
     // Finally, ensure that we update our BottomNavigationView when the back stack changes
     fragmentManager.addOnBackStackChangedListener {
@@ -192,7 +199,7 @@ private fun BottomNavigationView.setupItemReselected(
     setOnNavigationItemReselectedListener { item ->
         val newlySelectedItemTag = graphIdToTagMap[item.itemId]
         val selectedFragment = fragmentManager.findFragmentByTag(newlySelectedItemTag)
-            as NavHostFragment
+                as NavHostFragment
         val navController = selectedFragment.navController
         // Pop the back stack to the start destination of the current navController graph
         navController.popBackStack(

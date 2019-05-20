@@ -195,7 +195,12 @@ class LineDetailsFragment : Fragment() {
         //TODO NEED TO STORE THE STOP ON THE TAG OR JUST THE ARGS
         map.setOnInfoWindowClickListener { marker ->
             val stop = marker.tag as Stop
-            findNavController().navigate(MapFragmentDirections.actionGlobalStopDetails(stop.type.name, stop.stopId))
+            findNavController().navigate(
+                LineDetailsFragmentDirections.actionLineDetailsToStopDetails(
+                    stop.type.name,
+                    stop.stopId
+                )
+            )
         }
         map.setInfoWindowAdapter(StopInfoWindowAdapter())
         map.setOnMarkerClickListener { marker ->
