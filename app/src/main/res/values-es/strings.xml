@@ -44,7 +44,7 @@
     <string name="restore_reminder_title">Restaurar notificación</string>
     <string name="notification_channel_description_services">Notificaciones de servicios en primer plano.</string>
     <string name="notification_channel_name_services">Servicios</string>
-    <string name="notification_content_services_reminders">Preparando notificaciones...</string>
+    <string name="notification_content_services_reminders">Preparando notificaciones…</string>
     <string name="delete_reminder_message">¿Estas seguro de que quieres borrar esta notificación? Esta operación no se puede deshacer.</string>
     <string name="delete_reminder_title">Borrar notificación</string>
     <string name="delete">Borrar</string>
@@ -55,4 +55,10 @@
     <string name="bus_chip">BUS</string>
     <string name="tram_chip">TRANVÍA</string>
     <string name="notification_error">Error cargando información.</string>
+    <string name="search_view_hint">Nombre, destino o número…</string>
+    <string name="search_all_stops">TODAS</string>
+    <string name="search_nearby_stops">CERCANAS</string>
+    <string name="search_lines">LÍNEAS</string>
+    <string name="qr_scan_menu_item">Escanear código QR</string>
+    <string name="qr_scan_prompt">Coloque el código QR de la parada en el centro de la pantalla</string>
 </resources>

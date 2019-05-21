@@ -7,5 +7,11 @@
             android:icon="@drawable/ic_search_on_primary_24dp"
             android:title="@string/search_destination_title"
             app:actionViewClass="androidx.appcompat.widget.SearchView"
-            app:showAsAction="ifRoom|collapseActionView" />
+            app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
+            android:id="@+id/item_scan"
+            android:icon="@drawable/ic_qr_code"
+            android:title="@string/qr_scan_menu_item"
+            app:showAsAction="ifRoom"/>
 </menu>

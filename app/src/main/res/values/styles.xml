@@ -2,9 +2,10 @@
     <style name="ActionBarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="android:textColorPrimary">?colorOnPrimary</item>
         <item name="android:background">?colorPrimary</item>
+        <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
 
-    <style name="TabTest" parent="Widget.MaterialComponents.TabLayout">
+    <style name="CustomTabStyle" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabTextColor">@color/tab_text_color</item>
         <item name="tabIconTint">?colorSecondary</item>
         <item name="tabRippleColor">?colorSecondary</item>
@@ -18,12 +19,19 @@
         <item name="android:numbersTextColor">?colorOnPrimary</item>
     </style>
 
+    <style name="CustomActionBarWidgetTheme" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">?colorOnPrimary</item>
+    </style>
+
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:timePickerStyle">@style/CustomTimePickerTheme</item>
         <item name="actionBarTheme">@style/ActionBarTheme</item>
-        <item name="tabStyle">@style/TabTest</item>
+        <item name="android:actionBarWidgetTheme">@style/CustomActionBarWidgetTheme</item>
+        <item name="tabStyle">@style/CustomTabStyle</item>
         <item name="colorBackgroundFloating">?android:colorBackground</item>
         <item name="android:textColorPrimary">?colorOnBackground</item>
+        <item name="android:textColorSecondary">?colorOnBackground</item>
+        <item name="android:textColorTertiary">?colorOnBackground</item>
         <item name="colorAccent">?colorSecondary</item>
         <item name="colorSurface">?android:colorBackground</item>
         <item name="colorOnSurface">?colorOnBackground</item>
@@ -32,7 +40,6 @@
     </style>
 
     <style name="Cyanea" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCyanea</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCyanea</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCyanea</item>
@@ -47,7 +54,6 @@
     </style>
 
     <style name="Rio" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRio</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRio</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRio</item>
@@ -62,7 +68,6 @@
     </style>
 
     <style name="VitaminSea" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryVitaminSea</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVitaminSea</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVitaminSea</item>
@@ -77,7 +82,6 @@
     </style>
 
     <style name="TextileDyes" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTextileDyes</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTextileDyes</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTextileDyes</item>
@@ -92,7 +96,6 @@
     </style>
 
     <style name="Brave" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryBrave</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBrave</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryBrave</item>
@@ -107,7 +110,6 @@
     </style>
 
     <style name="Ashen" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryAshen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkAshen</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryAshen</item>
@@ -122,7 +124,6 @@
     </style>
 
     <style name="RecognEyes" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRecognEyes</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRecognEyes</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRecognEyes</item>
@@ -137,7 +138,6 @@
     </style>
 
     <style name="Monokai" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMonokai</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMonokai</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMonokai</item>
@@ -152,7 +152,6 @@
     </style>
 
     <style name="SigFig" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimarySigFig</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSigFig</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySigFig</item>
@@ -167,7 +166,6 @@
     </style>
 
     <style name="SoundCloud" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimarySoundCloud</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSoundCloud</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySoundCloud</item>
@@ -182,7 +180,6 @@
     </style>
 
     <style name="Materiallight" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMateriallight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMateriallight</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMateriallight</item>
@@ -197,7 +194,6 @@
     </style>
 
     <style name="Hololight" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryHololight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkHololight</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryHololight</item>
@@ -212,7 +208,6 @@
     </style>
 
     <style name="Materialdark" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMaterialdark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMaterialdark</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMaterialdark</item>
@@ -227,7 +222,6 @@
     </style>
 
     <style name="Holodark" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryHolodark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkHolodark</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryHolodark</item>
@@ -242,7 +236,6 @@
     </style>
 
     <style name="Cherrypie" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCherrypie</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCherrypie</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCherrypie</item>
@@ -257,7 +250,6 @@
     </style>
 
     <style name="Olive" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryOlive</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOlive</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryOlive</item>
@@ -272,7 +264,6 @@
     </style>
 
     <style name="Tasty" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTasty</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTasty</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTasty</item>
@@ -287,7 +278,6 @@
     </style>
 
     <style name="Desert" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryDesert</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDesert</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryDesert</item>
@@ -302,7 +292,6 @@
     </style>
 
     <style name="Weber" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryWeber</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkWeber</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryWeber</item>
@@ -317,7 +306,6 @@
     </style>
 
     <style name="Philips" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryPhilips</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkPhilips</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryPhilips</item>
@@ -332,7 +320,6 @@
     </style>
 
     <style name="Instagram" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryInstagram</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkInstagram</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryInstagram</item>
@@ -347,7 +334,6 @@
     </style>
 
     <style name="Reddit" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryReddit</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkReddit</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryReddit</item>
@@ -362,7 +348,6 @@
     </style>
 
     <style name="Waaark" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryWaaark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkWaaark</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryWaaark</item>
@@ -377,7 +362,6 @@
     </style>
 
     <style name="Flax" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryFlax</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFlax</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFlax</item>
@@ -392,7 +376,6 @@
     </style>
 
     <style name="Bing" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryBing</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkBing</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryBing</item>
@@ -407,7 +390,6 @@
     </style>
 
     <style name="Meetup" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMeetup</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMeetup</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMeetup</item>
@@ -422,7 +404,6 @@
     </style>
 
     <style name="Coffee" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCoffee</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCoffee</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCoffee</item>
@@ -437,7 +418,6 @@
     </style>
 
     <style name="Sepia" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimarySepia</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSepia</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySepia</item>
@@ -452,7 +432,6 @@
     </style>
 
     <style name="Oblivion" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryOblivion</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkOblivion</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryOblivion</item>
@@ -467,7 +446,6 @@
     </style>
 
     <style name="Obsidian" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryObsidian</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkObsidian</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryObsidian</item>
@@ -482,7 +460,6 @@
     </style>
 
     <style name="Forrest" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryForrest</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkForrest</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryForrest</item>
@@ -497,7 +474,6 @@
     </style>
 
     <style name="Dawn" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryDawn</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkDawn</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryDawn</item>
@@ -512,7 +488,6 @@
     </style>
 
     <style name="Twitter" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTwitter</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitter</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTwitter</item>
@@ -527,7 +502,6 @@
     </style>
 
     <style name="Periscope" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryPeriscope</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkPeriscope</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryPeriscope</item>
@@ -542,7 +516,6 @@
     </style>
 
     <style name="Subdued" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimarySubdued</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSubdued</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySubdued</item>
@@ -557,7 +530,6 @@
     </style>
 
     <style name="MistyGreen" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMistyGreen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMistyGreen</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMistyGreen</item>
@@ -572,7 +544,6 @@
     </style>
 
     <style name="Waterfall" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryWaterfall</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkWaterfall</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryWaterfall</item>
@@ -587,7 +558,6 @@
     </style>
 
     <style name="Retro" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRetro</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRetro</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRetro</item>
@@ -602,7 +572,6 @@
     </style>
 
     <style name="Inkpot" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryInkpot</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkInkpot</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryInkpot</item>
@@ -617,7 +586,6 @@
     </style>
 
     <style name="VibrantInk" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryVibrantInk</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVibrantInk</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVibrantInk</item>
@@ -632,7 +600,6 @@
     </style>
 
     <style name="Fresh" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryFresh</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFresh</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFresh</item>
@@ -647,7 +614,6 @@
     </style>
 
     <style name="Coteazur" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryCoteazur</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCoteazur</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCoteazur</item>
@@ -662,7 +628,6 @@
     </style>
 
     <style name="QED" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryQED</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkQED</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryQED</item>
@@ -677,7 +642,6 @@
     </style>
 
     <style name="Vintage" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryVintage</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVintage</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVintage</item>
@@ -692,7 +656,6 @@
     </style>
 
     <style name="Spotify" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimarySpotify</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSpotify</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySpotify</item>
@@ -707,7 +670,6 @@
     </style>
 
     <style name="Xbox" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryXbox</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkXbox</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryXbox</item>
@@ -722,7 +684,6 @@
     </style>
 
     <style name="Sublime" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimarySublime</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkSublime</item>
         <item name="colorOnPrimary">@color/colorOnPrimarySublime</item>
@@ -737,7 +698,6 @@
     </style>
 
     <style name="Zenburn" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryZenburn</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkZenburn</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryZenburn</item>
@@ -752,7 +712,6 @@
     </style>
 
     <style name="Starbucks" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryStarbucks</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkStarbucks</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryStarbucks</item>
@@ -767,7 +726,6 @@
     </style>
 
     <style name="Amazon" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryAmazon</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkAmazon</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryAmazon</item>
@@ -782,7 +740,6 @@
     </style>
 
     <style name="Twitch" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryTwitch</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitch</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryTwitch</item>
@@ -797,7 +754,6 @@
     </style>
 
     <style name="Robinhood" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryRobinhood</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkRobinhood</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryRobinhood</item>
@@ -812,7 +768,6 @@
     </style>
 
     <style name="Facebook" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryFacebook</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFacebook</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFacebook</item>
@@ -827,7 +782,6 @@
     </style>
 
     <style name="Mint" parent="BaseTheme">
-        <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="colorPrimary">@color/colorPrimaryMint</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMint</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMint</item>

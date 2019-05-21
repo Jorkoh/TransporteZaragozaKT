@@ -58,6 +58,14 @@
     <string name="bus_chip" translatable="true">BUS</string>
     <string name="tram_chip" translatable="true">TRAM</string>
 
+    <!--Search-->
+    <string name="search_view_hint" translatable="true">Name, destination or number…</string>
+    <string name="search_nearby_stops" translatable="true">NEARBY</string>
+    <string name="search_all_stops" translatable="true">EVERY STOP</string>
+    <string name="search_lines" translatable="true">LINES</string>
+    <string name="qr_scan_menu_item" translatable="true">Scan QR code</string>
+    <string name="qr_scan_prompt" translatable="true">Place the stop QR code on the center of the screen</string>
+
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>
 

@@ -1,10 +1,13 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
@@ -15,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
+import com.google.zxing.integration.android.IntentIntegrator
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
 import kotlinx.android.synthetic.main.main_container.*
@@ -38,7 +42,7 @@ class SearchFragment : Fragment() {
         searchVM.init()
         searchVM.getSearchTabPosition().observeOnce(viewLifecycleOwner, searchTabPositionObserver)
         setupToolbar()
-        search_viewpager.adapter = SearchPagerAdapter(childFragmentManager)
+        search_viewpager.adapter = SearchPagerAdapter(childFragmentManager, requireContext())
         search_tab_layout.setupWithViewPager(search_viewpager)
         search_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {}
@@ -90,6 +94,7 @@ class SearchFragment : Fragment() {
             toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.search_destination_menu)
             (toolbar.menu.findItem(R.id.item_search).actionView as SearchView).apply {
+                this.queryHint = getString(R.string.search_view_hint)
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         return false
@@ -113,5 +118,35 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_scan -> {
+//                findNavController().navigate(SearchFragmentDirections.actionSearchToScannerFragment())
+                IntentIntegrator
+                    .forSupportFragment(this)
+                    .setOrientationLocked(false)
+                    .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+                    .setPrompt(getString(R.string.qr_scan_prompt))
+                    .initiateScan()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            val toastText = if (result.contents == null) {
+                "Cancelled from fragment"
+            } else {
+                "Scanned from fragment: " + result.contents
+            }
+            Toast.makeText(activity, toastText, Toast.LENGTH_LONG).show()
+        }
+        fragmentManager?.popBackStack()
     }
 }
