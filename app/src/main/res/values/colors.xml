@@ -107,7 +107,7 @@
     <color name="colorOnBackgroundVariantMonokai">#FAFAFA</color>
     <!-- SigFig -->
     <color name="colorPrimarySigFig">#F7F6F3</color>
-    <color name="colorPrimaryDarkSigFig">#524E4A</color>
+    <color name="colorPrimaryDarkSigFig">#D8D8D8</color>
     <color name="colorOnPrimarySigFig">#1D1D24</color>
     <color name="colorSecondarySigFig">#F05A50</color>
     <color name="colorSecondaryVariantSigFig">#CC4C44</color>

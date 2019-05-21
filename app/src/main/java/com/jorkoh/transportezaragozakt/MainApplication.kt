@@ -24,6 +24,7 @@ class MainApplication : Application() {
 
         //Dresscode
         declareDressCode(
+            DressCode("SigFig", R.style.SigFig),
             DressCode("Cyanea", R.style.Cyanea),
             DressCode("Rio", R.style.Rio),
             DressCode("VitaminSea", R.style.VitaminSea),
@@ -32,7 +33,6 @@ class MainApplication : Application() {
             DressCode("Ashen", R.style.Ashen),
             DressCode("RecognEyes", R.style.RecognEyes),
             DressCode("Monokai", R.style.Monokai),
-            DressCode("SigFig", R.style.SigFig),
             DressCode("SoundCloud", R.style.SoundCloud),
             DressCode("Materiallight", R.style.Materiallight),
             DressCode("Hololight", R.style.Hololight),

@@ -16,7 +16,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/Cyanea"
+            android:theme="@style/SigFig"
             tools:ignore="GoogleAppIndexingWarning">
         <uses-library
                 android:name="org.apache.http.legacy"
