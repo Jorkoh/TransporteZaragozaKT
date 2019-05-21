@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.destinations.reminders
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.jorkoh.transportezaragozakt.db.Reminder
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import java.util.*
@@ -12,7 +11,7 @@ class RemindersViewModel(private val remindersRepository: RemindersRepository) :
     lateinit var reminders: LiveData<List<ReminderExtended>>
 
     fun init(){
-        reminders = remindersRepository.loadReminders()
+        reminders = remindersRepository.loadRemindersExtended()
     }
 
     fun updateReminder(reminderId : Int, daysOfWeek: List<Boolean>, time : Calendar){

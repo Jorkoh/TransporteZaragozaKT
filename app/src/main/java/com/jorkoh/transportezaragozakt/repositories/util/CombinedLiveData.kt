@@ -24,7 +24,7 @@ class CombinedLiveData<T, K, S>(
         }
     }
 
-    fun update() {
+    private fun update() {
         if (data1 != null && data2 != null) {
             value = combine(data1, data2)
         }

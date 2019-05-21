@@ -52,4 +52,7 @@
     <string name="delete_favorite_title">Borrar favorito</string>
     <string name="line_details_title">Información de la línea</string>
     <string name="line">Línea</string>
+    <string name="bus_chip">BUS</string>
+    <string name="tram_chip">TRANVÍA</string>
+    <string name="notification_error">Error cargando información.</string>
 </resources>

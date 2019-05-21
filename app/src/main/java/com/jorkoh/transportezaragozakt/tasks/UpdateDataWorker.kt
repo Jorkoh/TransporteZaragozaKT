@@ -30,7 +30,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         // May fire multiple times?
         // https://issuetracker.google.com/issues/119886476
-        Log.d("TestingStuff", "DO WORK FIRED!!")
+        Log.d("TestingStuff", "Update data worker fired!")
 
         checkBusStopsUpdate()
         checkTramStopsUpdate()

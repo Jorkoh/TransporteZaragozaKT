@@ -2,7 +2,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="120dp"
         android:height="120dp"
-        android:tint="?attr/colorControlNormal"
+        android:tint="?colorOnSurface"
         android:viewportHeight="24"
         android:viewportWidth="24">
 
@@ -14,7 +14,7 @@
         <path
                 android:name="crossPath"
                 android:pathData="@string/path_cross"
-                android:strokeColor="@android:color/primary_text_light"
+                android:strokeColor="?colorOnSurface"
                 android:strokeLineCap="square"
                 android:strokeWidth="@integer/stroke_width"/>
 

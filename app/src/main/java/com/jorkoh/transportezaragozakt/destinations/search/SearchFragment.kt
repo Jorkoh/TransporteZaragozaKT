@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -10,7 +11,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
@@ -26,11 +29,26 @@ class SearchFragment : Fragment() {
         search_tab_layout.getTabAt(position)?.select()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         searchVM.init()
         searchVM.getSearchTabPosition().observeOnce(viewLifecycleOwner, searchTabPositionObserver)
         setupToolbar()
+        search_viewpager.adapter = SearchPagerAdapter(childFragmentManager)
+        search_tab_layout.setupWithViewPager(search_viewpager)
+        search_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                searchVM.setSearchTabPosition(tab.position)
+            }
+        })
     }
 
     override fun onCreateView(
@@ -44,17 +62,20 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        search_viewpager.adapter = SearchPagerAdapter(childFragmentManager)
-        search_tab_layout.setupWithViewPager(search_viewpager)
-        search_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                searchVM.setSearchTabPosition(tab.position)
+        requireActivity().intent = requireActivity().intent.apply {
+            dataString?.let { uri ->
+                if (uri.startsWith("launchTZ://viewStop")) {
+                    val splitUri = uri.split("/")
+                    findNavController().navigate(
+                        SearchFragmentDirections.actionSearchToStopDetails(
+                            splitUri[3],
+                            splitUri[4]
+                        )
+                    )
+                    data = Uri.EMPTY
+                }
             }
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

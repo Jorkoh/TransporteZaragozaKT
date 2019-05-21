@@ -14,7 +14,13 @@ abstract class RemindersDao{
     abstract fun getReminderInmediate(reminderId: Int) : Reminder
 
     @Query("SELECT reminders.reminderId, reminders.stopId, reminders.daysOfWeek, reminders.hourOfDay, reminders.minute, stops.type, stops.stopTitle, reminders.alias, reminders.colorHex, stops.lines FROM reminders INNER JOIN stops ON reminders.stopId = stops.stopId ORDER BY reminders.position ASC")
-    abstract fun getReminders(): LiveData<List<ReminderExtended>>
+    abstract fun getRemindersExtended(): LiveData<List<ReminderExtended>>
+
+    @Query("SELECT * FROM reminders")
+    abstract fun getRemindersImmediate() : List<Reminder>
+
+    @Query("SELECT alias FROM reminders WHERE reminderId = :reminderId")
+    abstract fun getReminderAlias(reminderId: Int): LiveData<String>
 
     @Query("UPDATE reminders SET daysOfWeek = :daysOfWeek, hourOfDay = :hourOfDay, minute = :minute WHERE reminderId = :reminderId")
     abstract fun updateReminder(reminderId: Int, daysOfWeek: DaysOfWeek, hourOfDay: Int, minute: Int)

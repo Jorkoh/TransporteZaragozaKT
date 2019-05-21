@@ -9,13 +9,24 @@ import com.jorkoh.transportezaragozakt.R
 import java.util.concurrent.TimeUnit
 
 //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
-fun enqueueWorker(workName : String) {
-    val constraints = Constraints.Builder()
-        .setRequiredNetworkType(NetworkType.CONNECTED)
+fun enqueueUpdateDataWorker(workName: String) {
+    val updateDataRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
+        .setConstraints(
+            Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+        )
         .build()
 
-    val updateDataRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
-        .setConstraints(constraints)
+    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataRequest)
+}
+
+fun enqueueSetupRemindersWorker(workName: String) {
+    val updateDataRequest = PeriodicWorkRequestBuilder<SetupRemindersWorker>(12, TimeUnit.HOURS)
+        .setConstraints(
+            Constraints.Builder()
+                .build()
+        )
         .build()
 
     WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataRequest)

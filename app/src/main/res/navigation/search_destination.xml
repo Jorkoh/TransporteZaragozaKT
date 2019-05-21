@@ -13,14 +13,20 @@
             tools:layout="@layout/search_destination">
         <action
                 android:id="@+id/action_search_to_stopDetails"
-                app:destination="@id/stopDetails"/>
+                app:destination="@id/stopDetails"
+                />
         <action
                 android:id="@+id/action_search_to_lineDetails"
                 app:destination="@id/lineDetails"/>
+        <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH-->
+        <!-- LINKING TO DEEPER DESTINATIONS DOESN'T WORK PROPERLY EITHER WITH MULTIPLE NAVIGATION GRAPHS-->
+        <deepLink
+                android:id="@+id/deepLinkStop"
+                app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
     </fragment>
 
     <fragment
-            android:id="@+id/lineDetails"
+            android:id="@id/lineDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
             android:label="@string/line_details_title"
             tools:layout="@layout/line_details_destination">
@@ -30,17 +36,13 @@
         <argument
                 android:name="lineId"
                 app:argType="string"/>
-        <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH SO THIS IS THE BEST WE CAN DO-->
-        <deepLink
-                android:id="@+id/deepLinkLine"
-                app:uri="launchTZ://viewLine/{lineType}/{lineId}/"/>
         <action
                 android:id="@+id/action_lineDetails_to_stopDetails"
                 app:destination="@id/stopDetails"/>
     </fragment>
 
     <fragment
-            android:id="@+id/stopDetails"
+            android:id="@id/stopDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
             tools:layout="@layout/stop_details_destination">
         <argument
@@ -49,10 +51,6 @@
         <argument
                 android:name="stopId"
                 app:argType="string"/>
-        <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH SO THIS IS THE BEST WE CAN DO-->
-        <deepLink
-                android:id="@+id/deepLinkStop"
-                app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
         <action
                 android:id="@+id/action_stopDetails_to_lineDetails"
                 app:destination="@id/lineDetails"
