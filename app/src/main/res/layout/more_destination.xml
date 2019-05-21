@@ -21,8 +21,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dark_map_switch"/>
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
             android:text="Switch"
+            android:textColor="?colorOnSurface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dark_map_switch"

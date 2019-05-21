@@ -107,6 +107,6 @@ fun String.toMinutes(context: Context) =
 fun String.correctLine() =
     when (this) {
         "CI1" -> "Ci1"
-        "CI2" -> "CI2"
+        "CI2" -> "Ci2"
         else -> this
     }
