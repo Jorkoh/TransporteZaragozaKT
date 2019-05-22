@@ -116,10 +116,8 @@ class StopDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.stop_details_destination, container, false)
-
-        setupToolbar()
+        setHasOptionsMenu(true)
         setupFab(rootView)
-
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
@@ -133,6 +131,7 @@ class StopDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupToolbar()
         val args = StopDetailsFragmentArgs.fromBundle(requireArguments())
         stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
 
@@ -144,10 +143,16 @@ class StopDetailsFragment : Fragment() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        setupToolbar()
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.apply {
-            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
-            clear()
+        requireActivity().main_toolbar?.let {toolbar ->
+            (toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            toolbar.menu.clear()
+            toolbar.inflateMenu(R.menu.stop_details_destination_menu)
         }
     }
 
@@ -240,6 +245,16 @@ class StopDetailsFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_refresh -> {
+                stopDetailsVM.refreshStopDestinations()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

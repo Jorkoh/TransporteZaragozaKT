@@ -61,4 +61,5 @@
     <string name="search_lines">LÍNEAS</string>
     <string name="qr_scan_menu_item">Escanear código QR</string>
     <string name="qr_scan_prompt">Coloque el código QR de la parada en el centro de la pantalla</string>
+    <string name="refresh_menu_item">Actualizar</string>
 </resources>

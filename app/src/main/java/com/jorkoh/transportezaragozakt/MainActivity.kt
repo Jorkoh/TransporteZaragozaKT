@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.SigFig)
         matchDressCode()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_container)

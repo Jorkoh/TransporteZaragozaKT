@@ -43,7 +43,7 @@ class AlarmService : LifecycleService() {
             setupNotificationChannels(this)
             val foregroundServiceNotification =
                 NotificationCompat.Builder(this, getString(R.string.notification_channel_id_services))
-                    .setSmallIcon(R.mipmap.ic_bus_launcher_round)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setContentTitle(getString(R.string.app_name))
                     .setContentText(getString(R.string.notification_content_services_reminders))
                     .build()
@@ -98,7 +98,7 @@ class AlarmService : LifecycleService() {
                     setContentTitle(reminderAlias)
                     setContentText(getString(R.string.notification_error))
                 }
-                setSmallIcon(R.mipmap.ic_bus_launcher_round)
+                setSmallIcon(R.drawable.ic_notification_icon)
                 priority = NotificationCompat.PRIORITY_HIGH
                 setAutoCancel(true)
                 setDefaults(NotificationCompat.DEFAULT_SOUND)

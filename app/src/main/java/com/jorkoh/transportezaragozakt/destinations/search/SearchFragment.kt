@@ -33,10 +33,6 @@ class SearchFragment : Fragment() {
         search_tab_layout.getTabAt(position)?.select()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         searchVM.init()
@@ -89,7 +85,7 @@ class SearchFragment : Fragment() {
 
     //Has to be called from both onCreateView() and onCreateOptionsMenu() to avoid problems with bottom navigation
     private fun setupToolbar() {
-        requireActivity().findViewById<Toolbar>(R.id.main_toolbar)?.let { toolbar ->
+        requireActivity().main_toolbar?.let { toolbar ->
             (toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
             toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.search_destination_menu)
@@ -123,7 +119,6 @@ class SearchFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_scan -> {
-//                findNavController().navigate(SearchFragmentDirections.actionSearchToScannerFragment())
                 IntentIntegrator
                     .forSupportFragment(this)
                     .setOrientationLocked(false)
@@ -139,12 +134,8 @@ class SearchFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            val toastText = if (result.contents == null) {
-                "Cancelled from fragment"
-            } else {
-                "Scanned from fragment: " + result.contents
-            }
+        if (result != null && result.contents != null) {
+            val toastText = "Scanned from fragment: " + result.contents
             Toast.makeText(activity, toastText, Toast.LENGTH_LONG).show()
         }
         fragmentManager?.popBackStack()

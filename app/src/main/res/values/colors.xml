@@ -8,6 +8,7 @@
     <color name="kinda_black">#1D1D24</color>
     <color name="bus_color">#2c82c9</color>
     <color name="tram_color">#232828</color>
+    <color name="splash_red">#DE2F34</color>
 
     <!-- Cyanea -->
     <color name="colorPrimaryCyanea">#EE3868</color>

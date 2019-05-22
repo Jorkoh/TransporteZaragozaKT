@@ -1,4 +1,12 @@
 <resources>
+    <!-- The launcher theme. It sets the main window background to the launch_screen drawable -->
+    <style name="BaseTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="colorPrimaryDark">@color/splash_red</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <style name="ActionBarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="android:textColorPrimary">?colorOnPrimary</item>
         <item name="android:background">?colorPrimary</item>
@@ -24,6 +32,7 @@
     </style>
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:fontFamily">@font/manrope_medium</item>
         <item name="android:timePickerStyle">@style/CustomTimePickerTheme</item>
         <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="android:actionBarWidgetTheme">@style/CustomActionBarWidgetTheme</item>
