@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
+import com.livinglifetechway.quickpermissions_kotlin.R
 
 /**
  * This fragment holds the single permission request and holds it until the flow is completed
@@ -182,10 +183,10 @@ class PermissionCheckerFragment : Fragment() {
                     MaterialDialog(requireContext()).show {
                         message(text = quickPermissionsRequest?.rationaleMessage.orEmpty())
                         cancelable(false)
-                        positiveButton(text = "Try again") {
+                        positiveButton(text = getString(R.string.try_again)) {
                             requestPermissionsFromUser()
                         }
-                        negativeButton(text = "Cancel") {
+                        negativeButton(text = getString(R.string.cancel)) {
                             clean()
                         }
                     }

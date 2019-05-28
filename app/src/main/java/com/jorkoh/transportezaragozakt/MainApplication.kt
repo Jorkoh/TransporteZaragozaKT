@@ -24,6 +24,7 @@ class MainApplication : Application() {
 
         //Dresscode
         declareDressCode(
+            DressCode("TransporteZaragoza", R.style.TransporteZaragoza),
             DressCode("SigFig", R.style.SigFig),
             DressCode("Cyanea", R.style.Cyanea),
             DressCode("Rio", R.style.Rio),

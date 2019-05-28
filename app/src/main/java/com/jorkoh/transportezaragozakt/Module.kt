@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt
 
 import android.content.Context
+import android.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -71,10 +72,7 @@ val appModule = module {
     }
 
     single {
-        androidContext().getSharedPreferences(
-            androidContext().getString(R.string.preferences_version_number_key),
-            Context.MODE_PRIVATE
-        )
+        PreferenceManager.getDefaultSharedPreferences(androidContext())
     }
 
     single<SettingsRepository> { SettingsRepositoryImplementation(get(), androidContext()) }
@@ -91,5 +89,5 @@ val appModule = module {
     viewModel { MoreViewModel(get()) }
     viewModel { StopDetailsViewModel(get(), get(), get()) }
     viewModel { LineDetailsViewModel(get()) }
-    viewModel { MainActivityViewModel() }
+    viewModel { MainActivityViewModel(get(), get()) }
 }

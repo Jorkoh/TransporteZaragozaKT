@@ -99,6 +99,7 @@ fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
             busLinesLocationsEntities.add(
                 LineLocation(
                     line.id,
+                    LineType.BUS,
                     i+1,
                     LatLng(location[1], location[0])
                 )
@@ -118,6 +119,7 @@ fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
             tramLinesLocationsEntities.add(
                 LineLocation(
                     line.id,
+                    LineType.TRAM,
                     i+1,
                     LatLng(location[1], location[0])
                 )

@@ -51,7 +51,17 @@ fun setupNotificationChannels(context: Context) {
         ).apply {
             description = context.getString(R.string.notification_channel_description_services)
         }
+
+        val updatesChannel = NotificationChannel(
+            context.getString(R.string.notification_channel_id_updates),
+            context.getString(R.string.notification_channel_name_updates),
+            NotificationManager.IMPORTANCE_LOW
+        ).apply {
+            description = context.getString(R.string.notification_channel_description_updates)
+        }
+
         notificationManager.createNotificationChannel(reminderChannel)
         notificationManager.createNotificationChannel(foregroundChannel)
+        notificationManager.createNotificationChannel(updatesChannel)
     }
 }

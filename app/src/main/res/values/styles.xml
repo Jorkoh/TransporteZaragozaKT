@@ -32,6 +32,7 @@
     </style>
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:scrollbars">none</item>
         <item name="android:fontFamily">@font/manrope_medium</item>
         <item name="android:timePickerStyle">@style/CustomTimePickerTheme</item>
         <item name="actionBarTheme">@style/ActionBarTheme</item>
@@ -48,6 +49,21 @@
         <item name="md_color_button_text">?colorOnBackground</item>
     </style>
 
+    <style name="TransporteZaragoza" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryTransporteZaragoza</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkTransporteZaragoza</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryTransporteZaragoza</item>
+        <item name="colorSecondary">@color/colorSecondaryTransporteZaragoza</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTransporteZaragoza</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryTransporteZaragoza</item>
+        <item name="colorError">@color/colorErrorTransporteZaragoza</item>
+        <item name="colorOnError">@color/colorOnErrorTransporteZaragoza</item>
+        <item name="android:colorBackground">@color/colorBackgroundTransporteZaragoza</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundTransporteZaragoza</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTransporteZaragoza</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarTransporteZaragoza</item>
+    </style>
+
     <style name="Cyanea" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryCyanea</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCyanea</item>
@@ -60,6 +76,7 @@
         <item name="android:colorBackground">@color/colorBackgroundCyanea</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCyanea</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCyanea</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCyanea</item>
     </style>
 
     <style name="Rio" parent="BaseTheme">
@@ -74,6 +91,7 @@
         <item name="android:colorBackground">@color/colorBackgroundRio</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRio</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRio</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarRio</item>
     </style>
 
     <style name="VitaminSea" parent="BaseTheme">
@@ -88,6 +106,7 @@
         <item name="android:colorBackground">@color/colorBackgroundVitaminSea</item>
         <item name="colorOnBackground">@color/colorOnBackgroundVitaminSea</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVitaminSea</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarVitaminSea</item>
     </style>
 
     <style name="TextileDyes" parent="BaseTheme">
@@ -102,6 +121,7 @@
         <item name="android:colorBackground">@color/colorBackgroundTextileDyes</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTextileDyes</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTextileDyes</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarTextileDyes</item>
     </style>
 
     <style name="Brave" parent="BaseTheme">
@@ -116,6 +136,7 @@
         <item name="android:colorBackground">@color/colorBackgroundBrave</item>
         <item name="colorOnBackground">@color/colorOnBackgroundBrave</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBrave</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarBrave</item>
     </style>
 
     <style name="Ashen" parent="BaseTheme">
@@ -130,6 +151,7 @@
         <item name="android:colorBackground">@color/colorBackgroundAshen</item>
         <item name="colorOnBackground">@color/colorOnBackgroundAshen</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantAshen</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarAshen</item>
     </style>
 
     <style name="RecognEyes" parent="BaseTheme">
@@ -144,6 +166,7 @@
         <item name="android:colorBackground">@color/colorBackgroundRecognEyes</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRecognEyes</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRecognEyes</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarRecognEyes</item>
     </style>
 
     <style name="Monokai" parent="BaseTheme">
@@ -158,6 +181,7 @@
         <item name="android:colorBackground">@color/colorBackgroundMonokai</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMonokai</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMonokai</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMonokai</item>
     </style>
 
     <style name="SigFig" parent="BaseTheme">
@@ -172,6 +196,7 @@
         <item name="android:colorBackground">@color/colorBackgroundSigFig</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSigFig</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSigFig</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSigFig</item>
     </style>
 
     <style name="SoundCloud" parent="BaseTheme">
@@ -186,6 +211,7 @@
         <item name="android:colorBackground">@color/colorBackgroundSoundCloud</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSoundCloud</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSoundCloud</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSoundCloud</item>
     </style>
 
     <style name="Materiallight" parent="BaseTheme">
@@ -200,6 +226,7 @@
         <item name="android:colorBackground">@color/colorBackgroundMateriallight</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMateriallight</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMateriallight</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMateriallight</item>
     </style>
 
     <style name="Hololight" parent="BaseTheme">
@@ -214,6 +241,7 @@
         <item name="android:colorBackground">@color/colorBackgroundHololight</item>
         <item name="colorOnBackground">@color/colorOnBackgroundHololight</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantHololight</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarHololight</item>
     </style>
 
     <style name="Materialdark" parent="BaseTheme">
@@ -228,6 +256,7 @@
         <item name="android:colorBackground">@color/colorBackgroundMaterialdark</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMaterialdark</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMaterialdark</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMaterialdark</item>
     </style>
 
     <style name="Holodark" parent="BaseTheme">
@@ -242,6 +271,7 @@
         <item name="android:colorBackground">@color/colorBackgroundHolodark</item>
         <item name="colorOnBackground">@color/colorOnBackgroundHolodark</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantHolodark</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarHolodark</item>
     </style>
 
     <style name="Cherrypie" parent="BaseTheme">
@@ -256,6 +286,7 @@
         <item name="android:colorBackground">@color/colorBackgroundCherrypie</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCherrypie</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCherrypie</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCherrypie</item>
     </style>
 
     <style name="Olive" parent="BaseTheme">
@@ -270,6 +301,7 @@
         <item name="android:colorBackground">@color/colorBackgroundOlive</item>
         <item name="colorOnBackground">@color/colorOnBackgroundOlive</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantOlive</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarOlive</item>
     </style>
 
     <style name="Tasty" parent="BaseTheme">
@@ -284,6 +316,7 @@
         <item name="android:colorBackground">@color/colorBackgroundTasty</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTasty</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTasty</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarTasty</item>
     </style>
 
     <style name="Desert" parent="BaseTheme">
@@ -298,6 +331,7 @@
         <item name="android:colorBackground">@color/colorBackgroundDesert</item>
         <item name="colorOnBackground">@color/colorOnBackgroundDesert</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDesert</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarDesert</item>
     </style>
 
     <style name="Weber" parent="BaseTheme">
@@ -312,6 +346,7 @@
         <item name="android:colorBackground">@color/colorBackgroundWeber</item>
         <item name="colorOnBackground">@color/colorOnBackgroundWeber</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWeber</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarWeber</item>
     </style>
 
     <style name="Philips" parent="BaseTheme">
@@ -326,6 +361,7 @@
         <item name="android:colorBackground">@color/colorBackgroundPhilips</item>
         <item name="colorOnBackground">@color/colorOnBackgroundPhilips</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPhilips</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarPhilips</item>
     </style>
 
     <style name="Instagram" parent="BaseTheme">
@@ -340,6 +376,7 @@
         <item name="android:colorBackground">@color/colorBackgroundInstagram</item>
         <item name="colorOnBackground">@color/colorOnBackgroundInstagram</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantInstagram</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarInstagram</item>
     </style>
 
     <style name="Reddit" parent="BaseTheme">
@@ -354,6 +391,7 @@
         <item name="android:colorBackground">@color/colorBackgroundReddit</item>
         <item name="colorOnBackground">@color/colorOnBackgroundReddit</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantReddit</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarReddit</item>
     </style>
 
     <style name="Waaark" parent="BaseTheme">
@@ -368,6 +406,7 @@
         <item name="android:colorBackground">@color/colorBackgroundWaaark</item>
         <item name="colorOnBackground">@color/colorOnBackgroundWaaark</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWaaark</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarWaaark</item>
     </style>
 
     <style name="Flax" parent="BaseTheme">
@@ -382,6 +421,7 @@
         <item name="android:colorBackground">@color/colorBackgroundFlax</item>
         <item name="colorOnBackground">@color/colorOnBackgroundFlax</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFlax</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarFlax</item>
     </style>
 
     <style name="Bing" parent="BaseTheme">
@@ -396,6 +436,7 @@
         <item name="android:colorBackground">@color/colorBackgroundBing</item>
         <item name="colorOnBackground">@color/colorOnBackgroundBing</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBing</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarBing</item>
     </style>
 
     <style name="Meetup" parent="BaseTheme">
@@ -410,6 +451,7 @@
         <item name="android:colorBackground">@color/colorBackgroundMeetup</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMeetup</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMeetup</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMeetup</item>
     </style>
 
     <style name="Coffee" parent="BaseTheme">
@@ -424,6 +466,7 @@
         <item name="android:colorBackground">@color/colorBackgroundCoffee</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCoffee</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCoffee</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCoffee</item>
     </style>
 
     <style name="Sepia" parent="BaseTheme">
@@ -438,6 +481,7 @@
         <item name="android:colorBackground">@color/colorBackgroundSepia</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSepia</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSepia</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSepia</item>
     </style>
 
     <style name="Oblivion" parent="BaseTheme">
@@ -452,6 +496,7 @@
         <item name="android:colorBackground">@color/colorBackgroundOblivion</item>
         <item name="colorOnBackground">@color/colorOnBackgroundOblivion</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantOblivion</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarOblivion</item>
     </style>
 
     <style name="Obsidian" parent="BaseTheme">
@@ -466,6 +511,7 @@
         <item name="android:colorBackground">@color/colorBackgroundObsidian</item>
         <item name="colorOnBackground">@color/colorOnBackgroundObsidian</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantObsidian</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarObsidian</item>
     </style>
 
     <style name="Forrest" parent="BaseTheme">
@@ -480,6 +526,7 @@
         <item name="android:colorBackground">@color/colorBackgroundForrest</item>
         <item name="colorOnBackground">@color/colorOnBackgroundForrest</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantForrest</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarForrest</item>
     </style>
 
     <style name="Dawn" parent="BaseTheme">
@@ -494,6 +541,7 @@
         <item name="android:colorBackground">@color/colorBackgroundDawn</item>
         <item name="colorOnBackground">@color/colorOnBackgroundDawn</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDawn</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarDawn</item>
     </style>
 
     <style name="Twitter" parent="BaseTheme">
@@ -508,6 +556,7 @@
         <item name="android:colorBackground">@color/colorBackgroundTwitter</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTwitter</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTwitter</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarTwitter</item>
     </style>
 
     <style name="Periscope" parent="BaseTheme">
@@ -522,6 +571,7 @@
         <item name="android:colorBackground">@color/colorBackgroundPeriscope</item>
         <item name="colorOnBackground">@color/colorOnBackgroundPeriscope</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPeriscope</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarPeriscope</item>
     </style>
 
     <style name="Subdued" parent="BaseTheme">
@@ -536,6 +586,7 @@
         <item name="android:colorBackground">@color/colorBackgroundSubdued</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSubdued</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSubdued</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSubdued</item>
     </style>
 
     <style name="MistyGreen" parent="BaseTheme">
@@ -550,6 +601,7 @@
         <item name="android:colorBackground">@color/colorBackgroundMistyGreen</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMistyGreen</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMistyGreen</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMistyGreen</item>
     </style>
 
     <style name="Waterfall" parent="BaseTheme">
@@ -564,6 +616,7 @@
         <item name="android:colorBackground">@color/colorBackgroundWaterfall</item>
         <item name="colorOnBackground">@color/colorOnBackgroundWaterfall</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWaterfall</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarWaterfall</item>
     </style>
 
     <style name="Retro" parent="BaseTheme">
@@ -578,6 +631,7 @@
         <item name="android:colorBackground">@color/colorBackgroundRetro</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRetro</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRetro</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarRetro</item>
     </style>
 
     <style name="Inkpot" parent="BaseTheme">
@@ -592,6 +646,7 @@
         <item name="android:colorBackground">@color/colorBackgroundInkpot</item>
         <item name="colorOnBackground">@color/colorOnBackgroundInkpot</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantInkpot</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarInkpot</item>
     </style>
 
     <style name="VibrantInk" parent="BaseTheme">
@@ -606,6 +661,7 @@
         <item name="android:colorBackground">@color/colorBackgroundVibrantInk</item>
         <item name="colorOnBackground">@color/colorOnBackgroundVibrantInk</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVibrantInk</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarVibrantInk</item>
     </style>
 
     <style name="Fresh" parent="BaseTheme">
@@ -620,6 +676,7 @@
         <item name="android:colorBackground">@color/colorBackgroundFresh</item>
         <item name="colorOnBackground">@color/colorOnBackgroundFresh</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFresh</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarFresh</item>
     </style>
 
     <style name="Coteazur" parent="BaseTheme">
@@ -634,6 +691,7 @@
         <item name="android:colorBackground">@color/colorBackgroundCoteazur</item>
         <item name="colorOnBackground">@color/colorOnBackgroundCoteazur</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCoteazur</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCoteazur</item>
     </style>
 
     <style name="QED" parent="BaseTheme">
@@ -648,6 +706,7 @@
         <item name="android:colorBackground">@color/colorBackgroundQED</item>
         <item name="colorOnBackground">@color/colorOnBackgroundQED</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantQED</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarQED</item>
     </style>
 
     <style name="Vintage" parent="BaseTheme">
@@ -662,6 +721,7 @@
         <item name="android:colorBackground">@color/colorBackgroundVintage</item>
         <item name="colorOnBackground">@color/colorOnBackgroundVintage</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVintage</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarVintage</item>
     </style>
 
     <style name="Spotify" parent="BaseTheme">
@@ -676,6 +736,7 @@
         <item name="android:colorBackground">@color/colorBackgroundSpotify</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSpotify</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSpotify</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSpotify</item>
     </style>
 
     <style name="Xbox" parent="BaseTheme">
@@ -690,6 +751,7 @@
         <item name="android:colorBackground">@color/colorBackgroundXbox</item>
         <item name="colorOnBackground">@color/colorOnBackgroundXbox</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantXbox</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarXbox</item>
     </style>
 
     <style name="Sublime" parent="BaseTheme">
@@ -704,6 +766,7 @@
         <item name="android:colorBackground">@color/colorBackgroundSublime</item>
         <item name="colorOnBackground">@color/colorOnBackgroundSublime</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSublime</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSublime</item>
     </style>
 
     <style name="Zenburn" parent="BaseTheme">
@@ -718,6 +781,7 @@
         <item name="android:colorBackground">@color/colorBackgroundZenburn</item>
         <item name="colorOnBackground">@color/colorOnBackgroundZenburn</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantZenburn</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarZenburn</item>
     </style>
 
     <style name="Starbucks" parent="BaseTheme">
@@ -732,6 +796,7 @@
         <item name="android:colorBackground">@color/colorBackgroundStarbucks</item>
         <item name="colorOnBackground">@color/colorOnBackgroundStarbucks</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantStarbucks</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarStarbucks</item>
     </style>
 
     <style name="Amazon" parent="BaseTheme">
@@ -746,6 +811,7 @@
         <item name="android:colorBackground">@color/colorBackgroundAmazon</item>
         <item name="colorOnBackground">@color/colorOnBackgroundAmazon</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantAmazon</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarAmazon</item>
     </style>
 
     <style name="Twitch" parent="BaseTheme">
@@ -760,6 +826,7 @@
         <item name="android:colorBackground">@color/colorBackgroundTwitch</item>
         <item name="colorOnBackground">@color/colorOnBackgroundTwitch</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTwitch</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarTwitch</item>
     </style>
 
     <style name="Robinhood" parent="BaseTheme">
@@ -774,6 +841,7 @@
         <item name="android:colorBackground">@color/colorBackgroundRobinhood</item>
         <item name="colorOnBackground">@color/colorOnBackgroundRobinhood</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRobinhood</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarRobinhood</item>
     </style>
 
     <style name="Facebook" parent="BaseTheme">
@@ -788,6 +856,7 @@
         <item name="android:colorBackground">@color/colorBackgroundFacebook</item>
         <item name="colorOnBackground">@color/colorOnBackgroundFacebook</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFacebook</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarFacebook</item>
     </style>
 
     <style name="Mint" parent="BaseTheme">
@@ -802,5 +871,6 @@
         <item name="android:colorBackground">@color/colorBackgroundMint</item>
         <item name="colorOnBackground">@color/colorOnBackgroundMint</item>
         <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMint</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMint</item>
     </style>
 </resources>

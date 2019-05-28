@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.stop_row.view.*
 
@@ -55,7 +56,9 @@ class StopWithDistanceAdapter(
                     lineView.text = line
                 }
 
-                setOnClickListener { openStop(StopDetailsFragmentArgs(stop.stop.type.name, stop.stop.stopId)) }
+                setOnClickListener(DebounceClickListener {
+                    openStop(StopDetailsFragmentArgs(stop.stop.type.name, stop.stop.stopId))
+                })
             }
         }
     }

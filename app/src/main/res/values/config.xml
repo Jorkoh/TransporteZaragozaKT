@@ -3,7 +3,7 @@
     <!-- The duration (in milliseconds) of a very short animation. -->
     <integer name="config_veryShortAnimTime">150</integer>
 
-    <!-- Stop details fab speed dial item's ids -->
+    <!-- stop_lottie details fab speed dial item's ids -->
     <item type="id" name="stop_details_fab_favorite"/>
     <item type="id" name="stop_details_fab_reminder"/>
     <item type="id" name="stop_details_fab_shortcut"/>

@@ -10,7 +10,7 @@
     <string name="stop_details_title" translatable="true">Stop Details</string>
     <string name="line_details_title" translatable="true">Line Details</string>
 
-    <!--Favorites-->
+    <!--favorites_lottie-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
     <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
     <string name="edit_button" translatable="true">Edit</string>
@@ -24,10 +24,12 @@
     <string name="cancel" translatable="true">Cancel</string>
     <string name="delete_favorite_title" translatable="true">Delete favorite</string>
     <string name="delete_favorite_message" translatable="true">Are you sure you want to delete this favorite? This cannot be undone.</string>
+    <string name="added_favorite_snackbar" translatable="true">Favorite added!</string>
+    <string name="removed_favorite_snackbar" translatable="true">Favorite removed.</string>
 
-    <!--Stop details-->
-    <string name="no_data_available" translatable="true">No data available :(</string>
-    <string name="no_data_available_suggestions" translatable="true">Please check your internet connection and try again. If the problem persists the city council service that provides this information may be undergoing maintenance.</string>
+    <!--stop_lottie details-->
+    <string name="no_data_available" translatable="true">No data available</string>
+    <string name="no_data_available_suggestions" translatable="true">Please check your internet connection and try again.\n\nIf the problem persists the city council service that provides this information may be undergoing maintenance. Some stops and lines don\'t receive time updates.</string>
     <string name="no_estimate" translatable="true">No estimate</string>
     <string name="minutes" translatable="true">minutes</string>
     <string name="minute" translatable="true">minute</string>
@@ -54,26 +56,31 @@
     <string name="delete_reminder_title" translatable="true">Delete reminder</string>
     <string name="delete_reminder_message" translatable="true">Are you sure you want to delete this reminder? This cannot be undone.</string>
     <string name="delete" translatable="true">Delete</string>
+    <string name="added_reminder_snackbar" translatable="true">Reminder added!</string>
+    <string name="removed_reminder_snackbar" translatable="true">Reminder removed.</string>
 
     <!--Map-->
     <string name="bus_chip" translatable="true">BUS</string>
     <string name="tram_chip" translatable="true">TRAM</string>
+    <string name="location_outside_zaragoza_bounds" translatable="true">Function not available outside of Zaragoza.</string>
 
-    <!--Search-->
+    <!--search_lottie-->
     <string name="search_view_hint" translatable="true">Name, destination or number…</string>
     <string name="search_nearby_stops" translatable="true">NEARBY</string>
     <string name="search_all_stops" translatable="true">EVERY STOP</string>
     <string name="search_lines" translatable="true">LINES</string>
     <string name="qr_scan_menu_item" translatable="true">Scan QR code</string>
     <string name="qr_scan_prompt" translatable="true">Place the stop QR code on the center of the screen</string>
+    <string name="qr_not_recognized" translatable="true">QR code not recognized.</string>
+    <string name="search_nearby_stops_empty" translatable="true">No stops nearby!</string>
 
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>
 
     <!--Preferences-->
-    <string name="preferences_version_number_key" translatable="false">com.jorkoh.transportezaragozakt.PREFERENCES_VERSION_NUMBER_KEY</string>
-    <string name="saved_bus_version_number_key" translatable="false">SAVED_BUS_VERSION_NUMBER_KEY</string>
-    <string name="saved_tram_version_number_key" translatable="false">SAVED_TRAM_VERSION_NUMBER_KEY</string>
+    <string name="preferences" translatable="false">com.jorkoh.transportezaragozakt.PREFERENCES</string>
+    <string name="saved_bus_stops_version_number_key" translatable="false">SAVED_BUS_STOPS_VERSION_NUMBER_KEY</string>
+    <string name="saved_tram_stops_version_number_key" translatable="false">SAVED_TRAM_STOPS_VERSION_NUMBER_KEY</string>
     <string name="saved_bus_lines_version_number_key" translatable="false">SAVED_BUS_LINES_VERSION_NUMBER_KEY</string>
     <string name="saved_tram_lines_version_number_key" translatable="false">SAVED_TRAM_LINES_VERSION_NUMBER_KEY</string>
     <string name="saved_bus_lines_locations_version_number_key" translatable="false">SAVED_BUS_LINES_LOCATIONS_VERSION_NUMBER_KEY</string>
@@ -85,23 +92,80 @@
     <string name="tram_filter_key" translatable="false">TRAM_FILTER_KEY</string>
     <string name="search_tab_position_key" translatable="false">SEARCH_TAB_POSITION_KEY</string>
 
+    <string name="themes_key" translatable="false">THEMES_KEY</string>
+    <string name="avanza_twitter_key" translatable="false">AVANZA_TWITTER_KEY</string>
+    <string name="recharge_card_key" translatable="false">RECHARGE_CARD_KEY</string>
+    <string name="libraries_and_credits_key" translatable="false">LIBRARIES_AND_CREDITS_KEY</string>
+    <string name="privacy_policy_key" translatable="false">PRIVACY_POLICY_KEY</string>
+
+    <!--More-->
+    <string name="style_category_title" translatable="true">Style</string>
+    <string name="dark_map_title" translatable="true">Dark map</string>
+    <string name="themes_title" translatable="true">Themes</string>
+    <string name="themes_message" translatable="true">Style the app with your favorite colors with one of this themes</string>
+    <string name="useful_links_title" translatable="true">Useful links</string>
+    <string name="recharge_card_title" translatable="true">Recharge card</string>
+    <string name="recharge_card_message" translatable="true">Recharge your monthly or yearly bus card online</string>
+    <string name="avanza_twitter_title" translatable="true">Avanza twitter</string>
+    <string name="avanza_twitter_message" translatable="true">Stay up to date with the latest news about the bus service through the official twitter</string>
+    <string name="about_category_title" translatable="true">About</string>
+    <string name="privacy_policy_title" translatable="true">Privacy policy</string>
+    <string name="libraries_and_credits_title" translatable="true">Libraries and credits</string>
+    <string name="libraries_and_credits_message" translatable="true">
+        <![CDATA[<ul>
+<li><a href="https://developer.android.com/jetpack/">Jetpack components</a>. Room, LiveData, ViewModels, Navigation, WorkManager and more. The building blocks of a modern Android application.</li>
+<li><a href="https://github.com/square/retrofit">Retrofit</a>.&nbsp;Type-safe HTTP client for Android, makes dealing with any API an enjoyable experience.</li>
+<li><a href="https://github.com/square/moshi">Moshi</a>. Acts as an adapter parsing the JSON Retrofit responses into objects.</li>
+<li><a href="https://github.com/InsertKoinIO/koin">Koin</a>. Dependency Injection for Kotlin.</li>
+<li><a href="https://github.com/parse-community/Parse-SDK-Android">Parse SDK for Android</a>. Allows the app to access the <a href="https://heroku.com">Heroku</a>+<a href="https://parseplatform.org">Parse</a>+<a href="https://www.mongodb.com">MongoDB</a> backend to update lines and stops data automatically without updating the app itself.</li>
+<li><a href="https://github.com/airbnb/lottie-android">Lottie</a>. Adobe After Effects vector animations rendered natively, used throughout the app to display empty states.</li>
+<li><a href="https://github.com/leinardi/FloatingActionButtonSpeedDial">FAB Speed Dial</a>. Implementation of the <a href="https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions">Material Design speed dial</a> used in the stop information destination. Created by <a href="https://github.com/leinardi/">Roberto Leinardi</a> and modified by me.</li>
+<li><a href="https://github.com/Daio-io/dresscode">Dresscode</a>. Tiny convenience library that allows theme changing on runtime. Created by <a href="https://github.com/Daio-io">Dai Williams</a>&nbsp;and modified by me.</li>
+<li><a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. All kinds of dialogs made easy thanks to <a href="https://github.com/afollestad">Aidan Follestad</a>. The rounded corners of the dialog you are reading right now are his work.</li>
+<li><a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Handling runtime permissions with less boilerplate by <a href="https://github.com/kirtan403">Kirtan403</a>. Modified by me to use Material Dialogs and other small stuff.</li>
+<li><a href="https://github.com/journeyapps/zxing-android-embedded">ZXing Android Embedded</a>. ZXing QR scanning capabilities without extra downloads.</li>
+<li>Multiple Icons by <a href="https://www.freepik.com/">Freepik</a> from <a href="https://www.flaticon.com">flaticon.com</a></li>
+</ul>]]>
+    </string>
+
     <!--Parse-->
     <string name="parse_application_id" translatable="false">transporte-zaragoza</string>
     <string name="parse_server" translatable="false">https://transporte-zaragoza.herokuapp.com/parse/</string>
     <string name="parse_bus_stops_collection" translatable="false">bus_stops</string>
     <string name="parse_tram_stops_collection" translatable="false">tram_stops</string>
+    <string name="parse_bus_lines_collection" translatable="false">bus_lines</string>
+    <string name="parse_tram_lines_collection" translatable="false">tram_lines</string>
+    <string name="parse_bus_lines_locations_collection" translatable="false">bus_lines_locations</string>
+    <string name="parse_tram_lines_locations_collection" translatable="false">tram_lines_locations</string>
     <string name="update_data_work_name" translatable="false">UPDATE_DATA_WORK_NAME</string>
 
     <!--Notifications-->
     <string name="notification_channel_id_reminders" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_REMINDERS</string>
     <string name="notification_channel_name_reminders" translatable="true">Reminders</string>
     <string name="notification_channel_description_reminders" translatable="true">User defined reminders with stop information. Manage and setup them at the reminders tab.</string>
+    <string name="notification_content_services_reminders" translatable="true">Preparing reminders…</string>
     <string name="notification_channel_id_services" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_SERVICES</string>
-    <string name="notification_content_services_reminders" translatable="true">Preparing reminders...</string>
     <string name="notification_channel_name_services" translatable="true">Services</string>
     <string name="notification_channel_description_services" translatable="true">Foreground service notifications.</string>
+    <string name="notification_channel_id_updates" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_UPDATES</string>
+    <string name="notification_channel_name_updates" translatable="true">Updates</string>
+    <string name="notification_channel_description_updates" translatable="true">Stop and line updates.</string>
     <string name="notification_error" translatable="true">Error obtaining data.</string>
     <string name="setup_reminders_work_name" translatable="false">SETUP_REMINDERS_WORK_NAME</string>
+
+    <!--Updates-->
+    <string name="updated_bus_stops_title" translatable="true">Updated bus stops data</string>
+    <string name="updated_bus_stops_message" translatable="true">New version number: </string>
+    <string name="updated_tram_stops_title" translatable="true">Updated tram stops data</string>
+    <string name="updated_tram_stops_message" translatable="true">New version number: </string>
+    <string name="updated_bus_lines_title" translatable="true">Updated bus lines data</string>
+    <string name="updated_bus_lines_message" translatable="true">New version number: </string>
+    <string name="updated_tram_lines_title" translatable="true">Updated tram lines data</string>
+    <string name="updated_tram_lines_message" translatable="true">New version number: </string>
+    <string name="updated_bus_lines_locations_title" translatable="true">Updated bus lines locations data</string>
+    <string name="updated_bus_lines_locations_message" translatable="true">New version number: </string>
+    <string name="updated_tram_lines_locations_title" translatable="true">Updated tram lines locations data</string>
+    <string name="updated_tram_lines_locations_message" translatable="true">New version number: </string>
 
     <!--Tags-->
     <string name="map_destination_map_fragment_tag" translatable="false">map_destination_map_fragment_tag</string>

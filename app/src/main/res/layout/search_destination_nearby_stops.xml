@@ -8,6 +8,7 @@
         tools:context="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+            android:scrollbars="none"
             android:id="@+id/search_recycler_view_nearby_stops"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,31 +21,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <!--<com.airbnb.lottie.LottieAnimationView-->
-            <!--android:id="@+id/no_search_result_animation_nearby_stops"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:lottie_rawRes="@raw/tumbleweed"-->
-            <!--app:lottie_loop="true"-->
-            <!--app:lottie_autoPlay="true"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent"-->
-            <!--app:layout_constraintVertical_bias="0.25"-->
-            <!--android:visibility="gone"/>-->
+    <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/no_search_result_animation_nearby_stops"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:lottie_scale="0.3"
+            app:lottie_rawRes="@raw/search_lottie"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/no_search_result_text_nearby_stops"
+            android:visibility="gone"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="0.2"/>
 
-    <!--<TextView-->
-            <!--android:id="@+id/no_search_result_text_nearby_stops"-->
-            <!--android:textColor="?colorOnBackground"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/no_favorites"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/no_search_result_animation_nearby_stops"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--android:textAppearance="@android:style/TextAppearance.Material.Headline"-->
-            <!--android:layout_marginTop="24dp"-->
-            <!--android:visibility="gone"/>-->
+    <TextView
+            android:id="@+id/no_search_result_text_nearby_stops"
+            android:textColor="?colorOnBackground"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/search_nearby_stops_empty"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/no_search_result_animation_nearby_stops"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

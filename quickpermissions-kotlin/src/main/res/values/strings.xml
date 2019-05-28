@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">QuickPermissions-Kotlin</string>
+    <string name="try_again" translatable="true">Try again</string>
+    <string name="cancel" translatable="true">Cancel</string>
 </resources>

@@ -19,6 +19,9 @@ abstract class RemindersDao{
     @Query("SELECT * FROM reminders")
     abstract fun getRemindersImmediate() : List<Reminder>
 
+    @Query ("SELECT COUNT(reminderId) FROM reminders")
+    abstract fun getReminderCount(): LiveData<Int>
+
     @Query("SELECT alias FROM reminders WHERE reminderId = :reminderId")
     abstract fun getReminderAlias(reminderId: Int): LiveData<String>
 

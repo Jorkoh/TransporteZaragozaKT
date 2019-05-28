@@ -62,6 +62,7 @@
                 android:textSize="18sp"/>
 
         <androidx.appcompat.widget.AppCompatButton
+                android:scrollbars="none"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:paddingStart="8dp"
@@ -77,6 +78,7 @@
                 />
 
         <androidx.appcompat.widget.AppCompatButton
+                android:scrollbars="none"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:paddingStart="8dp"

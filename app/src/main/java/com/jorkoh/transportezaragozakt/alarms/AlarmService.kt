@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.alarms
 
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.Service
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -9,6 +10,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
 import com.jorkoh.transportezaragozakt.db.StopDestination
@@ -20,6 +22,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import org.koin.android.ext.android.inject
+import kotlin.IllegalArgumentException
 
 
 class AlarmService : LifecycleService() {
@@ -47,19 +50,25 @@ class AlarmService : LifecycleService() {
                     .setContentTitle(getString(R.string.app_name))
                     .setContentText(getString(R.string.notification_content_services_reminders))
                     .build()
-            startForeground(1, foregroundServiceNotification)
-            //TODO CHECKOUT THIS ID
+            // -1 As the notification id of the service avoids conflict with the reminder notifications
+            startForeground(-1, foregroundServiceNotification)
         }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        requireNotNull(intent.extras).run {
-            stopId = requireNotNull(getString(STOP_ID_KEY_ALARM))
-            stopType = StopType.valueOf(requireNotNull(getString(STOP_TYPE_KEY_ALARM)))
-            reminderId = getInt(REMINDER_ID_KEY_ALARM)
+        Log.d("TESTING STUFF", "REMINDER - STARTING")
+        try {
+            requireNotNull(intent.extras).run {
+                stopId = requireNotNull(getString(STOP_ID_KEY_ALARM))
+                stopType = StopType.valueOf(requireNotNull(getString(STOP_TYPE_KEY_ALARM)))
+                reminderId = getInt(REMINDER_ID_KEY_ALARM)
+            }
+        } catch (e: IllegalArgumentException) {
+            Log.d("TESTING STUFF", "REMINDER - STOP EXCEPTION")
+            stopSelf()
         }
 
-        //TODO: Maybe it would make more sense to use the reminder alias instead of the stop title
+        Log.d("TESTING STUFF", "REMINDER - GETTING DATA StopId: $stopId, StopType: ${stopType.name}, ReminderId: $reminderId")
         CombinedLiveData(
             stopsRepository.loadStopDestinations(stopId, stopType),
             remindersRepository.loadReminderAlias(reminderId)
@@ -69,14 +78,17 @@ class AlarmService : LifecycleService() {
                     info.first as Resource<List<StopDestination>>,
                     info.second as String
                 )
+                Log.d("TESTING STUFF", "REMINDER - STOP NORMAL")
                 stopSelf()
             }
         })
 
-        return super.onStartCommand(intent, flags, startId)
+        super.onStartCommand(intent, flags, startId)
+        return Service.START_REDELIVER_INTENT
     }
 
     private fun createNotification(stopDestinations: Resource<List<StopDestination>>, reminderAlias: String) {
+        Log.d("TESTING STUFF", "REMINDER - CREATING NOTIFICATION StopId: $stopId, StopType: ${stopType.name}, ReminderId: $reminderId")
         //NavDeepLinkBuilder doesn't work with bottom navigation view navigation so let's create the deep link normally
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -88,6 +100,7 @@ class AlarmService : LifecycleService() {
         val reminderNotification =
             NotificationCompat.Builder(this, getString(R.string.notification_channel_id_reminders)).apply {
                 if (stopDestinations.status == Status.SUCCESS && !stopDestinations.data.isNullOrEmpty()) {
+                    Log.d("TESTING STUFF", "REMINDER - GOT DATA StopId: $stopId, StopType: ${stopType.name}, ReminderId: $reminderId")
                     val notificationRemoteViews = createRemoteViews(stopDestinations, reminderAlias)
                     setCustomHeadsUpContentView(notificationRemoteViews.contentRemoteView)    //256dp max
                     setCustomContentView(notificationRemoteViews.contentRemoteView)           //256dp max
@@ -95,6 +108,10 @@ class AlarmService : LifecycleService() {
                     setContentTitle("")
                     setContentText("")
                 } else {
+                    Log.d(
+                        "TESTING STUFF",
+                        "REMINDER - DIDN'T GET DATA StopId: $stopId, StopType: ${stopType.name}, ReminderId: $reminderId"
+                    )
                     setContentTitle(reminderAlias)
                     setContentText(getString(R.string.notification_error))
                 }
@@ -106,6 +123,7 @@ class AlarmService : LifecycleService() {
                 setChannelId(getString(R.string.notification_channel_id_reminders))
             }
         setupNotificationChannels(this)
+        Log.d("TESTING STUFF", "REMINDER - SENDING NOTIFICATION StopId: $stopId, StopType: ${stopType.name}, ReminderId: $reminderId")
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(reminderId, reminderNotification.build())
     }
 

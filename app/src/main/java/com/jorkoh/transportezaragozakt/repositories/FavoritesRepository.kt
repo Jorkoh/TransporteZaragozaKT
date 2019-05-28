@@ -13,6 +13,7 @@ interface FavoritesRepository {
     fun updateFavorite(stopId: String, alias: String, colorHex: String)
     fun restoreFavorite(stopId: String)
     fun moveFavorite(from: Int, to: Int)
+    fun loadFavoriteCount(): LiveData<Int>
 }
 
 class FavoritesRepositoryImplementation(
@@ -54,5 +55,9 @@ class FavoritesRepositoryImplementation(
                 stopsDao.moveFavorite(from, to)
             }
         }
+    }
+
+    override fun loadFavoriteCount() : LiveData<Int>{
+        return stopsDao.getFavoriteCount()
     }
 }

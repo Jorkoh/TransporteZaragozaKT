@@ -17,9 +17,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.zxing.integration.android.IntentIntegrator
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.search_destination.*
@@ -135,9 +138,17 @@ class SearchFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null && result.contents != null) {
-            val toastText = "Scanned from fragment: " + result.contents
-            Toast.makeText(activity, toastText, Toast.LENGTH_LONG).show()
+            if (result.contents.startsWith("http://www.urbanosdezaragoza.es/frm_esquemaparadatime.php?poste=")) {
+                val stopId = "tuzsa-" + result.contents.split("=")[1]
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchToStopDetails(
+                        StopType.BUS.name,
+                        stopId
+                    )
+                )
+            } else {
+                (requireActivity() as MainActivity).makeSnackbar(getString(R.string.qr_not_recognized))
+            }
         }
-        fragmentManager?.popBackStack()
     }
 }

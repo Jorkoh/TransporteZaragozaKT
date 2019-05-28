@@ -16,6 +16,7 @@ interface RemindersRepository {
     fun moveReminder(from : Int, to : Int)
     fun deleteReminder(reminderId: Int)
     fun loadReminderAlias(reminderId: Int): LiveData<String>
+    fun loadReminderCount(): LiveData<Int>
 }
 
 class RemindersRepositoryImplementation(
@@ -77,5 +78,9 @@ class RemindersRepositoryImplementation(
 
     override fun loadReminderAlias(reminderId: Int): LiveData<String> {
         return remindersDao.getReminderAlias(reminderId)
+    }
+
+    override fun loadReminderCount() : LiveData<Int>{
+        return remindersDao.getReminderCount()
     }
 }

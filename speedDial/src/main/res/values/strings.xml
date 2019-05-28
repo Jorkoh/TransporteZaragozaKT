@@ -22,4 +22,7 @@
     <string name="speeddial_scrolling_view_snackbar_behavior" tools:ignore="UnusedResources">
         com.leinardi.android.speeddial.SpeedDialView$ScrollingViewSnackbarBehavior
     </string>
+    <string name="speeddial_custom_behavior" tools:ignore="UnusedResources">
+        com.leinardi.android.speeddial.SpeedDialView$CustomBehavior
+    </string>
 </resources>

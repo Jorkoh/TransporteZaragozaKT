@@ -107,17 +107,14 @@ data class Line(
 
 @Entity(
     tableName = "lineLocations",
-    primaryKeys = ["lineId", "position"],
-    foreignKeys = [ForeignKey(
-        entity = Line::class,
-        parentColumns = ["lineId"],
-        childColumns = ["lineId"],
-        onDelete = ForeignKey.CASCADE
-    )]
+    primaryKeys = ["lineId", "position"]
 )
 data class LineLocation(
     @ColumnInfo(name = "lineId")
     var lineId: String,
+
+    @ColumnInfo(name = "type")
+    var type: LineType,
 
     @ColumnInfo(name = "position")
     var position: Int,

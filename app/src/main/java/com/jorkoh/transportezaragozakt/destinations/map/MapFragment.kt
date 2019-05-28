@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -104,14 +105,18 @@ class MapFragment : Fragment() {
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
         runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                if (location != null && ZARAGOZA_BOUNDS.contains(location.toLatLng())) {
-                    //Smoothly pan the user towards their position, reset the zoom level and bearing
-                    val cameraPosition = CameraPosition.builder()
-                        .target(location.toLatLng())
-                        .zoom(DEFAULT_ZOOM)
-                        .bearing(0f)
-                        .build()
-                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                location?.let {
+                    if (ZARAGOZA_BOUNDS.contains(location.toLatLng())) {
+                        //Smoothly pan the user towards their position, reset the zoom level and bearing
+                        val cameraPosition = CameraPosition.builder()
+                            .target(location.toLatLng())
+                            .zoom(DEFAULT_ZOOM)
+                            .bearing(0f)
+                            .build()
+                        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                    }else{
+                        (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
+                    }
                 }
             }
         }
@@ -183,14 +188,14 @@ class MapFragment : Fragment() {
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.map_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment()
+            mapFragment = CustomSupportMapFragment.newInstance(true, false)
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))
                 .commit()
             childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync { map ->
-            setupMap(map, map.cameraPosition.target.run { latitude == 0.0 && longitude == 0.0 })
+            setupMap(map, !ZARAGOZA_BOUNDS.contains(map.cameraPosition.target))
             mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
                 map.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(

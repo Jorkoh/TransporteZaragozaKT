@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.db
 
 import android.content.Context
+import android.preference.PreferenceManager
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.jorkoh.transportezaragozakt.R
@@ -55,6 +56,9 @@ abstract class StopsDao {
     @Query("SELECT favoriteStops.stopId, stops.type, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.stopId = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
     abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
 
+    @Query ("SELECT COUNT(*) FROM favoriteStops")
+    abstract fun getFavoriteCount(): LiveData<Int>
+
     @Query("SELECT stopId, position FROM favoriteStops ORDER BY favoriteStops.position ASC")
     abstract fun getFavoritePositions(): List<FavoritePositions>
 
@@ -78,7 +82,7 @@ abstract class StopsDao {
     abstract fun getStops(): LiveData<List<Stop>>
 
     @Query("SELECT * FROM stops WHERE stopId IN (:stopIds)")
-    abstract fun getStops(stopIds : List<String>): LiveData<List<Stop>>
+    abstract fun getStops(stopIds: List<String>): LiveData<List<Stop>>
 
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
     abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
@@ -98,11 +102,17 @@ abstract class StopsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertLines(line: List<Line>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertLineLocations(line: List<LineLocation>)
+    @Query("DELETE FROM lines where type = :lineType")
+    abstract fun clearLines(lineType: LineType)
 
-    @Query("DELETE FROM stops")
-    abstract fun clearStops()
+    @Query("DELETE FROM lineLocations where type = :lineType")
+    abstract fun clearLinesLocations(lineType: LineType)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertLinesLocations(line: List<LineLocation>)
+
+    @Query("DELETE FROM stops where type = :stopType")
+    abstract fun clearStops(stopType: StopType)
 
     @Query("DELETE FROM stopDestinations WHERE stopId = :stopId")
     abstract fun deleteStopDestinations(stopId: String)
@@ -118,13 +128,11 @@ abstract class StopsDao {
         val initialBusLineLocations = getInitialBusLineLocations(context)
         val initialTramLineLocations = getInitialTramLineLocations(context)
 
-        val sharedPreferences = context.getSharedPreferences(
-            context.getString(R.string.preferences_version_number_key),
-            Context.MODE_PRIVATE
-        )
-        with(sharedPreferences.edit()) {
-            putInt(context.getString(R.string.saved_bus_version_number_key), initialBusStops.version)
-            putInt(context.getString(R.string.saved_tram_version_number_key), initialTramStops.version)
+        with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
+            //This should run before the update data worker, if it doesn't there may be problems with the data versions
+            //It should because the data worker forces the database creation and this callback uses the same executor
+            putInt(context.getString(R.string.saved_bus_stops_version_number_key), initialBusStops.version)
+            putInt(context.getString(R.string.saved_tram_stops_version_number_key), initialTramStops.version)
             putInt(context.getString(R.string.saved_bus_lines_version_number_key), initialBusLines.version)
             putInt(context.getString(R.string.saved_tram_lines_version_number_key), initialTramLines.version)
             putInt(context.getString(R.string.saved_bus_lines_locations_version_number_key), initialBusLineLocations.version)
@@ -139,16 +147,26 @@ abstract class StopsDao {
         }
         insertStops(initialBusStops.stops.plus(initialTramStops.stops))
         insertLines(initialBusLines.lines.plus(initialTramLines.lines))
-        insertLineLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations))
+        insertLinesLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations))
     }
 
-    fun updateStops(stops: List<Stop>) {
+    fun updateStops(stops: List<Stop>, type : StopType) {
         stops.forEach { stop ->
             if (stopIsFavoriteImmediate(stop.stopId)) {
                 stop.isFavorite = true
             }
         }
-        clearStops()
+        clearStops(type)
         insertStops(stops)
+    }
+
+    fun updateLines(lines: List<Line>, type : LineType) {
+        clearLines(type)
+        insertLines(lines)
+    }
+
+    fun updateLinesLocations(linesLocations: List<LineLocation>, type : LineType) {
+        clearLinesLocations(type)
+        insertLinesLocations(linesLocations)
     }
 }

@@ -37,6 +37,7 @@ import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragmentD
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.destinations.search.SearchFragmentDirections
 import kotlinx.android.synthetic.main.main_container.*
+import kotlinx.android.synthetic.main.main_container.view.*
 
 
 class StopDetailsFragment : Fragment() {
@@ -82,8 +83,9 @@ class StopDetailsFragment : Fragment() {
             }
         }
 
-        no_data_suggestions_text?.visibility = newVisibility
-        no_data_text?.visibility = newVisibility
+        stop_details_no_data_animation?.visibility = newVisibility
+        stop_details_no_data_text?.visibility = newVisibility
+        stop_details_no_data_help?.visibility = newVisibility
     }
 
     private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->
@@ -99,7 +101,7 @@ class StopDetailsFragment : Fragment() {
             R.string.fab_add_favorite
         }
 
-        stop_details_fab.replaceActionItem(
+        requireActivity().stop_details_fab.replaceActionItem(
             SpeedDialActionItem.Builder(R.id.stop_details_fab_favorite, newIcon)
                 .setLabel(newLabel)
                 .create(),
@@ -107,8 +109,10 @@ class StopDetailsFragment : Fragment() {
         )
     }
 
-    private val onSwipeRefreshListener = SwipeRefreshLayout.OnRefreshListener {
-        stopDetailsVM.refreshStopDestinations()
+    private val noDataOnClickListener = View.OnClickListener {
+        MaterialDialog(requireContext()).show {
+            message(R.string.no_data_available_suggestions)
+        }
     }
 
     override fun onCreateView(
@@ -117,14 +121,18 @@ class StopDetailsFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.stop_details_destination, container, false)
         setHasOptionsMenu(true)
-        setupFab(rootView)
+        setupFab()
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = stopDestinationsAdapter
         }
 
-        rootView.swiperefresh.setOnRefreshListener(onSwipeRefreshListener)
+        rootView.stop_details_no_data_text.setOnClickListener(noDataOnClickListener)
+        rootView.stop_details_no_data_help.setOnClickListener(noDataOnClickListener)
+        rootView.swiperefresh.setOnRefreshListener {
+            stopDetailsVM.refreshStopDestinations()
+        }
 
         return rootView
     }
@@ -149,15 +157,15 @@ class StopDetailsFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        requireActivity().main_toolbar?.let {toolbar ->
+        requireActivity().main_toolbar?.let { toolbar ->
             (toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
             toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.stop_details_destination_menu)
         }
     }
 
-    private fun setupFab(rootView: View) {
-        rootView.stop_details_fab.apply {
+    private fun setupFab() {
+        requireActivity().stop_details_fab?.apply {
             addActionItem(
                 SpeedDialActionItem.Builder(
                     R.id.stop_details_fab_favorite,

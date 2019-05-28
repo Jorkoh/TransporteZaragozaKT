@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.line_row.view.*
@@ -40,19 +41,20 @@ class LineAdapter(
                 line_text_line.text = line.name
 
                 first_destination_line.text = line.destinations[0]
-                if(line.destinations.count() > 1){
+                if (line.destinations.count() > 1) {
                     second_destination_line.text = line.destinations[1]
                     second_destination_line.visibility = View.VISIBLE
-                }else{
+                } else {
                     second_destination_line.visibility = View.GONE
                 }
 
-                setOnClickListener { openLine(LineDetailsFragmentArgs(line.type.name, line.lineId)) }
+                setOnClickListener(DebounceClickListener {
+                    openLine(LineDetailsFragmentArgs(line.type.name, line.lineId))
+                })
             }
         }
     }
 
-    //TODO: Maybe it would be worth it to make a data class without the destinations since they are not used here
     private var displayedLines: List<Line> = listOf()
     private var linesFull: List<Line> = listOf()
 
@@ -78,7 +80,12 @@ class LineAdapter(
                 linesFull
             } else {
                 val filterPattern = constraint.toString().trim()
-                linesFull.filter { (it.name + it.destinations[0] + it.destinations.getOrElse(1) {""}).contains(filterPattern, ignoreCase = true) }
+                linesFull.filter {
+                    (it.name + it.destinations[0] + it.destinations.getOrElse(1) { "" }).contains(
+                        filterPattern,
+                        ignoreCase = true
+                    )
+                }
             }
             @Suppress("UNCHECKED_CAST")
             //Flag to control wheter the recycler view should scroll to the top

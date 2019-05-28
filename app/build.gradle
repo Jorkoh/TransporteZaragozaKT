@@ -40,11 +40,13 @@ dependencies {
     implementation deps.androidx.constraintLayout
     implementation deps.androidx.recyclerView
     implementation deps.androidx.viewPager
+    implementation deps.androidx.preference
 
     implementation 'androidx.core:core-ktx:1.2.0-alpha01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
 
     //Room
     implementation deps.androidx.room.runtime
@@ -78,9 +80,9 @@ dependencies {
     implementation project(':dresscode')
 
     //Material Dialogs
-    implementation 'com.afollestad.material-dialogs:core:2.8.1'
-    implementation 'com.afollestad.material-dialogs:input:2.8.1'
-    implementation 'com.afollestad.material-dialogs:color:2.8.1'
+    implementation 'com.afollestad.material-dialogs:core:3.0.0-beta2'
+    implementation 'com.afollestad.material-dialogs:input:3.0.0-beta2'
+    implementation 'com.afollestad.material-dialogs:color:3.0.0-beta2'
     implementation project(':datetime')
 
     //Quick Permissions
@@ -97,7 +99,6 @@ dependencies {
     //Koin
     implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
 
     testImplementation deps.junit
     androidTestImplementation 'androidx.test:runner:1.1.1'

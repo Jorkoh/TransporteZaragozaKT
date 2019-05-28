@@ -31,9 +31,7 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MA
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MIN_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
-import com.jorkoh.transportezaragozakt.destinations.map.MapFragmentDirections
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
@@ -41,7 +39,6 @@ import kotlinx.android.synthetic.main.line_details_destination.view.*
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.map_info_window.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LineDetailsFragment : Fragment() {
 
@@ -154,7 +151,7 @@ class LineDetailsFragment : Fragment() {
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment(displayFilters = false, extraBottomMargin = true)
+            mapFragment = CustomSupportMapFragment.newInstance(displayFilters = false, bottomMargin = true)
             childFragmentManager.beginTransaction()
                 .add(
                     R.id.map_fragment_container_line,
@@ -165,7 +162,7 @@ class LineDetailsFragment : Fragment() {
             childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync { map ->
-            setupMap(map, map.cameraPosition.target.run { latitude == 0.0 && longitude == 0.0 })
+            setupMap(map, !ZARAGOZA_BOUNDS.contains(map.cameraPosition.target))
             mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
                 map.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
@@ -192,7 +189,6 @@ class LineDetailsFragment : Fragment() {
         map.clear()
         styleMap()
 
-        //TODO NEED TO STORE THE STOP ON THE TAG OR JUST THE ARGS
         map.setOnInfoWindowClickListener { marker ->
             val stop = marker.tag as Stop
             findNavController().navigate(
@@ -206,6 +202,9 @@ class LineDetailsFragment : Fragment() {
         map.setOnMarkerClickListener { marker ->
             lineDetailsVM.selectedStopId.value = (marker.tag as Stop).stopId
             false
+        }
+        map.setOnInfoWindowCloseListener {
+            lineDetailsVM.selectedStopId.value = ""
         }
         createBaseMarkers()
 

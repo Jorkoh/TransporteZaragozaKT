@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:key="@string/preferences">
+
+    <PreferenceCategory
+            android:title="@string/style_category_title"
+            app:iconSpaceReserved="false">
+
+        <SwitchPreference
+                app:key="@string/is_dark_map_key"
+                app:title="@string/dark_map_title"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
+                app:key="@string/themes_key"
+                app:title="@string/themes_title"
+                app:summary="@string/themes_message"
+                app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/useful_links_title"
+            app:iconSpaceReserved="false">
+
+        <Preference
+                app:key="@string/recharge_card_key"
+                app:title="@string/recharge_card_title"
+                android:summary="@string/recharge_card_message"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
+                app:key="@string/avanza_twitter_key"
+                app:title="@string/avanza_twitter_title"
+                android:summary="@string/avanza_twitter_message"
+                app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="@string/about_category_title"
+            app:iconSpaceReserved="false">
+
+        <Preference
+                app:key=""
+                app:title="F.A.Q."
+                app:iconSpaceReserved="false"/>
+
+        <Preference
+                app:key="@string/privacy_policy_key"
+                app:title="@string/privacy_policy_title"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
+                app:key="@string/libraries_and_credits_key"
+                app:title="@string/libraries_and_credits_title"
+                app:iconSpaceReserved="false"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

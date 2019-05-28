@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.favorite_row.view.*
 
@@ -62,7 +63,9 @@ class FavoriteAdapter(
                     lineView.text = line
                 }
 
-                setOnClickListener { openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId)) }
+                setOnClickListener(DebounceClickListener {
+                    openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId))
+                })
                 edit_view_favorite.setOnClickListener {
                     PopupMenu(context, it).apply {
                         menu.apply {

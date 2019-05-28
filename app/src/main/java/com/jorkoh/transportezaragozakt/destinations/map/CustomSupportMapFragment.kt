@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.maps.SupportMapFragment
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
@@ -19,10 +18,24 @@ import kotlinx.android.synthetic.main.map_filters.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class CustomSupportMapFragment(
-    private val displayFilters: Boolean = true,
-    private val extraBottomMargin: Boolean = false
-) : SupportMapFragment() {
+class CustomSupportMapFragment : SupportMapFragment() {
+
+    companion object {
+        const val DISPLAY_FILTERS_KEY = "DISPLAY_FILTERS_KEY"
+        const val BOTTOM_MARGIN_KEY = "BOTTOM_MARGIN_KEY"
+
+        fun newInstance(displayFilters: Boolean = true, bottomMargin: Boolean = false): CustomSupportMapFragment {
+            val instance = CustomSupportMapFragment()
+            instance.arguments = Bundle().apply {
+                putBoolean(DISPLAY_FILTERS_KEY, displayFilters)
+                putBoolean(BOTTOM_MARGIN_KEY, bottomMargin)
+            }
+            return instance
+        }
+    }
+
+    private var displayFilters: Boolean = true
+    private var bottomMargin: Boolean = false
 
     private val mapVM: MapViewModel by sharedViewModel()
 
@@ -45,8 +58,14 @@ class CustomSupportMapFragment(
         traffic_button.setImageResource(if (enabled) R.drawable.ic_layers_clear_black_24dp else R.drawable.ic_traffic_black_24dp)
     }
 
-    override fun onActivityCreated(p0: Bundle?) {
-        super.onActivityCreated(p0)
+    override fun onCreate(p0: Bundle?) {
+        super.onCreate(p0)
+        displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
+        bottomMargin = arguments?.getBoolean(BOTTOM_MARGIN_KEY) ?: false
+    }
+
+    override fun onActivityCreated(bundle: Bundle?) {
+        super.onActivityCreated(bundle)
 
         if (displayFilters) {
             mapVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
@@ -96,7 +115,7 @@ class CustomSupportMapFragment(
             mapVM.setTrafficEnabled(mapVM.trafficEnabled.value != true)
         }
         wrapper.addView(mapExtraControls)
-        if (extraBottomMargin) {
+        if (bottomMargin) {
             wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
                 bottomMargin = 160.toPx()
             }

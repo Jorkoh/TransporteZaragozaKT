@@ -11,7 +11,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class StopDestinationsPagerAdapter(val fragmentManager: FragmentManager, private val line: Line) :
+class StopDestinationsPagerAdapter(private val fragmentManager: FragmentManager, private val line: Line) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment =

@@ -22,6 +22,7 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZA
 import com.jorkoh.transportezaragozakt.destinations.map.toLatLng
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -92,14 +93,24 @@ class NearbyStopsFragment : Fragment() {
         return rootView
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         setupLocationStuff()
     }
 
     @SuppressLint("MissingPermission")
     private fun setupLocationStuff() {
-        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
+        runWithPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            options = QuickPermissionsOptions(
+                handleRationale = true,
+                rationaleMessage = getString(R.string.location_rationale),
+                handlePermanentlyDenied = false,
+                permissionsDeniedMethod = {
+                    updateEmptyViewVisibility(true)
+                }
+            )
+        ) {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
             // Since this is only active while the nearby stops viewpager is on the screen
             // it shouldn't be too heavy on the battery
@@ -125,12 +136,12 @@ class NearbyStopsFragment : Fragment() {
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {
-//        val newVisibility = if (isEmpty) {
-//            View.VISIBLE
-//        } else {
-//            View.GONE
-//        }
-//        view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
-//        view?.no_search_result_text_nearby_stops?.visibility = newVisibility
+        val newVisibility = if (isEmpty) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
+        view?.no_search_result_text_nearby_stops?.visibility = newVisibility
     }
 }

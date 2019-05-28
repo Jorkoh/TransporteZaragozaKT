@@ -67,7 +67,6 @@ class ThemePickerAdapter(private val themes: List<ThemePickerFragment.CustomThem
         val title = holder.find<TextView>(R.id.title)
         title.text = theme.name
 
-        //TODO
         if (theme.isMatchingColorScheme(context)) {
             title.setBackgroundColor(ContextCompat.getColor(parent.context, R.color.colorThemeSelected))
             title.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.theme_check, 0)

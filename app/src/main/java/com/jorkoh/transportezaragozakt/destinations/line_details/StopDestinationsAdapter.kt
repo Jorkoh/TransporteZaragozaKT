@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.stop_row.view.*
 
@@ -52,7 +53,9 @@ class StopDestinationsAdapter(
                     lineView.text = line
                 }
 
-                setOnClickListener { selectStop(stop.stopId) }
+                setOnClickListener(DebounceClickListener {
+                    selectStop(stop.stopId)
+                })
             }
         }
     }
@@ -60,7 +63,6 @@ class StopDestinationsAdapter(
     private var stops: List<Stop> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopViewHolder {
-        //TODO PROBABLY CHANGE THIS LAYOUT
         val view = LayoutInflater.from(parent.context).inflate(R.layout.stop_row, parent, false) as View
         return StopViewHolder(view)
     }
