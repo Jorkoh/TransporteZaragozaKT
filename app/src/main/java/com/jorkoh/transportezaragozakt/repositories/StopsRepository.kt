@@ -1,7 +1,6 @@
 package com.jorkoh.transportezaragozakt.repositories
 
 import android.location.Location
-import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData

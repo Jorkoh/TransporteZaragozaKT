@@ -3,7 +3,6 @@ package com.jorkoh.transportezaragozakt.repositories
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.repositories.util.SharedPreferencesLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.booleanLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.intLiveData
 

@@ -3,14 +3,18 @@ package com.jorkoh.transportezaragozakt.destinations.reminders
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.db.ReminderExtended
+import com.jorkoh.transportezaragozakt.db.StopType
 import kotlinx.android.synthetic.main.reminder_row.view.*
 
 class RemindersAdapter(

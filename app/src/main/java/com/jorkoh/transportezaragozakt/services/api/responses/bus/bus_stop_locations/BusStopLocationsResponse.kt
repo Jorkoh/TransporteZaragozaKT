@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations
+package com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop_locations
 
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.Stop

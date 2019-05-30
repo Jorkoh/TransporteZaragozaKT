@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.toLatLng

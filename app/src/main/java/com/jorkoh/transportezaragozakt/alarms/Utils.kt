@@ -1,17 +1,15 @@
 package com.jorkoh.transportezaragozakt.alarms
 
 import android.annotation.SuppressLint
-import com.jorkoh.transportezaragozakt.db.Reminder
 import android.app.AlarmManager
-import android.content.Context.ALARM_SERVICE
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import com.jorkoh.transportezaragozakt.db.DaysOfWeek
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.db.Reminder
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 // Alarms are created (or recreated) when a reminder is created, updated or

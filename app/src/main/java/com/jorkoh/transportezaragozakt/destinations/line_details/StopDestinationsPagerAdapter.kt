@@ -1,14 +1,12 @@
 package com.jorkoh.transportezaragozakt.destinations.line_details
 
-import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.jorkoh.transportezaragozakt.db.Line
-import android.view.ViewGroup
-import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
+import com.jorkoh.transportezaragozakt.db.Line
 
 
 class StopDestinationsPagerAdapter(private val fragmentManager: FragmentManager, private val line: Line) :

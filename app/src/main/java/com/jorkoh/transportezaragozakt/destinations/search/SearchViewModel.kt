@@ -1,15 +1,16 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
 import android.location.Location
-import androidx.lifecycle.*
-import com.google.android.gms.maps.model.LatLng
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
 import com.jorkoh.transportezaragozakt.destinations.map.toLatLng
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
-import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
 
 class SearchViewModel(
     private val stopsRepository: StopsRepository,

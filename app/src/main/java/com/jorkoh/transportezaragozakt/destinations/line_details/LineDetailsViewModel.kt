@@ -1,12 +1,9 @@
 package com.jorkoh.transportezaragozakt.destinations.line_details
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.*
-import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 
 class LineDetailsViewModel(

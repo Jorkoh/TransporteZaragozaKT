@@ -2,8 +2,9 @@ package com.jorkoh.transportezaragozakt.destinations.reminders
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,7 +16,6 @@ import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
@@ -83,7 +83,7 @@ class RemindersFragment : Fragment() {
             title(R.string.edit_reminder_dialog_title)
             colorChooser(
                 materialColors,
-                initialSelection = if (reminder.colorHex.isNullOrEmpty()) Color.TRANSPARENT else Color.parseColor(
+                initialSelection = if (reminder.colorHex.isEmpty()) Color.TRANSPARENT else Color.parseColor(
                     reminder.colorHex
                 )
             ) { _, color ->

@@ -3,10 +3,10 @@ package com.jorkoh.transportezaragozakt.tasks
 import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import androidx.work.*
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.R
@@ -28,8 +28,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         // May fire multiple times?
         // https://issuetracker.google.com/issues/119886476
-        Log.d("TESTING STUFF", "Update data worker fired!")
-
         checkBusStopsUpdate()
         checkTramStopsUpdate()
         checkBusLinesUpdate()
@@ -45,9 +43,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { busStopDocument, e ->
-                if (e != null) {
-                    Log.d("TESTING STUFF", "Retrieving new bus stops failed", e)
-                } else {
+                if (e == null) {
                     checkBusStopsUpdate(busStopDocument)
                 }
             }
@@ -59,9 +55,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { tramStopDocument, e ->
-                if (e != null) {
-                    Log.d("TESTING STUFF", "Retrieving new tram stops failed", e)
-                } else {
+                if (e == null) {
                     checkTramStopsUpdate(tramStopDocument)
                 }
             }
@@ -73,9 +67,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { busLinesDocument, e ->
-                if (e != null) {
-                    Log.d("TESTING STUFF", "Retrieving new bus lines failed", e)
-                } else {
+                if (e == null) {
                     checkBusLinesUpdate(busLinesDocument)
                 }
             }
@@ -87,9 +79,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { tramLinesDocument, e ->
-                if (e != null) {
-                    Log.d("TESTING STUFF", "Retrieving new tram lines failed", e)
-                } else {
+                if (e == null) {
                     checkTramLinesUpdate(tramLinesDocument)
                 }
             }
@@ -101,9 +91,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { busLinesLocationsDocument, e ->
-                if (e != null) {
-                    Log.d("TESTING STUFF", "Retrieving new bus lines locations failed", e)
-                } else {
+                if (e == null) {
                     checkBusLinesLocationsUpdate(busLinesLocationsDocument)
                 }
             }
@@ -115,9 +103,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { tramLinesLocationsDocument, e ->
-                if (e != null) {
-                    Log.d("TESTING STUFF", "Retrieving new tram lines locations failed", e)
-                } else {
+                if (e == null) {
                     checkTramLinesLocationsUpdate(tramLinesLocationsDocument)
                 }
             }
@@ -125,10 +111,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun checkBusStopsUpdate(busStopDocument: ParseObject) {
-        if (!isNewBusStopsVersion(busStopDocument)) {
-            Log.d("TESTING STUFF", "Bus stops data is up to date")
-        } else {
-            Log.d("TESTING STUFF", "Updating bus stops data")
+        if (isNewBusStopsVersion(busStopDocument)) {
             updateBusStops(busStopDocument)
 
             val updateNotification =
@@ -148,10 +131,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun checkTramStopsUpdate(tramStopDocument: ParseObject) {
-        if (!isNewTramStopsVersion(tramStopDocument)) {
-            Log.d("TESTING STUFF", "Tram stops data is up to date")
-        } else {
-            Log.d("TESTING STUFF", "Updating tram stops data")
+        if (isNewTramStopsVersion(tramStopDocument)) {
             updateTramStops(tramStopDocument)
 
             val updateNotification =
@@ -171,10 +151,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun checkBusLinesUpdate(busLinesDocument: ParseObject) {
-        if (!isNewBusLinesVersion(busLinesDocument)) {
-            Log.d("TESTING STUFF", "Bus lines data is up to date")
-        } else {
-            Log.d("TESTING STUFF", "Updating bus lines data")
+        if (isNewBusLinesVersion(busLinesDocument)) {
             updateBusLines(busLinesDocument)
 
             val updateNotification =
@@ -194,10 +171,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun checkTramLinesUpdate(tramLinesDocument: ParseObject) {
-        if (!isNewTramLinesVersion(tramLinesDocument)) {
-            Log.d("TESTING STUFF", "Tram lines data is up to date")
-        } else {
-            Log.d("TESTING STUFF", "Updating tram lines data")
+        if (isNewTramLinesVersion(tramLinesDocument)) {
             updateTramLines(tramLinesDocument)
 
             val updateNotification =
@@ -217,10 +191,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun checkBusLinesLocationsUpdate(busLinesLocationsDocument: ParseObject) {
-        if (!isNewBusLinesLocationsVersion(busLinesLocationsDocument)) {
-            Log.d("TESTING STUFF", "Bus lines locations data is up to date")
-        } else {
-            Log.d("TESTING STUFF", "Updating bus lines locations data")
+        if (isNewBusLinesLocationsVersion(busLinesLocationsDocument)) {
             updateBusLinesLocations(busLinesLocationsDocument)
 
             val updateNotification =
@@ -244,10 +215,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     }
 
     private fun checkTramLinesLocationsUpdate(tramLinesLocationsDocument: ParseObject) {
-        if (!isNewTramLinesLocationsVersion(tramLinesLocationsDocument)) {
-            Log.d("TESTING STUFF", "Tram lines locations data is up to date")
-        } else {
-            Log.d("TESTING STUFF", "Updating tram lines locations data")
+        if (isNewTramLinesLocationsVersion(tramLinesLocationsDocument)) {
             updateTramLinesLocations(tramLinesLocationsDocument)
 
             val updateNotification =

@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt
 
-import android.content.Context
 import android.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -9,14 +8,13 @@ import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
-import com.jorkoh.transportezaragozakt.destinations.more.MoreViewModel
 import com.jorkoh.transportezaragozakt.destinations.reminders.RemindersViewModel
 import com.jorkoh.transportezaragozakt.destinations.search.SearchViewModel
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsViewModel
 import com.jorkoh.transportezaragozakt.repositories.*
+import com.jorkoh.transportezaragozakt.repositories.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsViewModel
-import com.jorkoh.transportezaragozakt.repositories.util.LiveDataCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import org.koin.android.ext.koin.androidApplication
@@ -86,7 +84,6 @@ val appModule = module {
     viewModel { MapViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }
-    viewModel { MoreViewModel(get()) }
     viewModel { StopDetailsViewModel(get(), get(), get()) }
     viewModel { LineDetailsViewModel(get()) }
     viewModel { MainActivityViewModel(get(), get()) }

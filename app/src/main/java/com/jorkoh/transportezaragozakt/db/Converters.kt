@@ -5,10 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import org.koin.standalone.KoinComponent
-import java.lang.StringBuilder
 import java.util.*
-import kotlin.collections.ArrayList
 
 object Converters {
 

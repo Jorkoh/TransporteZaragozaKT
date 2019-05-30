@@ -25,7 +25,7 @@ fun getInitialBusStops(context: Context): InitialStopsMessage {
             )
         )
     }
-    return InitialStopsMessage(busStopEntities, busStopsJson.version.toInt())
+    return InitialStopsMessage(busStopEntities, busStopsJson.version)
 }
 
 fun getInitialTramStops(context: Context): InitialStopsMessage {
@@ -66,7 +66,7 @@ fun getInitialBusLines(context: Context): InitialLinesMessage {
             )
         )
     }
-    return InitialLinesMessage(busLinesEntities, busLinesJson.version.toInt())
+    return InitialLinesMessage(busLinesEntities, busLinesJson.version)
 }
 
 fun getInitialTramLines(context: Context): InitialLinesMessage {
@@ -86,7 +86,7 @@ fun getInitialTramLines(context: Context): InitialLinesMessage {
             )
         )
     }
-    return InitialLinesMessage(tramLinesEntities, tramLinesJson.version.toInt())
+    return InitialLinesMessage(tramLinesEntities, tramLinesJson.version)
 }
 
 fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
@@ -106,7 +106,7 @@ fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
             )
         }
     }
-    return InitialLineLocationsMessage(busLinesLocationsEntities, busLinesLocationsJson.version.toInt())
+    return InitialLineLocationsMessage(busLinesLocationsEntities, busLinesLocationsJson.version)
 }
 
 fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
@@ -126,7 +126,7 @@ fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
             )
         }
     }
-    return InitialLineLocationsMessage(tramLinesLocationsEntities, tramLinesLocationsJson.version.toInt())
+    return InitialLineLocationsMessage(tramLinesLocationsEntities, tramLinesLocationsJson.version)
 }
 
 

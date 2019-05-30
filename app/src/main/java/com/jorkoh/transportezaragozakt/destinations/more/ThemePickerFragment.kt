@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.destinations.more
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
 import androidx.fragment.app.Fragment
 import com.jorkoh.transportezaragozakt.R
-import android.graphics.Color
 import daio.io.dresscode.dressCodeStyleId
 import daio.io.dresscode.getDressCodes
 

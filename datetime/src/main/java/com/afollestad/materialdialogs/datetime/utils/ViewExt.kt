@@ -17,9 +17,11 @@
 
 package com.afollestad.materialdialogs.datetime.utils
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
+import android.util.TypedValue
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.TimePicker
@@ -29,10 +31,6 @@ import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.R
 import com.afollestad.viewpagerdots.DotsIndicator
-import android.R.attr.data
-import android.content.Context
-import android.content.res.TypedArray
-import android.util.TypedValue
 
 
 internal fun TimePicker.hour(): Int = if (isNougat()) hour else currentHour

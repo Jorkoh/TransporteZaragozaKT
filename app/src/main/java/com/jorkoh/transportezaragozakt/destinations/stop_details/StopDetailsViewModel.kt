@@ -7,8 +7,8 @@ import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
-import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
+import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import java.util.*
 
 class StopDetailsViewModel(

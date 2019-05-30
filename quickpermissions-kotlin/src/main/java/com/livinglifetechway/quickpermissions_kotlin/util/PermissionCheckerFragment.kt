@@ -6,7 +6,6 @@ import android.net.Uri.fromParts
 import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
@@ -36,7 +35,6 @@ class PermissionCheckerFragment : Fragment() {
 
     fun setListener(listener: QuickPermissionsCallback) {
         mListener = listener
-        Log.d(TAG, "onCreate: listeners set")
     }
 
     private fun removeListener() {
@@ -45,8 +43,6 @@ class PermissionCheckerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        Log.d(TAG, "onCreate: permission fragment created")
     }
 
     fun setRequestPermissionsRequest(quickPermissionsRequest: QuickPermissionsRequest?) {
@@ -76,21 +72,12 @@ class PermissionCheckerFragment : Fragment() {
 
     fun requestPermissionsFromUser() {
         if (quickPermissionsRequest != null) {
-            Log.d(TAG, "requestPermissionsFromUser: requesting permissions")
             requestPermissions(quickPermissionsRequest?.permissions.orEmpty(), PERMISSIONS_REQUEST_CODE)
-        } else {
-            Log.w(
-                TAG, "requestPermissionsFromUser: QuickPermissionsRequest has already completed its flow. " +
-                        "Cannot request permissions again from the request received from the callback. " +
-                        "You can start the new flow by calling runWithPermissions() { } again."
-            )
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d(TAG, "passing callback")
-
         // check if permissions granted
         handlePermissionResult(permissions, grantResults)
     }

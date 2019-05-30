@@ -8,10 +8,8 @@ import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResource
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.ApiResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.BusStopResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.toStopDestinations
-import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.BusStopLocationsResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.toStops
+import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusStopResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.toStopDestinations
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>

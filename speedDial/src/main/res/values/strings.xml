@@ -16,13 +16,10 @@
   -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="speeddial_snackbar_behavior" tools:ignore="UnusedResources">
+    <string name="speeddial_snackbar_behavior" tools:ignore="UnusedResources" translatable="false">
         com.leinardi.android.speeddial.SpeedDialView$SnackbarBehavior
     </string>
-    <string name="speeddial_scrolling_view_snackbar_behavior" tools:ignore="UnusedResources">
+    <string name="speeddial_scrolling_view_snackbar_behavior" tools:ignore="UnusedResources" translatable="false">
         com.leinardi.android.speeddial.SpeedDialView$ScrollingViewSnackbarBehavior
-    </string>
-    <string name="speeddial_custom_behavior" tools:ignore="UnusedResources">
-        com.leinardi.android.speeddial.SpeedDialView$CustomBehavior
     </string>
 </resources>

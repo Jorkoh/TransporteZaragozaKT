@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel

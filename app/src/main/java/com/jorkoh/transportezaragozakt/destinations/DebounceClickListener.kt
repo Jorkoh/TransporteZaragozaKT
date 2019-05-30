@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations
 
-import android.R.attr.onClick
 import android.os.SystemClock
 import android.view.View
 

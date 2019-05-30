@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.maps.SupportMapFragment
 import android.widget.FrameLayout
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.line_details.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
-import kotlinx.android.synthetic.main.map_filters.view.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_filters.*
+import kotlinx.android.synthetic.main.map_filters.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 

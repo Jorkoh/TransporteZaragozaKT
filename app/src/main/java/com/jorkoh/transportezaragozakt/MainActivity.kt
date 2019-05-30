@@ -1,36 +1,29 @@
 package com.jorkoh.transportezaragozakt
 
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
+import androidx.core.view.updateLayoutParams
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.snackbar.Snackbar
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
+import com.jorkoh.transportezaragozakt.destinations.stop_details.getColorFromAttr
+import com.jorkoh.transportezaragozakt.tasks.enqueueSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueueUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.animation.ValueAnimator
-import android.content.Intent
-import android.graphics.Color
-import android.util.Log
-import android.view.Gravity
-import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
-import androidx.core.view.updateLayoutParams
-import com.google.android.material.snackbar.Snackbar
-import com.jorkoh.transportezaragozakt.destinations.line_details.toPx
-import com.jorkoh.transportezaragozakt.destinations.more.ThemePickerFragment
-import com.jorkoh.transportezaragozakt.destinations.stop_details.getColorFromAttr
-import com.jorkoh.transportezaragozakt.tasks.enqueueSetupRemindersWorker
-import kotlinx.android.synthetic.main.favorites_destination.*
-import kotlinx.android.synthetic.main.more_destination.*
 
 
 class MainActivity : AppCompatActivity() {

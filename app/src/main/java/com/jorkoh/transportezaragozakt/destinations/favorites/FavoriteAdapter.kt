@@ -2,14 +2,18 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.favorite_row.view.*

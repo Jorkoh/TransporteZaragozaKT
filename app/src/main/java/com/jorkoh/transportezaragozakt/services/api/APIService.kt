@@ -1,10 +1,10 @@
 package com.jorkoh.transportezaragozakt.services.api
 
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStop.BusStopResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.Bus.BusStopLocations.BusStopLocationsResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop.TramStopResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStopLocations.TramStopLocationsResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusStopResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop_locations.BusStopLocationsResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop.TramStopResponse
+import com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop_locations.TramStopLocationsResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path

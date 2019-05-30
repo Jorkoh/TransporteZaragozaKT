@@ -1,10 +1,10 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -17,7 +17,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.input.input
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
@@ -76,7 +75,7 @@ class FavoritesFragment : Fragment() {
             title(R.string.edit_favorite_dialog_title)
             colorChooser(
                 materialColors,
-                initialSelection = if (favorite.colorHex.isNullOrEmpty()) Color.TRANSPARENT else Color.parseColor(
+                initialSelection = if (favorite.colorHex.isEmpty()) Color.TRANSPARENT else Color.parseColor(
                     favorite.colorHex
                 )
             ) { _, color ->

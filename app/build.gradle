@@ -13,8 +13,8 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "Alpha-1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,7 +25,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -95,10 +96,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
     implementation 'com.squareup.moshi:moshi-adapters:1.8.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.8.0'
+    implementation 'com.squareup.moshi:moshi:1.8.0'
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.8.0"
 
     //Koin
     implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
-
 
     testImplementation deps.junit
     androidTestImplementation 'androidx.test:runner:1.1.1'

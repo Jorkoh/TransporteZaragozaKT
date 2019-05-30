@@ -23,9 +23,6 @@
         <deepLink
                 android:id="@+id/deepLinkStop"
                 app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
-        <action
-                android:id="@+id/action_search_to_scannerFragment"
-                app:destination="@id/scannerFragment"/>
     </fragment>
 
     <fragment
@@ -60,8 +57,4 @@
                 app:popUpTo="@id/lineDetails"
                 app:popUpToInclusive="true"/>
     </fragment>
-    <fragment
-            android:id="@+id/scannerFragment"
-            android:name="com.jorkoh.transportezaragozakt.destinations.scanner.ScannerFragment"
-            android:label="ScannerFragment"/>
 </navigation>

@@ -8,8 +8,7 @@
     <fragment
             android:id="@+id/more"
             android:name="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment"
-            android:label="More"
-            tools:layout="@layout/more_destination">
+            android:label="More">
         <action
                 android:id="@+id/action_more_to_ThemePicker"
                 app:destination="@id/ThemePicker"/>

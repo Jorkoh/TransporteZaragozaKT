@@ -3,7 +3,6 @@ package com.jorkoh.transportezaragozakt.destinations.more
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +28,10 @@ class MoreFragment : PreferenceFragmentCompat() {
         }
         findPreference<Preference>(getString(R.string.avanza_twitter_key))?.setOnPreferenceClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/buszaragoza")))
+            true
+        }
+        findPreference<Preference>(getString(R.string.privacy_policy_key))?.setOnPreferenceClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy")))
             true
         }
 

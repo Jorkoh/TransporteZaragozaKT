@@ -5,6 +5,6 @@
     <string name="saturday_letter">Sáb.</string>
     <string name="sunday_letter">Dom.</string>
     <string name="monday_letter">Lun.</string>
-    <string name="thursday_letter">Mar.</string>
-    <string name="tuesday_letter">Jue.</string>
+    <string name="thursday_letter">Jue.</string>
+    <string name="tuesday_letter">Mar.</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.jorkoh.transportezaragozakt
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 

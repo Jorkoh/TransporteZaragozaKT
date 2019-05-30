@@ -1,78 +1,78 @@
-package com.jorkoh.transportezaragozakt.services.api.responses.Tram.TramStop
+package com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop
 
 import android.content.Context
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class TramStopResponse(
-    @field:Json(name = "features")
+    @Json(name = "features")
     val features: List<Feature>,
 
-    @field:Transient
-    @field:Json(name = "type")
+    @Json(name = "type")
     val itemType: String
 )
 
+@JsonClass(generateAdapter = true)
 data class Feature(
-    @field:Json(name = "geometry")
+    @Json(name = "geometry")
     val geometry: Geometry,
 
-    @field:Json(name = "properties")
+    @Json(name = "properties")
     val properties: Properties,
 
-    @field:Transient
-    @field:Json(name = "type")
+    @Json(name = "type")
     val type: String
 )
 
+@JsonClass(generateAdapter = true)
 data class Properties(
-    @field:Json(name = "id")
+    @Json(name = "id")
     val id: String,
 
-    @field:Json(name = "uri")
+    @Json(name = "uri")
     val link: String,
 
-    @field:Json(name = "stopTitle")
+    @Json(name = "title")
     val title: String,
 
-    @field:Json(name = "lastUpdated")
+    @Json(name = "lastUpdated")
     val lastUpdated: Date,
 
-    @field:Transient
-    @field:Json(name = "mensajes")
+    @Json(name = "mensajes")
     val messages: List<String>,
 
-    @field:Transient
-    @field:Json(name = "icon")
+    @Json(name = "icon")
     val icon: String,
 
-    @field:Json(name = "destinos")
+    @Json(name = "destinos")
     val destinos: List<Destino>?,
 
-    @field:Transient
-    @field:Json(name = "description")
+    @Json(name = "description")
     val description: String
 )
 
+@JsonClass(generateAdapter = true)
 data class Destino(
-    @field:Json(name = "destino")
+    @Json(name = "destino")
     val destino: String,
 
-    @field:Json(name = "linea")
+    @Json(name = "linea")
     val linea: String,
 
-    @field:Json(name = "minutos")
+    @Json(name = "minutos")
     val minutos: Int
 )
 
+@JsonClass(generateAdapter = true)
 data class Geometry(
-    @field:Json(name = "coordinates")
+    @Json(name = "coordinates")
     val coordinates: List<Double>,
 
-    @field:Transient
-    @field:Json(name = "type")
+    @Json(name = "type")
     val type: String
 )
 

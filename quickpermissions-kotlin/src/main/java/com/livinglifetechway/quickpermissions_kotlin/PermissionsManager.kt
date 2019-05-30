@@ -1,13 +1,12 @@
 package com.livinglifetechway.quickpermissions_kotlin
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
+import androidx.fragment.app.Fragment
 import com.livinglifetechway.quickpermissions_kotlin.util.PermissionCheckerFragment
 import com.livinglifetechway.quickpermissions_kotlin.util.PermissionsUtil
-import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsRequest
 
 private const val TAG = "runWithPermissions"
 
@@ -36,33 +35,21 @@ fun Fragment?.runWithPermissions(
 }
 
 private fun runWithPermissionsHandler(target: Any?, permissions: Array<out String>, callback: () -> Unit, options: QuickPermissionsOptions): Nothing? {
-    Log.d(TAG, "runWithPermissions: start")
-
     // get the permissions defined in annotation
-    Log.d(TAG, "runWithPermissions: permissions to check: $permissions")
-
     // get target
     if (target is AppCompatActivity || target is Fragment) {
-        Log.d(TAG, "runWithPermissions: context found")
-
         val context = when (target) {
             is Context -> target
             is Fragment -> target.context
             else -> null
         }
-
         // check if we have the permissions
         if (PermissionsUtil.hasSelfPermission(context, arrayOf(*permissions))) {
-            Log.d(TAG, "runWithPermissions: already has required permissions. Proceed with the execution.")
             callback()
         } else {
             // we don't have required permissions
             // begin the permission request flow
-
-            Log.d(TAG, "runWithPermissions: doesn't have required permissions")
-
             // check if we have permission checker fragment already attached
-
             // support for AppCompatActivity and Activity
             var permissionCheckerFragment = when (context) {
             // for app compat activity
@@ -76,7 +63,6 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
             // check if permission check fragment is added or not
             // if not, add that fragment
             if (permissionCheckerFragment == null) {
-                Log.d(TAG, "runWithPermissions: adding headless fragment for asking permissions")
                 permissionCheckerFragment = PermissionCheckerFragment.newInstance()
                 when (context) {
                     is AppCompatActivity -> {
@@ -102,7 +88,6 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
             // set callback to permission checker fragment
             permissionCheckerFragment.setListener(object : PermissionCheckerFragment.QuickPermissionsCallback {
                 override fun onPermissionsGranted(quickPermissionsRequest: QuickPermissionsRequest?) {
-                    Log.d(TAG, "runWithPermissions: got permissions")
                     try {
                         callback()
                     } catch (throwable: Throwable) {

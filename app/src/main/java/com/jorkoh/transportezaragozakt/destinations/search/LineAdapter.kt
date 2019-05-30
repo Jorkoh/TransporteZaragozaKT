@@ -1,23 +1,20 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
-import android.annotation.SuppressLint
-import android.graphics.PorterDuff
-import android.location.Location
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.db.Line
+import com.jorkoh.transportezaragozakt.db.LineType
+import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.line_row.view.*
-import kotlinx.android.synthetic.main.stop_row.view.*
 
 class LineAdapter(
     private val openLine: (LineDetailsFragmentArgs) -> Unit

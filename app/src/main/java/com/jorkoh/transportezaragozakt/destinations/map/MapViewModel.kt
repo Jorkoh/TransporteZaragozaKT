@@ -2,10 +2,8 @@ package com.jorkoh.transportezaragozakt.destinations.map
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 

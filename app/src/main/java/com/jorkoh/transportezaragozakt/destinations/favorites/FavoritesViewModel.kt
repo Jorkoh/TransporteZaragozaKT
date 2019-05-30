@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
-import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 
 
 class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): ViewModel() {

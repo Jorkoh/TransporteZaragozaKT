@@ -2,42 +2,34 @@ package com.jorkoh.transportezaragozakt.destinations.stop_details
 
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
 import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.datetime.timePicker
+import com.afollestad.materialdialogs.input.input
+import com.google.android.material.snackbar.Snackbar
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.leinardi.android.speeddial.SpeedDialActionItem
+import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
-import android.graphics.drawable.Icon
-import android.os.Build.VERSION_CODES.O
-import android.util.Log
-import android.view.*
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.datetime.timePicker
-import com.afollestad.materialdialogs.input.input
-import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragmentDirections
-import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
-import com.jorkoh.transportezaragozakt.destinations.search.SearchFragmentDirections
-import kotlinx.android.synthetic.main.main_container.*
-import kotlinx.android.synthetic.main.main_container.view.*
 
 
 class StopDetailsFragment : Fragment() {
