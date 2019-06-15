@@ -24,7 +24,8 @@ class LinesFragment : Fragment(){
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchToLineDetails(
                     info.lineType,
-                    info.lineId
+                    info.lineId,
+                    info.stopId
                 )
             )
         }

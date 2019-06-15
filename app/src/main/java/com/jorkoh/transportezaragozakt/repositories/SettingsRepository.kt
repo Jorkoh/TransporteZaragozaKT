@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.repositories
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
@@ -138,13 +139,14 @@ class SettingsRepositoryImplementation(
         )
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun isFirstLaunch(isFirstLaunch : Boolean){
         with(sharedPreferences.edit()) {
             putBoolean(
                 context.getString(com.jorkoh.transportezaragozakt.R.string.is_first_launch_key),
                 isFirstLaunch
             )
-            apply()
+            commit()
         }
     }
 }

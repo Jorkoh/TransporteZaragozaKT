@@ -46,7 +46,7 @@ class LineAdapter(
                 }
 
                 setOnClickListener(DebounceClickListener {
-                    openLine(LineDetailsFragmentArgs(line.type.name, line.lineId))
+                    openLine(LineDetailsFragmentArgs(line.type.name, line.lineId, null))
                 })
             }
         }

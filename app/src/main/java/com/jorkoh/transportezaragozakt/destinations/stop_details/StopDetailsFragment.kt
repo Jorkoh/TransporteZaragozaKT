@@ -48,7 +48,8 @@ class StopDetailsFragment : Fragment() {
             findNavController().navigate(
                 StopDetailsFragmentDirections.actionStopDetailsToLineDetails(
                     info.lineType,
-                    info.lineId
+                    info.lineId,
+                    info.stopId
                 )
             )
         }
@@ -60,7 +61,7 @@ class StopDetailsFragment : Fragment() {
         val newVisibility = when (stopDestinations.status) {
             Status.SUCCESS -> {
                 swiperefresh?.isRefreshing = false
-                stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType)
+                stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType, stopDetailsVM.stopId)
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
                 } else {
@@ -70,7 +71,7 @@ class StopDetailsFragment : Fragment() {
             }
             Status.ERROR -> {
                 swiperefresh?.isRefreshing = false
-                stopDestinationsAdapter.setDestinations(listOf(), stopDetailsVM.stopType)
+                stopDestinationsAdapter.setDestinations(listOf(), stopDetailsVM.stopType, stopDetailsVM.stopId)
                 View.VISIBLE
 
             }

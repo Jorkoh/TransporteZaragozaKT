@@ -72,10 +72,13 @@ class LineDetailsFragment : Fragment() {
             bounds.include(it.location)
         }
         map.addPolyline(line)
-        if (SphericalUtil.computeDistanceBetween(map.cameraPosition.target, ZARAGOZA_CENTER) < 1) {
-            map.setPadding(0, 0, 0, 160.toPx())
-            map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
-            map.setPadding(0, 0, 0, 0)
+        // Only adjust the camera to reveal the entire line when user didn't come from a specific stop
+        if (lineDetailsVM.selectedStopId.value.isNullOrEmpty()) {
+            if (SphericalUtil.computeDistanceBetween(map.cameraPosition.target, ZARAGOZA_CENTER) < 1) {
+                map.setPadding(0, 0, 0, 160.toPx())
+                map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
+                map.setPadding(0, 0, 0, 0)
+            }
         }
     }
 
@@ -147,6 +150,9 @@ class LineDetailsFragment : Fragment() {
         mapVM.init()
         val args = LineDetailsFragmentArgs.fromBundle(requireArguments())
         lineDetailsVM.init(args.lineId, LineType.valueOf(args.lineType))
+        if (!args.stopId.isNullOrEmpty()) {
+            lineDetailsVM.selectedStopId.postValue(args.stopId)
+        }
 
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?

@@ -21,6 +21,7 @@ class StopDestinationsAdapter(private val openLine: (LineDetailsFragmentArgs) ->
     private var stopDestinations = listOf<StopDestination>()
 
     lateinit var stopType: StopType
+    lateinit var stopId: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopDestinationsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.destination_row, parent, false) as View
@@ -42,15 +43,16 @@ class StopDestinationsAdapter(private val openLine: (LineDetailsFragmentArgs) ->
             first_time_text.text = stopDestinations[position].times[0]
             second_time_text.text = stopDestinations[position].times[1]
             setOnClickListener(DebounceClickListener {
-                openLine(LineDetailsFragmentArgs(stopType.toLineType().name, stopDestinations[position].line))
+                openLine(LineDetailsFragmentArgs(stopType.toLineType().name, stopDestinations[position].line, stopId))
             })
         }
     }
 
     override fun getItemCount(): Int = stopDestinations.size
 
-    fun setDestinations(newStopDestinations: List<StopDestination>, stopType: StopType) {
+    fun setDestinations(newStopDestinations: List<StopDestination>, stopType: StopType, stopId : String) {
         this.stopType = stopType
+        this.stopId = stopId
         val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize() = stopDestinations.size
 

@@ -36,6 +36,10 @@
         <argument
                 android:name="lineId"
                 app:argType="string"/>
+        <argument
+                android:name="stopId"
+                app:argType="string"
+                app:nullable="true"/>
         <action
                 android:id="@+id/action_lineDetails_to_stopDetails"
                 app:destination="@id/stopDetails"/>
