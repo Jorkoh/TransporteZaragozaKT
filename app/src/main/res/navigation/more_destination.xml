@@ -8,7 +8,7 @@
     <fragment
             android:id="@+id/more"
             android:name="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment"
-            android:label="More">
+            android:label="@string/more_destination_title">
         <action
                 android:id="@+id/action_more_to_ThemePicker"
                 app:destination="@id/ThemePicker"/>
@@ -16,5 +16,5 @@
     <fragment
             android:id="@+id/ThemePicker"
             android:name="com.jorkoh.transportezaragozakt.destinations.more.ThemePickerFragment"
-            android:label="ThemePicker"/>
+            android:label="@string/theme_picker_title"/>
 </navigation>

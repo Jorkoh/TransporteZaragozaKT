@@ -9,6 +9,6 @@
     <fragment
             android:id="@+id/reminders"
             android:name="com.jorkoh.transportezaragozakt.destinations.reminders.RemindersFragment"
-            android:label="Reminders"
+            android:label="@string/reminders_destination_title"
             tools:layout="@layout/reminders_destination"/>
 </navigation>

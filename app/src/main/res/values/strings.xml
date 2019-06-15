@@ -9,6 +9,7 @@
     <string name="more_destination_title" translatable="true">More</string>
     <string name="stop_details_title" translatable="true">Stop Details</string>
     <string name="line_details_title" translatable="true">Line Details</string>
+    <string name="theme_picker_title" translatable="true">Themes</string>
 
     <!--Intro-->
     <string name="slide_welcome_title" translatable="true">Welcome!</string>

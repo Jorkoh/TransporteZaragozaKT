@@ -144,4 +144,5 @@
     <string name="theme_sky">Cielo</string>
     <string name="theme_vintage">Clásico</string>
     <string name="theme_cerulean">Cerúleo</string>
+    <string name="theme_picker_title">Temas</string>
 </resources>

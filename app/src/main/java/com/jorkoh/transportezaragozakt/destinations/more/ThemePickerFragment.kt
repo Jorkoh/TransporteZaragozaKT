@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.jorkoh.transportezaragozakt.R
 import daio.io.dresscode.dressCodeStyleId
 import daio.io.dresscode.getDressCodes
+import kotlinx.android.synthetic.main.main_container.*
 
 
 /**
@@ -24,6 +26,7 @@ open class ThemePickerFragment : Fragment(), OnItemClickListener {
     private lateinit var gridView: GridView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        setupToolbar()
         return inflater.inflate(R.layout.theme_picker, container, false)
     }
 
@@ -39,6 +42,13 @@ open class ThemePickerFragment : Fragment(), OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val theme = (gridView.adapter as ThemePickerAdapter).getItem(position)
         requireActivity().dressCodeStyleId = theme.themeId
+    }
+
+    private fun setupToolbar() {
+        requireActivity().main_toolbar.menu.apply {
+            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+            clear()
+        }
     }
 
     private fun scrollToCurrentTheme(themes: List<CustomTheme>) {
