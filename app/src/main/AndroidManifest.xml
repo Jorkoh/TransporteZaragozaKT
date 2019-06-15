@@ -30,6 +30,10 @@
                 android:value="AIzaSyCoaxzJXf1A1mypWOa0XkIzb6kXQT0RgT4"/>
 
         <activity
+                android:name=".IntroActivity"
+                android:theme="@style/Theme.MaterialIntro" />
+
+        <activity
                 android:name="com.journeyapps.barcodescanner.CaptureActivity"
                 android:screenOrientation="fullSensor"
                 tools:replace="screenOrientation" />

@@ -19,7 +19,6 @@
             android:layout_height="wrap_content">
 
         <TextView
-                android:text="23"
                 android:id="@+id/line_text_line"
                 android:textColor="@color/kinda_white"
                 android:layout_width="60dp"
@@ -42,7 +41,7 @@
                 android:gravity="center"
                 android:id="@+id/first_destination_line"
                 android:textColor="?colorOnSurface"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +56,7 @@
                 android:gravity="center"
                 android:id="@+id/second_destination_line"
                 android:textColor="?colorOnSurface"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"

@@ -28,6 +28,13 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
+    <View
+            android:id="@+id/gap"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:layout_anchor="@id/bottom_navigation"
+            app:layout_anchorGravity="top"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"

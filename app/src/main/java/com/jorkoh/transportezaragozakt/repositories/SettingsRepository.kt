@@ -19,6 +19,8 @@ interface SettingsRepository {
     fun setTramFilterEnabled(enabled: Boolean)
     fun loadSearchTabPosition(): LiveData<Int>
     fun setSearchTabPosition(tabPosition: Int)
+    fun isFirstLaunch(): Boolean
+    fun isFirstLaunch(isFirstLaunch: Boolean)
 }
 
 class SettingsRepositoryImplementation(
@@ -124,6 +126,23 @@ class SettingsRepositoryImplementation(
             putInt(
                 context.getString(com.jorkoh.transportezaragozakt.R.string.search_tab_position_key),
                 tabPosition
+            )
+            apply()
+        }
+    }
+
+    override fun isFirstLaunch() : Boolean{
+        return sharedPreferences.getBoolean(
+            context.getString(com.jorkoh.transportezaragozakt.R.string.is_first_launch_key),
+            true
+        )
+    }
+
+    override fun isFirstLaunch(isFirstLaunch : Boolean){
+        with(sharedPreferences.edit()) {
+            putBoolean(
+                context.getString(com.jorkoh.transportezaragozakt.R.string.is_first_launch_key),
+                isFirstLaunch
             )
             apply()
         }

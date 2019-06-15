@@ -5,5 +5,4 @@
         <attr name="colorSecondary"/>
         <attr name="android:colorBackground"/>
     </declare-styleable>
-        <attr name="colorOnSnackbar"/>
 </resources>

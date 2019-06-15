@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt
 
+import android.net.Uri
 import android.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -15,6 +16,7 @@ import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.repositories.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.moshi_adapters.LatLngAdapter
+import com.pixplicity.generate.Rate
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import org.koin.android.ext.koin.androidApplication
@@ -25,6 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
 
+const val MILLISECONDS_PER_DAY = 86400000
 
 val appModule = module {
 
@@ -73,6 +76,17 @@ val appModule = module {
         PreferenceManager.getDefaultSharedPreferences(androidContext())
     }
 
+    single{
+        //First rate request after 5 launches, 5 days passed and positive action. Next rate request (if the user pressed later or dismissed) after 10 launches and positive action
+        Rate.Builder(androidContext())
+            .setTriggerCount(5)
+            .setRepeatCount(6)
+            .setSwipeToDismissVisible(true)
+            .setMinimumInstallTime(MILLISECONDS_PER_DAY * 4)
+            .setFeedbackAction(Uri.parse(androidContext().getString(R.string.feedback_mail_uri)))
+            .build()
+    }
+
     single<SettingsRepository> { SettingsRepositoryImplementation(get(), androidContext()) }
     single<StopsRepository> { StopsRepositoryImplementation(get(), get(), get(), get()) }
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
@@ -86,5 +100,6 @@ val appModule = module {
     viewModel { RemindersViewModel(get()) }
     viewModel { StopDetailsViewModel(get(), get(), get()) }
     viewModel { LineDetailsViewModel(get()) }
-    viewModel { MainActivityViewModel(get(), get()) }
+    viewModel { MainActivityViewModel(get(), get(), get()) }
+    viewModel { IntroActivityViewModel(get()) }
 }

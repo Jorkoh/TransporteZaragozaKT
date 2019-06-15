@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.search_destination.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
 
 class SearchFragment : Fragment() {
 
@@ -85,7 +87,8 @@ class SearchFragment : Fragment() {
             toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.search_destination_menu)
             (toolbar.menu.findItem(R.id.item_search).actionView as SearchView).apply {
-                this.queryHint = getString(R.string.search_view_hint)
+                queryHint = getString(R.string.search_view_hint)
+                findViewById<TextView>(androidx.appcompat.R.id.search_src_text).textSize = 16f
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         return false

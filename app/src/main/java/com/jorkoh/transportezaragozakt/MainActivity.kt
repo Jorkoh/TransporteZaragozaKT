@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -21,14 +22,18 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.getColorFromAtt
 import com.jorkoh.transportezaragozakt.tasks.enqueueSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueueUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
+import com.pixplicity.generate.Rate
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private val mainActivityVM: MainActivityViewModel by viewModel()
+
+    private val rate : Rate by inject()
 
     private var currentNavController: LiveData<NavController>? = null
     private var currentAnimator: ValueAnimator? = null
@@ -57,9 +62,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)
+
+        openIntroScreen()
+
         setContentView(R.layout.main_container)
         setSupportActionBar(main_toolbar)
         if (savedInstanceState == null) {
+            rate.count()
             //WorkManager tasks are queued both on app launch and device boot to cover first install
             enqueueUpdateDataWorker(getString(R.string.update_data_work_name))
             enqueueSetupRemindersWorker(getString(R.string.setup_reminders_work_name))
@@ -150,7 +159,7 @@ class MainActivity : AppCompatActivity() {
                 duration = 250
                 doOnEnd {
                     if (!showing) {
-                        visibility = View.GONE
+                        visibility = View.INVISIBLE
                     }
                 }
                 start()
@@ -192,6 +201,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun openIntroScreen(){
+        if(mainActivityVM.isFirstLaunch()){
+            startActivity(Intent(this, IntroActivity::class.java))
+        }
+    }
+
     fun makeSnackbar(text: String) {
         Snackbar.make(
             coordinator_layout,
@@ -199,7 +214,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.LENGTH_LONG
         ).apply {
             view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
-                anchorId = R.id.bottom_navigation
+                anchorId = R.id.gap
                 anchorGravity = Gravity.TOP
                 gravity = Gravity.TOP
             }

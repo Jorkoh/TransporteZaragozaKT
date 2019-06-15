@@ -91,7 +91,7 @@
     <string name="dark_map_title">Mapa nocturno</string>
     <string name="themes_title">Temas</string>
     <string name="themes_message">Personaliza la aplicación con tus colores favoritos seleccionando un tema</string>
-    <string name="useful_links_title">Enlaces útiles</string>
+    <string name="useful_links_title">Cosas útiles</string>
     <string name="recharge_card_message">Recarga online tu tarjeta de bus mensual o anual</string>
     <string name="avanza_twitter_title">Twitter de Avanza</string>
     <string name="recharge_card_title">Recargar tarjeta</string>
@@ -111,4 +111,37 @@
     <string name="updated_tram_lines_locations_message">"Número de la nueva versión: "</string>
     <string name="updated_bus_lines_locations_message">"Número de la nueva versión: "</string>
     <string name="updated_bus_lines_locations_title">Actualizadas posiciones de líneas de bus</string>
+    <string name="play_intro_title">Introducción a la aplicación</string>
+    <string name="play_intro_message">Como si fuese la primera vez</string>
+    <string name="slide_favorites_description">Añade paradas a tus favoritos para acceder fácilmente. Renombra, reordena y colorea tus favoritos para mantenerte organizado.</string>
+    <string name="slide_favorites_title">¡Añade favoritos!</string>
+    <string name="slide_find_description">Usa el MAPA o la BÚSQUEDA para encontrar rápidamente cualquier parada. La aplicación utiliza información de localización para mostrar paradas cercanas y la posición en el mapa.</string>
+    <string name="slide_find_title">¡Encuentra tu parada!</string>
+    <string name="slide_more_description">Personaliza la aplicación con diferentes paletas de colores y otros ajustes en MÁS.</string>
+    <string name="slide_more_title">¡Hazla tuya!</string>
+    <string name="slide_reminder_description">¿Revisas la misma parada todas las mañanas al salir de casa para el trabajo? Prepara una notificación para recibir los tiempos automáticamente en el mejor momento.</string>
+    <string name="slide_reminder_title">¡Crea una notificación!</string>
+    <string name="slide_welcome_description">Gracias por probar Transporte Zaragoza. No te preocupes, esto no tardará nada!</string>
+    <string name="slide_welcome_title">¡Bienvenido!</string>
+    <string name="feedback_mail_uri">mailto:jorge@jorkoh.com?subject=Transporte%20Zaragoza%20Feedback&amp;body=Describe%20el%20problema%20o%20sugerencia%20aquí…</string>
+    <string name="theme_kingfisher">Alción</string>
+    <string name="theme_zaragoza_transport">Tranporte Zaragoza</string>
+    <string name="theme_ashen">Cenizo</string>
+    <string name="theme_coffee">Café</string>
+    <string name="theme_cyanea">Cyanea</string>
+    <string name="theme_cobalt">Cobalto</string>
+    <string name="theme_flax">Flax</string>
+    <string name="theme_inkpot">Tintero</string>
+    <string name="theme_deep_sea">Océano</string>
+    <string name="theme_mint">Menta</string>
+    <string name="theme_breeze">Brisa</string>
+    <string name="theme_midnight">Medianoche</string>
+    <string name="theme_porcelain">Porcelana</string>
+    <string name="theme_jade">Jade</string>
+    <string name="theme_watermelon">Sandía</string>
+    <string name="theme_coral">Coral</string>
+    <string name="theme_grape">Uva</string>
+    <string name="theme_sky">Cielo</string>
+    <string name="theme_vintage">Clásico</string>
+    <string name="theme_cerulean">Cerúleo</string>
 </resources>

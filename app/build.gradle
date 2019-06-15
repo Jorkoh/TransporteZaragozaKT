@@ -13,8 +13,8 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 3
-        versionName "Alpha-1.0.1"
+        versionCode 4
+        versionName "Alpha-1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -80,6 +80,9 @@ dependencies {
     //Dresscode
     implementation project(':dresscode')
 
+    //Gene-Rate
+    implementation project(path: ':gene-rate')
+
     //Material Dialogs
     implementation 'com.afollestad.material-dialogs:core:3.0.0-beta2'
     implementation 'com.afollestad.material-dialogs:input:3.0.0-beta2'
@@ -88,6 +91,9 @@ dependencies {
 
     //Quick Permissions
     implementation project(':quickpermissions-kotlin')
+
+    //Material Intro Screen
+    implementation project(':material-intro-screen')
 
     //QR Scanner
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'

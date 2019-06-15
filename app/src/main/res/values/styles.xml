@@ -13,6 +13,11 @@
         <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
 
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/background_color_chip_state_list</item>
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+    </style>
+
     <style name="CustomTabStyle" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabTextColor">@color/tab_text_color</item>
         <item name="tabIconTint">?colorSecondary</item>
@@ -22,13 +27,9 @@
 
     <style name="CustomTimePickerTheme" parent="@android:style/Widget.Material.TimePicker">
         <item name="android:headerBackground">?colorSecondary</item>
-        <item name="android:numbersBackgroundColor">?colorPrimaryDark</item>
+        <item name="android:numbersBackgroundColor">?colorPrimaryVariant</item>
         <item name="android:numbersSelectorColor">?colorPrimary</item>
         <item name="android:numbersTextColor">?colorOnPrimary</item>
-    </style>
-
-    <style name="CustomActionBarWidgetTheme" parent="Widget.AppCompat.SearchView">
-        <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
@@ -36,7 +37,6 @@
         <item name="android:fontFamily">@font/manrope_medium</item>
         <item name="android:timePickerStyle">@style/CustomTimePickerTheme</item>
         <item name="actionBarTheme">@style/ActionBarTheme</item>
-        <item name="android:actionBarWidgetTheme">@style/CustomActionBarWidgetTheme</item>
         <item name="tabStyle">@style/CustomTabStyle</item>
         <item name="colorBackgroundFloating">?android:colorBackground</item>
         <item name="android:textColorPrimary">?colorOnBackground</item>
@@ -49,24 +49,42 @@
         <item name="md_color_button_text">?colorOnBackground</item>
     </style>
 
-    <style name="TransporteZaragoza" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryTransporteZaragoza</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkTransporteZaragoza</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryTransporteZaragoza</item>
-        <item name="colorSecondary">@color/colorSecondaryTransporteZaragoza</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTransporteZaragoza</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryTransporteZaragoza</item>
-        <item name="colorError">@color/colorErrorTransporteZaragoza</item>
-        <item name="colorOnError">@color/colorOnErrorTransporteZaragoza</item>
-        <item name="android:colorBackground">@color/colorBackgroundTransporteZaragoza</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundTransporteZaragoza</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTransporteZaragoza</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarTransporteZaragoza</item>
+    <style name="Kingfisher" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryKingfisher</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkKingfisher</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantKingfisher</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryKingfisher</item>
+        <item name="colorSecondary">@color/colorSecondaryKingfisher</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantKingfisher</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryKingfisher</item>
+        <item name="colorError">@color/colorErrorKingfisher</item>
+        <item name="colorOnError">@color/colorOnErrorKingfisher</item>
+        <item name="android:colorBackground">@color/colorBackgroundKingfisher</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundKingfisher</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantKingfisher</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarKingfisher</item>
+    </style>
+
+    <style name="ZaragozaTransport" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryZaragozaTransport</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkZaragozaTransport</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantZaragozaTransport</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryZaragozaTransport</item>
+        <item name="colorSecondary">@color/colorSecondaryZaragozaTransport</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantZaragozaTransport</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryZaragozaTransport</item>
+        <item name="colorError">@color/colorErrorZaragozaTransport</item>
+        <item name="colorOnError">@color/colorOnErrorZaragozaTransport</item>
+        <item name="android:colorBackground">@color/colorBackgroundZaragozaTransport</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundZaragozaTransport</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantZaragozaTransport</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarZaragozaTransport</item>
     </style>
 
     <style name="Cyanea" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryCyanea</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCyanea</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantCyanea</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCyanea</item>
         <item name="colorSecondary">@color/colorSecondaryCyanea</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantCyanea</item>
@@ -79,69 +97,27 @@
         <item name="colorOnSnackbar">@color/colorOnSnackbarCyanea</item>
     </style>
 
-    <style name="Rio" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryRio</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkRio</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryRio</item>
-        <item name="colorSecondary">@color/colorSecondaryRio</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRio</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryRio</item>
-        <item name="colorError">@color/colorErrorRio</item>
-        <item name="colorOnError">@color/colorOnErrorRio</item>
-        <item name="android:colorBackground">@color/colorBackgroundRio</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundRio</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRio</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarRio</item>
+    <style name="Coral" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryCoral</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCoral</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantCoral</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCoral</item>
+        <item name="colorSecondary">@color/colorSecondaryCoral</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCoral</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCoral</item>
+        <item name="colorError">@color/colorErrorCoral</item>
+        <item name="colorOnError">@color/colorOnErrorCoral</item>
+        <item name="android:colorBackground">@color/colorBackgroundCoral</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCoral</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCoral</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCoral</item>
     </style>
 
-    <style name="VitaminSea" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryVitaminSea</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkVitaminSea</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryVitaminSea</item>
-        <item name="colorSecondary">@color/colorSecondaryVitaminSea</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantVitaminSea</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryVitaminSea</item>
-        <item name="colorError">@color/colorErrorVitaminSea</item>
-        <item name="colorOnError">@color/colorOnErrorVitaminSea</item>
-        <item name="android:colorBackground">@color/colorBackgroundVitaminSea</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundVitaminSea</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVitaminSea</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarVitaminSea</item>
-    </style>
-
-    <style name="TextileDyes" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryTextileDyes</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkTextileDyes</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryTextileDyes</item>
-        <item name="colorSecondary">@color/colorSecondaryTextileDyes</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTextileDyes</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryTextileDyes</item>
-        <item name="colorError">@color/colorErrorTextileDyes</item>
-        <item name="colorOnError">@color/colorOnErrorTextileDyes</item>
-        <item name="android:colorBackground">@color/colorBackgroundTextileDyes</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundTextileDyes</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTextileDyes</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarTextileDyes</item>
-    </style>
-
-    <style name="Brave" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryBrave</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkBrave</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryBrave</item>
-        <item name="colorSecondary">@color/colorSecondaryBrave</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantBrave</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryBrave</item>
-        <item name="colorError">@color/colorErrorBrave</item>
-        <item name="colorOnError">@color/colorOnErrorBrave</item>
-        <item name="android:colorBackground">@color/colorBackgroundBrave</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundBrave</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBrave</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarBrave</item>
-    </style>
 
     <style name="Ashen" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryAshen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkAshen</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantAshen</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryAshen</item>
         <item name="colorSecondary">@color/colorSecondaryAshen</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantAshen</item>
@@ -154,264 +130,91 @@
         <item name="colorOnSnackbar">@color/colorOnSnackbarAshen</item>
     </style>
 
-    <style name="RecognEyes" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryRecognEyes</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkRecognEyes</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryRecognEyes</item>
-        <item name="colorSecondary">@color/colorSecondaryRecognEyes</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRecognEyes</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryRecognEyes</item>
-        <item name="colorError">@color/colorErrorRecognEyes</item>
-        <item name="colorOnError">@color/colorOnErrorRecognEyes</item>
-        <item name="android:colorBackground">@color/colorBackgroundRecognEyes</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundRecognEyes</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRecognEyes</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarRecognEyes</item>
+    <style name="Porcelain" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryPorcelain</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkPorcelain</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantPorcelain</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryPorcelain</item>
+        <item name="colorSecondary">@color/colorSecondaryPorcelain</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantPorcelain</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryPorcelain</item>
+        <item name="colorError">@color/colorErrorPorcelain</item>
+        <item name="colorOnError">@color/colorOnErrorPorcelain</item>
+        <item name="android:colorBackground">@color/colorBackgroundPorcelain</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundPorcelain</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPorcelain</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarPorcelain</item>
     </style>
 
-    <style name="Monokai" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryMonokai</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMonokai</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryMonokai</item>
-        <item name="colorSecondary">@color/colorSecondaryMonokai</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMonokai</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryMonokai</item>
-        <item name="colorError">@color/colorErrorMonokai</item>
-        <item name="colorOnError">@color/colorOnErrorMonokai</item>
-        <item name="android:colorBackground">@color/colorBackgroundMonokai</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundMonokai</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMonokai</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarMonokai</item>
+    <style name="Watermelon" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryWatermelon</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkWatermelon</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantWatermelon</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryWatermelon</item>
+        <item name="colorSecondary">@color/colorSecondaryWatermelon</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWatermelon</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryWatermelon</item>
+        <item name="colorError">@color/colorErrorWatermelon</item>
+        <item name="colorOnError">@color/colorOnErrorWatermelon</item>
+        <item name="android:colorBackground">@color/colorBackgroundWatermelon</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundWatermelon</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWatermelon</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarWatermelon</item>
     </style>
 
-    <style name="SigFig" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimarySigFig</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSigFig</item>
-        <item name="colorOnPrimary">@color/colorOnPrimarySigFig</item>
-        <item name="colorSecondary">@color/colorSecondarySigFig</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSigFig</item>
-        <item name="colorOnSecondary">@color/colorOnSecondarySigFig</item>
-        <item name="colorError">@color/colorErrorSigFig</item>
-        <item name="colorOnError">@color/colorOnErrorSigFig</item>
-        <item name="android:colorBackground">@color/colorBackgroundSigFig</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundSigFig</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSigFig</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarSigFig</item>
+
+    <style name="DeepSea" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryDeepSea</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkDeepSea</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantDeepSea</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryDeepSea</item>
+        <item name="colorSecondary">@color/colorSecondaryDeepSea</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantDeepSea</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryDeepSea</item>
+        <item name="colorError">@color/colorErrorDeepSea</item>
+        <item name="colorOnError">@color/colorOnErrorDeepSea</item>
+        <item name="android:colorBackground">@color/colorBackgroundDeepSea</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundDeepSea</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDeepSea</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarDeepSea</item>
     </style>
 
-    <style name="SoundCloud" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimarySoundCloud</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSoundCloud</item>
-        <item name="colorOnPrimary">@color/colorOnPrimarySoundCloud</item>
-        <item name="colorSecondary">@color/colorSecondarySoundCloud</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSoundCloud</item>
-        <item name="colorOnSecondary">@color/colorOnSecondarySoundCloud</item>
-        <item name="colorError">@color/colorErrorSoundCloud</item>
-        <item name="colorOnError">@color/colorOnErrorSoundCloud</item>
-        <item name="android:colorBackground">@color/colorBackgroundSoundCloud</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundSoundCloud</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSoundCloud</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarSoundCloud</item>
+    <style name="Midnight" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryMidnight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkMidnight</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantMidnight</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryMidnight</item>
+        <item name="colorSecondary">@color/colorSecondaryMidnight</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMidnight</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryMidnight</item>
+        <item name="colorError">@color/colorErrorMidnight</item>
+        <item name="colorOnError">@color/colorOnErrorMidnight</item>
+        <item name="android:colorBackground">@color/colorBackgroundMidnight</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundMidnight</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMidnight</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarMidnight</item>
     </style>
 
-    <style name="Materiallight" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryMateriallight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMateriallight</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryMateriallight</item>
-        <item name="colorSecondary">@color/colorSecondaryMateriallight</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMateriallight</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryMateriallight</item>
-        <item name="colorError">@color/colorErrorMateriallight</item>
-        <item name="colorOnError">@color/colorOnErrorMateriallight</item>
-        <item name="android:colorBackground">@color/colorBackgroundMateriallight</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundMateriallight</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMateriallight</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarMateriallight</item>
-    </style>
-
-    <style name="Hololight" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryHololight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkHololight</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryHololight</item>
-        <item name="colorSecondary">@color/colorSecondaryHololight</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantHololight</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryHololight</item>
-        <item name="colorError">@color/colorErrorHololight</item>
-        <item name="colorOnError">@color/colorOnErrorHololight</item>
-        <item name="android:colorBackground">@color/colorBackgroundHololight</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundHololight</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantHololight</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarHololight</item>
-    </style>
-
-    <style name="Materialdark" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryMaterialdark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMaterialdark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryMaterialdark</item>
-        <item name="colorSecondary">@color/colorSecondaryMaterialdark</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMaterialdark</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryMaterialdark</item>
-        <item name="colorError">@color/colorErrorMaterialdark</item>
-        <item name="colorOnError">@color/colorOnErrorMaterialdark</item>
-        <item name="android:colorBackground">@color/colorBackgroundMaterialdark</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundMaterialdark</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMaterialdark</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarMaterialdark</item>
-    </style>
-
-    <style name="Holodark" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryHolodark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkHolodark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryHolodark</item>
-        <item name="colorSecondary">@color/colorSecondaryHolodark</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantHolodark</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryHolodark</item>
-        <item name="colorError">@color/colorErrorHolodark</item>
-        <item name="colorOnError">@color/colorOnErrorHolodark</item>
-        <item name="android:colorBackground">@color/colorBackgroundHolodark</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundHolodark</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantHolodark</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarHolodark</item>
-    </style>
-
-    <style name="Cherrypie" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryCherrypie</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkCherrypie</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryCherrypie</item>
-        <item name="colorSecondary">@color/colorSecondaryCherrypie</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCherrypie</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryCherrypie</item>
-        <item name="colorError">@color/colorErrorCherrypie</item>
-        <item name="colorOnError">@color/colorOnErrorCherrypie</item>
-        <item name="android:colorBackground">@color/colorBackgroundCherrypie</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundCherrypie</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCherrypie</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarCherrypie</item>
-    </style>
-
-    <style name="Olive" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryOlive</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkOlive</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryOlive</item>
-        <item name="colorSecondary">@color/colorSecondaryOlive</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantOlive</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryOlive</item>
-        <item name="colorError">@color/colorErrorOlive</item>
-        <item name="colorOnError">@color/colorOnErrorOlive</item>
-        <item name="android:colorBackground">@color/colorBackgroundOlive</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundOlive</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantOlive</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarOlive</item>
-    </style>
-
-    <style name="Tasty" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryTasty</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkTasty</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryTasty</item>
-        <item name="colorSecondary">@color/colorSecondaryTasty</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTasty</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryTasty</item>
-        <item name="colorError">@color/colorErrorTasty</item>
-        <item name="colorOnError">@color/colorOnErrorTasty</item>
-        <item name="android:colorBackground">@color/colorBackgroundTasty</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundTasty</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTasty</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarTasty</item>
-    </style>
-
-    <style name="Desert" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryDesert</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkDesert</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryDesert</item>
-        <item name="colorSecondary">@color/colorSecondaryDesert</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantDesert</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryDesert</item>
-        <item name="colorError">@color/colorErrorDesert</item>
-        <item name="colorOnError">@color/colorOnErrorDesert</item>
-        <item name="android:colorBackground">@color/colorBackgroundDesert</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundDesert</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDesert</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarDesert</item>
-    </style>
-
-    <style name="Weber" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryWeber</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkWeber</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryWeber</item>
-        <item name="colorSecondary">@color/colorSecondaryWeber</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWeber</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryWeber</item>
-        <item name="colorError">@color/colorErrorWeber</item>
-        <item name="colorOnError">@color/colorOnErrorWeber</item>
-        <item name="android:colorBackground">@color/colorBackgroundWeber</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundWeber</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWeber</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarWeber</item>
-    </style>
-
-    <style name="Philips" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryPhilips</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkPhilips</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryPhilips</item>
-        <item name="colorSecondary">@color/colorSecondaryPhilips</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantPhilips</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryPhilips</item>
-        <item name="colorError">@color/colorErrorPhilips</item>
-        <item name="colorOnError">@color/colorOnErrorPhilips</item>
-        <item name="android:colorBackground">@color/colorBackgroundPhilips</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundPhilips</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPhilips</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarPhilips</item>
-    </style>
-
-    <style name="Instagram" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryInstagram</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkInstagram</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryInstagram</item>
-        <item name="colorSecondary">@color/colorSecondaryInstagram</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantInstagram</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryInstagram</item>
-        <item name="colorError">@color/colorErrorInstagram</item>
-        <item name="colorOnError">@color/colorOnErrorInstagram</item>
-        <item name="android:colorBackground">@color/colorBackgroundInstagram</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundInstagram</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantInstagram</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarInstagram</item>
-    </style>
-
-    <style name="Reddit" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryReddit</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkReddit</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryReddit</item>
-        <item name="colorSecondary">@color/colorSecondaryReddit</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantReddit</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryReddit</item>
-        <item name="colorError">@color/colorErrorReddit</item>
-        <item name="colorOnError">@color/colorOnErrorReddit</item>
-        <item name="android:colorBackground">@color/colorBackgroundReddit</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundReddit</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantReddit</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarReddit</item>
-    </style>
-
-    <style name="Waaark" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryWaaark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkWaaark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryWaaark</item>
-        <item name="colorSecondary">@color/colorSecondaryWaaark</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWaaark</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryWaaark</item>
-        <item name="colorError">@color/colorErrorWaaark</item>
-        <item name="colorOnError">@color/colorOnErrorWaaark</item>
-        <item name="android:colorBackground">@color/colorBackgroundWaaark</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundWaaark</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWaaark</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarWaaark</item>
+    <style name="Cerulean" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryCerulean</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCerulean</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantCerulean</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCerulean</item>
+        <item name="colorSecondary">@color/colorSecondaryCerulean</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCerulean</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCerulean</item>
+        <item name="colorError">@color/colorErrorCerulean</item>
+        <item name="colorOnError">@color/colorOnErrorCerulean</item>
+        <item name="android:colorBackground">@color/colorBackgroundCerulean</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCerulean</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCerulean</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCerulean</item>
     </style>
 
     <style name="Flax" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryFlax</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkFlax</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantFlax</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryFlax</item>
         <item name="colorSecondary">@color/colorSecondaryFlax</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantFlax</item>
@@ -424,39 +227,10 @@
         <item name="colorOnSnackbar">@color/colorOnSnackbarFlax</item>
     </style>
 
-    <style name="Bing" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryBing</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkBing</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryBing</item>
-        <item name="colorSecondary">@color/colorSecondaryBing</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantBing</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryBing</item>
-        <item name="colorError">@color/colorErrorBing</item>
-        <item name="colorOnError">@color/colorOnErrorBing</item>
-        <item name="android:colorBackground">@color/colorBackgroundBing</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundBing</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBing</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarBing</item>
-    </style>
-
-    <style name="Meetup" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryMeetup</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMeetup</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryMeetup</item>
-        <item name="colorSecondary">@color/colorSecondaryMeetup</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMeetup</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryMeetup</item>
-        <item name="colorError">@color/colorErrorMeetup</item>
-        <item name="colorOnError">@color/colorOnErrorMeetup</item>
-        <item name="android:colorBackground">@color/colorBackgroundMeetup</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundMeetup</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMeetup</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarMeetup</item>
-    </style>
-
     <style name="Coffee" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryCoffee</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkCoffee</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantCoffee</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryCoffee</item>
         <item name="colorSecondary">@color/colorSecondaryCoffee</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantCoffee</item>
@@ -469,174 +243,42 @@
         <item name="colorOnSnackbar">@color/colorOnSnackbarCoffee</item>
     </style>
 
-    <style name="Sepia" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimarySepia</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSepia</item>
-        <item name="colorOnPrimary">@color/colorOnPrimarySepia</item>
-        <item name="colorSecondary">@color/colorSecondarySepia</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSepia</item>
-        <item name="colorOnSecondary">@color/colorOnSecondarySepia</item>
-        <item name="colorError">@color/colorErrorSepia</item>
-        <item name="colorOnError">@color/colorOnErrorSepia</item>
-        <item name="android:colorBackground">@color/colorBackgroundSepia</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundSepia</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSepia</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarSepia</item>
+    <style name="Sky" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimarySky</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkSky</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantSky</item>
+        <item name="colorOnPrimary">@color/colorOnPrimarySky</item>
+        <item name="colorSecondary">@color/colorSecondarySky</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSky</item>
+        <item name="colorOnSecondary">@color/colorOnSecondarySky</item>
+        <item name="colorError">@color/colorErrorSky</item>
+        <item name="colorOnError">@color/colorOnErrorSky</item>
+        <item name="android:colorBackground">@color/colorBackgroundSky</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundSky</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSky</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarSky</item>
     </style>
 
-    <style name="Oblivion" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryOblivion</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkOblivion</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryOblivion</item>
-        <item name="colorSecondary">@color/colorSecondaryOblivion</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantOblivion</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryOblivion</item>
-        <item name="colorError">@color/colorErrorOblivion</item>
-        <item name="colorOnError">@color/colorOnErrorOblivion</item>
-        <item name="android:colorBackground">@color/colorBackgroundOblivion</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundOblivion</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantOblivion</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarOblivion</item>
-    </style>
-
-    <style name="Obsidian" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryObsidian</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkObsidian</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryObsidian</item>
-        <item name="colorSecondary">@color/colorSecondaryObsidian</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantObsidian</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryObsidian</item>
-        <item name="colorError">@color/colorErrorObsidian</item>
-        <item name="colorOnError">@color/colorOnErrorObsidian</item>
-        <item name="android:colorBackground">@color/colorBackgroundObsidian</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundObsidian</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantObsidian</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarObsidian</item>
-    </style>
-
-    <style name="Forrest" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryForrest</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkForrest</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryForrest</item>
-        <item name="colorSecondary">@color/colorSecondaryForrest</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantForrest</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryForrest</item>
-        <item name="colorError">@color/colorErrorForrest</item>
-        <item name="colorOnError">@color/colorOnErrorForrest</item>
-        <item name="android:colorBackground">@color/colorBackgroundForrest</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundForrest</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantForrest</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarForrest</item>
-    </style>
-
-    <style name="Dawn" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryDawn</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkDawn</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryDawn</item>
-        <item name="colorSecondary">@color/colorSecondaryDawn</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantDawn</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryDawn</item>
-        <item name="colorError">@color/colorErrorDawn</item>
-        <item name="colorOnError">@color/colorOnErrorDawn</item>
-        <item name="android:colorBackground">@color/colorBackgroundDawn</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundDawn</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantDawn</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarDawn</item>
-    </style>
-
-    <style name="Twitter" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryTwitter</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitter</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryTwitter</item>
-        <item name="colorSecondary">@color/colorSecondaryTwitter</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTwitter</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryTwitter</item>
-        <item name="colorError">@color/colorErrorTwitter</item>
-        <item name="colorOnError">@color/colorOnErrorTwitter</item>
-        <item name="android:colorBackground">@color/colorBackgroundTwitter</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundTwitter</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTwitter</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarTwitter</item>
-    </style>
-
-    <style name="Periscope" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryPeriscope</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkPeriscope</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryPeriscope</item>
-        <item name="colorSecondary">@color/colorSecondaryPeriscope</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantPeriscope</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryPeriscope</item>
-        <item name="colorError">@color/colorErrorPeriscope</item>
-        <item name="colorOnError">@color/colorOnErrorPeriscope</item>
-        <item name="android:colorBackground">@color/colorBackgroundPeriscope</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundPeriscope</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantPeriscope</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarPeriscope</item>
-    </style>
-
-    <style name="Subdued" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimarySubdued</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSubdued</item>
-        <item name="colorOnPrimary">@color/colorOnPrimarySubdued</item>
-        <item name="colorSecondary">@color/colorSecondarySubdued</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSubdued</item>
-        <item name="colorOnSecondary">@color/colorOnSecondarySubdued</item>
-        <item name="colorError">@color/colorErrorSubdued</item>
-        <item name="colorOnError">@color/colorOnErrorSubdued</item>
-        <item name="android:colorBackground">@color/colorBackgroundSubdued</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundSubdued</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSubdued</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarSubdued</item>
-    </style>
-
-    <style name="MistyGreen" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryMistyGreen</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkMistyGreen</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryMistyGreen</item>
-        <item name="colorSecondary">@color/colorSecondaryMistyGreen</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantMistyGreen</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryMistyGreen</item>
-        <item name="colorError">@color/colorErrorMistyGreen</item>
-        <item name="colorOnError">@color/colorOnErrorMistyGreen</item>
-        <item name="android:colorBackground">@color/colorBackgroundMistyGreen</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundMistyGreen</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantMistyGreen</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarMistyGreen</item>
-    </style>
-
-    <style name="Waterfall" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryWaterfall</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkWaterfall</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryWaterfall</item>
-        <item name="colorSecondary">@color/colorSecondaryWaterfall</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantWaterfall</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryWaterfall</item>
-        <item name="colorError">@color/colorErrorWaterfall</item>
-        <item name="colorOnError">@color/colorOnErrorWaterfall</item>
-        <item name="android:colorBackground">@color/colorBackgroundWaterfall</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundWaterfall</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantWaterfall</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarWaterfall</item>
-    </style>
-
-    <style name="Retro" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryRetro</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkRetro</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryRetro</item>
-        <item name="colorSecondary">@color/colorSecondaryRetro</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRetro</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryRetro</item>
-        <item name="colorError">@color/colorErrorRetro</item>
-        <item name="colorOnError">@color/colorOnErrorRetro</item>
-        <item name="android:colorBackground">@color/colorBackgroundRetro</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundRetro</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRetro</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarRetro</item>
+    <style name="Breeze" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryBreeze</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBreeze</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantBreeze</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryBreeze</item>
+        <item name="colorSecondary">@color/colorSecondaryBreeze</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantBreeze</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryBreeze</item>
+        <item name="colorError">@color/colorErrorBreeze</item>
+        <item name="colorOnError">@color/colorOnErrorBreeze</item>
+        <item name="android:colorBackground">@color/colorBackgroundBreeze</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundBreeze</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantBreeze</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarBreeze</item>
     </style>
 
     <style name="Inkpot" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryInkpot</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkInkpot</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantInkpot</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryInkpot</item>
         <item name="colorSecondary">@color/colorSecondaryInkpot</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantInkpot</item>
@@ -649,69 +291,10 @@
         <item name="colorOnSnackbar">@color/colorOnSnackbarInkpot</item>
     </style>
 
-    <style name="VibrantInk" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryVibrantInk</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkVibrantInk</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryVibrantInk</item>
-        <item name="colorSecondary">@color/colorSecondaryVibrantInk</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantVibrantInk</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryVibrantInk</item>
-        <item name="colorError">@color/colorErrorVibrantInk</item>
-        <item name="colorOnError">@color/colorOnErrorVibrantInk</item>
-        <item name="android:colorBackground">@color/colorBackgroundVibrantInk</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundVibrantInk</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantVibrantInk</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarVibrantInk</item>
-    </style>
-
-    <style name="Fresh" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryFresh</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkFresh</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryFresh</item>
-        <item name="colorSecondary">@color/colorSecondaryFresh</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantFresh</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryFresh</item>
-        <item name="colorError">@color/colorErrorFresh</item>
-        <item name="colorOnError">@color/colorOnErrorFresh</item>
-        <item name="android:colorBackground">@color/colorBackgroundFresh</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundFresh</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFresh</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarFresh</item>
-    </style>
-
-    <style name="Coteazur" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryCoteazur</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkCoteazur</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryCoteazur</item>
-        <item name="colorSecondary">@color/colorSecondaryCoteazur</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCoteazur</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryCoteazur</item>
-        <item name="colorError">@color/colorErrorCoteazur</item>
-        <item name="colorOnError">@color/colorOnErrorCoteazur</item>
-        <item name="android:colorBackground">@color/colorBackgroundCoteazur</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundCoteazur</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCoteazur</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarCoteazur</item>
-    </style>
-
-    <style name="QED" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryQED</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkQED</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryQED</item>
-        <item name="colorSecondary">@color/colorSecondaryQED</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantQED</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryQED</item>
-        <item name="colorError">@color/colorErrorQED</item>
-        <item name="colorOnError">@color/colorOnErrorQED</item>
-        <item name="android:colorBackground">@color/colorBackgroundQED</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundQED</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantQED</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarQED</item>
-    </style>
-
     <style name="Vintage" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryVintage</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVintage</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantVintage</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryVintage</item>
         <item name="colorSecondary">@color/colorSecondaryVintage</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantVintage</item>
@@ -724,144 +307,59 @@
         <item name="colorOnSnackbar">@color/colorOnSnackbarVintage</item>
     </style>
 
-    <style name="Spotify" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimarySpotify</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSpotify</item>
-        <item name="colorOnPrimary">@color/colorOnPrimarySpotify</item>
-        <item name="colorSecondary">@color/colorSecondarySpotify</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSpotify</item>
-        <item name="colorOnSecondary">@color/colorOnSecondarySpotify</item>
-        <item name="colorError">@color/colorErrorSpotify</item>
-        <item name="colorOnError">@color/colorOnErrorSpotify</item>
-        <item name="android:colorBackground">@color/colorBackgroundSpotify</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundSpotify</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSpotify</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarSpotify</item>
+    <style name="Jade" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryJade</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkJade</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantJade</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryJade</item>
+        <item name="colorSecondary">@color/colorSecondaryJade</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantJade</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryJade</item>
+        <item name="colorError">@color/colorErrorJade</item>
+        <item name="colorOnError">@color/colorOnErrorJade</item>
+        <item name="android:colorBackground">@color/colorBackgroundJade</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundJade</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantJade</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarJade</item>
     </style>
 
-    <style name="Xbox" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryXbox</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkXbox</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryXbox</item>
-        <item name="colorSecondary">@color/colorSecondaryXbox</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantXbox</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryXbox</item>
-        <item name="colorError">@color/colorErrorXbox</item>
-        <item name="colorOnError">@color/colorOnErrorXbox</item>
-        <item name="android:colorBackground">@color/colorBackgroundXbox</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundXbox</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantXbox</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarXbox</item>
+
+    <style name="Grape" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryGrape</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGrape</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantGrape</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryGrape</item>
+        <item name="colorSecondary">@color/colorSecondaryGrape</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantGrape</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryGrape</item>
+        <item name="colorError">@color/colorErrorGrape</item>
+        <item name="colorOnError">@color/colorOnErrorGrape</item>
+        <item name="android:colorBackground">@color/colorBackgroundGrape</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundGrape</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantGrape</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarGrape</item>
     </style>
 
-    <style name="Sublime" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimarySublime</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSublime</item>
-        <item name="colorOnPrimary">@color/colorOnPrimarySublime</item>
-        <item name="colorSecondary">@color/colorSecondarySublime</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantSublime</item>
-        <item name="colorOnSecondary">@color/colorOnSecondarySublime</item>
-        <item name="colorError">@color/colorErrorSublime</item>
-        <item name="colorOnError">@color/colorOnErrorSublime</item>
-        <item name="android:colorBackground">@color/colorBackgroundSublime</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundSublime</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantSublime</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarSublime</item>
-    </style>
-
-    <style name="Zenburn" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryZenburn</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkZenburn</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryZenburn</item>
-        <item name="colorSecondary">@color/colorSecondaryZenburn</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantZenburn</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryZenburn</item>
-        <item name="colorError">@color/colorErrorZenburn</item>
-        <item name="colorOnError">@color/colorOnErrorZenburn</item>
-        <item name="android:colorBackground">@color/colorBackgroundZenburn</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundZenburn</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantZenburn</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarZenburn</item>
-    </style>
-
-    <style name="Starbucks" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryStarbucks</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkStarbucks</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryStarbucks</item>
-        <item name="colorSecondary">@color/colorSecondaryStarbucks</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantStarbucks</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryStarbucks</item>
-        <item name="colorError">@color/colorErrorStarbucks</item>
-        <item name="colorOnError">@color/colorOnErrorStarbucks</item>
-        <item name="android:colorBackground">@color/colorBackgroundStarbucks</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundStarbucks</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantStarbucks</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarStarbucks</item>
-    </style>
-
-    <style name="Amazon" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryAmazon</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkAmazon</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryAmazon</item>
-        <item name="colorSecondary">@color/colorSecondaryAmazon</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantAmazon</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryAmazon</item>
-        <item name="colorError">@color/colorErrorAmazon</item>
-        <item name="colorOnError">@color/colorOnErrorAmazon</item>
-        <item name="android:colorBackground">@color/colorBackgroundAmazon</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundAmazon</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantAmazon</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarAmazon</item>
-    </style>
-
-    <style name="Twitch" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryTwitch</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkTwitch</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryTwitch</item>
-        <item name="colorSecondary">@color/colorSecondaryTwitch</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantTwitch</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryTwitch</item>
-        <item name="colorError">@color/colorErrorTwitch</item>
-        <item name="colorOnError">@color/colorOnErrorTwitch</item>
-        <item name="android:colorBackground">@color/colorBackgroundTwitch</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundTwitch</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantTwitch</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarTwitch</item>
-    </style>
-
-    <style name="Robinhood" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryRobinhood</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkRobinhood</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryRobinhood</item>
-        <item name="colorSecondary">@color/colorSecondaryRobinhood</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantRobinhood</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryRobinhood</item>
-        <item name="colorError">@color/colorErrorRobinhood</item>
-        <item name="colorOnError">@color/colorOnErrorRobinhood</item>
-        <item name="android:colorBackground">@color/colorBackgroundRobinhood</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundRobinhood</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantRobinhood</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarRobinhood</item>
-    </style>
-
-    <style name="Facebook" parent="BaseTheme">
-        <item name="colorPrimary">@color/colorPrimaryFacebook</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkFacebook</item>
-        <item name="colorOnPrimary">@color/colorOnPrimaryFacebook</item>
-        <item name="colorSecondary">@color/colorSecondaryFacebook</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariantFacebook</item>
-        <item name="colorOnSecondary">@color/colorOnSecondaryFacebook</item>
-        <item name="colorError">@color/colorErrorFacebook</item>
-        <item name="colorOnError">@color/colorOnErrorFacebook</item>
-        <item name="android:colorBackground">@color/colorBackgroundFacebook</item>
-        <item name="colorOnBackground">@color/colorOnBackgroundFacebook</item>
-        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantFacebook</item>
-        <item name="colorOnSnackbar">@color/colorOnSnackbarFacebook</item>
+    <style name="Cobalt" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorPrimaryCobalt</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkCobalt</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantCobalt</item>
+        <item name="colorOnPrimary">@color/colorOnPrimaryCobalt</item>
+        <item name="colorSecondary">@color/colorSecondaryCobalt</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariantCobalt</item>
+        <item name="colorOnSecondary">@color/colorOnSecondaryCobalt</item>
+        <item name="colorError">@color/colorErrorCobalt</item>
+        <item name="colorOnError">@color/colorOnErrorCobalt</item>
+        <item name="android:colorBackground">@color/colorBackgroundCobalt</item>
+        <item name="colorOnBackground">@color/colorOnBackgroundCobalt</item>
+        <item name="android:textColorSecondary">@color/colorOnBackgroundVariantCobalt</item>
+        <item name="colorOnSnackbar">@color/colorOnSnackbarCobalt</item>
     </style>
 
     <style name="Mint" parent="BaseTheme">
         <item name="colorPrimary">@color/colorPrimaryMint</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkMint</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariantMint</item>
         <item name="colorOnPrimary">@color/colorOnPrimaryMint</item>
         <item name="colorSecondary">@color/colorSecondaryMint</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariantMint</item>

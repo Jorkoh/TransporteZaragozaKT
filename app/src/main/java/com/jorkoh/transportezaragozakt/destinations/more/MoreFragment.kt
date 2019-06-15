@@ -34,7 +34,6 @@ class MoreFragment : PreferenceFragmentCompat() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy")))
             true
         }
-
         findPreference<Preference>(getString(R.string.libraries_and_credits_key))?.setOnPreferenceClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.libraries_and_credits_title)

@@ -1,1 +1,1 @@
-include ':app', ':quickpermissions-kotlin', ':speedDial', ':dresscode', ':datetime'
+include ':app', ':quickpermissions-kotlin', ':speedDial', ':dresscode', ':datetime', ':material-intro-screen', ':gene-rate'

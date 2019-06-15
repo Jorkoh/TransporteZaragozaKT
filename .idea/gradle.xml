@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/datetime" />
             <option value="$PROJECT_DIR$/dresscode" />
+            <option value="$PROJECT_DIR$/gene-rate" />
+            <option value="$PROJECT_DIR$/material-intro-screen" />
             <option value="$PROJECT_DIR$/quickpermissions-kotlin" />
             <option value="$PROJECT_DIR$/speedDial" />
           </set>

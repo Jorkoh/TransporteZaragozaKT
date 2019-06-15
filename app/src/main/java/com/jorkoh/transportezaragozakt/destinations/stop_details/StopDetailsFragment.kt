@@ -25,9 +25,11 @@ import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFrag
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.leinardi.android.speeddial.SpeedDialActionItem
+import com.pixplicity.generate.Rate
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.Serializable
 
@@ -38,6 +40,8 @@ class StopDetailsFragment : Fragment() {
     }
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
+
+    private val rate : Rate by inject()
 
     private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
@@ -60,6 +64,7 @@ class StopDetailsFragment : Fragment() {
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
                 } else {
+                    rate.showRequest(requireActivity().coordinator_layout, R.id.gap, requireContext())
                     View.GONE
                 }
             }

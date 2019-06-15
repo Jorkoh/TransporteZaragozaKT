@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:key="@string/preferences">
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
             android:title="@string/style_category_title"
@@ -35,6 +34,17 @@
                 app:title="@string/avanza_twitter_title"
                 android:summary="@string/avanza_twitter_message"
                 app:iconSpaceReserved="false"/>
+
+        <Preference
+                app:key="@string/play_intro_key"
+                app:title="@string/play_intro_title"
+                android:summary="@string/play_intro_message"
+                app:iconSpaceReserved="false">
+            <intent
+                    android:action="android.intent.action.VIEW"
+                    android:targetPackage="com.jorkoh.transportezaragozakt"
+                    android:targetClass="com.jorkoh.transportezaragozakt.IntroActivity"/>
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory

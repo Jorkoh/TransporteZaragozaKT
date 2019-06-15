@@ -77,7 +77,7 @@ open class ThemePickerFragment : Fragment(), OnItemClickListener {
             attributes.recycle()
         }
 
-        return themes
+        return themes.sortedBy { it.name }
     }
 
     data class CustomTheme(

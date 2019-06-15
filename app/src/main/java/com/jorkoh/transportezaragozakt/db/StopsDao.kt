@@ -146,6 +146,7 @@ abstract class StopsDao {
             putBoolean(context.getString(R.string.bus_filter_key), true)
             putBoolean(context.getString(R.string.tram_filter_key), true)
             putInt(context.getString(R.string.search_tab_position_key), 0)
+            putBoolean(context.getString(R.string.is_first_launch_key), true)
             apply()
         }
         insertStops(initialBusStops.stops.plus(initialTramStops.stops))

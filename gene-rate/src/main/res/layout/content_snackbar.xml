@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:gravity="center_vertical"
+              android:padding="12dp"
+              xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+            android:id="@+id/tv_swipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/swipe_to_dismiss"
+            android:textColor="?attr/colorOnSnackbar"
+            android:alpha="0.5"
+            android:textSize="12sp"/>
+
+    <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:textColor="?attr/colorOnSnackbar"
+            tools:text="@string/initial_question"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+            android:textAlignment="center"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <Button
+                android:id="@+id/bt_no"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="@string/button_no"/>
+        <Button
+                android:id="@+id/bt_later"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:visibility="gone"
+                android:layout_marginLeft="8dp"
+                android:text="@string/button_later"
+                tools:ignore="RtlHardcoded"/>
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_weight="1"/>
+        <Button
+                android:id="@+id/bt_yes"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="@string/button_yes"/>
+    </LinearLayout>
+</LinearLayout>

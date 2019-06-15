@@ -5,8 +5,13 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
+import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 
-class MainActivityViewModel(private val favoritesRepository: FavoritesRepository, private val remindersRepository: RemindersRepository) :
+class MainActivityViewModel(
+    private val favoritesRepository: FavoritesRepository,
+    private val remindersRepository: RemindersRepository,
+    private val settingsRepository: SettingsRepository
+) :
     ViewModel() {
 
     private var favoriteCount: Int = -1
@@ -38,4 +43,6 @@ class MainActivityViewModel(private val favoritesRepository: FavoritesRepository
             }
         }
     }
+
+    fun isFirstLaunch() = settingsRepository.isFirstLaunch()
 }

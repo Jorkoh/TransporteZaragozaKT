@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gene-rate</string>
+    <string name="button_later">MÁS TARDE</string>
+    <string name="button_no">NO</string>
+    <string name="button_yes">SÍ</string>
+    <string name="initial_question">¿Te está resultando útil la aplicación?</string>
+    <string name="secondary_question_negative">Lo siento. ¿Puedes decirme cuál es el problema para poder mejorar?</string>
+    <string name="secondary_question_positive">¿Considerarías dejar una valoración?</string>
+    <string name="swipe_to_dismiss">Desliza para ocultar</string>
+</resources>

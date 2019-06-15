@@ -10,87 +10,27 @@
     <color name="tram_color">#232828</color>
     <color name="splash_red">#DE2F34</color>
 
-    <!-- TransporteZaragoza -->
-    <color name="colorPrimaryTransporteZaragoza">#de2f34</color>
-    <color name="colorPrimaryDarkTransporteZaragoza">#a4000d</color>
-    <color name="colorOnPrimaryTransporteZaragoza">#FAFAFA</color>
-    <color name="colorSecondaryTransporteZaragoza">#1976d2</color>
-    <color name="colorSecondaryVariantTransporteZaragoza">#004ba0</color>
-    <color name="colorOnSecondaryTransporteZaragoza">#FAFAFA</color>
-    <color name="colorErrorTransporteZaragoza">#F44336</color>
-    <color name="colorOnErrorTransporteZaragoza">#FAFAFA</color>
-    <color name="colorBackgroundTransporteZaragoza">#F0EEE8</color>
-    <color name="colorOnBackgroundTransporteZaragoza">#000000</color>
-    <color name="colorOnBackgroundVariantTransporteZaragoza">#1D1D24</color>
-    <color name="colorOnSnackbarTransporteZaragoza">#FFFFFF</color>
-    <!-- Cyanea -->
-    <color name="colorPrimaryCyanea">#EE3868</color>
-    <color name="colorPrimaryDarkCyanea">#CA2F58</color>
-    <color name="colorOnPrimaryCyanea">#FAFAFA</color>
-    <color name="colorSecondaryCyanea">#93C43E</color>
-    <color name="colorSecondaryVariantCyanea">#7CA634</color>
-    <color name="colorOnSecondaryCyanea">#FAFAFA</color>
-    <color name="colorErrorCyanea">#F44336</color>
-    <color name="colorOnErrorCyanea">#FAFAFA</color>
-    <color name="colorBackgroundCyanea">#FAFAFA</color>
-    <color name="colorOnBackgroundCyanea">#000000</color>
-    <color name="colorOnBackgroundVariantCyanea">#1D1D24</color>
-    <color name="colorOnSnackbarCyanea">#FFFFFF</color>
-    <!-- Rio -->
-    <color name="colorPrimaryRio">#0B4239</color>
-    <color name="colorPrimaryDarkRio">#093830</color>
-    <color name="colorOnPrimaryRio">#FAFAFA</color>
-    <color name="colorSecondaryRio">#E34517</color>
-    <color name="colorSecondaryVariantRio">#C03A13</color>
-    <color name="colorOnSecondaryRio">#FAFAFA</color>
-    <color name="colorErrorRio">#F44336</color>
-    <color name="colorOnErrorRio">#FAFAFA</color>
-    <color name="colorBackgroundRio">#FAFAFA</color>
-    <color name="colorOnBackgroundRio">#000000</color>
-    <color name="colorOnBackgroundVariantRio">#1D1D24</color>
-    <color name="colorOnSnackbarRio">#FFFFFF</color>
-    <!-- VitaminSea -->
-    <color name="colorPrimaryVitaminSea">#0359AE</color>
-    <color name="colorPrimaryDarkVitaminSea">#024B93</color>
-    <color name="colorOnPrimaryVitaminSea">#FAFAFA</color>
-    <color name="colorSecondaryVitaminSea">#14B09B</color>
-    <color name="colorSecondaryVariantVitaminSea">#119583</color>
-    <color name="colorOnSecondaryVitaminSea">#FAFAFA</color>
-    <color name="colorErrorVitaminSea">#F44336</color>
-    <color name="colorOnErrorVitaminSea">#FAFAFA</color>
-    <color name="colorBackgroundVitaminSea">#EBE5D9</color>
-    <color name="colorOnBackgroundVitaminSea">#000000</color>
-    <color name="colorOnBackgroundVariantVitaminSea">#1D1D24</color>
-    <color name="colorOnSnackbarVitaminSea">#FFFFFF</color>
-    <!-- TextileDyes -->
-    <color name="colorPrimaryTextileDyes">#32435F</color>
-    <color name="colorPrimaryDarkTextileDyes">#2A3850</color>
-    <color name="colorOnPrimaryTextileDyes">#FAFAFA</color>
-    <color name="colorSecondaryTextileDyes">#EB9772</color>
-    <color name="colorSecondaryVariantTextileDyes">#C78060</color>
-    <color name="colorOnSecondaryTextileDyes">#FAFAFA</color>
-    <color name="colorErrorTextileDyes">#F44336</color>
-    <color name="colorOnErrorTextileDyes">#FAFAFA</color>
-    <color name="colorBackgroundTextileDyes">#FDDCCA</color>
-    <color name="colorOnBackgroundTextileDyes">#000000</color>
-    <color name="colorOnBackgroundVariantTextileDyes">#1D1D24</color>
-    <color name="colorOnSnackbarTextileDyes">#FFFFFF</color>
-    <!-- Brave -->
-    <color name="colorPrimaryBrave">#3E9AB4</color>
-    <color name="colorPrimaryDarkBrave">#348299</color>
-    <color name="colorOnPrimaryBrave">#FAFAFA</color>
-    <color name="colorSecondaryBrave">#EE6000</color>
-    <color name="colorSecondaryVariantBrave">#CA5100</color>
-    <color name="colorOnSecondaryBrave">#FAFAFA</color>
-    <color name="colorErrorBrave">#F44336</color>
-    <color name="colorOnErrorBrave">#FAFAFA</color>
-    <color name="colorBackgroundBrave">#1D1D24</color>
-    <color name="colorOnBackgroundBrave">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantBrave">#FAFAFA</color>
-    <color name="colorOnSnackbarBrave">#000000</color>
+
+    <!-- Kingfisher -->
+    <color name="colorPrimaryKingfisher">#FF9900</color>
+    <color name="colorPrimaryDarkKingfisher">#D88200</color>
+    <color name="colorPrimaryVariantKingfisher">#D88200</color>
+    <color name="colorOnPrimaryKingfisher">#FAFAFA</color>
+    <color name="colorSecondaryKingfisher">#146EB4</color>
+    <color name="colorSecondaryVariantKingfisher">#115D99</color>
+    <color name="colorOnSecondaryKingfisher">#FAFAFA</color>
+    <color name="colorErrorKingfisher">#F44336</color>
+    <color name="colorOnErrorKingfisher">#FAFAFA</color>
+    <color name="colorBackgroundKingfisher">#FAFAFA</color>
+    <color name="colorOnBackgroundKingfisher">#000000</color>
+    <color name="colorOnBackgroundVariantKingfisher">#1D1D24</color>
+    <color name="colorOnSnackbarKingfisher">#FFFFFF</color>
+
+
     <!-- Ashen -->
     <color name="colorPrimaryAshen">#FC474A</color>
     <color name="colorPrimaryDarkAshen">#D63C3E</color>
+    <color name="colorPrimaryVariantAshen">#C72D2F</color>
     <color name="colorOnPrimaryAshen">#FAFAFA</color>
     <color name="colorSecondaryAshen">#3BB7CB</color>
     <color name="colorSecondaryVariantAshen">#329BAC</color>
@@ -101,269 +41,11 @@
     <color name="colorOnBackgroundAshen">#FFFFFF</color>
     <color name="colorOnBackgroundVariantAshen">#FAFAFA</color>
     <color name="colorOnSnackbarAshen">#000000</color>
-    <!-- RecognEyes -->
-    <color name="colorPrimaryRecognEyes">#00D0D0</color>
-    <color name="colorPrimaryDarkRecognEyes">#00B0B0</color>
-    <color name="colorOnPrimaryRecognEyes">#FAFAFA</color>
-    <color name="colorSecondaryRecognEyes">#FF8080</color>
-    <color name="colorSecondaryVariantRecognEyes">#D86C6C</color>
-    <color name="colorOnSecondaryRecognEyes">#FAFAFA</color>
-    <color name="colorErrorRecognEyes">#F44336</color>
-    <color name="colorOnErrorRecognEyes">#FAFAFA</color>
-    <color name="colorBackgroundRecognEyes">#101020</color>
-    <color name="colorOnBackgroundRecognEyes">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantRecognEyes">#FAFAFA</color>
-    <color name="colorOnSnackbarRecognEyes">#000000</color>
-    <!-- Monokai -->
-    <color name="colorPrimaryMonokai">#66CCB3</color>
-    <color name="colorPrimaryDarkMonokai">#56AD98</color>
-    <color name="colorOnPrimaryMonokai">#FAFAFA</color>
-    <color name="colorSecondaryMonokai">#5B80BF</color>
-    <color name="colorSecondaryVariantMonokai">#4D6CA2</color>
-    <color name="colorOnSecondaryMonokai">#FAFAFA</color>
-    <color name="colorErrorMonokai">#F44336</color>
-    <color name="colorOnErrorMonokai">#FAFAFA</color>
-    <color name="colorBackgroundMonokai">#272822</color>
-    <color name="colorOnBackgroundMonokai">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantMonokai">#FAFAFA</color>
-    <color name="colorOnSnackbarMonokai">#000000</color>
-    <!-- SigFig -->
-    <color name="colorPrimarySigFig">#F7F6F3</color>
-    <color name="colorPrimaryDarkSigFig">#D8D8D8</color>
-    <color name="colorOnPrimarySigFig">#1D1D24</color>
-    <color name="colorSecondarySigFig">#F05A50</color>
-    <color name="colorSecondaryVariantSigFig">#CC4C44</color>
-    <color name="colorOnSecondarySigFig">#FAFAFA</color>
-    <color name="colorErrorSigFig">#F44336</color>
-    <color name="colorOnErrorSigFig">#FAFAFA</color>
-    <color name="colorBackgroundSigFig">#F0EEE8</color>
-    <color name="colorOnBackgroundSigFig">#000000</color>
-    <color name="colorOnBackgroundVariantSigFig">#1D1D24</color>
-    <color name="colorOnSnackbarSigFig">#FFFFFF</color>
-    <!-- SoundCloud -->
-    <color name="colorPrimarySoundCloud">#FFFFFF</color>
-    <color name="colorPrimaryDarkSoundCloud">#D8D8D8</color>
-    <color name="colorOnPrimarySoundCloud">#1D1D24</color>
-    <color name="colorSecondarySoundCloud">#E65100</color>
-    <color name="colorSecondaryVariantSoundCloud">#C34400</color>
-    <color name="colorOnSecondarySoundCloud">#FAFAFA</color>
-    <color name="colorErrorSoundCloud">#F44336</color>
-    <color name="colorOnErrorSoundCloud">#FAFAFA</color>
-    <color name="colorBackgroundSoundCloud">#FFFFFF</color>
-    <color name="colorOnBackgroundSoundCloud">#000000</color>
-    <color name="colorOnBackgroundVariantSoundCloud">#1D1D24</color>
-    <color name="colorOnSnackbarSoundCloud">#FFFFFF</color>
-    <!-- Materiallight -->
-    <color name="colorPrimaryMateriallight">#263238</color>
-    <color name="colorPrimaryDarkMateriallight">#202A2F</color>
-    <color name="colorOnPrimaryMateriallight">#FAFAFA</color>
-    <color name="colorSecondaryMateriallight">#009688</color>
-    <color name="colorSecondaryVariantMateriallight">#007F73</color>
-    <color name="colorOnSecondaryMateriallight">#FAFAFA</color>
-    <color name="colorErrorMateriallight">#F44336</color>
-    <color name="colorOnErrorMateriallight">#FAFAFA</color>
-    <color name="colorBackgroundMateriallight">#F3F3F3</color>
-    <color name="colorOnBackgroundMateriallight">#000000</color>
-    <color name="colorOnBackgroundVariantMateriallight">#1D1D24</color>
-    <color name="colorOnSnackbarMateriallight">#FFFFFF</color>
-    <!-- Hololight -->
-    <color name="colorPrimaryHololight">#222222</color>
-    <color name="colorPrimaryDarkHololight">#1C1C1C</color>
-    <color name="colorOnPrimaryHololight">#FAFAFA</color>
-    <color name="colorSecondaryHololight">#00DDFF</color>
-    <color name="colorSecondaryVariantHololight">#00BBD8</color>
-    <color name="colorOnSecondaryHololight">#FAFAFA</color>
-    <color name="colorErrorHololight">#F44336</color>
-    <color name="colorOnErrorHololight">#FAFAFA</color>
-    <color name="colorBackgroundHololight">#F3F3F3</color>
-    <color name="colorOnBackgroundHololight">#000000</color>
-    <color name="colorOnBackgroundVariantHololight">#1D1D24</color>
-    <color name="colorOnSnackbarHololight">#FFFFFF</color>
-    <!-- Materialdark -->
-    <color name="colorPrimaryMaterialdark">#263238</color>
-    <color name="colorPrimaryDarkMaterialdark">#202A2F</color>
-    <color name="colorOnPrimaryMaterialdark">#FAFAFA</color>
-    <color name="colorSecondaryMaterialdark">#009688</color>
-    <color name="colorSecondaryVariantMaterialdark">#007F73</color>
-    <color name="colorOnSecondaryMaterialdark">#FAFAFA</color>
-    <color name="colorErrorMaterialdark">#F44336</color>
-    <color name="colorOnErrorMaterialdark">#FAFAFA</color>
-    <color name="colorBackgroundMaterialdark">#000000</color>
-    <color name="colorOnBackgroundMaterialdark">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantMaterialdark">#FAFAFA</color>
-    <color name="colorOnSnackbarMaterialdark">#000000</color>
-    <!-- Holodark -->
-    <color name="colorPrimaryHolodark">#222222</color>
-    <color name="colorPrimaryDarkHolodark">#1C1C1C</color>
-    <color name="colorOnPrimaryHolodark">#FAFAFA</color>
-    <color name="colorSecondaryHolodark">#00DDFF</color>
-    <color name="colorSecondaryVariantHolodark">#00BBD8</color>
-    <color name="colorOnSecondaryHolodark">#FAFAFA</color>
-    <color name="colorErrorHolodark">#F44336</color>
-    <color name="colorOnErrorHolodark">#FAFAFA</color>
-    <color name="colorBackgroundHolodark">#000000</color>
-    <color name="colorOnBackgroundHolodark">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantHolodark">#FAFAFA</color>
-    <color name="colorOnSnackbarHolodark">#000000</color>
-    <!-- Cherrypie -->
-    <color name="colorPrimaryCherrypie">#46070B</color>
-    <color name="colorPrimaryDarkCherrypie">#3B0509</color>
-    <color name="colorOnPrimaryCherrypie">#FAFAFA</color>
-    <color name="colorSecondaryCherrypie">#FC1604</color>
-    <color name="colorSecondaryVariantCherrypie">#D61203</color>
-    <color name="colorOnSecondaryCherrypie">#FAFAFA</color>
-    <color name="colorErrorCherrypie">#F44336</color>
-    <color name="colorOnErrorCherrypie">#FAFAFA</color>
-    <color name="colorBackgroundCherrypie">#060000</color>
-    <color name="colorOnBackgroundCherrypie">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantCherrypie">#FAFAFA</color>
-    <color name="colorOnSnackbarCherrypie">#000000</color>
-    <!-- Olive -->
-    <color name="colorPrimaryOlive">#40411E</color>
-    <color name="colorPrimaryDarkOlive">#363719</color>
-    <color name="colorOnPrimaryOlive">#FAFAFA</color>
-    <color name="colorSecondaryOlive">#C03000</color>
-    <color name="colorSecondaryVariantOlive">#A32800</color>
-    <color name="colorOnSecondaryOlive">#FAFAFA</color>
-    <color name="colorErrorOlive">#F44336</color>
-    <color name="colorOnErrorOlive">#FAFAFA</color>
-    <color name="colorBackgroundOlive">#1B1C0B</color>
-    <color name="colorOnBackgroundOlive">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantOlive">#FAFAFA</color>
-    <color name="colorOnSnackbarOlive">#000000</color>
-    <!-- Tasty -->
-    <color name="colorPrimaryTasty">#437356</color>
-    <color name="colorPrimaryDarkTasty">#386149</color>
-    <color name="colorOnPrimaryTasty">#FAFAFA</color>
-    <color name="colorSecondaryTasty">#F34A53</color>
-    <color name="colorSecondaryVariantTasty">#CE3E46</color>
-    <color name="colorOnSecondaryTasty">#FAFAFA</color>
-    <color name="colorErrorTasty">#F44336</color>
-    <color name="colorOnErrorTasty">#FAFAFA</color>
-    <color name="colorBackgroundTasty">#FEF7E8</color>
-    <color name="colorOnBackgroundTasty">#000000</color>
-    <color name="colorOnBackgroundVariantTasty">#1D1D24</color>
-    <color name="colorOnSnackbarTasty">#FFFFFF</color>
-    <!-- Desert -->
-    <color name="colorPrimaryDesert">#5D3C1B</color>
-    <color name="colorPrimaryDarkDesert">#4F3316</color>
-    <color name="colorOnPrimaryDesert">#FAFAFA</color>
-    <color name="colorSecondaryDesert">#90A04A</color>
-    <color name="colorSecondaryVariantDesert">#7A883E</color>
-    <color name="colorOnSecondaryDesert">#FAFAFA</color>
-    <color name="colorErrorDesert">#F44336</color>
-    <color name="colorOnErrorDesert">#FAFAFA</color>
-    <color name="colorBackgroundDesert">#F3EEE4</color>
-    <color name="colorOnBackgroundDesert">#000000</color>
-    <color name="colorOnBackgroundVariantDesert">#1D1D24</color>
-    <color name="colorOnSnackbarDesert">#FFFFFF</color>
-    <!-- Weber -->
-    <color name="colorPrimaryWeber">#729F98</color>
-    <color name="colorPrimaryDarkWeber">#608781</color>
-    <color name="colorOnPrimaryWeber">#FAFAFA</color>
-    <color name="colorSecondaryWeber">#AA863A</color>
-    <color name="colorSecondaryVariantWeber">#907131</color>
-    <color name="colorOnSecondaryWeber">#FAFAFA</color>
-    <color name="colorErrorWeber">#F44336</color>
-    <color name="colorOnErrorWeber">#FAFAFA</color>
-    <color name="colorBackgroundWeber">#F0ECEB</color>
-    <color name="colorOnBackgroundWeber">#000000</color>
-    <color name="colorOnBackgroundVariantWeber">#1D1D24</color>
-    <color name="colorOnSnackbarWeber">#FFFFFF</color>
-    <!-- Philips -->
-    <color name="colorPrimaryPhilips">#2F435E</color>
-    <color name="colorPrimaryDarkPhilips">#27384F</color>
-    <color name="colorOnPrimaryPhilips">#FAFAFA</color>
-    <color name="colorSecondaryPhilips">#4B5E65</color>
-    <color name="colorSecondaryVariantPhilips">#3F4F55</color>
-    <color name="colorOnSecondaryPhilips">#FAFAFA</color>
-    <color name="colorErrorPhilips">#F44336</color>
-    <color name="colorOnErrorPhilips">#FAFAFA</color>
-    <color name="colorBackgroundPhilips">#ECECEC</color>
-    <color name="colorOnBackgroundPhilips">#000000</color>
-    <color name="colorOnBackgroundVariantPhilips">#1D1D24</color>
-    <color name="colorOnSnackbarPhilips">#FFFFFF</color>
-    <!-- Instagram -->
-    <color name="colorPrimaryInstagram">#517FA4</color>
-    <color name="colorPrimaryDarkInstagram">#446B8B</color>
-    <color name="colorOnPrimaryInstagram">#FAFAFA</color>
-    <color name="colorSecondaryInstagram">#517FA4</color>
-    <color name="colorSecondaryVariantInstagram">#446B8B</color>
-    <color name="colorOnSecondaryInstagram">#FAFAFA</color>
-    <color name="colorErrorInstagram">#F44336</color>
-    <color name="colorOnErrorInstagram">#FAFAFA</color>
-    <color name="colorBackgroundInstagram">#161819</color>
-    <color name="colorOnBackgroundInstagram">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantInstagram">#FAFAFA</color>
-    <color name="colorOnSnackbarInstagram">#000000</color>
-    <!-- Reddit -->
-    <color name="colorPrimaryReddit">#000000</color>
-    <color name="colorPrimaryDarkReddit">#000000</color>
-    <color name="colorOnPrimaryReddit">#FAFAFA</color>
-    <color name="colorSecondaryReddit">#FF3D00</color>
-    <color name="colorSecondaryVariantReddit">#D83300</color>
-    <color name="colorOnSecondaryReddit">#FAFAFA</color>
-    <color name="colorErrorReddit">#F44336</color>
-    <color name="colorOnErrorReddit">#FAFAFA</color>
-    <color name="colorBackgroundReddit">#212121</color>
-    <color name="colorOnBackgroundReddit">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantReddit">#FAFAFA</color>
-    <color name="colorOnSnackbarReddit">#000000</color>
-    <!-- Waaark -->
-    <color name="colorPrimaryWaaark">#F76C6C</color>
-    <color name="colorPrimaryDarkWaaark">#D15B5B</color>
-    <color name="colorOnPrimaryWaaark">#FAFAFA</color>
-    <color name="colorSecondaryWaaark">#A8D0E6</color>
-    <color name="colorSecondaryVariantWaaark">#8EB0C3</color>
-    <color name="colorOnSecondaryWaaark">#FAFAFA</color>
-    <color name="colorErrorWaaark">#F44336</color>
-    <color name="colorOnErrorWaaark">#FAFAFA</color>
-    <color name="colorBackgroundWaaark">#24305E</color>
-    <color name="colorOnBackgroundWaaark">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantWaaark">#FAFAFA</color>
-    <color name="colorOnSnackbarWaaark">#000000</color>
-    <!-- Flax -->
-    <color name="colorPrimaryFlax">#2B2F48</color>
-    <color name="colorPrimaryDarkFlax">#24273D</color>
-    <color name="colorOnPrimaryFlax">#FAFAFA</color>
-    <color name="colorSecondaryFlax">#ECBC1B</color>
-    <color name="colorSecondaryVariantFlax">#C89F16</color>
-    <color name="colorOnSecondaryFlax">#FAFAFA</color>
-    <color name="colorErrorFlax">#F44336</color>
-    <color name="colorOnErrorFlax">#FAFAFA</color>
-    <color name="colorBackgroundFlax">#21263A</color>
-    <color name="colorOnBackgroundFlax">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantFlax">#FAFAFA</color>
-    <color name="colorOnSnackbarFlax">#000000</color>
-    <!-- Bing -->
-    <color name="colorPrimaryBing">#FFB900</color>
-    <color name="colorPrimaryDarkBing">#D89D00</color>
-    <color name="colorOnPrimaryBing">#FAFAFA</color>
-    <color name="colorSecondaryBing">#61B3DE</color>
-    <color name="colorSecondaryVariantBing">#5298BC</color>
-    <color name="colorOnSecondaryBing">#FAFAFA</color>
-    <color name="colorErrorBing">#F44336</color>
-    <color name="colorOnErrorBing">#FAFAFA</color>
-    <color name="colorBackgroundBing">#FAFAFA</color>
-    <color name="colorOnBackgroundBing">#000000</color>
-    <color name="colorOnBackgroundVariantBing">#1D1D24</color>
-    <color name="colorOnSnackbarBing">#FFFFFF</color>
-    <!-- Meetup -->
-    <color name="colorPrimaryMeetup">#ED1744</color>
-    <color name="colorPrimaryDarkMeetup">#C91339</color>
-    <color name="colorOnPrimaryMeetup">#FAFAFA</color>
-    <color name="colorSecondaryMeetup">#1DE9B6</color>
-    <color name="colorSecondaryVariantMeetup">#18C69A</color>
-    <color name="colorOnSecondaryMeetup">#FAFAFA</color>
-    <color name="colorErrorMeetup">#F44336</color>
-    <color name="colorOnErrorMeetup">#FAFAFA</color>
-    <color name="colorBackgroundMeetup">#FAFAFA</color>
-    <color name="colorOnBackgroundMeetup">#000000</color>
-    <color name="colorOnBackgroundVariantMeetup">#1D1D24</color>
-    <color name="colorOnSnackbarMeetup">#FFFFFF</color>
+
     <!-- Coffee -->
     <color name="colorPrimaryCoffee">#562C22</color>
     <color name="colorPrimaryDarkCoffee">#49251C</color>
+    <color name="colorPrimaryVariantCoffee">#3A160D</color>
     <color name="colorOnPrimaryCoffee">#FAFAFA</color>
     <color name="colorSecondaryCoffee">#A55634</color>
     <color name="colorSecondaryVariantCoffee">#8C492C</color>
@@ -374,152 +56,179 @@
     <color name="colorOnBackgroundCoffee">#000000</color>
     <color name="colorOnBackgroundVariantCoffee">#1D1D24</color>
     <color name="colorOnSnackbarCoffee">#FFFFFF</color>
-    <!-- Sepia -->
-    <color name="colorPrimarySepia">#6D4C41</color>
-    <color name="colorPrimaryDarkSepia">#5C4037</color>
-    <color name="colorOnPrimarySepia">#FAFAFA</color>
-    <color name="colorSecondarySepia">#E64A19</color>
-    <color name="colorSecondaryVariantSepia">#C33E15</color>
-    <color name="colorOnSecondarySepia">#FAFAFA</color>
-    <color name="colorErrorSepia">#F44336</color>
-    <color name="colorOnErrorSepia">#FAFAFA</color>
-    <color name="colorBackgroundSepia">#F2F8E9</color>
-    <color name="colorOnBackgroundSepia">#000000</color>
-    <color name="colorOnBackgroundVariantSepia">#1D1D24</color>
-    <color name="colorOnSnackbarSepia">#FFFFFF</color>
-    <!-- Oblivion -->
-    <color name="colorPrimaryOblivion">#D25252</color>
-    <color name="colorPrimaryDarkOblivion">#B24545</color>
-    <color name="colorOnPrimaryOblivion">#FAFAFA</color>
-    <color name="colorSecondaryOblivion">#7FB347</color>
-    <color name="colorSecondaryVariantOblivion">#6B983C</color>
-    <color name="colorOnSecondaryOblivion">#FAFAFA</color>
-    <color name="colorErrorOblivion">#F44336</color>
-    <color name="colorOnErrorOblivion">#FAFAFA</color>
-    <color name="colorBackgroundOblivion">#1E1E1E</color>
-    <color name="colorOnBackgroundOblivion">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantOblivion">#FAFAFA</color>
-    <color name="colorOnSnackbarOblivion">#000000</color>
-    <!-- Obsidian -->
-    <color name="colorPrimaryObsidian">#678CB1</color>
-    <color name="colorPrimaryDarkObsidian">#577796</color>
-    <color name="colorOnPrimaryObsidian">#FAFAFA</color>
-    <color name="colorSecondaryObsidian">#93C763</color>
-    <color name="colorSecondaryVariantObsidian">#7CA954</color>
-    <color name="colorOnSecondaryObsidian">#FAFAFA</color>
-    <color name="colorErrorObsidian">#F44336</color>
-    <color name="colorOnErrorObsidian">#FAFAFA</color>
-    <color name="colorBackgroundObsidian">#293134</color>
-    <color name="colorOnBackgroundObsidian">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantObsidian">#FAFAFA</color>
-    <color name="colorOnSnackbarObsidian">#000000</color>
-    <!-- Forrest -->
-    <color name="colorPrimaryForrest">#2C3801</color>
-    <color name="colorPrimaryDarkForrest">#252F00</color>
-    <color name="colorOnPrimaryForrest">#FAFAFA</color>
-    <color name="colorSecondaryForrest">#9ECD68</color>
-    <color name="colorSecondaryVariantForrest">#86AE58</color>
-    <color name="colorOnSecondaryForrest">#FAFAFA</color>
-    <color name="colorErrorForrest">#F44336</color>
-    <color name="colorOnErrorForrest">#FAFAFA</color>
-    <color name="colorBackgroundForrest">#0C1000</color>
-    <color name="colorOnBackgroundForrest">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantForrest">#FAFAFA</color>
-    <color name="colorOnSnackbarForrest">#000000</color>
-    <!-- Dawn -->
-    <color name="colorPrimaryDawn">#65353E</color>
-    <color name="colorPrimaryDarkDawn">#552D34</color>
-    <color name="colorOnPrimaryDawn">#FAFAFA</color>
-    <color name="colorSecondaryDawn">#D55246</color>
-    <color name="colorSecondaryVariantDawn">#B5453B</color>
-    <color name="colorOnSecondaryDawn">#FAFAFA</color>
-    <color name="colorErrorDawn">#F44336</color>
-    <color name="colorOnErrorDawn">#FAFAFA</color>
-    <color name="colorBackgroundDawn">#0C0006</color>
-    <color name="colorOnBackgroundDawn">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantDawn">#FAFAFA</color>
-    <color name="colorOnSnackbarDawn">#000000</color>
-    <!-- Twitter -->
-    <color name="colorPrimaryTwitter">#00ACED</color>
-    <color name="colorPrimaryDarkTwitter">#0084B4</color>
-    <color name="colorOnPrimaryTwitter">#FAFAFA</color>
-    <color name="colorSecondaryTwitter">#00ACED</color>
-    <color name="colorSecondaryVariantTwitter">#0092C9</color>
-    <color name="colorOnSecondaryTwitter">#FAFAFA</color>
-    <color name="colorErrorTwitter">#F44336</color>
-    <color name="colorOnErrorTwitter">#FAFAFA</color>
-    <color name="colorBackgroundTwitter">#FAFAFA</color>
-    <color name="colorOnBackgroundTwitter">#000000</color>
-    <color name="colorOnBackgroundVariantTwitter">#1D1D24</color>
-    <color name="colorOnSnackbarTwitter">#FFFFFF</color>
-    <!-- Periscope -->
-    <color name="colorPrimaryPeriscope">#40A4C4</color>
-    <color name="colorPrimaryDarkPeriscope">#368BA6</color>
-    <color name="colorOnPrimaryPeriscope">#FAFAFA</color>
-    <color name="colorSecondaryPeriscope">#D75444</color>
-    <color name="colorSecondaryVariantPeriscope">#B64739</color>
-    <color name="colorOnSecondaryPeriscope">#FAFAFA</color>
-    <color name="colorErrorPeriscope">#F44336</color>
-    <color name="colorOnErrorPeriscope">#FAFAFA</color>
-    <color name="colorBackgroundPeriscope">#FFFFFF</color>
-    <color name="colorOnBackgroundPeriscope">#000000</color>
-    <color name="colorOnBackgroundVariantPeriscope">#1D1D24</color>
-    <color name="colorOnSnackbarPeriscope">#FFFFFF</color>
-    <!-- Subdued -->
-    <color name="colorPrimarySubdued">#283B42</color>
-    <color name="colorPrimaryDarkSubdued">#223238</color>
-    <color name="colorOnPrimarySubdued">#FAFAFA</color>
-    <color name="colorSecondarySubdued">#1D6A96</color>
-    <color name="colorSecondaryVariantSubdued">#185A7F</color>
-    <color name="colorOnSecondarySubdued">#FAFAFA</color>
-    <color name="colorErrorSubdued">#F44336</color>
-    <color name="colorOnErrorSubdued">#FAFAFA</color>
-    <color name="colorBackgroundSubdued">#E2EAE9</color>
-    <color name="colorOnBackgroundSubdued">#000000</color>
-    <color name="colorOnBackgroundVariantSubdued">#1D1D24</color>
-    <color name="colorOnSnackbarSubdued">#FFFFFF</color>
-    <!-- MistyGreen -->
-    <color name="colorPrimaryMistyGreen">#003E19</color>
-    <color name="colorPrimaryDarkMistyGreen">#003415</color>
-    <color name="colorOnPrimaryMistyGreen">#FAFAFA</color>
-    <color name="colorSecondaryMistyGreen">#028C6A</color>
-    <color name="colorSecondaryVariantMistyGreen">#01775A</color>
-    <color name="colorOnSecondaryMistyGreen">#FAFAFA</color>
-    <color name="colorErrorMistyGreen">#F44336</color>
-    <color name="colorOnErrorMistyGreen">#FAFAFA</color>
-    <color name="colorBackgroundMistyGreen">#D1EDE1</color>
-    <color name="colorOnBackgroundMistyGreen">#000000</color>
-    <color name="colorOnBackgroundVariantMistyGreen">#1D1D24</color>
-    <color name="colorOnSnackbarMistyGreen">#FFFFFF</color>
-    <!-- Waterfall -->
-    <color name="colorPrimaryWaterfall">#1D3847</color>
-    <color name="colorPrimaryDarkWaterfall">#182F3C</color>
-    <color name="colorOnPrimaryWaterfall">#FAFAFA</color>
-    <color name="colorSecondaryWaterfall">#03A9F4</color>
-    <color name="colorSecondaryVariantWaterfall">#028FCF</color>
-    <color name="colorOnSecondaryWaterfall">#FAFAFA</color>
-    <color name="colorErrorWaterfall">#F44336</color>
-    <color name="colorOnErrorWaterfall">#FAFAFA</color>
-    <color name="colorBackgroundWaterfall">#091318</color>
-    <color name="colorOnBackgroundWaterfall">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantWaterfall">#FAFAFA</color>
-    <color name="colorOnSnackbarWaterfall">#000000</color>
-    <!-- Retro -->
-    <color name="colorPrimaryRetro">#123943</color>
-    <color name="colorPrimaryDarkRetro">#0F3038</color>
-    <color name="colorOnPrimaryRetro">#FAFAFA</color>
-    <color name="colorSecondaryRetro">#AE2332</color>
-    <color name="colorSecondaryVariantRetro">#931D2A</color>
-    <color name="colorOnSecondaryRetro">#FAFAFA</color>
-    <color name="colorErrorRetro">#F44336</color>
-    <color name="colorOnErrorRetro">#FAFAFA</color>
-    <color name="colorBackgroundRetro">#1C170D</color>
-    <color name="colorOnBackgroundRetro">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantRetro">#FAFAFA</color>
-    <color name="colorOnSnackbarRetro">#000000</color>
+
+    <!-- Zaragoza Transport -->
+    <color name="colorPrimaryZaragozaTransport">#de2f34</color>
+    <color name="colorPrimaryDarkZaragozaTransport">#a4000d</color>
+    <color name="colorPrimaryVariantZaragozaTransport">#a4000d</color>
+    <color name="colorOnPrimaryZaragozaTransport">#FAFAFA</color>
+    <color name="colorSecondaryZaragozaTransport">#1976d2</color>
+    <color name="colorSecondaryVariantZaragozaTransport">#004ba0</color>
+    <color name="colorOnSecondaryZaragozaTransport">#FAFAFA</color>
+    <color name="colorErrorZaragozaTransport">#F44336</color>
+    <color name="colorOnErrorZaragozaTransport">#FAFAFA</color>
+    <color name="colorBackgroundZaragozaTransport">#F0EEE8</color>
+    <color name="colorOnBackgroundZaragozaTransport">#000000</color>
+    <color name="colorOnBackgroundVariantZaragozaTransport">#1D1D24</color>
+    <color name="colorOnSnackbarZaragozaTransport">#FFFFFF</color>
+
+
+    <!-- Cyanea -->
+    <color name="colorPrimaryCyanea">#EE3868</color>
+    <color name="colorPrimaryDarkCyanea">#CA2F58</color>
+    <color name="colorPrimaryVariantCyanea">#BB2049</color>
+    <color name="colorOnPrimaryCyanea">#FAFAFA</color>
+    <color name="colorSecondaryCyanea">#93C43E</color>
+    <color name="colorSecondaryVariantCyanea">#7CA634</color>
+    <color name="colorOnSecondaryCyanea">#FAFAFA</color>
+    <color name="colorErrorCyanea">#F44336</color>
+    <color name="colorOnErrorCyanea">#FAFAFA</color>
+    <color name="colorBackgroundCyanea">#FAFAFA</color>
+    <color name="colorOnBackgroundCyanea">#000000</color>
+    <color name="colorOnBackgroundVariantCyanea">#1D1D24</color>
+    <color name="colorOnSnackbarCyanea">#FFFFFF</color>
+
+    <!-- Coral -->
+    <color name="colorPrimaryCoral">#32435F</color>
+    <color name="colorPrimaryDarkCoral">#2A3850</color>
+    <color name="colorPrimaryVariantCoral">#1B2941</color>
+    <color name="colorOnPrimaryCoral">#FAFAFA</color>
+    <color name="colorSecondaryCoral">#EB9772</color>
+    <color name="colorSecondaryVariantCoral">#C78060</color>
+    <color name="colorOnSecondaryCoral">#FAFAFA</color>
+    <color name="colorErrorCoral">#F44336</color>
+    <color name="colorOnErrorCoral">#FAFAFA</color>
+    <color name="colorBackgroundCoral">#FDDCCA</color>
+    <color name="colorOnBackgroundCoral">#000000</color>
+    <color name="colorOnBackgroundVariantCoral">#1D1D24</color>
+    <color name="colorOnSnackbarCoral">#FFFFFF</color>
+
+    <!-- Porcelain -->
+    <color name="colorPrimaryPorcelain">#F7F6F3</color>
+    <color name="colorPrimaryDarkPorcelain">#D8D8D8</color>
+    <color name="colorPrimaryVariantPorcelain">#D8D8D8</color>
+    <color name="colorOnPrimaryPorcelain">#1D1D24</color>
+    <color name="colorSecondaryPorcelain">#F05A50</color>
+    <color name="colorSecondaryVariantPorcelain">#CC4C44</color>
+    <color name="colorOnSecondaryPorcelain">#FAFAFA</color>
+    <color name="colorErrorPorcelain">#F44336</color>
+    <color name="colorOnErrorPorcelain">#FAFAFA</color>
+    <color name="colorBackgroundPorcelain">#F0EEE8</color>
+    <color name="colorOnBackgroundPorcelain">#000000</color>
+    <color name="colorOnBackgroundVariantPorcelain">#1D1D24</color>
+    <color name="colorOnSnackbarPorcelain">#FFFFFF</color>
+
+    <!-- Watermelon -->
+    <color name="colorPrimaryWatermelon">#437356</color>
+    <color name="colorPrimaryDarkWatermelon">#386149</color>
+    <color name="colorPrimaryVariantWatermelon">#29523A</color>
+    <color name="colorOnPrimaryWatermelon">#FAFAFA</color>
+    <color name="colorSecondaryWatermelon">#F34A53</color>
+    <color name="colorSecondaryVariantWatermelon">#CE3E46</color>
+    <color name="colorOnSecondaryWatermelon">#FAFAFA</color>
+    <color name="colorErrorWatermelon">#F44336</color>
+    <color name="colorOnErrorWatermelon">#FAFAFA</color>
+    <color name="colorBackgroundWatermelon">#FEF7E8</color>
+    <color name="colorOnBackgroundWatermelon">#000000</color>
+    <color name="colorOnBackgroundVariantWatermelon">#1D1D24</color>
+    <color name="colorOnSnackbarWatermelon">#FFFFFF</color>
+
+    <!-- Deep Sea -->
+    <color name="colorPrimaryDeepSea">#517FA4</color>
+    <color name="colorPrimaryDarkDeepSea">#446B8B</color>
+    <color name="colorPrimaryVariantDeepSea">#355C7C</color>
+    <color name="colorOnPrimaryDeepSea">#FAFAFA</color>
+    <color name="colorSecondaryDeepSea">#517FA4</color>
+    <color name="colorSecondaryVariantDeepSea">#446B8B</color>
+    <color name="colorOnSecondaryDeepSea">#FAFAFA</color>
+    <color name="colorErrorDeepSea">#F44336</color>
+    <color name="colorOnErrorDeepSea">#FAFAFA</color>
+    <color name="colorBackgroundDeepSea">#161819</color>
+    <color name="colorOnBackgroundDeepSea">#FFFFFF</color>
+    <color name="colorOnBackgroundVariantDeepSea">#FAFAFA</color>
+    <color name="colorOnSnackbarDeepSea">#000000</color>
+
+    <!-- Midnight -->
+    <color name="colorPrimaryMidnight">#000000</color>
+    <color name="colorPrimaryDarkMidnight">#000000</color>
+    <color name="colorPrimaryVariantMidnight">#292929</color>
+    <color name="colorOnPrimaryMidnight">#FAFAFA</color>
+    <color name="colorSecondaryMidnight">#FF3D00</color>
+    <color name="colorSecondaryVariantMidnight">#D83300</color>
+    <color name="colorOnSecondaryMidnight">#FAFAFA</color>
+    <color name="colorErrorMidnight">#F44336</color>
+    <color name="colorOnErrorMidnight">#FAFAFA</color>
+    <color name="colorBackgroundMidnight">#1D1D1D</color>
+    <color name="colorOnBackgroundMidnight">#FFFFFF</color>
+    <color name="colorOnBackgroundVariantMidnight">#FAFAFA</color>
+    <color name="colorOnSnackbarMidnight">#000000</color>
+
+    <!-- Cerulean -->
+    <color name="colorPrimaryCerulean">#F76C6C</color>
+    <color name="colorPrimaryDarkCerulean">#D15B5B</color>
+    <color name="colorPrimaryVariantCerulean">#C24C4C</color>
+    <color name="colorOnPrimaryCerulean">#FAFAFA</color>
+    <color name="colorSecondaryCerulean">#A8D0E6</color>
+    <color name="colorSecondaryVariantCerulean">#8EB0C3</color>
+    <color name="colorOnSecondaryCerulean">#FAFAFA</color>
+    <color name="colorErrorCerulean">#F44336</color>
+    <color name="colorOnErrorCerulean">#FAFAFA</color>
+    <color name="colorBackgroundCerulean">#24305E</color>
+    <color name="colorOnBackgroundCerulean">#FFFFFF</color>
+    <color name="colorOnBackgroundVariantCerulean">#FAFAFA</color>
+    <color name="colorOnSnackbarCerulean">#000000</color>
+
+    <!-- Flax -->
+    <color name="colorPrimaryFlax">#333855</color>
+    <color name="colorPrimaryDarkFlax">#272A42</color>
+    <color name="colorPrimaryVariantFlax">#24273D</color>
+    <color name="colorOnPrimaryFlax">#FAFAFA</color>
+    <color name="colorSecondaryFlax">#ECBC1B</color>
+    <color name="colorSecondaryVariantFlax">#C89F16</color>
+    <color name="colorOnSecondaryFlax">#FAFAFA</color>
+    <color name="colorErrorFlax">#F44336</color>
+    <color name="colorOnErrorFlax">#FAFAFA</color>
+    <color name="colorBackgroundFlax">#1B2030</color>
+    <color name="colorOnBackgroundFlax">#FFFFFF</color>
+    <color name="colorOnBackgroundVariantFlax">#FAFAFA</color>
+    <color name="colorOnSnackbarFlax">#000000</color>
+
+    <!-- Sky -->
+    <color name="colorPrimarySky">#00ACED</color>
+    <color name="colorPrimaryDarkSky">#0084B4</color>
+    <color name="colorPrimaryVariantSky">#0084B4</color>
+    <color name="colorOnPrimarySky">#FAFAFA</color>
+    <color name="colorSecondarySky">#00ACED</color>
+    <color name="colorSecondaryVariantSky">#0092C9</color>
+    <color name="colorOnSecondarySky">#FAFAFA</color>
+    <color name="colorErrorSky">#F44336</color>
+    <color name="colorOnErrorSky">#FAFAFA</color>
+    <color name="colorBackgroundSky">#FAFAFA</color>
+    <color name="colorOnBackgroundSky">#000000</color>
+    <color name="colorOnBackgroundVariantSky">#1D1D24</color>
+    <color name="colorOnSnackbarSky">#FFFFFF</color>
+
+
+    <!-- Breeze -->
+    <color name="colorPrimaryBreeze">#40A4C4</color>
+    <color name="colorPrimaryDarkBreeze">#368BA6</color>
+    <color name="colorPrimaryVariantBreeze">#2E839E</color>
+    <color name="colorOnPrimaryBreeze">#FAFAFA</color>
+    <color name="colorSecondaryBreeze">#D75444</color>
+    <color name="colorSecondaryVariantBreeze">#B64739</color>
+    <color name="colorOnSecondaryBreeze">#FAFAFA</color>
+    <color name="colorErrorBreeze">#F44336</color>
+    <color name="colorOnErrorBreeze">#FAFAFA</color>
+    <color name="colorBackgroundBreeze">#FFFFFF</color>
+    <color name="colorOnBackgroundBreeze">#000000</color>
+    <color name="colorOnBackgroundVariantBreeze">#1D1D24</color>
+    <color name="colorOnSnackbarBreeze">#FFFFFF</color>
+
+
     <!-- Inkpot -->
     <color name="colorPrimaryInkpot">#6068B2</color>
     <color name="colorPrimaryDarkInkpot">#515897</color>
+    <color name="colorPrimaryVariantInkpot">#444B8A</color>
     <color name="colorOnPrimaryInkpot">#FAFAFA</color>
     <color name="colorSecondaryInkpot">#5AC0FF</color>
     <color name="colorSecondaryVariantInkpot">#4CA3D8</color>
@@ -530,61 +239,12 @@
     <color name="colorOnBackgroundInkpot">#FFFFFF</color>
     <color name="colorOnBackgroundVariantInkpot">#FAFAFA</color>
     <color name="colorOnSnackbarInkpot">#000000</color>
-    <!-- VibrantInk -->
-    <color name="colorPrimaryVibrantInk">#EC691E</color>
-    <color name="colorPrimaryDarkVibrantInk">#C85919</color>
-    <color name="colorOnPrimaryVibrantInk">#FAFAFA</color>
-    <color name="colorSecondaryVibrantInk">#9CF828</color>
-    <color name="colorSecondaryVariantVibrantInk">#84D222</color>
-    <color name="colorOnSecondaryVibrantInk">#FAFAFA</color>
-    <color name="colorErrorVibrantInk">#F44336</color>
-    <color name="colorOnErrorVibrantInk">#FAFAFA</color>
-    <color name="colorBackgroundVibrantInk">#191919</color>
-    <color name="colorOnBackgroundVibrantInk">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantVibrantInk">#FAFAFA</color>
-    <color name="colorOnSnackbarVibrantInk">#000000</color>
-    <!-- Fresh -->
-    <color name="colorPrimaryFresh">#748A96</color>
-    <color name="colorPrimaryDarkFresh">#62757F</color>
-    <color name="colorOnPrimaryFresh">#FAFAFA</color>
-    <color name="colorSecondaryFresh">#8A36BB</color>
-    <color name="colorSecondaryVariantFresh">#752D9E</color>
-    <color name="colorOnSecondaryFresh">#FAFAFA</color>
-    <color name="colorErrorFresh">#F44336</color>
-    <color name="colorOnErrorFresh">#FAFAFA</color>
-    <color name="colorBackgroundFresh">#FFFCF1</color>
-    <color name="colorOnBackgroundFresh">#000000</color>
-    <color name="colorOnBackgroundVariantFresh">#1D1D24</color>
-    <color name="colorOnSnackbarFresh">#FFFFFF</color>
-    <!-- Coteazur -->
-    <color name="colorPrimaryCoteazur">#00585F</color>
-    <color name="colorPrimaryDarkCoteazur">#004A50</color>
-    <color name="colorOnPrimaryCoteazur">#FAFAFA</color>
-    <color name="colorSecondaryCoteazur">#FF3800</color>
-    <color name="colorSecondaryVariantCoteazur">#D82F00</color>
-    <color name="colorOnSecondaryCoteazur">#FAFAFA</color>
-    <color name="colorErrorCoteazur">#F44336</color>
-    <color name="colorOnErrorCoteazur">#FAFAFA</color>
-    <color name="colorBackgroundCoteazur">#FAFAFA</color>
-    <color name="colorOnBackgroundCoteazur">#000000</color>
-    <color name="colorOnBackgroundVariantCoteazur">#1D1D24</color>
-    <color name="colorOnSnackbarCoteazur">#FFFFFF</color>
-    <!-- QED -->
-    <color name="colorPrimaryQED">#22264B</color>
-    <color name="colorPrimaryDarkQED">#1C203F</color>
-    <color name="colorOnPrimaryQED">#FAFAFA</color>
-    <color name="colorSecondaryQED">#B56969</color>
-    <color name="colorSecondaryVariantQED">#995959</color>
-    <color name="colorOnSecondaryQED">#FAFAFA</color>
-    <color name="colorErrorQED">#F44336</color>
-    <color name="colorOnErrorQED">#FAFAFA</color>
-    <color name="colorBackgroundQED">#E8EDF3</color>
-    <color name="colorOnBackgroundQED">#000000</color>
-    <color name="colorOnBackgroundVariantQED">#1D1D24</color>
-    <color name="colorOnSnackbarQED">#FFFFFF</color>
+
+
     <!-- Vintage -->
-    <color name="colorPrimaryVintage">#1D2125</color>
-    <color name="colorPrimaryDarkVintage">#181C1F</color>
+    <color name="colorPrimaryVintage">#333741</color>
+    <color name="colorPrimaryDarkVintage">#252D30</color>
+    <color name="colorPrimaryVariantVintage">#0B0F12</color>
     <color name="colorOnPrimaryVintage">#FAFAFA</color>
     <color name="colorSecondaryVintage">#8C2D2D</color>
     <color name="colorSecondaryVariantVintage">#772626</color>
@@ -595,126 +255,60 @@
     <color name="colorOnBackgroundVintage">#000000</color>
     <color name="colorOnBackgroundVariantVintage">#1D1D24</color>
     <color name="colorOnSnackbarVintage">#FFFFFF</color>
-    <!-- Spotify -->
-    <color name="colorPrimarySpotify">#262626</color>
-    <color name="colorPrimaryDarkSpotify">#202020</color>
-    <color name="colorOnPrimarySpotify">#FAFAFA</color>
-    <color name="colorSecondarySpotify">#81B71A</color>
-    <color name="colorSecondaryVariantSpotify">#6D9B16</color>
-    <color name="colorOnSecondarySpotify">#FAFAFA</color>
-    <color name="colorErrorSpotify">#F44336</color>
-    <color name="colorOnErrorSpotify">#FAFAFA</color>
-    <color name="colorBackgroundSpotify">#000000</color>
-    <color name="colorOnBackgroundSpotify">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantSpotify">#FAFAFA</color>
-    <color name="colorOnSnackbarSpotify">#000000</color>
-    <!-- Xbox -->
-    <color name="colorPrimaryXbox">#107C10</color>
-    <color name="colorPrimaryDarkXbox">#0D690D</color>
-    <color name="colorOnPrimaryXbox">#FAFAFA</color>
-    <color name="colorSecondaryXbox">#5DC21E</color>
-    <color name="colorSecondaryVariantXbox">#4FA419</color>
-    <color name="colorOnSecondaryXbox">#FAFAFA</color>
-    <color name="colorErrorXbox">#F44336</color>
-    <color name="colorOnErrorXbox">#FAFAFA</color>
-    <color name="colorBackgroundXbox">#3A3A3A</color>
-    <color name="colorOnBackgroundXbox">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantXbox">#FAFAFA</color>
-    <color name="colorOnSnackbarXbox">#000000</color>
-    <!-- Sublime -->
-    <color name="colorPrimarySublime">#FF007F</color>
-    <color name="colorPrimaryDarkSublime">#D8006B</color>
-    <color name="colorOnPrimarySublime">#FAFAFA</color>
-    <color name="colorSecondarySublime">#52E3F6</color>
-    <color name="colorSecondaryVariantSublime">#45C0D1</color>
-    <color name="colorOnSecondarySublime">#FAFAFA</color>
-    <color name="colorErrorSublime">#F44336</color>
-    <color name="colorOnErrorSublime">#FAFAFA</color>
-    <color name="colorBackgroundSublime">#272822</color>
-    <color name="colorOnBackgroundSublime">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantSublime">#FAFAFA</color>
-    <color name="colorOnSnackbarSublime">#000000</color>
-    <!-- Zenburn -->
-    <color name="colorPrimaryZenburn">#3F3F6A</color>
-    <color name="colorPrimaryDarkZenburn">#35355A</color>
-    <color name="colorOnPrimaryZenburn">#FAFAFA</color>
-    <color name="colorSecondaryZenburn">#8ACCCF</color>
-    <color name="colorSecondaryVariantZenburn">#75ADAF</color>
-    <color name="colorOnSecondaryZenburn">#FAFAFA</color>
-    <color name="colorErrorZenburn">#F44336</color>
-    <color name="colorOnErrorZenburn">#FAFAFA</color>
-    <color name="colorBackgroundZenburn">#404040</color>
-    <color name="colorOnBackgroundZenburn">#FFFFFF</color>
-    <color name="colorOnBackgroundVariantZenburn">#FAFAFA</color>
-    <color name="colorOnSnackbarZenburn">#000000</color>
-    <!-- Starbucks -->
-    <color name="colorPrimaryStarbucks">#00704A</color>
-    <color name="colorPrimaryDarkStarbucks">#005F3E</color>
-    <color name="colorOnPrimaryStarbucks">#FAFAFA</color>
-    <color name="colorSecondaryStarbucks">#66442B</color>
-    <color name="colorSecondaryVariantStarbucks">#5A3C26</color>
-    <color name="colorOnSecondaryStarbucks">#FAFAFA</color>
-    <color name="colorErrorStarbucks">#F44336</color>
-    <color name="colorOnErrorStarbucks">#FAFAFA</color>
-    <color name="colorBackgroundStarbucks">#FFFCFC</color>
-    <color name="colorOnBackgroundStarbucks">#000000</color>
-    <color name="colorOnBackgroundVariantStarbucks">#1D1D24</color>
-    <color name="colorOnSnackbarStarbucks">#FFFFFF</color>
-    <!-- Amazon -->
-    <color name="colorPrimaryAmazon">#FF9900</color>
-    <color name="colorPrimaryDarkAmazon">#D88200</color>
-    <color name="colorOnPrimaryAmazon">#FAFAFA</color>
-    <color name="colorSecondaryAmazon">#146EB4</color>
-    <color name="colorSecondaryVariantAmazon">#115D99</color>
-    <color name="colorOnSecondaryAmazon">#FAFAFA</color>
-    <color name="colorErrorAmazon">#F44336</color>
-    <color name="colorOnErrorAmazon">#FAFAFA</color>
-    <color name="colorBackgroundAmazon">#FAFAFA</color>
-    <color name="colorOnBackgroundAmazon">#000000</color>
-    <color name="colorOnBackgroundVariantAmazon">#1D1D24</color>
-    <color name="colorOnSnackbarAmazon">#FFFFFF</color>
-    <!-- Twitch -->
-    <color name="colorPrimaryTwitch">#7E57C2</color>
-    <color name="colorPrimaryDarkTwitch">#6B49A4</color>
-    <color name="colorOnPrimaryTwitch">#FAFAFA</color>
-    <color name="colorSecondaryTwitch">#7E57C2</color>
-    <color name="colorSecondaryVariantTwitch">#6B49A4</color>
-    <color name="colorOnSecondaryTwitch">#FAFAFA</color>
-    <color name="colorErrorTwitch">#F44336</color>
-    <color name="colorOnErrorTwitch">#FAFAFA</color>
-    <color name="colorBackgroundTwitch">#EFEEF1</color>
-    <color name="colorOnBackgroundTwitch">#000000</color>
-    <color name="colorOnBackgroundVariantTwitch">#1D1D24</color>
-    <color name="colorOnSnackbarTwitch">#FFFFFF</color>
-    <!-- Robinhood -->
-    <color name="colorPrimaryRobinhood">#1DE9B6</color>
-    <color name="colorPrimaryDarkRobinhood">#18C69A</color>
-    <color name="colorOnPrimaryRobinhood">#FAFAFA</color>
-    <color name="colorSecondaryRobinhood">#1DE9B6</color>
-    <color name="colorSecondaryVariantRobinhood">#18C69A</color>
-    <color name="colorOnSecondaryRobinhood">#FAFAFA</color>
-    <color name="colorErrorRobinhood">#F44336</color>
-    <color name="colorOnErrorRobinhood">#FAFAFA</color>
-    <color name="colorBackgroundRobinhood">#FAFAFA</color>
-    <color name="colorOnBackgroundRobinhood">#000000</color>
-    <color name="colorOnBackgroundVariantRobinhood">#1D1D24</color>
-    <color name="colorOnSnackbarRobinhood">#FFFFFF</color>
-    <!-- Facebook -->
-    <color name="colorPrimaryFacebook">#3B5998</color>
-    <color name="colorPrimaryDarkFacebook">#324B81</color>
-    <color name="colorOnPrimaryFacebook">#FAFAFA</color>
-    <color name="colorSecondaryFacebook">#3B5998</color>
-    <color name="colorSecondaryVariantFacebook">#324B81</color>
-    <color name="colorOnSecondaryFacebook">#FAFAFA</color>
-    <color name="colorErrorFacebook">#F44336</color>
-    <color name="colorOnErrorFacebook">#FAFAFA</color>
-    <color name="colorBackgroundFacebook">#F7F7F7</color>
-    <color name="colorOnBackgroundFacebook">#000000</color>
-    <color name="colorOnBackgroundVariantFacebook">#1D1D24</color>
-    <color name="colorOnSnackbarFacebook">#FFFFFF</color>
+
+
+    <!-- Jade -->
+    <color name="colorPrimaryJade">#2E2E2E</color>
+    <color name="colorPrimaryDarkJade">#252525</color>
+    <color name="colorPrimaryVariantJade">#181818</color>
+    <color name="colorOnPrimaryJade">#FAFAFA</color>
+    <color name="colorSecondaryJade">#81B71A</color>
+    <color name="colorSecondaryVariantJade">#6D9B16</color>
+    <color name="colorOnSecondaryJade">#FAFAFA</color>
+    <color name="colorErrorJade">#F44336</color>
+    <color name="colorOnErrorJade">#FAFAFA</color>
+    <color name="colorBackgroundJade">#000000</color>
+    <color name="colorOnBackgroundJade">#FFFFFF</color>
+    <color name="colorOnBackgroundVariantJade">#FAFAFA</color>
+    <color name="colorOnSnackbarJade">#000000</color>
+
+
+    <!-- Grape -->
+    <color name="colorPrimaryGrape">#7E57C2</color>
+    <color name="colorPrimaryDarkGrape">#6B49A4</color>
+    <color name="colorPrimaryVariantGrape">#5C3A95</color>
+    <color name="colorOnPrimaryGrape">#FAFAFA</color>
+    <color name="colorSecondaryGrape">#7E57C2</color>
+    <color name="colorSecondaryVariantGrape">#6B49A4</color>
+    <color name="colorOnSecondaryGrape">#FAFAFA</color>
+    <color name="colorErrorGrape">#F44336</color>
+    <color name="colorOnErrorGrape">#FAFAFA</color>
+    <color name="colorBackgroundGrape">#EFEEF1</color>
+    <color name="colorOnBackgroundGrape">#000000</color>
+    <color name="colorOnBackgroundVariantGrape">#1D1D24</color>
+    <color name="colorOnSnackbarGrape">#FFFFFF</color>
+
+
+    <!-- Cobalt -->
+    <color name="colorPrimaryCobalt">#3B5998</color>
+    <color name="colorPrimaryDarkCobalt">#324B81</color>
+    <color name="colorPrimaryVariantCobalt">#233C72</color>
+    <color name="colorOnPrimaryCobalt">#FAFAFA</color>
+    <color name="colorSecondaryCobalt">#3B5998</color>
+    <color name="colorSecondaryVariantCobalt">#324B81</color>
+    <color name="colorOnSecondaryCobalt">#FAFAFA</color>
+    <color name="colorErrorCobalt">#F44336</color>
+    <color name="colorOnErrorCobalt">#FAFAFA</color>
+    <color name="colorBackgroundCobalt">#F7F7F7</color>
+    <color name="colorOnBackgroundCobalt">#000000</color>
+    <color name="colorOnBackgroundVariantCobalt">#1D1D24</color>
+    <color name="colorOnSnackbarCobalt">#FFFFFF</color>
+
+
     <!-- Mint -->
     <color name="colorPrimaryMint">#0AC775</color>
     <color name="colorPrimaryDarkMint">#08A963</color>
+    <color name="colorPrimaryVariantMint">#009A54</color>
     <color name="colorOnPrimaryMint">#FAFAFA</color>
     <color name="colorSecondaryMint">#FD8A10</color>
     <color name="colorSecondaryVariantMint">#F2890D</color>
