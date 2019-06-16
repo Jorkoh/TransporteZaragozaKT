@@ -49,49 +49,37 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintVertical_bias="0.2"/>
 
-        <TextView
-                android:id="@+id/stop_details_no_data_text"
-                android:text="@string/no_data_available"
-                android:textColor="?colorOnBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/stop_details_no_data_help"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/stop_details_no_data_animation"
-                android:visibility="gone"
-                android:layout_marginStart="8dp"
-                android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintHorizontal_bias="0.5"
-                android:layout_marginTop="32dp"/>
+    <TextView
+            android:id="@+id/stop_details_no_data_text"
+            android:text="@string/no_data_available"
+            android:textColor="?colorOnBackground"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_default="wrap"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/stop_details_no_data_help"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stop_details_no_data_animation"
+            android:visibility="visible"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:layout_marginEnd="4dp"
+            android:textAlignment="center"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="32dp"/>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/stop_details_no_data_help"
-                style="@style/Widget.AppCompat.ImageButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_help_outline_black_24dp"
-                android:background="@android:color/transparent"
-                app:layout_constraintTop_toTopOf="@+id/stop_details_no_data_text"
-                app:layout_constraintBottom_toBottomOf="@+id/stop_details_no_data_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/stop_details_no_data_text"
-                android:visibility="gone"
-                android:layout_marginEnd="8dp"/>
-
-        <!--&lt;!&ndash; SHADOW BUGS ON ANDROID 9 :( &ndash;&gt;-->
-        <!--&lt;!&ndash; Not using alpha anymore here &ndash;&gt;-->
-        <!--&lt;!&ndash; https://issuetracker.google.com/issues/132569416 &ndash;&gt;-->
-        <!--<com.leinardi.android.speeddial.SpeedDialView-->
-                <!--android:id="@+id/stop_details_fab"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="bottom|end"-->
-                <!--android:layout_margin="16dp"-->
-                <!--app:layout_behavior="@string/speeddial_snackbar_behavior"-->
-                <!--app:sdMainFabClosedSrc="@drawable/ic_add_black_24dp"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintBottom_toBottomOf="parent"/>-->
+    <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/stop_details_no_data_help"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_help_outline_black_24dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="@+id/stop_details_no_data_text"
+            app:layout_constraintBottom_toBottomOf="@+id/stop_details_no_data_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/stop_details_no_data_text"
+            android:visibility="visible"
+            android:layout_marginEnd="8dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

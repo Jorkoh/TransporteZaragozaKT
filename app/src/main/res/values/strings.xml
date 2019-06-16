@@ -32,8 +32,8 @@
     <string name="alias" translatable="true">Alias</string>
     <string name="color" translatable="true">Color</string>
     <string name="restore" translatable="true">Restore</string>
-    <string name="restore_favorite_title" translatable="true">Restore favorite stop?</string>
-    <string name="restore_favorite_message" translatable="true">Restore the original alias and color of this favorite.</string>
+    <string name="restore_favorite_title" translatable="true">Restore favorite stop</string>
+    <string name="restore_favorite_message" translatable="true">Do you want to restore the original alias and color of this favorite?</string>
     <string name="cancel" translatable="true">Cancel</string>
     <string name="delete_favorite_title" translatable="true">Delete favorite</string>
     <string name="delete_favorite_message" translatable="true">Are you sure you want to delete this favorite? This cannot be undone.</string>

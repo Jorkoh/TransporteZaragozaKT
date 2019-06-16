@@ -6,9 +6,8 @@
     <string name="search_destination_title">Búsqueda</string>
     <string name="more_destination_title">Más</string>
     <string name="no_favorites">Aún no tienes paradas favoritas!</string>
-    <string name="no_data_available">Sin información disponible :(</string>
-    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo. Si el
-        problema continúa el servicio del ayuntamiento que proporciona está información puede estar de mantenimiento.
+    <string name="no_data_available">Sin información disponible</string>
+    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo.\n\nSi el problema continúa el servicio del ayuntamiento que proporciona está información puede estar de mantenimiento.
     </string>
     <string name="notification_channel_name_reminders">Notificaciones</string>
     <string name="notification_channel_description_reminders">Notificaciones definidas por el usuario con información de una parada. Administradas desde la pantalla de notificaciones.</string>
@@ -35,9 +34,9 @@
     <string name="alias">Alias</string>
     <string name="create_reminder">Crear notificación</string>
     <string name="restore">Restaurar</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Cancelar</string>
     <string name="restore_favorite_message">Restaura el alias y color original de este favorito.</string>
-    <string name="restore_favorite_title">¿Restaurar parada favorita?</string>
+    <string name="restore_favorite_title">Restaurar parada favorita</string>
     <string name="reminder">Notificación</string>
     <string name="edit_reminder_dialog_title">Editar notificación</string>
     <string name="restore_reminder_message">¿Quieres restaurar el alias y color original de esta notificación?</string>
