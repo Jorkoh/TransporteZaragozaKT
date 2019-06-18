@@ -28,7 +28,7 @@ dependencies {
   implementation deps.material
   implementation deps.kotlin.stdlib.jdk
 
-  implementation 'com.afollestad:viewpagerdots:1.0.0'
+  implementation deps.viewpagerdots
 
-  implementation 'com.afollestad.material-dialogs:core:3.0.0-beta2'
+  implementation deps.material_dialogs.core
 }

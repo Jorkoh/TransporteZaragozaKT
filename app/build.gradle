@@ -13,8 +13,8 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 4
-        versionName "Alpha-1.0.2"
+        versionCode 5
+        versionName "Beta-1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,18 +36,20 @@ dependencies {
     implementation fileTree(include: ['*.aar'], dir: 'libs')
 
     implementation deps.kotlin.stdlib.jdk
-    implementation deps.androidx.appCompat
+
+    //Androidx
     implementation deps.material
+    implementation deps.androidx.appCompat
     implementation deps.androidx.constraintLayout
     implementation deps.androidx.recyclerView
     implementation deps.androidx.viewPager
     implementation deps.androidx.preference
+    implementation deps.androidx.core
+    implementation deps.androidx.legacy
+    implementation deps.androidx.lifecycle.extensions
+    implementation deps.androidx.lifecycle.viewmodel
 
-    implementation 'androidx.core:core-ktx:1.2.0-alpha01'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
+    implementation deps.kotlinx_serialization
 
     //Room
     implementation deps.androidx.room.runtime
@@ -66,7 +68,7 @@ dependencies {
     //Google Play Services
     implementation deps.playServices.maps
     implementation deps.playServices.location
-    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation deps.maps_utils
 
     //Parse
     implementation deps.parse
@@ -84,9 +86,9 @@ dependencies {
     implementation project(path: ':gene-rate')
 
     //Material Dialogs
-    implementation 'com.afollestad.material-dialogs:core:3.0.0-beta2'
-    implementation 'com.afollestad.material-dialogs:input:3.0.0-beta2'
-    implementation 'com.afollestad.material-dialogs:color:3.0.0-beta2'
+    implementation deps.material_dialogs.core
+    implementation deps.material_dialogs.input
+    implementation deps.material_dialogs.color
     implementation project(':datetime')
 
     //Quick Permissions
@@ -96,20 +98,21 @@ dependencies {
     implementation project(':material-intro-screen')
 
     //QR Scanner
-    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation deps.zxing
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.5.0'
-    implementation 'com.squareup.moshi:moshi-adapters:1.8.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.8.0'
-    implementation 'com.squareup.moshi:moshi:1.8.0'
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.8.0"
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.converter_moshi
+    implementation deps.moshi.moshi_adapters
+    implementation deps.moshi.moshi_kotlin
+    implementation deps.moshi.moshi
+    kapt deps.moshi.moshi_kotlin_codegen
 
     //Koin
-    implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+    implementation deps.koin
 
+    //Testing
     testImplementation deps.junit
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation deps.androidx.test
+    androidTestImplementation deps.espresso
 }

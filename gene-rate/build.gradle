@@ -61,10 +61,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
+    androidTestImplementation(deps.espresso, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation deps.androidx.appCompat
     implementation deps.material
-    testImplementation 'junit:junit:4.12'
+    testImplementation deps.junit
 }
