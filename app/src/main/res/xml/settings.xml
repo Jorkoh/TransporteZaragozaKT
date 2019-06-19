@@ -15,7 +15,7 @@
         <Preference
                 app:key="@string/themes_key"
                 app:title="@string/themes_title"
-                app:summary="@string/themes_message"
+                app:summary="@string/themes_summary"
                 app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 
@@ -26,19 +26,19 @@
         <Preference
                 app:key="@string/recharge_card_key"
                 app:title="@string/recharge_card_title"
-                android:summary="@string/recharge_card_message"
+                android:summary="@string/recharge_card_summary"
                 app:iconSpaceReserved="false"/>
 
         <Preference
                 app:key="@string/avanza_twitter_key"
                 app:title="@string/avanza_twitter_title"
-                android:summary="@string/avanza_twitter_message"
+                android:summary="@string/avanza_twitter_summary"
                 app:iconSpaceReserved="false"/>
 
         <Preference
                 app:key="@string/play_intro_key"
                 app:title="@string/play_intro_title"
-                android:summary="@string/play_intro_message"
+                android:summary="@string/play_intro_summary"
                 app:iconSpaceReserved="false">
             <intent
                     android:action="android.intent.action.VIEW"
@@ -52,8 +52,9 @@
             app:iconSpaceReserved="false">
 
         <Preference
-                app:key=""
-                app:title="F.A.Q."
+                app:key="@string/feedback_key"
+                app:title="@string/feedback_title"
+                app:summary="@string/feedback_summary"
                 app:iconSpaceReserved="false"/>
 
         <Preference

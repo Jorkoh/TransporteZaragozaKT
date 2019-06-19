@@ -13,12 +13,12 @@ enum class LineType {
     BUS, TRAM
 }
 
-fun StopType.toLineType() = when(this){
+fun StopType.toLineType() = when (this) {
     StopType.BUS -> LineType.BUS
     StopType.TRAM -> LineType.TRAM
 }
 
-fun LineType.toStopType() = when(this){
+fun LineType.toStopType() = when (this) {
     LineType.BUS -> StopType.BUS
     LineType.TRAM -> StopType.TRAM
 }
@@ -192,6 +192,7 @@ data class StopWithDistance(
 data class FavoriteStopExtended(
     val stopId: String,
     val type: StopType,
+    val number: String,
     val stopTitle: String,
     val alias: String,
     val colorHex: String,

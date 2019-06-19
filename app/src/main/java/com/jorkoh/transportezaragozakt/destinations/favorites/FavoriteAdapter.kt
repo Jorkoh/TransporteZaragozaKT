@@ -45,6 +45,7 @@ class FavoriteAdapter(
                     }
                 )
                 title_text_favorite.text = favorite.alias
+                number_text_favorite.text = favorite.number
                 if (favorite.colorHex.isNotEmpty()) {
                     favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
                     favorite_color.visibility = View.VISIBLE

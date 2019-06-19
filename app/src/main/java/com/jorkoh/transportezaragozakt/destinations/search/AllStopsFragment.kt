@@ -33,7 +33,6 @@ class AllStopsFragment : Fragment() {
     private val allStopsAdapter = StopAdapter(openStop)
 
     private val allStopsObserver = Observer<List<Stop>> { allStops ->
-        updateEmptyViewVisibility(allStops.isEmpty())
         allStopsAdapter.setNewStops(allStops)
         allStopsAdapter.filter.filter(searchVM.query.value)
     }
@@ -66,15 +65,5 @@ class AllStopsFragment : Fragment() {
         }
 
         return rootView
-    }
-
-    private fun updateEmptyViewVisibility(isEmpty: Boolean) {
-//        val newVisibility = if (isEmpty) {
-//            View.VISIBLE
-//        } else {
-//            View.GONE
-//        }
-//        view?.no_search_result_animation_all_stops?.visibility = newVisibility
-//        view?.no_search_result_text_all_stops?.visibility = newVisibility
     }
 }

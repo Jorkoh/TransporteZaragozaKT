@@ -21,7 +21,7 @@
     <string name="slide_reminder_title" translatable="true">Create a reminder!</string>
     <string name="slide_reminder_description" translatable="true">Do you check the same bus stop when you leave home for work every morning? Setup a reminder to receive a notification at a chosen time with the arrival times.</string>
     <string name="slide_more_title" translatable="true">Make it yours!</string>
-    <string name="slide_more_description" translatable="true">Personalize the app with different color themes and other settings on MORE.</string>
+    <string name="slide_more_description" translatable="true">Personalize the app with different color themes and other settings on MORE. Dark themes for AMOLED screens available!</string>
 
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
@@ -113,36 +113,44 @@
     <string name="play_intro_key" translatable="false">PLAY_INTRO_KEY</string>
     <string name="libraries_and_credits_key" translatable="false">LIBRARIES_AND_CREDITS_KEY</string>
     <string name="privacy_policy_key" translatable="false">PRIVACY_POLICY_KEY</string>
+    <string name="feedback_key" translatable="false">FEEDBACK_KEY</string>
 
     <!--More-->
     <string name="style_category_title" translatable="true">Style</string>
     <string name="dark_map_title" translatable="true">Dark map</string>
     <string name="themes_title" translatable="true">Themes</string>
-    <string name="themes_message" translatable="true">Style the app with your favorite colors with one of this themes</string>
+    <string name="themes_summary" translatable="true">Style the app with your favorite colors with one of this themes</string>
     <string name="useful_links_title" translatable="true">Useful stuff</string>
     <string name="recharge_card_title" translatable="true">Recharge card</string>
-    <string name="recharge_card_message" translatable="true">Recharge your monthly or yearly bus card online</string>
+    <string name="recharge_card_summary" translatable="true">Recharge your monthly or yearly bus card online</string>
     <string name="avanza_twitter_title" translatable="true">Avanza twitter</string>
-    <string name="avanza_twitter_message" translatable="true">Stay up to date with the latest news about the bus service through the official twitter</string>
+    <string name="avanza_twitter_summary" translatable="true">Stay up to date with the latest news about the bus service through the official twitter</string>
     <string name="play_intro_title" translatable="true">App introduction</string>
-    <string name="play_intro_message" translatable="true">Like it was your first time</string>
+    <string name="play_intro_summary" translatable="true">Like it was your first time</string>
     <string name="about_category_title" translatable="true">About</string>
     <string name="privacy_policy_title" translatable="true">Privacy policy</string>
     <string name="libraries_and_credits_title" translatable="true">Libraries and credits</string>
+    <string name="feedback_title" translatable="true">Contact</string>
+    <string name="feedback_summary" translatable="true">Problems? Suggestions? Ask me anything</string>
+    <string name="feedback_message_address" translatable="false">jorge@jorkoh.com</string>
+    <string name="feedback_message_subject" translatable="true">Transporte Zaragoza Feedback</string>
+    <string name="feedback_message_text" translatable="true">Describe the problem, question or suggestion here…</string>
     <string name="libraries_and_credits_message" translatable="true">
         <![CDATA[<ul>
-<li><a href="https://developer.android.com/jetpack/">Jetpack components</a>. Room, LiveData, ViewModels, Navigation, WorkManager and more. The building blocks of a modern Android application.</li>
-<li><a href="https://github.com/square/retrofit">Retrofit</a>.&nbsp;Type-safe HTTP client for Android, makes dealing with any API an enjoyable experience.</li>
-<li><a href="https://github.com/square/moshi">Moshi</a>. Acts as an adapter parsing the JSON Retrofit responses into objects.</li>
-<li><a href="https://github.com/InsertKoinIO/koin">Koin</a>. Dependency Injection for Kotlin.</li>
-<li><a href="https://github.com/parse-community/Parse-SDK-Android">Parse SDK for Android</a>. Allows the app to access the <a href="https://heroku.com">Heroku</a>+<a href="https://parseplatform.org">Parse</a>+<a href="https://www.mongodb.com">MongoDB</a> backend to update lines and stops data automatically without updating the app itself.</li>
-<li><a href="https://github.com/airbnb/lottie-android">Lottie</a>. Adobe After Effects vector animations rendered natively, used throughout the app to display empty states.</li>
-<li><a href="https://github.com/leinardi/FloatingActionButtonSpeedDial">FAB Speed Dial</a>. Implementation of the <a href="https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions">Material Design speed dial</a> used in the stop information destination. Created by <a href="https://github.com/leinardi/">Roberto Leinardi</a> and modified by me.</li>
-<li><a href="https://github.com/Daio-io/dresscode">Dresscode</a>. Tiny convenience library that allows theme changing on runtime. Created by <a href="https://github.com/Daio-io">Dai Williams</a>&nbsp;and modified by me.</li>
-<li><a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. All kinds of dialogs made easy thanks to <a href="https://github.com/afollestad">Aidan Follestad</a>. The rounded corners of the dialog you are reading right now are his work.</li>
-<li><a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Handling runtime permissions with less boilerplate by <a href="https://github.com/kirtan403">Kirtan403</a>. Modified by me to use Material Dialogs and other small stuff.</li>
-<li><a href="https://github.com/journeyapps/zxing-android-embedded">ZXing Android Embedded</a>. ZXing QR scanning capabilities without extra downloads.</li>
-<li>Multiple Icons by <a href="https://www.freepik.com/">Freepik</a> from <a href="https://www.flaticon.com">flaticon.com</a></li>
+<li> <a href="https://developer.android.com/jetpack/">Jetpack components</a>. Room, LiveData, ViewModels, Navigation, WorkManager and more. The building blocks of a modern Android application.</li>
+<li> <a href="https://github.com/square/retrofit">Retrofit</a>.&nbsp;Type-safe HTTP client for Android, makes dealing with any API an enjoyable experience.</li>
+<li> <a href="https://github.com/square/moshi">Moshi</a>. Acts as an adapter parsing the JSON Retrofit responses into objects.</li>
+<li> <a href="https://github.com/InsertKoinIO/koin">Koin</a>. Dependency Injection for Kotlin.</li>
+<li> <a href="https://github.com/parse-community/Parse-SDK-Android">Parse SDK for Android</a>. Allows the app to access the <a href="https://heroku.com">Heroku</a>+<a href="https://parseplatform.org">Parse</a>+<a href="https://www.mongodb.com">MongoDB</a> backend to update lines and stops data automatically without updating the app itself.</li>
+<li> <a href="https://github.com/airbnb/lottie-android">Lottie</a>. Adobe After Effects vector animations rendered natively, used throughout the app to display empty states.</li>
+<li> <a href="https://github.com/leinardi/FloatingActionButtonSpeedDial">FAB Speed Dial</a>. Implementation of the <a href="https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions">Material Design speed dial</a> used in the stop information destination. Created by <a href="https://github.com/leinardi/">Roberto Leinardi</a> and modified by me.</li>
+<li> <a href="https://github.com/Daio-io/dresscode">Dresscode</a>. Tiny convenience library that allows theme changing on runtime. Created by <a href="https://github.com/Daio-io">Dai Williams</a>&nbsp;and modified by me.</li>
+<li> <a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. All kinds of dialogs made easy thanks to <a href="https://github.com/afollestad">Aidan Follestad</a>. The rounded corners of the dialog you are reading right now are his work.</li>
+<li> <a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Handling runtime permissions with less boilerplate by <a href="https://github.com/kirtan403">Kirtan403</a>. Modified by me to use Material Dialogs and other small stuff.</li>
+<li> <a href="https://github.com/journeyapps/zxing-android-embedded">ZXing Android Embedded</a>. ZXing QR scanning capabilities without extra downloads.</li>
+<li> <a href="https://github.com/TangoAgency/material-intro-screen">Material Intro Screen</a>. Welcoming slides to introduce the user to the app features. Modified by me to support animated vector drawables.</li>
+<li> <a href="https://github.com/Pixplicity/gene-rate">Gene-rate</a>. Asks for ratings without interrupting the user's flow after conditions are met. Heavily modified by me with ideas from other libraries like <a href="https://github.com/mediavrog/integrated-rating-request">Integrated Rating Request</a>.</li>
+<li> Multiple Icons by <a href="https://www.freepik.com/">Freepik</a> from <a href="https://www.flaticon.com">flaticon.com</a></li>
 </ul>]]>
     </string>
 

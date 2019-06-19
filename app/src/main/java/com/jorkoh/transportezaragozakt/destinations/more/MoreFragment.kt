@@ -14,6 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.main_container.*
 
+
 class MoreFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -30,6 +31,10 @@ class MoreFragment : PreferenceFragmentCompat() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/buszaragoza")))
             true
         }
+        findPreference<Preference>(getString(R.string.feedback_key))?.setOnPreferenceClickListener {
+            composeFeedbackEmail()
+            true
+        }
         findPreference<Preference>(getString(R.string.privacy_policy_key))?.setOnPreferenceClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy")))
             true
@@ -37,7 +42,7 @@ class MoreFragment : PreferenceFragmentCompat() {
         findPreference<Preference>(getString(R.string.libraries_and_credits_key))?.setOnPreferenceClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.libraries_and_credits_title)
-                message(R.string.libraries_and_credits_message){
+                message(R.string.libraries_and_credits_message) {
                     html()
                 }
             }
@@ -54,6 +59,17 @@ class MoreFragment : PreferenceFragmentCompat() {
         requireActivity().main_toolbar.menu.apply {
             (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
             clear()
+        }
+    }
+
+    private fun composeFeedbackEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.data = Uri.parse("mailto:")
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.feedback_message_address)))
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_message_subject))
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_message_text))
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(intent)
         }
     }
 }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- MISC TODO CLEAN THIS UP-->
-    <color name="colorLineText">#FAFAFA</color>
     <color name="colorThemeSelected">#FF689F38</color>
     <color name="colorThemeNotSelected">#CC37474F</color>
-    <color name="kinda_white">#ECECEC</color>
+    <color name="kinda_white">#F5F5F5</color>
     <color name="kinda_black">#1D1D24</color>
     <color name="bus_color">#2c82c9</color>
     <color name="tram_color">#232828</color>

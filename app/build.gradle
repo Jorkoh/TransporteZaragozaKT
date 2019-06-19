@@ -83,7 +83,7 @@ dependencies {
     implementation project(':dresscode')
 
     //Gene-Rate
-    implementation project(path: ':gene-rate')
+    implementation project(':gene-rate')
 
     //Material Dialogs
     implementation deps.material_dialogs.core

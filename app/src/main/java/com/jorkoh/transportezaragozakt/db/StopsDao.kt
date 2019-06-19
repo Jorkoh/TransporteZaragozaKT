@@ -56,7 +56,7 @@ abstract class StopsDao {
     @Query("UPDATE stops SET isFavorite = :isFavorite WHERE stopId = :stopId")
     abstract fun updateIsFavorite(stopId: String, isFavorite: Boolean)
 
-    @Query("SELECT favoriteStops.stopId, stops.type, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.stopId = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
+    @Query("SELECT favoriteStops.stopId, stops.type, stops.number, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.stopId = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
     abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
 
     @Query ("SELECT COUNT(*) FROM favoriteStops")

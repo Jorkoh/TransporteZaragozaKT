@@ -5,7 +5,7 @@
     <string name="map_destination_title">Mapa</string>
     <string name="search_destination_title">Búsqueda</string>
     <string name="more_destination_title">Más</string>
-    <string name="no_favorites">Aún no tienes paradas favoritas!</string>
+    <string name="no_favorites">¡Aún no tienes paradas favoritas!</string>
     <string name="no_data_available">Sin información disponible</string>
     <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo.\n\nSi el problema continúa el servicio del ayuntamiento que proporciona está información puede estar de mantenimiento.
     </string>
@@ -20,7 +20,7 @@
     <string name="stop_type_content_description">Tipo de parada</string>
     <string name="edit_favorite_dialog_restore">Restaurar</string>
     <string name="location_rationale">Este permiso es usado para mostrar tu localización en el mapa y encontrar paradas cercanas. La información de localización nunca será usada para otro propósito</string>
-    <string name="no_reminders">Aún no tienes notificaciones!</string>
+    <string name="no_reminders">¡Aún no tienes notificaciones!</string>
     <string name="reminders_destination_title">Notificaciones</string>
     <string name="fab_add_favorite">Añadir a favoritos</string>
     <string name="fab_remove_favorite">Eliminar de favoritos</string>
@@ -62,9 +62,9 @@
     <string name="qr_scan_prompt">Coloque el código QR de la parada en el centro de la pantalla</string>
     <string name="refresh_menu_item">Actualizar</string>
     <string name="search_nearby_stops_empty">No hay paradas cerca!</string>
-    <string name="added_favorite_snackbar">Favorito añadido!</string>
-    <string name="removed_favorite_snackbar">Favorito eliminado.</string>
-    <string name="added_reminder_snackbar">Notificación añadida!</string>
+    <string name="added_favorite_snackbar">¡Parada añadida a favoritos!</string>
+    <string name="removed_favorite_snackbar">Parada eliminada de favoritos.</string>
+    <string name="added_reminder_snackbar">¡Notificación creada!</string>
     <string name="removed_reminder_snackbar">Notificación eliminada.</string>
     <string name="qr_not_recognized">Código QR no reconocido.</string>
     <string name="location_outside_zaragoza_bounds">Función no disponible fuera de Zaragoza.</string>
@@ -78,9 +78,11 @@
 <li><a href="https://github.com/airbnb/lottie-android">Lottie</a>. Animaciones de Adobe After Effects vector animations renderizadas nativamente, usada a lo largo de la aplicación para mostrar estados de falta de datos.</li>
 <li><a href="https://github.com/leinardi/FloatingActionButtonSpeedDial">FAB Speed Dial</a>. Implementación del <a href="https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions">Material Design speed dial</a> usado en la pantalla de tiempos de parada. Creada por <a href="https://github.com/leinardi/">Roberto Leinardi</a> y modificada por mí para adaptarse al cambio de temas.</li>
 <li><a href="https://github.com/Daio-io/dresscode">Dresscode</a>. Pequeña libraría que permite cambiar el tema de la aplicación durante la ejecución de la misma. Creada por <a href="https://github.com/Daio-io">Dai Williams</a> y modificada por mí.</li>
-<li><a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. Todo tipo de ventanas emergentes por <a href="https://github.com/afollestad">Aidan Follestad</a>.Las esquinas redondeadas de esta misma ventana son fruto de su trabajo.</li>
-<li><a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Simplifica la petición y control de permisos, creada por <a href="https://github.com/kirtan403">Kirtan403</a>.Traducida y modificada por mi para utilizar Material Dialogs.</li>
+<li><a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. Todo tipo de ventanas emergentes por <a href="https://github.com/afollestad">Aidan Follestad</a>. Las esquinas redondeadas de esta misma ventana son fruto de su trabajo.</li>
+<li><a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Simplifica la petición y control de permisos, creada por <a href="https://github.com/kirtan403">Kirtan403</a>. Traducida y modificada por mi para utilizar Material Dialogs.</li>
 <li><a href="https://github.com/journeyapps/zxing-android-embedded">ZXing Android Embedded</a>. Escaneo de códigos QR mediante la librería ZXing sin descargas adicionales.</li>
+<li> <a href="https://github.com/TangoAgency/material-intro-screen">Material Intro Screen</a>. Diapositivas de bienvenida para presentar las características de la aplicación. Modificada por mi para soportar animated vector drawables.</li>
+<li> <a href="https://github.com/Pixplicity/gene-rate">Gene-rate</a>. Permite pedir opiniones al usuario sin interrumpir su uso en la app cuando ciertas condiciones se cumplen. Modificada profundamente por mi con ideas de otras librerías como <a href="https://github.com/mediavrog/integrated-rating-request">Integrated Rating Request</a>.</li>
 <li>Múltiples iconos de <a href="https://www.freepik.com/">Freepik</a> en <a href="https://www.flaticon.com">flaticon.com</a></li>
 </ul>]]>
     </string>
@@ -89,12 +91,12 @@
     <string name="style_category_title">Estilo</string>
     <string name="dark_map_title">Mapa nocturno</string>
     <string name="themes_title">Temas</string>
-    <string name="themes_message">Personaliza la aplicación con tus colores favoritos seleccionando un tema</string>
+    <string name="themes_summary">Personaliza la aplicación con tus colores favoritos seleccionando un tema</string>
     <string name="useful_links_title">Cosas útiles</string>
-    <string name="recharge_card_message">Recarga online tu tarjeta de bus mensual o anual</string>
+    <string name="recharge_card_summary">Recarga online tu tarjeta de bus mensual o anual</string>
     <string name="avanza_twitter_title">Twitter de Avanza</string>
     <string name="recharge_card_title">Recargar tarjeta</string>
-    <string name="avanza_twitter_message">Mantente actualizado con las últimas noticias mediante el twitter oficial de Avanza</string>
+    <string name="avanza_twitter_summary">Mantente actualizado con las últimas noticias mediante el twitter oficial de Avanza</string>
     <string name="about_category_title">Acerca de</string>
     <string name="notification_channel_description_updates">Actualizaciones de paradas y líneas.</string>
     <string name="notification_channel_name_updates">Actualizaciones</string>
@@ -111,12 +113,12 @@
     <string name="updated_bus_lines_locations_message">"Número de la nueva versión: "</string>
     <string name="updated_bus_lines_locations_title">Actualizadas posiciones de líneas de bus</string>
     <string name="play_intro_title">Introducción a la aplicación</string>
-    <string name="play_intro_message">Como si fuese la primera vez</string>
+    <string name="play_intro_summary">Como si fuese la primera vez</string>
     <string name="slide_favorites_description">Añade paradas a tus favoritos para acceder fácilmente. Renombra, reordena y colorea tus favoritos para mantenerte organizado.</string>
     <string name="slide_favorites_title">¡Añade favoritos!</string>
     <string name="slide_find_description">Usa el MAPA o la BÚSQUEDA para encontrar rápidamente cualquier parada. La aplicación utiliza información de localización para mostrar paradas cercanas y la posición en el mapa.</string>
     <string name="slide_find_title">¡Encuentra tu parada!</string>
-    <string name="slide_more_description">Personaliza la aplicación con diferentes paletas de colores y otros ajustes en MÁS.</string>
+    <string name="slide_more_description">Personaliza la aplicación con diferentes paletas de colores y otros ajustes en MÁS. ¡Hay disponibles temas oscuros para pantallas AMOLED!</string>
     <string name="slide_more_title">¡Hazla tuya!</string>
     <string name="slide_reminder_description">¿Revisas la misma parada todas las mañanas al salir de casa para el trabajo? Prepara una notificación para recibir los tiempos automáticamente en el mejor momento.</string>
     <string name="slide_reminder_title">¡Crea una notificación!</string>
@@ -144,4 +146,8 @@
     <string name="theme_vintage">Clásico</string>
     <string name="theme_cerulean">Cerúleo</string>
     <string name="theme_picker_title">Temas</string>
+    <string name="feedback_title">Contácto</string>
+    <string name="feedback_message_subject">Transporte Zaragoza Feedback</string>
+    <string name="feedback_message_text">Describe el problema, pregunta o sugerencia aquí…</string>
+    <string name="feedback_summary">¿Problemas? ¿Sugerencias? Pregúntame cualquier cosa</string>
 </resources>
