@@ -3,7 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion buildConfig.compileSdk
@@ -111,8 +112,14 @@ dependencies {
     //Koin
     implementation deps.koin
 
+    //Firebase and Crashlytics
+    implementation deps.firebase
+    implementation deps.crashlytics
+
     //Testing
     testImplementation deps.junit
     androidTestImplementation deps.androidx.test
     androidTestImplementation deps.espresso
 }
+
+apply plugin: 'com.google.gms.google-services'
