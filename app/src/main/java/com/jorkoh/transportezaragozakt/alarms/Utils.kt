@@ -12,8 +12,8 @@ import com.jorkoh.transportezaragozakt.db.Reminder
 import java.text.SimpleDateFormat
 import java.util.*
 
-// Alarms are created (or recreated) when a reminder is created, updated or
-// when the setup reminders periodic task fires
+// Alarms are created (or recreated) when a reminder is created, updated or when the setup reminders periodic task fires.
+// The periodic task requeuing combined with setting alarms some days in advance should ensure that they keep firing
 fun Reminder.createAlarms(context: Context, daysInAdvance: Int = 7) {
     val currentTime = Calendar.getInstance()
     val reminderTime = Calendar.getInstance().apply {
@@ -85,7 +85,7 @@ fun Reminder.deleteAlarms(context: Context, daysInAdvance: Int = 7) {
 
 @SuppressLint("SimpleDateFormat")
 private fun createRequestCode(reminderId: Int, reminderTime: Calendar): Int {
-    // This is a bit sketchy, puts a theorical hard limit of 9999 reminders created during
+    // This is a bit sketchy, puts a theoretical hard limit of 9999 reminders created during
     // the app install lifespan, months go first to get more out of Int range
     val datePart = SimpleDateFormat("MMyydd").format(reminderTime.time)
     return "$datePart$reminderId".toInt()

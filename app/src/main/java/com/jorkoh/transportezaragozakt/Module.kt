@@ -77,7 +77,8 @@ val appModule = module {
     }
 
     single{
-        //First rate request after 5 launches, 5 days passed and positive action. Next rate request (if the user pressed later or dismissed) after 10 launches and positive action
+        // First rate request after 5 launches, 4 days passed and positive action (loading stop details).
+        // Next rate request (if the user pressed later or dismissed) after 6 launches and positive action
         Rate.Builder(androidContext())
             .setTriggerCount(5)
             .setRepeatCount(6)

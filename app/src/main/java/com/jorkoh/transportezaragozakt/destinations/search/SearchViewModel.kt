@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
-import com.jorkoh.transportezaragozakt.destinations.map.toLatLng
+import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 

@@ -2,9 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.map
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.graphics.PorterDuff
-import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,6 +24,7 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.main_container.*
@@ -54,11 +53,6 @@ class MapFragment : Fragment() {
     private lateinit var clusterManager: ClusterManager<Stop>
     private lateinit var map: GoogleMap
     private lateinit var clickedClusterItem: Stop
-
-    private lateinit var busMarkerIcon: BitmapDescriptor
-    private lateinit var busFavoriteMarkerIcon: BitmapDescriptor
-    private lateinit var tramMarkerIcon: BitmapDescriptor
-    private lateinit var tramFavoriteMarkerIcon: BitmapDescriptor
 
     private val busStops = mutableListOf<Stop>()
     private val tramStops = mutableListOf<Stop>()
@@ -272,8 +266,6 @@ class MapFragment : Fragment() {
         clusterManager.markerCollection.setOnInfoWindowAdapter(StopInfoWindowAdapter())
         clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager)
 
-        createBaseMarkers()
-
         clusterManager.algorithm = CustomClusteringAlgorithm()
         clusterManager.setOnClusterItemClickListener { item ->
             clickedClusterItem = item
@@ -282,46 +274,5 @@ class MapFragment : Fragment() {
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
             findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
         }
-    }
-
-    private fun createBaseMarkers() {
-        val busDrawable = resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
-        val busBitmap = Bitmap.createScaledBitmap(
-            busDrawable.bitmap,
-            ICON_SIZE,
-            ICON_SIZE,
-            false
-        )
-        busMarkerIcon = BitmapDescriptorFactory.fromBitmap(busBitmap)
-
-        val busFavoriteDrawable = resources.getDrawable(R.drawable.marker_bus_favorite, null) as BitmapDrawable
-        val busFavoriteBitmap =
-            Bitmap.createScaledBitmap(
-                busFavoriteDrawable.bitmap,
-                ICON_FAV_SIZE,
-                ICON_FAV_SIZE,
-                false
-            )
-        busFavoriteMarkerIcon = BitmapDescriptorFactory.fromBitmap(busFavoriteBitmap)
-
-
-        val tramDrawable = resources.getDrawable(R.drawable.marker_tram, null) as BitmapDrawable
-        val tramBitmap = Bitmap.createScaledBitmap(
-            tramDrawable.bitmap,
-            ICON_SIZE,
-            ICON_SIZE,
-            false
-        )
-        tramMarkerIcon = BitmapDescriptorFactory.fromBitmap(tramBitmap)
-
-        val tramFavoriteDrawable = resources.getDrawable(R.drawable.marker_tram_favorite, null) as BitmapDrawable
-        val tramFavoriteBitmap =
-            Bitmap.createScaledBitmap(
-                tramFavoriteDrawable.bitmap,
-                ICON_FAV_SIZE,
-                ICON_FAV_SIZE,
-                false
-            )
-        tramFavoriteMarkerIcon = BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap)
     }
 }

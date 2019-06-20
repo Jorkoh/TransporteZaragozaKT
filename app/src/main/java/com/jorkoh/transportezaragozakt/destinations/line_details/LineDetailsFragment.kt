@@ -32,6 +32,7 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MI
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
+import com.jorkoh.transportezaragozakt.destinations.toPx
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
@@ -51,7 +52,6 @@ class LineDetailsFragment : Fragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
 
-    //TODO CAN WE MAKE THIS NOT LATEINIT
     private lateinit var busMarkerIcon: BitmapDescriptor
     private lateinit var busFavoriteMarkerIcon: BitmapDescriptor
     private lateinit var tramMarkerIcon: BitmapDescriptor

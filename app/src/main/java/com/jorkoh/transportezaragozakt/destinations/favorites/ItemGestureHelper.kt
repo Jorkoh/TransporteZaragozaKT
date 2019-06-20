@@ -10,7 +10,6 @@ class ItemGestureHelper(private val listener: OnItemGestureListener) : ItemTouch
     }
 
     interface OnItemGestureListener {
-
         fun onItemDrag(fromPosition: Int, toPosition: Int): Boolean
 
         fun onItemDragged(fromPosition: Int, toPosition: Int)
@@ -20,8 +19,6 @@ class ItemGestureHelper(private val listener: OnItemGestureListener) : ItemTouch
 
     private var dragFromPosition = -1
     private var dragToPosition = -1
-
-    // Other methods omitted...
 
     override fun onMove(
         recyclerView: RecyclerView,

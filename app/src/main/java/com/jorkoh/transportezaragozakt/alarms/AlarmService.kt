@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.stop_details.createStopDetailsDeepLink
+import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
@@ -77,6 +77,7 @@ class AlarmService : LifecycleService() {
         })
 
         super.onStartCommand(intent, flags, startId)
+        // This should cover cases where Android kills the service while building the notification. In practice it's manufacturer dependent
         return Service.START_REDELIVER_INTENT
     }
 
@@ -93,9 +94,9 @@ class AlarmService : LifecycleService() {
             NotificationCompat.Builder(this, getString(R.string.notification_channel_id_reminders)).apply {
                 if (stopDestinations.status == Status.SUCCESS && !stopDestinations.data.isNullOrEmpty()) {
                     val notificationRemoteViews = createRemoteViews(stopDestinations, reminderAlias)
-                    setCustomHeadsUpContentView(notificationRemoteViews.contentRemoteView)    //256dp max
-                    setCustomContentView(notificationRemoteViews.contentRemoteView)           //256dp max
-                    setCustomBigContentView(notificationRemoteViews.bigContentRemoteView)     //no max, should be built programmatically?
+                    setCustomHeadsUpContentView(notificationRemoteViews.contentRemoteView)    //256dp max height
+                    setCustomContentView(notificationRemoteViews.contentRemoteView)           //256dp max height
+                    setCustomBigContentView(notificationRemoteViews.bigContentRemoteView)     //no max height
                     setContentTitle("")
                     setContentText("")
                 } else {
@@ -103,7 +104,9 @@ class AlarmService : LifecycleService() {
                     setContentText(getString(R.string.notification_error))
                 }
                 setSmallIcon(R.drawable.ic_notification_icon)
+                // High priority to enable heads up
                 priority = NotificationCompat.PRIORITY_HIGH
+                // If the notification is clicked the app opens into the stop details so notification is deleted
                 setAutoCancel(true)
                 setDefaults(NotificationCompat.DEFAULT_SOUND)
                 setContentIntent(pendingIntent)
@@ -139,6 +142,7 @@ class AlarmService : LifecycleService() {
             destinationRemoteView.setTextViewText(R.id.notification_destination_text, stopDestination.destination)
 
             if (index < 2) {
+                // The standard notification only gets 2 destinations, more wouldn't fit. The rest are displayed in the expanded mode
                 remoteView.addView(R.id.reminder_destinations_container, destinationRemoteView)
             }
             bigRemoteView.addView(R.id.reminder_destinations_container, destinationRemoteView)

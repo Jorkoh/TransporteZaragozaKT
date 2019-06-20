@@ -21,6 +21,7 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status

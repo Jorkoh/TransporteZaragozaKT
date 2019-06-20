@@ -19,7 +19,7 @@ import com.afollestad.materialdialogs.input.input
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
-import com.jorkoh.transportezaragozakt.destinations.favorites.materialColors
+import com.jorkoh.transportezaragozakt.destinations.materialColors
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.reminders_destination.*
 import kotlinx.android.synthetic.main.reminders_destination.view.*

@@ -16,7 +16,7 @@ import com.google.android.gms.location.*
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
-import com.jorkoh.transportezaragozakt.destinations.map.toLatLng
+import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions

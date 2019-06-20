@@ -19,44 +19,17 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MA
 class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterManager: ClusterManager<Stop>) :
     DefaultClusterRenderer<Stop>(context, map, clusterManager), GoogleMap.OnCameraIdleListener {
 
-    private lateinit var busMarkerIcon: BitmapDescriptor
-    private lateinit var busFavoriteMarkerIcon: BitmapDescriptor
-    private lateinit var tramMarkerIcon: BitmapDescriptor
-    private lateinit var tramFavoriteMarkerIcon: BitmapDescriptor
+    private val busMarkerIcon: BitmapDescriptor
+    private val busFavoriteMarkerIcon: BitmapDescriptor
+    private val tramMarkerIcon: BitmapDescriptor
+    private val tramFavoriteMarkerIcon: BitmapDescriptor
 
     private var currentZoom: Float = DEFAULT_ZOOM
 
-
     init {
-        createBaseMarkers()
         currentZoom = map.cameraPosition.zoom
-    }
 
-    override fun onCameraIdle() {
-        currentZoom = map.cameraPosition.zoom
-    }
-
-
-    override fun shouldRenderAsCluster(cluster: Cluster<Stop>): Boolean {
-        return if (currentZoom >= MAX_CLUSTERING_ZOOM) {
-            false
-        } else {
-            cluster.size > 1
-        }
-    }
-
-    override fun onBeforeClusterItemRendered(stop: Stop?, markerOptions: MarkerOptions?) {
-        stop?.let {
-            markerOptions?.icon(
-                when (stop.type) {
-                    StopType.BUS -> if (stop.isFavorite) busFavoriteMarkerIcon else busMarkerIcon
-                    StopType.TRAM -> if (stop.isFavorite) tramFavoriteMarkerIcon else tramMarkerIcon
-                }
-            )
-        }
-    }
-
-    private fun createBaseMarkers() {
+        //Initialize the marker icons to be reused on item rendering
         val busDrawable = context.resources.getDrawable(R.drawable.marker_bus, null) as BitmapDrawable
         val busBitmap = Bitmap.createScaledBitmap(
             busDrawable.bitmap,
@@ -96,5 +69,30 @@ class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterMan
                 false
             )
         tramFavoriteMarkerIcon = BitmapDescriptorFactory.fromBitmap(tramFavoriteBitmap)
+    }
+
+    override fun onCameraIdle() {
+        currentZoom = map.cameraPosition.zoom
+    }
+
+
+    override fun shouldRenderAsCluster(cluster: Cluster<Stop>): Boolean {
+        //Avoid clustering if the zoom level is above a threshold or it's just one stop
+        return if (currentZoom >= MAX_CLUSTERING_ZOOM) {
+            false
+        } else {
+            cluster.size > 1
+        }
+    }
+
+    override fun onBeforeClusterItemRendered(stop: Stop?, markerOptions: MarkerOptions?) {
+        stop?.let {
+            markerOptions?.icon(
+                when (stop.type) {
+                    StopType.BUS -> if (stop.isFavorite) busFavoriteMarkerIcon else busMarkerIcon
+                    StopType.TRAM -> if (stop.isFavorite) tramFavoriteMarkerIcon else tramMarkerIcon
+                }
+            )
+        }
     }
 }

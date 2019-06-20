@@ -49,9 +49,5 @@
         <action
                 android:id="@id/action_lineDetails_to_stopDetails"
                 app:destination="@id/stopDetails"/>
-        <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH SO THIS IS THE BEST WE CAN DO-->
-        <!--<deepLink-->
-        <!--android:id="@+id/deepLinkLine"-->
-        <!--app:uri="launchTZ://viewLine/{lineType}/{lineId}/"/>-->
     </fragment>
 </navigation>

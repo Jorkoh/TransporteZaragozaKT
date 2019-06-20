@@ -19,12 +19,12 @@ import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.input.input
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
+import com.jorkoh.transportezaragozakt.destinations.materialColors
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.favorites_destination.*
 import kotlinx.android.synthetic.main.favorites_destination.view.*
 import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class FavoritesFragment : Fragment() {
 
@@ -79,6 +79,7 @@ class FavoritesFragment : Fragment() {
                     favorite.colorHex
                 )
             ) { _, color ->
+                //Color is saved as hex in persistance so it has to be masked. Selecting transparent is equivalent to not selecting a color
                 val hexColor = if (color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
                 favoritesVM.updateFavorite(favorite.stopId, favorite.alias, hexColor)
             }

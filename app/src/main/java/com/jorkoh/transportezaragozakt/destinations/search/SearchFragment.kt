@@ -43,6 +43,7 @@ class SearchFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
 
             override fun onTabSelected(tab: TabLayout.Tab) {
+                // Save the selected search tab for future launches
                 searchVM.setSearchTabPosition(tab.position)
             }
         })

@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.line_details.toPx
+import com.jorkoh.transportezaragozakt.destinations.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_filters.*

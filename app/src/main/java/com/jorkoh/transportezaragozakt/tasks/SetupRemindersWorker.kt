@@ -1,10 +1,8 @@
 package com.jorkoh.transportezaragozakt.tasks
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.alarms.createAlarms
 import com.jorkoh.transportezaragozakt.db.RemindersDao
 import org.koin.standalone.KoinComponent
@@ -16,8 +14,6 @@ class SetupRemindersWorker(appContext: Context, workerParams: WorkerParameters) 
     KoinComponent {
 
     private val remindersDao: RemindersDao by inject()
-    private val executors: AppExecutors by inject()
-    private val sharedPreferences : SharedPreferences by inject()
 
     override fun doWork(): Result {
         // May fire multiple times?

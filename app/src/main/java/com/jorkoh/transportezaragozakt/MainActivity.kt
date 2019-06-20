@@ -17,8 +17,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.jorkoh.transportezaragozakt.destinations.getColorFromAttr
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
-import com.jorkoh.transportezaragozakt.destinations.stop_details.getColorFromAttr
 import com.jorkoh.transportezaragozakt.tasks.enqueueSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueueUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -32,19 +33,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val mainActivityVM: MainActivityViewModel by viewModel()
-
-    private val rate : Rate by inject()
-
+    private val rate: Rate by inject()
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private var currentNavController: LiveData<NavController>? = null
-    private var currentAnimator: ValueAnimator? = null
-    private var showing = true
 
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
+        // Bottom navigation showing and hiding
         when (destination.id) {
             R.id.stopDetails -> hideBottomNavigation()
             R.id.lineDetails -> hideBottomNavigation()
             else -> showBottomNavigation()
         }
+        // Fab showing and hiding. Ideally the fab would just be part of that fragment layout but to have it properly react to snackbars
+        // and the bottom navigation animations it has to be a direct child of the main_container coordinator layout.
         when (destination.id) {
             R.id.stopDetails -> {
                 stop_details_fab.alpha = 0f
@@ -56,39 +57,46 @@ class MainActivity : AppCompatActivity() {
                 stop_details_fab.close()
             }
         }
+        logDestinationVisit(destination.id)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         matchDressCode()
         super.onCreate(savedInstanceState)
 
-        openIntroScreen()
+        // Start the intro if needed
+        if (mainActivityVM.isFirstLaunch()) {
+            startActivity(Intent(this, IntroActivity::class.java))
+        }
 
         setContentView(R.layout.main_container)
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setSupportActionBar(main_toolbar)
         if (savedInstanceState == null) {
+            // Every time the app is started from scratch count up the engagement events towards displaying the rate-me flow
             rate.count()
-            //WorkManager tasks are queued both on app launch and device boot to cover first install
+            // WorkManager tasks are queued both on app launch and device boot to cover first install
             enqueueUpdateDataWorker(getString(R.string.update_data_work_name))
             enqueueSetupRemindersWorker(getString(R.string.setup_reminders_work_name))
             setupNotificationChannels(this)
             setupBottomNavigationBar(true)
         }
 
+        // Setup snackbar feedback observers. Whenever the user adds/removes favorites/reminders from any screen they get a snackbar
         mainActivityVM.init()
         mainActivityVM.favoriteCountChange.observe(this, Observer { changeAmount ->
             when {
                 changeAmount == 0 -> return@Observer
                 changeAmount > 0 -> makeSnackbar(getString(R.string.added_favorite_snackbar))
-                else -> makeSnackbar(getString(R.string.removed_favorite_snackbar))
+                changeAmount < 0 -> makeSnackbar(getString(R.string.removed_favorite_snackbar))
             }
         })
         mainActivityVM.reminderCountChange.observe(this, Observer { changeAmount ->
             when {
                 changeAmount == 0 -> return@Observer
                 changeAmount > 0 -> makeSnackbar(getString(R.string.added_reminder_snackbar))
-                else -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
+                changeAmount < 0 -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
             }
         })
     }
@@ -107,13 +115,14 @@ class MainActivity : AppCompatActivity() {
             R.navigation.more_destination
         )
 
-
+        // "bottomNavigationShowing" is passed to avoid users with quick fingers navigating into another destination while the
+        // bottom navigation is in the process of hiding. Easier and cleaner than trying to directly disable clicks on it
         val controller = bottom_navigation.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
             containerId = R.id.nav_host_container,
             intent = intent,
-            isAnimationDisabled = { !showing },
+            isAnimationDisabled = { !bottomNavigationShowing },
             firstLaunch = firstLaunch
         )
 
@@ -135,19 +144,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun makeSnackbar(text: String) {
+        Snackbar.make(
+            coordinator_layout,
+            text,
+            Snackbar.LENGTH_LONG
+        ).apply {
+            view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
+                anchorId = R.id.gap
+                anchorGravity = Gravity.TOP
+                gravity = Gravity.TOP
+            }
+            view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+                .setTextColor(getColorFromAttr(R.attr.colorOnSnackbar))
+        }.show()
+    }
+
     fun setActionBarTitle(title: String) {
         supportActionBar?.title = title
     }
 
+    //Log the destinations on firebase, it only supports activities by default. This
+    private fun logDestinationVisit(destinationId : Int){
+        val screenName = when(destinationId){
+            R.id.favorites -> "Favorites"
+            R.id.map -> "Map"
+            R.id.search -> "Search"
+            R.id.reminders -> "Reminders"
+            R.id.more -> "More"
+            R.id.stopDetails -> "StopDetails"
+            R.id.lineDetails -> "LineDetails"
+            R.id.ThemePicker -> "ThemePicker"
+            else -> "Unknown"
+        }
+        firebaseAnalytics.setCurrentScreen(this, screenName, screenName)
+    }
+
+
+    /* Bottom navigation animation stuff. */
+    // The idea is to hide the bottom navigation when the user enters a destination that can be accessed
+    // from multiple root destinations and doesn't belong to one specifically. For example stop details can be opened from favorites, map,
+    // search, notifications... It wouldn't make sense to have one open on the map stack and another on the favorites stack. It would
+    // be even worse if the same stop is opened on different stacks. This is similar to how the youtube app handles the video screen
+    private var currentAnimator: ValueAnimator? = null
+    private var bottomNavigationShowing = true
+
     private fun hideBottomNavigation() {
-        if (!showing) {
-            //Avoid duplicating animations
+        if (!bottomNavigationShowing) {
+            // Avoid duplicating animations
             return
         }
 
         nav_host_container.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
         with(bottom_navigation) {
-            showing = false
+            bottomNavigationShowing = false
             currentAnimator?.end()
             currentAnimator = ValueAnimator.ofInt(measuredHeight, 1).apply {
                 addUpdateListener { valueAnimator ->
@@ -158,7 +208,7 @@ class MainActivity : AppCompatActivity() {
                 interpolator = FastOutLinearInInterpolator()
                 duration = 250
                 doOnEnd {
-                    if (!showing) {
+                    if (!bottomNavigationShowing) {
                         visibility = View.INVISIBLE
                     }
                 }
@@ -168,12 +218,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showBottomNavigation() {
-        if (showing) {
-            //Avoid duplicating animations
+        if (bottomNavigationShowing) {
+            // Avoid duplicating animations
             return
         }
         with(bottom_navigation) {
-            showing = true
+            bottomNavigationShowing = true
             currentAnimator?.end()
             currentAnimator = ValueAnimator.ofInt(
                 measuredHeight,
@@ -190,7 +240,7 @@ class MainActivity : AppCompatActivity() {
                     visibility = View.VISIBLE
                 }
                 doOnEnd {
-                    if (showing) {
+                    if (bottomNavigationShowing) {
                         nav_host_container.updateLayoutParams<CoordinatorLayout.LayoutParams> {
                             bottomMargin = resources.getDimension(R.dimen.design_bottom_navigation_height).toInt()
                         }
@@ -199,27 +249,5 @@ class MainActivity : AppCompatActivity() {
                 start()
             }
         }
-    }
-
-    private fun openIntroScreen(){
-        if(mainActivityVM.isFirstLaunch()){
-            startActivity(Intent(this, IntroActivity::class.java))
-        }
-    }
-
-    fun makeSnackbar(text: String) {
-        Snackbar.make(
-            coordinator_layout,
-            text,
-            Snackbar.LENGTH_LONG
-        ).apply {
-            view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
-                anchorId = R.id.gap
-                anchorGravity = Gravity.TOP
-                gravity = Gravity.TOP
-            }
-            view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-                .setTextColor(getColorFromAttr(R.attr.colorOnSnackbar))
-        }.show()
     }
 }
