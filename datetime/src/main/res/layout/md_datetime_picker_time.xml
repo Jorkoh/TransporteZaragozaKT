@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+            android:layout_weight="0.5"
             android:id="@+id/picker_days_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,6 +106,7 @@
     </LinearLayout>
 
     <TimePicker
+            android:layout_weight="0.5"
             android:id="@+id/datetimeTimePicker"
             android:theme="@style/testing"
             android:layout_width="match_parent"
@@ -111,4 +114,4 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/picker_days_layout"
             android:layout_marginTop="16dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

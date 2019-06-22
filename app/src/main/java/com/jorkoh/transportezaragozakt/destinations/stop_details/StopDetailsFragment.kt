@@ -6,6 +6,7 @@ import android.graphics.drawable.Icon
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -202,7 +203,7 @@ class StopDetailsFragment : Fragment() {
                         MaterialDialog(requireContext()).show {
                             title(R.string.create_reminder)
                             timePicker(
-                                show24HoursView = false,
+                                show24HoursView = DateFormat.is24HourFormat(requireContext()),
                                 daysOfWeek = listOf(true, true, true, true, true, false, false)
                             ) { _, time, daysOfWeek ->
                                 stopDetailsVM.createReminder(daysOfWeek, time)
