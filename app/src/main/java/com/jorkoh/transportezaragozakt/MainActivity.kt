@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Start the intro if needed
-        if (mainActivityVM.isFirstLaunch()) {
-            startActivity(Intent(this, IntroActivity::class.java))
+        if (savedInstanceState == null && mainActivityVM.isFirstLaunch()) {
+            startActivity(Intent(this, IntroActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
         }
 
         setContentView(R.layout.main_container)
