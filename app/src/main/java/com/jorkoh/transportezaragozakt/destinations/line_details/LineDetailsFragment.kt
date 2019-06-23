@@ -108,13 +108,15 @@ class LineDetailsFragment : Fragment() {
         )
         line_details_tab_layout.setupWithViewPager(line_details_viewpager)
         lineDetailsVM.selectedStopId.observe(viewLifecycleOwner, Observer { stopId ->
-            val selectedMarker = markers.find { marker ->
-                (marker.tag as Stop).stopId == stopId
-            }
-            if (selectedMarker != null) {
-                selectedMarker.showInfoWindow()
-                map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as Stop).location))
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            if (!stopId.isNullOrEmpty()) {
+                val selectedMarker = markers.find { marker ->
+                    (marker.tag as Stop).stopId == stopId
+                }
+                if (selectedMarker != null) {
+                    selectedMarker.showInfoWindow()
+                    map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as Stop).location))
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
             }
         })
     }
@@ -192,6 +194,9 @@ class LineDetailsFragment : Fragment() {
             )
         }
 
+        // Setting this to null while clearing old markers to avoid triggering
+        // the listener that reacts to the user performing the action
+        map.setOnInfoWindowCloseListener(null)
         map.clear()
         styleMap()
 
@@ -206,11 +211,11 @@ class LineDetailsFragment : Fragment() {
         }
         map.setInfoWindowAdapter(StopInfoWindowAdapter())
         map.setOnMarkerClickListener { marker ->
-            lineDetailsVM.selectedStopId.value = (marker.tag as Stop).stopId
+            lineDetailsVM.selectedStopId.postValue((marker.tag as Stop).stopId)
             false
         }
         map.setOnInfoWindowCloseListener {
-            lineDetailsVM.selectedStopId.value = ""
+            lineDetailsVM.selectedStopId.postValue("")
         }
         createBaseMarkers()
 
@@ -263,7 +268,7 @@ class LineDetailsFragment : Fragment() {
                 }
             )
 
-            //If the stopTitle is longer we can fit more lines while keeping a nice ratio
+            // If the stopTitle is longer we can fit more lines while keeping a nice ratio
             content.lines_layout_favorite.columnCount = when {
                 stop.stopTitle.length >= 24 -> 8
                 stop.stopTitle.length >= 18 -> 6
