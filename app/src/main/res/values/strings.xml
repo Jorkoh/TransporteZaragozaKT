@@ -180,18 +180,8 @@
     <string name="setup_reminders_work_name" translatable="false">SETUP_REMINDERS_WORK_NAME</string>
 
     <!--Updates-->
-    <string name="updated_bus_stops_title" translatable="true">Updated bus stops data</string>
-    <string name="updated_bus_stops_message" translatable="true">New version number: </string>
-    <string name="updated_tram_stops_title" translatable="true">Updated tram stops data</string>
-    <string name="updated_tram_stops_message" translatable="true">New version number: </string>
-    <string name="updated_bus_lines_title" translatable="true">Updated bus lines data</string>
-    <string name="updated_bus_lines_message" translatable="true">New version number: </string>
-    <string name="updated_tram_lines_title" translatable="true">Updated tram lines data</string>
-    <string name="updated_tram_lines_message" translatable="true">New version number: </string>
-    <string name="updated_bus_lines_locations_title" translatable="true">Updated bus lines locations data</string>
-    <string name="updated_bus_lines_locations_message" translatable="true">New version number: </string>
-    <string name="updated_tram_lines_locations_title" translatable="true">Updated tram lines locations data</string>
-    <string name="updated_tram_lines_locations_message" translatable="true">New version number: </string>
+    <string name="updated_stops_lines_title" translatable="true">Updated stops and lines</string>
+    <string name="updated_stops_lines_message" translatable="true">Check the changelog for update details</string>
 
     <!--Tags-->
     <string name="map_destination_map_fragment_tag" translatable="false">map_destination_map_fragment_tag</string>

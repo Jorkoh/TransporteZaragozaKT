@@ -43,8 +43,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { busStopDocument, e ->
-                if (e == null) {
-                    checkBusStopsUpdate(busStopDocument)
+                if (e == null && isNewBusStopsVersion(busStopDocument)) {
+                    updateBusStops(busStopDocument)
+                    showUpdateNotification()
                 }
             }
         }
@@ -55,8 +56,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { tramStopDocument, e ->
-                if (e == null) {
-                    checkTramStopsUpdate(tramStopDocument)
+                if (e == null && isNewTramStopsVersion(tramStopDocument)) {
+                    updateTramStops(tramStopDocument)
+                    showUpdateNotification()
                 }
             }
         }
@@ -67,8 +69,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { busLinesDocument, e ->
-                if (e == null) {
-                    checkBusLinesUpdate(busLinesDocument)
+                if (e == null && isNewBusLinesVersion(busLinesDocument)) {
+                    updateBusLines(busLinesDocument)
+                    showUpdateNotification()
                 }
             }
         }
@@ -79,8 +82,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { tramLinesDocument, e ->
-                if (e == null) {
-                    checkTramLinesUpdate(tramLinesDocument)
+                if (e == null && isNewTramLinesVersion(tramLinesDocument)) {
+                    updateTramLines(tramLinesDocument)
+                    showUpdateNotification()
                 }
             }
         }
@@ -91,8 +95,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { busLinesLocationsDocument, e ->
-                if (e == null) {
-                    checkBusLinesLocationsUpdate(busLinesLocationsDocument)
+                if (e == null && isNewBusLinesLocationsVersion(busLinesLocationsDocument)) {
+                    updateBusLinesLocations(busLinesLocationsDocument)
+                    showUpdateNotification()
                 }
             }
         }
@@ -103,138 +108,11 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             orderByDescending("version")
             limit = 1
             getFirstInBackground { tramLinesLocationsDocument, e ->
-                if (e == null) {
-                    checkTramLinesLocationsUpdate(tramLinesLocationsDocument)
+                if (e == null && isNewTramLinesLocationsVersion(tramLinesLocationsDocument)) {
+                    updateTramLinesLocations(tramLinesLocationsDocument)
+                    showUpdateNotification()
                 }
             }
-        }
-    }
-
-    private fun checkBusStopsUpdate(busStopDocument: ParseObject) {
-        if (isNewBusStopsVersion(busStopDocument)) {
-            updateBusStops(busStopDocument)
-
-            val updateNotification =
-                NotificationCompat.Builder(applicationContext, applicationContext.getString(R.string.notification_channel_id_updates))
-                    .apply {
-                        setSmallIcon(R.drawable.ic_notification_icon)
-                        setContentTitle(applicationContext.getString(R.string.updated_bus_stops_title))
-                        setContentText(applicationContext.getString(R.string.updated_bus_stops_message) + busStopDocument.getInt("version"))
-                        priority = NotificationCompat.PRIORITY_DEFAULT
-                    }
-
-            (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
-                -50,
-                updateNotification.build()
-            )
-        }
-    }
-
-    private fun checkTramStopsUpdate(tramStopDocument: ParseObject) {
-        if (isNewTramStopsVersion(tramStopDocument)) {
-            updateTramStops(tramStopDocument)
-
-            val updateNotification =
-                NotificationCompat.Builder(applicationContext, applicationContext.getString(R.string.notification_channel_id_updates))
-                    .apply {
-                        setSmallIcon(R.drawable.ic_notification_icon)
-                        setContentTitle(applicationContext.getString(R.string.updated_tram_stops_title))
-                        setContentText(applicationContext.getString(R.string.updated_tram_stops_message) + tramStopDocument.getInt("version"))
-                        priority = NotificationCompat.PRIORITY_DEFAULT
-                    }
-
-            (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
-                -60,
-                updateNotification.build()
-            )
-        }
-    }
-
-    private fun checkBusLinesUpdate(busLinesDocument: ParseObject) {
-        if (isNewBusLinesVersion(busLinesDocument)) {
-            updateBusLines(busLinesDocument)
-
-            val updateNotification =
-                NotificationCompat.Builder(applicationContext, applicationContext.getString(R.string.notification_channel_id_updates))
-                    .apply {
-                        setSmallIcon(R.drawable.ic_notification_icon)
-                        setContentTitle(applicationContext.getString(R.string.updated_bus_lines_title))
-                        setContentText(applicationContext.getString(R.string.updated_bus_lines_message) + busLinesDocument.getInt("version"))
-                        priority = NotificationCompat.PRIORITY_DEFAULT
-                    }
-
-            (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
-                -70,
-                updateNotification.build()
-            )
-        }
-    }
-
-    private fun checkTramLinesUpdate(tramLinesDocument: ParseObject) {
-        if (isNewTramLinesVersion(tramLinesDocument)) {
-            updateTramLines(tramLinesDocument)
-
-            val updateNotification =
-                NotificationCompat.Builder(applicationContext, applicationContext.getString(R.string.notification_channel_id_updates))
-                    .apply {
-                        setSmallIcon(R.drawable.ic_notification_icon)
-                        setContentTitle(applicationContext.getString(R.string.updated_tram_lines_title))
-                        setContentText(applicationContext.getString(R.string.updated_tram_lines_message) + tramLinesDocument.getInt("version"))
-                        priority = NotificationCompat.PRIORITY_DEFAULT
-                    }
-
-            (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
-                -80,
-                updateNotification.build()
-            )
-        }
-    }
-
-    private fun checkBusLinesLocationsUpdate(busLinesLocationsDocument: ParseObject) {
-        if (isNewBusLinesLocationsVersion(busLinesLocationsDocument)) {
-            updateBusLinesLocations(busLinesLocationsDocument)
-
-            val updateNotification =
-                NotificationCompat.Builder(applicationContext, applicationContext.getString(R.string.notification_channel_id_updates))
-                    .apply {
-                        setSmallIcon(R.drawable.ic_notification_icon)
-                        setContentTitle(applicationContext.getString(R.string.updated_bus_lines_locations_title))
-                        setContentText(
-                            applicationContext.getString(R.string.updated_bus_lines_locations_message) + busLinesLocationsDocument.getInt(
-                                "version"
-                            )
-                        )
-                        priority = NotificationCompat.PRIORITY_DEFAULT
-                    }
-
-            (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
-                -90,
-                updateNotification.build()
-            )
-        }
-    }
-
-    private fun checkTramLinesLocationsUpdate(tramLinesLocationsDocument: ParseObject) {
-        if (isNewTramLinesLocationsVersion(tramLinesLocationsDocument)) {
-            updateTramLinesLocations(tramLinesLocationsDocument)
-
-            val updateNotification =
-                NotificationCompat.Builder(applicationContext, applicationContext.getString(R.string.notification_channel_id_updates))
-                    .apply {
-                        setSmallIcon(R.drawable.ic_notification_icon)
-                        setContentTitle(applicationContext.getString(R.string.updated_tram_lines_locations_title))
-                        setContentText(
-                            applicationContext.getString(R.string.updated_tram_lines_locations_message) + tramLinesLocationsDocument.getInt(
-                                "version"
-                            )
-                        )
-                        priority = NotificationCompat.PRIORITY_DEFAULT
-                    }
-
-            (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
-                -100,
-                updateNotification.build()
-            )
         }
     }
 
@@ -508,5 +386,25 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             )
             apply()
         }
+    }
+
+    private fun showUpdateNotification(){
+        val updateNotification =
+            NotificationCompat.Builder(
+                applicationContext,
+                applicationContext.getString(R.string.notification_channel_id_updates)
+            )
+                .apply {
+                    setSmallIcon(R.drawable.ic_notification_icon)
+                    setContentTitle(applicationContext.getString(R.string.updated_stops_lines_title))
+                    setContentText(applicationContext.getString(R.string.updated_stops_lines_message))
+                    priority = NotificationCompat.PRIORITY_LOW
+                    setOnlyAlertOnce(true)
+                }
+
+        (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
+            -50,
+            updateNotification.build()
+        )
     }
 }
