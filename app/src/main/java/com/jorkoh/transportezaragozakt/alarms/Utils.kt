@@ -7,6 +7,10 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import com.jorkoh.transportezaragozakt.alarms.AlarmService.Companion.REMINDER_ID_KEY_ALARM
+import com.jorkoh.transportezaragozakt.alarms.AlarmService.Companion.REQUEST_CODE
+import com.jorkoh.transportezaragozakt.alarms.AlarmService.Companion.STOP_ID_KEY_ALARM
+import com.jorkoh.transportezaragozakt.alarms.AlarmService.Companion.STOP_TYPE_KEY_ALARM
 import com.jorkoh.transportezaragozakt.db.DaysOfWeek
 import com.jorkoh.transportezaragozakt.db.Reminder
 import java.text.SimpleDateFormat
@@ -19,6 +23,8 @@ fun Reminder.createAlarms(context: Context, daysInAdvance: Int = 7) {
     val reminderTime = Calendar.getInstance().apply {
         set(Calendar.HOUR_OF_DAY, hourOfDay)
         set(Calendar.MINUTE, minute)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
     }
 
     repeat(daysInAdvance) {
@@ -31,21 +37,24 @@ fun Reminder.createAlarms(context: Context, daysInAdvance: Int = 7) {
     }
 }
 
-const val STOP_ID_KEY_ALARM = "STOP_ID_KEY_ALARM"
-const val STOP_TYPE_KEY_ALARM = "STOP_TYPE_KEY_ALARM"
-const val REMINDER_ID_KEY_ALARM = "REMINDER_ID_KEY_ALARM"
 private fun Reminder.createAlarm(context: Context, reminderTime: Calendar) {
+    val requestCode = createRequestCode(reminderId, reminderTime)
     val notifyIntent = Intent(context, AlarmReceiver::class.java)
+    // Request code has to be added to the intent bundle because the request code
+    // supplied on getBroadcast doesn't actually get used on filterEquals, it doesn't
+    // make any sense to ask for an identifier and then don't use it but hey ¯\_(ツ)_/¯
+    // https://developer.android.com/reference/android/content/Intent.html#filterEquals(android.content.Intent)
     notifyIntent.putExtras(
         Bundle().apply {
             putString(STOP_TYPE_KEY_ALARM, type.name)
             putString(STOP_ID_KEY_ALARM, stopId)
             putInt(REMINDER_ID_KEY_ALARM, reminderId)
+            putInt(REQUEST_CODE, requestCode)
         }
     )
     val pendingIntent = PendingIntent.getBroadcast(
         context,
-        createRequestCode(reminderId, reminderTime),
+        requestCode,
         notifyIntent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
@@ -56,30 +65,39 @@ private fun Reminder.createAlarm(context: Context, reminderTime: Calendar) {
 }
 
 fun Reminder.deleteAlarms(context: Context, daysInAdvance: Int = 7) {
-    val notifyIntent = Intent(context, AlarmReceiver::class.java)
-    notifyIntent.putExtras(
-        Bundle().apply {
-            putString(STOP_TYPE_KEY_ALARM, type.name)
-            putString(STOP_ID_KEY_ALARM, stopId)
-            putInt(REMINDER_ID_KEY_ALARM, reminderId)
-        }
-    )
-
+    // When it comes to deleting the alarms the timing beyond the day is not needed since the request code
+    // is generated from the combination of day, month, year and reminder persistence identifier
     val reminderTime = Calendar.getInstance()
     val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
 
     repeat(daysInAdvance) {
+        val requestCode = createRequestCode(reminderId, reminderTime)
+        val notifyIntent = Intent(context, AlarmReceiver::class.java)
+        // Request code has to be added to the intent bundle because the request code
+        // supplied on getBroadcast doesn't actually get used on filterEquals, it doesn't
+        // make any sense to ask for an identifier and then don't use it but hey ¯\_(ツ)_/¯
+        // https://developer.android.com/reference/android/content/Intent.html#filterEquals(android.content.Intent)
+        notifyIntent.putExtras(
+            Bundle().apply {
+                putString(STOP_TYPE_KEY_ALARM, type.name)
+                putString(STOP_ID_KEY_ALARM, stopId)
+                putInt(REMINDER_ID_KEY_ALARM, reminderId)
+                putInt(REQUEST_CODE, requestCode)
+            }
+        )
+
         // No need to check whether some of this days are enabled or not, if there is no alarm setup
         // the cancel Intent will simply be ignored
-        reminderTime.add(Calendar.DATE, 1)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            createRequestCode(reminderId, reminderTime),
+            requestCode,
             notifyIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         alarmManager.cancel(pendingIntent)
+
+        reminderTime.add(Calendar.DATE, 1)
     }
 }
 

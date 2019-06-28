@@ -20,6 +20,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import org.koin.android.ext.android.inject
+import java.util.*
 
 
 class AlarmService : LifecycleService() {
@@ -28,18 +29,17 @@ class AlarmService : LifecycleService() {
         const val STOP_ID_KEY_ALARM = "STOP_ID_KEY_ALARM"
         const val STOP_TYPE_KEY_ALARM = "STOP_TYPE_KEY_ALARM"
         const val REMINDER_ID_KEY_ALARM = "REMINDER_ID_KEY_ALARM"
+        const val REQUEST_CODE = "REQUEST_CODE"
     }
 
     private val stopsRepository: StopsRepository by inject()
     private val remindersRepository: RemindersRepository by inject()
-    private lateinit var stopId: String
-    private lateinit var stopType: StopType
-    private var reminderId: Int = 1
 
+    private val currentInstances = ArrayDeque<Unit>()
 
     override fun onCreate() {
         super.onCreate()
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setupNotificationChannels(this)
             val foregroundServiceNotification =
                 NotificationCompat.Builder(this, getString(R.string.notification_channel_id_services))
@@ -52,36 +52,50 @@ class AlarmService : LifecycleService() {
         }
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        try {
-            requireNotNull(intent.extras).run {
-                stopId = requireNotNull(getString(STOP_ID_KEY_ALARM))
-                stopType = StopType.valueOf(requireNotNull(getString(STOP_TYPE_KEY_ALARM)))
-                reminderId = getInt(REMINDER_ID_KEY_ALARM)
-            }
-        } catch (e: IllegalArgumentException) {
-            stopSelf()
-        }
 
-        CombinedLiveData(
-            stopsRepository.loadStopDestinations(stopId, stopType),
-            remindersRepository.loadReminderAlias(reminderId)
-        ) { x, y -> Pair(x, y) }.observe(this, Observer { info ->
-            if (info.first?.status != Status.LOADING) {
-                createNotification(
-                    info.first as Resource<List<StopDestination>>,
-                    info.second as String
-                )
-                stopSelf()
-            }
-        })
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        currentInstances.push(Unit)
+
+        requireNotNull(intent.extras).let { extras ->
+            val stopId = requireNotNull(extras.getString(STOP_ID_KEY_ALARM))
+            val stopType = StopType.valueOf(requireNotNull(extras.getString(STOP_TYPE_KEY_ALARM)))
+            val reminderId = extras.getInt(REMINDER_ID_KEY_ALARM)
+            CombinedLiveData(
+                stopsRepository.loadStopDestinations(stopId, stopType),
+                remindersRepository.loadReminderAlias(reminderId)
+            ) { x, y -> Pair(x, y) }.observe(this, Observer { info ->
+                if (info.first?.status != Status.LOADING) {
+                    createNotification(
+                        stopId,
+                        stopType,
+                        reminderId,
+                        info.first as Resource<List<StopDestination>>,
+                        info.second as String
+                    )
+                    stopSelfIfLast()
+                }
+            })
+        }
 
         super.onStartCommand(intent, flags, startId)
         // This should cover cases where Android kills the service while building the notification. In practice it's manufacturer dependent
         return Service.START_REDELIVER_INTENT
     }
 
-    private fun createNotification(stopDestinations: Resource<List<StopDestination>>, reminderAlias: String) {
+    private fun stopSelfIfLast() {
+        currentInstances.pop()
+        if (currentInstances.isEmpty()) {
+            stopSelf()
+        }
+    }
+
+    private fun createNotification(
+        stopId: String,
+        stopType: StopType,
+        reminderId: Int,
+        stopDestinations: Resource<List<StopDestination>>,
+        reminderAlias: String
+    ) {
         //NavDeepLinkBuilder doesn't work with bottom navigation view navigation so let's create the deep link normally
         val pendingIntent = PendingIntent.getActivity(
             this,
@@ -93,7 +107,7 @@ class AlarmService : LifecycleService() {
         val reminderNotification =
             NotificationCompat.Builder(this, getString(R.string.notification_channel_id_reminders)).apply {
                 if (stopDestinations.status == Status.SUCCESS && !stopDestinations.data.isNullOrEmpty()) {
-                    val notificationRemoteViews = createRemoteViews(stopDestinations, reminderAlias)
+                    val notificationRemoteViews = createRemoteViews(stopType, stopDestinations, reminderAlias)
                     setCustomHeadsUpContentView(notificationRemoteViews.contentRemoteView)    //256dp max height
                     setCustomContentView(notificationRemoteViews.contentRemoteView)           //256dp max height
                     setCustomBigContentView(notificationRemoteViews.bigContentRemoteView)     //no max height
@@ -117,6 +131,7 @@ class AlarmService : LifecycleService() {
     }
 
     private fun createRemoteViews(
+        stopType: StopType,
         stopDestinations: Resource<List<StopDestination>>,
         reminderAlias: String
     ): NotificationRemoteViews {
