@@ -14,8 +14,9 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 8
-        versionName "1.0.2"
+        versionCode 9
+        versionName "1.0.3"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -110,7 +111,9 @@ dependencies {
     kapt deps.moshi.moshi_kotlin_codegen
 
     //Koin
-    implementation deps.koin
+    implementation deps.koin.core
+    testImplementation deps.koin.test
+    androidTestImplementation deps.koin.test
 
     //Firebase and Crashlytics
     implementation deps.firebase
@@ -118,8 +121,13 @@ dependencies {
 
     //Testing
     testImplementation deps.junit
+    testImplementation deps.androidx.jUnitRunner
+    testImplementation deps.mockito
+    androidTestImplementation deps.junit
     androidTestImplementation deps.androidx.test
-    androidTestImplementation deps.espresso
+    androidTestImplementation deps.androidx.jUnitRunner
+    androidTestImplementation deps.androidx.espresso.core
+    androidTestImplementation deps.androidx.espresso.contrib
 }
 
 apply plugin: 'com.google.gms.google-services'

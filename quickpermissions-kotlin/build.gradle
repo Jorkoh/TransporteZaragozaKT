@@ -32,9 +32,9 @@ dependencies {
 
     implementation deps.kotlin.stdlib.jdk
 
-    androidTestImplementation deps.androidx.appCompat
     testImplementation deps.junit
-    androidTestImplementation deps.espresso
+    androidTestImplementation deps.androidx.appCompat
+    androidTestImplementation deps.androidx.espresso.core
 
     implementation deps.androidx.appCompat
 

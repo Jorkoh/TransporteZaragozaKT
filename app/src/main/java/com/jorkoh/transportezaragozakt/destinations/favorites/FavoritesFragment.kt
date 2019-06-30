@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +20,8 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.destinations.materialColors
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
+import com.jorkoh.transportezaragozakt.destinations.toHexFromColor
 import kotlinx.android.synthetic.main.favorites_destination.*
 import kotlinx.android.synthetic.main.favorites_destination.view.*
 import kotlinx.android.synthetic.main.main_container.*
@@ -73,15 +74,8 @@ class FavoritesFragment : Fragment() {
     private val editColor: (FavoriteStopExtended) -> Unit = { favorite ->
         MaterialDialog(requireContext()).show {
             title(R.string.edit_favorite_dialog_title)
-            colorChooser(
-                materialColors,
-                initialSelection = if (favorite.colorHex.isEmpty()) Color.TRANSPARENT else Color.parseColor(
-                    favorite.colorHex
-                )
-            ) { _, color ->
-                //Color is saved as hex in persistance so it has to be masked. Selecting transparent is equivalent to not selecting a color
-                val hexColor = if (color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
-                favoritesVM.updateFavorite(favorite.stopId, favorite.alias, hexColor)
+            colorChooser(materialColors, initialSelection = favorite.colorHex.toColorFromHex()) { _, color ->
+                favoritesVM.updateFavorite(favorite.stopId, favorite.alias, color.toHexFromColor())
             }
             positiveButton(R.string.edit_button)
         }

@@ -14,6 +14,7 @@ interface FavoritesRepository {
     fun restoreFavorite(stopId: String)
     fun moveFavorite(from: Int, to: Int)
     fun loadFavoriteCount(): LiveData<Int>
+    fun deleteAllFavoriteStops()
 }
 
 class FavoritesRepositoryImplementation(
@@ -59,5 +60,14 @@ class FavoritesRepositoryImplementation(
 
     override fun loadFavoriteCount() : LiveData<Int>{
         return stopsDao.getFavoriteCount()
+    }
+
+    // For testing purposes
+    override fun deleteAllFavoriteStops() {
+        appExecutors.diskIO().execute {
+            db.runInTransaction {
+                stopsDao.deleteAllFavorites()
+            }
+        }
     }
 }

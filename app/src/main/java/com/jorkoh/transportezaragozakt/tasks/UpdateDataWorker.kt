@@ -13,8 +13,8 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
 import com.parse.ParseObject
 import com.parse.ParseQuery
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 
 class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :

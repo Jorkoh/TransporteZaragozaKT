@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.reminders
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +19,8 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
 import com.jorkoh.transportezaragozakt.destinations.materialColors
+import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
+import com.jorkoh.transportezaragozakt.destinations.toHexFromColor
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.reminders_destination.*
 import kotlinx.android.synthetic.main.reminders_destination.view.*
@@ -81,14 +82,8 @@ class RemindersFragment : Fragment() {
     private val editColor: (ReminderExtended) -> Unit = { reminder ->
         MaterialDialog(requireContext()).show {
             title(R.string.edit_reminder_dialog_title)
-            colorChooser(
-                materialColors,
-                initialSelection = if (reminder.colorHex.isEmpty()) Color.TRANSPARENT else Color.parseColor(
-                    reminder.colorHex
-                )
-            ) { _, color ->
-                val hexColor = if (color == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and color)
-                remindersVM.updateReminder(reminder.reminderId, reminder.alias, hexColor)
+            colorChooser(materialColors, initialSelection = reminder.colorHex.toColorFromHex()) { _, color ->
+                remindersVM.updateReminder(reminder.reminderId, reminder.alias, color.toHexFromColor())
             }
             positiveButton(R.string.edit_button)
         }

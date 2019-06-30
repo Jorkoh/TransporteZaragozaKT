@@ -50,6 +50,9 @@ abstract class StopsDao {
     @Query("DELETE FROM favoriteStops WHERE stopId = :stopId")
     abstract fun deleteFavorite(stopId: String)
 
+    @Query("DELETE FROM favoriteStops")
+    abstract fun deleteAllFavorites()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertFavoriteStop(favoriteStop: FavoriteStop)
 

@@ -4,7 +4,8 @@ import android.app.Application
 import com.parse.Parse
 import daio.io.dresscode.DressCode
 import daio.io.dresscode.declareDressCode
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MainApplication : Application() {
 
@@ -12,7 +13,10 @@ class MainApplication : Application() {
         super.onCreate()
 
         // Koin
-        startKoin(this, listOf(appModule))
+        startKoin {
+            androidContext(this@MainApplication)
+            modules(appModule)
+        }
 
         //Parse
         Parse.initialize(

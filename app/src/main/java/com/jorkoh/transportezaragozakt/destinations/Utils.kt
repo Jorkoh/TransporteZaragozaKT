@@ -8,6 +8,9 @@ import android.location.Location
 import android.net.Uri
 import android.util.TypedValue
 import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import androidx.core.graphics.toColorInt
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.StopType
 
@@ -35,11 +38,17 @@ val materialColors = intArrayOf(
     Color.BLACK
 )
 
+// Color is saved as hex in persistence so it has to be masked, there is no Android utility for this available on API >=21.
+// Transparent is equivalent to no color selected
+fun Int.toHexFromColor() = if (this == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and this)
+
+fun String.toColorFromHex() = if (this.isEmpty()) Color.TRANSPARENT else this.toColorInt()
+
 fun Int.toPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 fun Int.toDp(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()
 
-fun Location.toLatLng() : LatLng = LatLng(latitude, longitude)
+fun Location.toLatLng(): LatLng = LatLng(latitude, longitude)
 
 fun createStopDetailsDeepLink(stopId: String, stopType: StopType) = Intent(
     Intent.ACTION_VIEW,
@@ -55,4 +64,12 @@ fun Context.getColorFromAttr(
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
+}
+
+fun lighter(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) factor: Float = 0.15f): Int {
+    val alpha = Color.alpha(color)
+    val red = ((Color.red(color) * (1 - factor) / 255 + factor) * 255).toInt()
+    val green = ((Color.green(color) * (1 - factor) / 255 + factor) * 255).toInt()
+    val blue = ((Color.blue(color) * (1 - factor) / 255 + factor) * 255).toInt()
+    return Color.argb(alpha, red, green, blue)
 }
