@@ -218,4 +218,10 @@ data class ReminderExtended(
 )
 
 //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
-data class DaysOfWeek(val days: List<Boolean>)
+data class DaysOfWeek(val days: List<Boolean>){
+    init {
+        require(days.count() == 7){
+            "Argument has to be a list of exactly 7 days"
+        }
+    }
+}

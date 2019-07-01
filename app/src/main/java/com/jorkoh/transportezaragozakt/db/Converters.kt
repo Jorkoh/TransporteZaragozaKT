@@ -19,13 +19,13 @@ object Converters {
     @TypeConverter
     @JvmStatic
     fun timestampToDate(value: Long?): Date? {
-        return value?.let { Date(it * 1000) }
+        return value?.let { Date(it) }
     }
 
     @TypeConverter
     @JvmStatic
     fun dateToTimestamp(value: Date?): Long? {
-        return value?.let { it.time / 1000 }
+        return value?.time
     }
 
     @TypeConverter
@@ -46,7 +46,7 @@ object Converters {
     fun daysOfWeekToJson(value: DaysOfWeek): String {
         val sb = StringBuilder()
         value.days.forEach {
-            sb.append(if(it) 'T' else 'F')
+            sb.append(if (it) 'T' else 'F')
         }
         return sb.toString()
     }
@@ -76,16 +76,11 @@ object Converters {
 
     @TypeConverter
     @JvmStatic
-    fun latLongToJson(value: LatLng): String {
-        return doubleListAdapter.toJson(listOf(value.latitude, value.longitude))
-    }
+    fun latLongToJson(value: LatLng): String = doubleListAdapter.toJson(listOf(value.latitude, value.longitude))
 
     @TypeConverter
     @JvmStatic
-    fun jsonToLatLng(value: String): LatLng? {
-        val doubleList = doubleListAdapter.fromJson(value)
-        return if (doubleList == null) null else LatLng(doubleList[0], doubleList[1])
-    }
+    fun jsonToLatLng(value: String): LatLng? = doubleListAdapter.fromJson(value)?.let { LatLng(it[0], it[1]) }
 
     @TypeConverter
     @JvmStatic
