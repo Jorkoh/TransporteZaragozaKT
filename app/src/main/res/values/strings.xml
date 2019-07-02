@@ -48,7 +48,7 @@
     <string name="minute" translatable="true">minute</string>
     <string name="at_the_stop" translatable="true">At the stop</string>
     <string name="fab_add_favorite" translatable="true">Add to favorites</string>
-    <string name="fab_remove_favorite" translatable="true">Remove from favorites</string>
+    <string name="fab_remove_favorite" translatable="true">Remove favorite</string>
     <string name="fab_reminder" translatable="true">Create reminder</string>
     <string name="fab_shortcut" translatable="true">Create shortcut</string>
     <string name="create_shortcut" translatable="true">Create shortcut</string>

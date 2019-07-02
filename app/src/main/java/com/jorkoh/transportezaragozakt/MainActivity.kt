@@ -20,8 +20,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.destinations.getColorFromAttr
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
-import com.jorkoh.transportezaragozakt.tasks.enqueueSetupRemindersWorker
-import com.jorkoh.transportezaragozakt.tasks.enqueueUpdateDataWorker
+import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicSetupRemindersWorker
+import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import com.pixplicity.generate.Rate
 import daio.io.dresscode.matchDressCode
@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         // Bottom navigation showing and hiding
         when (destination.id) {
-            R.id.stopDetails -> hideBottomNavigation()
-            R.id.lineDetails -> hideBottomNavigation()
+            R.id.stopDetails, R.id.lineDetails -> hideBottomNavigation()
             else -> showBottomNavigation()
         }
         // Fab showing and hiding. Ideally the fab would just be part of that fragment layout but to have it properly react to snackbars
@@ -77,8 +76,8 @@ class MainActivity : AppCompatActivity() {
             // Every time the app is started from scratch count up the engagement events towards displaying the rate-me flow
             rate.count()
             // WorkManager tasks are queued both on app launch and device boot to cover first install
-            enqueueUpdateDataWorker(getString(R.string.update_data_work_name))
-            enqueueSetupRemindersWorker(getString(R.string.setup_reminders_work_name))
+            enqueuePeriodicUpdateDataWorker(getString(R.string.update_data_work_name))
+            enqueuePeriodicSetupRemindersWorker(getString(R.string.setup_reminders_work_name))
             setupNotificationChannels(this)
             setupBottomNavigationBar(true)
         }

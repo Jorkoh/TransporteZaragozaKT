@@ -9,8 +9,8 @@ import com.jorkoh.transportezaragozakt.R
 import java.util.concurrent.TimeUnit
 
 //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
-fun enqueueUpdateDataWorker(workName: String) {
-    val updateDataRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
+fun enqueuePeriodicUpdateDataWorker(workName: String) {
+    val updateDataPeriodicRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
         .setConstraints(
             Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -18,18 +18,29 @@ fun enqueueUpdateDataWorker(workName: String) {
         )
         .build()
 
-    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataRequest)
+    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataPeriodicRequest)
 }
 
-fun enqueueSetupRemindersWorker(workName: String) {
-    val updateDataRequest = PeriodicWorkRequestBuilder<SetupRemindersWorker>(12, TimeUnit.HOURS)
+fun enqueuePeriodicSetupRemindersWorker(workName: String) {
+    val setupRemindersPeriodicRequest = PeriodicWorkRequestBuilder<SetupRemindersWorker>(1, TimeUnit.DAYS)
         .setConstraints(
             Constraints.Builder()
                 .build()
         )
         .build()
 
-    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataRequest)
+    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, setupRemindersPeriodicRequest)
+}
+
+fun enqueueOneTimeSetupRemindersWorker() {
+    val setupRemindersOneTimeRequest = OneTimeWorkRequestBuilder<SetupRemindersWorker>()
+        .setConstraints(
+            Constraints.Builder()
+                .build()
+        )
+        .build()
+
+    WorkManager.getInstance().enqueue(setupRemindersOneTimeRequest)
 }
 
 fun setupNotificationChannels(context: Context) {

@@ -9,10 +9,15 @@ import com.jorkoh.transportezaragozakt.R
 class BootCompleteReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            setupNotificationChannels(context)
-            enqueueUpdateDataWorker(context.getString(R.string.update_data_work_name))
-            enqueueSetupRemindersWorker(context.getString(R.string.setup_reminders_work_name))
+        when (intent.action) {
+            Intent.ACTION_BOOT_COMPLETED -> {
+                setupNotificationChannels(context)
+                enqueuePeriodicUpdateDataWorker(context.getString(R.string.update_data_work_name))
+                enqueuePeriodicSetupRemindersWorker(context.getString(R.string.setup_reminders_work_name))
+            }
+            Intent.ACTION_TIME_CHANGED, Intent.ACTION_TIMEZONE_CHANGED -> {
+                enqueueOneTimeSetupRemindersWorker()
+            }
         }
     }
 }
