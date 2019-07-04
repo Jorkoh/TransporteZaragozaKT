@@ -1,4 +1,4 @@
-﻿<h1 align="center"> Zaragoza Transport </h1> <br>
+<h1 align="center"> Zaragoza Transport </h1> <br>
 <p align="center">
     <img alt="Zaragoza Transport" title="Zaragoza Transport" src="/readme-resources/rounded_app_logo.png" width="256">
 </p>
@@ -37,7 +37,7 @@ Real-time Zaragoza bus and tram imformation. Built with Kotlin following modern 
 
 Some of the technologies used to develop Transporte Zaragoza:
 
-* [Kotlin](https://kotlinlang.org/), Google’s preferred language for Android app development.
+* [Kotlin](https://kotlinlang.org/)\*, Google’s preferred language for Android app development.
 * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata), lifecycle-aware observables.
 * [Room](https://developer.android.com/topic/libraries/architecture/room), abstraction layer over SQLite.
 * [Retrofit](https://square.github.io/retrofit/) + [Moshi](https://github.com/square/moshi), interaction with [the API](https://www.zaragoza.es/sede/portal/datos-abiertos/api) that provides bus and tram data.
@@ -49,6 +49,7 @@ Some of the technologies used to develop Transporte Zaragoza:
 * [Lottie](https://airbnb.design/lottie/), After Effects animations rendered natively.
 * [ShapeShifter](https://github.com/alexjlockwood/ShapeShifter), Animated Vector Drawable animations.
 
+\* <sub>The app itself is 100% Kotlin code. Some of the modified open source libraries included as local modules are written in Java.</sub>
 ## Features
 
 A few of the things you can do with Transporte Zaragoza:
