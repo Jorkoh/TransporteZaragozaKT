@@ -19,7 +19,6 @@
 - [Technologies](#technologies)
 - [Features](#features)
 - [Feedback and Contributions](#feedback-and-contributions)
-- [Build Process](#build-process)
 - [Acknowledgments](#acknowledgments)
 - [License](#license)
 
@@ -78,16 +77,18 @@ Feel free to [ask me anything](mailto:jorge@jorkoh.com) or [file an issue](https
 
 Transporte Zaragoza is first and foremost a personal project to improve my own skillset and reflect my current abilities. This is why, for now, extensive pull requests are discouraged. 
 
-
-## Build Process
-
-//TODO
-
 ## Acknowledgments
 
-Thanks to the creators of the awesome open source libraries that were used in some form on the project:
+Some extra stuff that made this project a better experience:
 
-//TODO
+* [FAB Speed Dial](https://github.com/leinardi/FloatingActionButtonSpeedDial). Implementation of the [Material Design speed dial](https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions) used in the stop information destination. Created by [Roberto Leinardi](https://github.com/leinardi) and modified by me to support theming.
+* [Dresscode](https://github.com/Daio-io/dresscode). Tiny convenience library that allows theme changing on runtime. Created by [Dai Williams](https://github.com/Daio-io) and modified by me to work with [Cyanea](https://github.com/jaredrummler/Cyanea) theme picker.
+* [Material Dialogs](https://github.com/afollestad/material-dialogs). All kinds of dialogs made easy thanks to [Aidan Follestad](https://github.com/afollestad).
+* [Quick Permissions](https://github.com/QuickPermissions/QuickPermissions). Handling runtime permissions with less boilerplate by [Kirtan403](https://github.com/kirtan403). Modified by me to use Material Dialogs and other small stuff.
+* [ZXing Android Embedded](https://github.com/journeyapps/zxing-android-embedded). ZXing QR scanning capabilities without extra downloads.
+* [Material Intro Screen](https://github.com/TangoAgency/material-intro-screen). Welcoming slides to introduce the user to the app features. Modified by me to support animated vector drawables.
+* [Gene-rate](https://github.com/Pixplicity/gene-rate). Asks for ratings without interrupting the user's flow after conditions are met. Heavily modified by me with ideas from other libraries like [Integrated Rating Request](https://github.com/mediavrog/integrated-rating-request).
+* Multiple Icons by [Freepik](https://www.freepik.com/) from [flaticon.com](https://www.flaticon.com).
 
 ## License
 
