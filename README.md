@@ -24,7 +24,7 @@
 
 ## Introduction
 
-Real-time Zaragoza bus and tram imformation. Built with Kotlin following modern best practices, Transporte Zaragoza aims to be the most intuitive and feature-rich alternative on Google Play. See it in motion with a [short video demo](https://www.google.com).
+Real-time Zaragoza bus and tram imformation. Built with Kotlin following modern best practices, Transporte Zaragoza aims to be the most intuitive and feature-rich alternative on Google Play.
 
 <p align="center">
     <b>🚧 This app is WIP. Test coverage, architecture and features are not final 🚧</b>
