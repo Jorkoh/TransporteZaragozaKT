@@ -34,6 +34,9 @@ abstract class RemindersDao{
     @Query("DELETE FROM reminders WHERE reminderId = :reminderId")
     abstract fun deleteReminder(reminderId: Int)
 
+    @Query("DELETE FROM reminders")
+    abstract fun deleteAllReminders()
+
     @Query("SELECT IFNULL(position, 0)+1 'position' FROM reminders ORDER BY position LIMIT 1")
     abstract fun getLastPositionImmediate(): Int
 

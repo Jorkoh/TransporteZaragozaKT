@@ -140,4 +140,6 @@
     <string name="feedback_message_subject">Transporte Zaragoza Feedback</string>
     <string name="feedback_message_text">Describe el problema, pregunta o sugerencia aquí…</string>
     <string name="feedback_summary">¿Problemas? ¿Sugerencias? Pregúntame cualquier cosa</string>
+    <string name="open_source_summary">Esta aplicación es código abierto, échale un vistazo en GitHub!</string>
+    <string name="open_source_title">Código abierto</string>
 </resources>

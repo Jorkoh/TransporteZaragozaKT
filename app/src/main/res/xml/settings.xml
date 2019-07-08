@@ -58,6 +58,12 @@
                 app:iconSpaceReserved="false"/>
 
         <Preference
+                app:key="@string/open_source_key"
+                app:title="@string/open_source_title"
+                app:summary="@string/open_source_summary"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
                 app:key="@string/privacy_policy_key"
                 app:title="@string/privacy_policy_title"
                 app:iconSpaceReserved="false"/>

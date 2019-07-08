@@ -114,6 +114,7 @@
     <string name="libraries_and_credits_key" translatable="false">LIBRARIES_AND_CREDITS_KEY</string>
     <string name="privacy_policy_key" translatable="false">PRIVACY_POLICY_KEY</string>
     <string name="feedback_key" translatable="false">FEEDBACK_KEY</string>
+    <string name="open_source_key" translatable="false">OPEN_SOURCE_KEY</string>
 
     <!--More-->
     <string name="style_category_title" translatable="true">Style</string>
@@ -132,6 +133,8 @@
     <string name="libraries_and_credits_title" translatable="true">Libraries and credits</string>
     <string name="feedback_title" translatable="true">Contact</string>
     <string name="feedback_summary" translatable="true">Problems? Suggestions? Ask me anything</string>
+    <string name="open_source_title" translatable="true">Open Source</string>
+    <string name="open_source_summary" translatable="true">This app is open source, check out the code at GitHub!</string>
     <string name="feedback_message_address" translatable="false">jorge@jorkoh.com</string>
     <string name="feedback_message_subject" translatable="true">Transporte Zaragoza Feedback</string>
     <string name="feedback_message_text" translatable="true">Describe the problem, question or suggestion here…</string>

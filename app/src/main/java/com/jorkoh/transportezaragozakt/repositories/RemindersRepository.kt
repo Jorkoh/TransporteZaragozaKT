@@ -17,6 +17,7 @@ interface RemindersRepository {
     fun deleteReminder(reminderId: Int)
     fun loadReminderAlias(reminderId: Int): LiveData<String>
     fun loadReminderCount(): LiveData<Int>
+    fun deleteAllReminders()
 }
 
 class RemindersRepositoryImplementation(
@@ -82,5 +83,14 @@ class RemindersRepositoryImplementation(
 
     override fun loadReminderCount() : LiveData<Int>{
         return remindersDao.getReminderCount()
+    }
+
+    // For testing purposes
+    override fun deleteAllReminders() {
+        appExecutors.diskIO().execute {
+            db.runInTransaction {
+                remindersDao.deleteAllReminders()
+            }
+        }
     }
 }

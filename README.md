@@ -1,4 +1,4 @@
-<h1 align="center"> Zaragoza Transport </h1> <br>
+﻿<h1 align="center"> Zaragoza Transport </h1> <br>
 <p align="center">
     <img alt="Zaragoza Transport" title="Zaragoza Transport" src="/readme-resources/rounded_app_logo.png" width="256">
 </p>
@@ -93,4 +93,5 @@ Some extra stuff that made this project a better experience:
 
 ## License
 
-This project is licensed under the terms of the GNU GPLv3 license.
+This project is licensed under the terms of the **CC BY-NC 4.0 License**. This means, among other things, that you **can not use this project commercially**. Please read the [full license terms](https://creativecommons.org/licenses/by-nc/4.0/legalcode) if you have any doubts.
+
