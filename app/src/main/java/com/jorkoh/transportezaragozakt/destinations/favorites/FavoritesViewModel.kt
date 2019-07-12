@@ -8,11 +8,7 @@ import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 
 class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): ViewModel() {
 
-    lateinit var favoriteStops: LiveData<List<FavoriteStopExtended>>
-
-    fun init(){
-        favoriteStops = favoritesRepository.loadFavoriteStops()
-    }
+    val favoriteStops: LiveData<List<FavoriteStopExtended>> = favoritesRepository.loadFavoriteStops()
 
     fun updateFavorite(stopId : String, alias : String, colorHex: String){
         favoritesRepository.updateFavorite(stopId, alias, colorHex)

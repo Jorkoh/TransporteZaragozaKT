@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
@@ -16,7 +17,8 @@ import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
-import kotlinx.android.synthetic.main.favorite_row.view.*
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.favorite_row.*
 
 class FavoriteAdapter(
     private val openStop: (StopDetailsFragmentArgs) -> Unit,
@@ -27,7 +29,12 @@ class FavoriteAdapter(
     private val delete: (FavoriteStopExtended, Int) -> Unit
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    class FavoriteViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    // Binding performance improvements https://proandroiddev.com/kotlin-android-extensions-using-view-binding-the-right-way-707cd0c9e648
+    class FavoriteViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        val context : Context
+            get() = itemView.context
+
         fun bind(
             favorite: FavoriteStopExtended,
             openStop: (StopDetailsFragmentArgs) -> Unit,
@@ -37,74 +44,75 @@ class FavoriteAdapter(
             reorder: (RecyclerView.ViewHolder) -> Unit,
             delete: (FavoriteStopExtended, Int) -> Unit
         ) {
-            itemView.apply {
-                type_image_favorite.setImageResource(
-                    when (favorite.type) {
-                        StopType.BUS -> R.drawable.ic_bus
-                        StopType.TRAM -> R.drawable.ic_tram
-                    }
+            // Stop type icon
+            type_image_favorite.setImageResource(
+                when (favorite.type) {
+                    StopType.BUS -> R.drawable.ic_bus
+                    StopType.TRAM -> R.drawable.ic_tram
+                }
+            )
+            // Texts
+            title_text_favorite.text = favorite.alias
+            number_text_favorite.text = favorite.number
+            // Favorite user defined color
+            if (favorite.colorHex.isNotEmpty()) {
+                favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
+                favorite_color.visibility = View.VISIBLE
+            } else {
+                favorite_color.setBackgroundColor(Color.TRANSPARENT)
+                favorite_color.visibility = View.GONE
+            }
+            // Lines
+            lines_layout_favorite.removeAllViews()
+            val layoutInflater = LayoutInflater.from(context)
+            favorite.lines.forEachIndexed { index, line ->
+                layoutInflater.inflate(R.layout.map_info_window_line, lines_layout_favorite)
+                val lineView = lines_layout_favorite.getChildAt(index) as TextView
+
+                val lineColor = if (favorite.type == StopType.BUS) R.color.bus_color else R.color.tram_color
+                lineView.background.setColorFilter(
+                    ContextCompat.getColor(context, lineColor),
+                    PorterDuff.Mode.SRC_IN
                 )
-                title_text_favorite.text = favorite.alias
-                number_text_favorite.text = favorite.number
-                if (favorite.colorHex.isNotEmpty()) {
-                    favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
-                    favorite_color.visibility = View.VISIBLE
-                } else {
-                    favorite_color.setBackgroundColor(Color.TRANSPARENT)
-                    favorite_color.visibility = View.GONE
-                }
-
-                itemView.lines_layout_favorite.removeAllViews()
-                val layoutInflater = LayoutInflater.from(context)
-                favorite.lines.forEachIndexed { index, line ->
-                    layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout_favorite)
-                    val lineView = itemView.lines_layout_favorite.getChildAt(index) as TextView
-
-                    val lineColor = if (favorite.type == StopType.BUS) R.color.bus_color else R.color.tram_color
-                    lineView.background.setColorFilter(
-                        ContextCompat.getColor(context, lineColor),
-                        PorterDuff.Mode.SRC_IN
-                    )
-                    lineView.text = line
-                }
-
-                setOnClickListener(DebounceClickListener {
-                    openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId))
-                })
-                edit_view_favorite.setOnClickListener {
-                    PopupMenu(context, it).apply {
-                        menu.apply {
-                            add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
-                                editAlias(favorite)
-                                true
-                            }
-                            add(context.resources.getString(R.string.color)).setOnMenuItemClickListener {
-                                editColor(favorite)
-                                true
-                            }
-                            add(context.resources.getString(R.string.restore)).setOnMenuItemClickListener {
-                                restore(favorite)
-                                true
-                            }
-                            add(context.resources.getString(R.string.delete)).setOnMenuItemClickListener {
-                                delete(favorite, adapterPosition)
-                                true
-                            }
+                lineView.text = line
+            }
+            // Listeners
+            itemView.setOnClickListener(DebounceClickListener {
+                openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId))
+            })
+            edit_view_favorite.setOnClickListener {
+                PopupMenu(context, it).apply {
+                    menu.apply {
+                        add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
+                            editAlias(favorite)
+                            true
                         }
-                        show()
+                        add(context.resources.getString(R.string.color)).setOnMenuItemClickListener {
+                            editColor(favorite)
+                            true
+                        }
+                        add(context.resources.getString(R.string.restore)).setOnMenuItemClickListener {
+                            restore(favorite)
+                            true
+                        }
+                        add(context.resources.getString(R.string.delete)).setOnMenuItemClickListener {
+                            delete(favorite, adapterPosition)
+                            true
+                        }
                     }
+                    show()
                 }
-                reorder_view_favorite.setOnTouchListener { _, event ->
-                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        reorder(this@FavoriteViewHolder)
-                    }
-                    return@setOnTouchListener true
+            }
+            reorder_view_favorite.setOnTouchListener { _, event ->
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                    reorder(this@FavoriteViewHolder)
                 }
+                return@setOnTouchListener true
             }
         }
     }
 
-    lateinit var favorites: List<FavoriteStopExtended>
+    var favorites: List<FavoriteStopExtended> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_row, parent, false) as View
@@ -115,35 +123,32 @@ class FavoriteAdapter(
         holder.bind(favorites[position], openStop, editAlias, editColor, restore, reorder, delete)
     }
 
-    override fun getItemCount(): Int = if (::favorites.isInitialized) favorites.size else 0
+    override fun getItemCount(): Int = favorites.size
 
     fun setNewFavoriteStops(newFavorites: List<FavoriteStopExtended>) {
-        if (::favorites.isInitialized) {
-            if (isOnlyPositionChange(newFavorites)) {
-                favorites = newFavorites
-            } else {
-                val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                    override fun getOldListSize() = favorites.size
-
-                    override fun getNewListSize() = newFavorites.size
-
-                    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                        return favorites[oldItemPosition].stopId == newFavorites[newItemPosition].stopId
-                    }
-
-                    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                        return favorites[oldItemPosition].type == newFavorites[newItemPosition].type
-                                && favorites[oldItemPosition].lines == newFavorites[newItemPosition].lines
-                                && favorites[oldItemPosition].alias == newFavorites[newItemPosition].alias
-                                && favorites[oldItemPosition].colorHex == newFavorites[newItemPosition].colorHex
-                    }
-                })
-                favorites = newFavorites
-                result.dispatchUpdatesTo(this)
-            }
-        } else {
+        if (isOnlyPositionChange(newFavorites)) {
+            // In the case of drag and drop positional changes the reordering has already taken place visually
             favorites = newFavorites
-            notifyItemRangeInserted(0, favorites.size)
+        } else {
+            // In any other case the difference is calculated with DiffUtil
+            val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+                override fun getOldListSize() = favorites.size
+
+                override fun getNewListSize() = newFavorites.size
+
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return favorites[oldItemPosition].stopId == newFavorites[newItemPosition].stopId
+                }
+
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return favorites[oldItemPosition].type == newFavorites[newItemPosition].type
+                            && favorites[oldItemPosition].lines == newFavorites[newItemPosition].lines
+                            && favorites[oldItemPosition].alias == newFavorites[newItemPosition].alias
+                            && favorites[oldItemPosition].colorHex == newFavorites[newItemPosition].colorHex
+                }
+            })
+            favorites = newFavorites
+            result.dispatchUpdatesTo(this)
         }
     }
 

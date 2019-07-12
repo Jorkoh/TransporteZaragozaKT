@@ -32,21 +32,22 @@ class FavoritesFragment : Fragment() {
     private val favoritesVM: FavoritesViewModel by viewModel()
 
     private val itemTouchHelper by lazy {
-        val simpleItemTouchCallback = ItemGestureHelper(object : ItemGestureHelper.OnItemGestureListener {
+        ItemTouchHelper(ItemGestureHelper(object : ItemGestureHelper.OnItemGestureListener {
             override fun onItemDrag(fromPosition: Int, toPosition: Int): Boolean {
+                // Dragging ongoing, modify the position visually to keep it snappy but don't bother persisting the change yet
                 favorites_recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
                 return true
             }
 
             override fun onItemDragged(fromPosition: Int, toPosition: Int) {
+                // Dragging complete, persist the change
                 favoritesVM.moveFavorite(fromPosition, toPosition)
             }
 
             override fun onItemSwiped(position: Int) {
                 delete(favoriteStopsAdapter.favorites[position], position)
             }
-        })
-        ItemTouchHelper(simpleItemTouchCallback)
+        }))
     }
 
     private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
@@ -123,10 +124,7 @@ class FavoritesFragment : Fragment() {
         favoritesVM.favoriteStops.observe(viewLifecycleOwner, favoriteStopsObserver)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setupToolbar()
         val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
         rootView.favorites_recycler_view.apply {
@@ -143,11 +141,6 @@ class FavoritesFragment : Fragment() {
             (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
             clear()
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        favoritesVM.init()
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {
