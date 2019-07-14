@@ -9,6 +9,7 @@ import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
+import com.jorkoh.transportezaragozakt.destinations.map.MarkerIcons
 import com.jorkoh.transportezaragozakt.destinations.reminders.RemindersViewModel
 import com.jorkoh.transportezaragozakt.destinations.search.SearchViewModel
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsViewModel
@@ -86,6 +87,10 @@ val appModule = module {
             .setMinimumInstallTime(MILLISECONDS_PER_DAY * 4)
             .setFeedbackAction(Uri.parse(androidContext().getString(R.string.feedback_mail_uri)))
             .build()
+    }
+
+    single {
+        MarkerIcons(androidContext())
     }
 
     single<SettingsRepository> { SettingsRepositoryImplementation(get(), androidContext()) }

@@ -24,18 +24,18 @@ class CustomSupportMapFragment : SupportMapFragment() {
         const val DISPLAY_FILTERS_KEY = "DISPLAY_FILTERS_KEY"
         const val BOTTOM_MARGIN_KEY = "BOTTOM_MARGIN_KEY"
 
-        fun newInstance(displayFilters: Boolean = true, bottomMargin: Boolean = false): CustomSupportMapFragment {
+        fun newInstance(displayFilters: Boolean = true, bottomMargin: Int = 0): CustomSupportMapFragment {
             val instance = CustomSupportMapFragment()
             instance.arguments = Bundle().apply {
                 putBoolean(DISPLAY_FILTERS_KEY, displayFilters)
-                putBoolean(BOTTOM_MARGIN_KEY, bottomMargin)
+                putInt(BOTTOM_MARGIN_KEY, bottomMargin)
             }
             return instance
         }
     }
 
     private var displayFilters: Boolean = true
-    private var bottomMargin: Boolean = false
+    private var bottomMargin: Int = 0
 
     private val mapVM: MapViewModel by sharedViewModel()
 
@@ -61,7 +61,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     override fun onCreate(p0: Bundle?) {
         super.onCreate(p0)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
-        bottomMargin = arguments?.getBoolean(BOTTOM_MARGIN_KEY) ?: false
+        bottomMargin = arguments?.getInt(BOTTOM_MARGIN_KEY) ?: 0
     }
 
     override fun onActivityCreated(bundle: Bundle?) {
@@ -115,9 +115,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
             mapVM.setTrafficEnabled(mapVM.trafficEnabled.value != true)
         }
         wrapper.addView(mapExtraControls)
-        if (bottomMargin) {
+        if (bottomMargin != 0) {
             wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
-                bottomMargin = 160.toPx()
+                bottomMargin = bottomMargin.toPx()
             }
         }
     }

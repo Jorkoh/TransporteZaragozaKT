@@ -1,16 +1,14 @@
 package com.jorkoh.transportezaragozakt.destinations.line_details
 
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import kotlinx.android.synthetic.main.stop_row.view.*
 
 class StopDestinationsAdapter(
@@ -35,19 +33,7 @@ class StopDestinationsAdapter(
                     if (stop.isFavorite) R.drawable.ic_favorite_black_24dp else R.drawable.ic_favorite_border_black_24dp
                 )
 
-                itemView.lines_layout_stop.removeAllViews()
-                val layoutInflater = LayoutInflater.from(context)
-                stop.lines.forEachIndexed { index, line ->
-                    layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout_stop)
-                    val lineView = itemView.lines_layout_stop.getChildAt(index) as TextView
-
-                    val lineColor = if (stop.type == StopType.BUS) R.color.bus_color else R.color.tram_color
-                    lineView.background.setColorFilter(
-                        ContextCompat.getColor(context, lineColor),
-                        PorterDuff.Mode.SRC_IN
-                    )
-                    lineView.text = line
-                }
+                stop.lines.inflateLines(itemView.lines_layout_stop, stop.type, context)
 
                 setOnClickListener(DebounceClickListener {
                     selectStop(stop.stopId)

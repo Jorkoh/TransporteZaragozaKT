@@ -2,15 +2,12 @@ package com.jorkoh.transportezaragozakt.destinations.map
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.graphics.PorterDuff
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -18,17 +15,18 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.main_container.*
-import kotlinx.android.synthetic.main.map_info_window.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -42,7 +40,7 @@ class MapFragment : Fragment() {
         const val DEFAULT_ZOOM = 16f
         const val MAX_CLUSTERING_ZOOM = 15.5f
         val ZARAGOZA_BOUNDS = LatLngBounds(
-            LatLng(41.6000, -1.08125), LatLng(41.774594, -0.7933)
+            LatLng(41.614155, -0.984636), LatLng(41.774594, -0.7933)
         )
         val ZARAGOZA_CENTER = LatLng(41.656362, -0.878920)
     }
@@ -52,48 +50,9 @@ class MapFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var clusterManager: ClusterManager<Stop>
     private lateinit var map: GoogleMap
-    private lateinit var clickedClusterItem: Stop
 
     private val busStops = mutableListOf<Stop>()
     private val tramStops = mutableListOf<Stop>()
-
-    private val busStopLocationsObserver = Observer<List<Stop>> { stops ->
-        if (mapVM.busFilterEnabled.value == true) {
-            stops.forEach { clusterManager.removeItem(it) }
-            clusterManager.addItems(stops)
-            clusterManager.cluster()
-        }
-        busStops.clear()
-        busStops.addAll(stops)
-    }
-
-    private val tramStopLocationsObserver = Observer<List<Stop>> { stops ->
-        if (mapVM.tramFilterEnabled.value == true) {
-            stops.forEach { clusterManager.removeItem(it) }
-            clusterManager.addItems(stops)
-            clusterManager.cluster()
-        }
-        tramStops.clear()
-        tramStops.addAll(stops)
-    }
-
-    private val busFilterEnabledObserver = Observer<Boolean> { enabled ->
-        if (enabled) {
-            clusterManager.addItems(busStops)
-        } else {
-            busStops.forEach { clusterManager.removeItem(it) }
-        }
-        clusterManager.cluster()
-    }
-
-    private val tramFilterEnabledObserver = Observer<Boolean> { enabled ->
-        if (enabled) {
-            clusterManager.addItems(tramStops)
-        } else {
-            tramStops.forEach { clusterManager.removeItem(it) }
-        }
-        clusterManager.cluster()
-    }
 
     @SuppressLint("MissingPermission")
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
@@ -108,55 +67,13 @@ class MapFragment : Fragment() {
                             .bearing(0f)
                             .build()
                         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                    }else{
+                    } else {
                         (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
                     }
                 }
             }
         }
         true
-    }
-
-    internal inner class StopInfoWindowAdapter : GoogleMap.InfoWindowAdapter {
-        override fun getInfoWindow(marker: Marker?): View? {
-            return null
-        }
-
-        override fun getInfoContents(marker: Marker?): View? {
-            if (marker == null) return null
-
-            val stop = clickedClusterItem
-            val content = layoutInflater.inflate(R.layout.map_info_window, null)
-
-            content.type_image_info_window.setImageResource(
-                when (stop.type) {
-                    StopType.BUS -> R.drawable.ic_bus
-                    StopType.TRAM -> R.drawable.ic_tram
-                }
-            )
-
-            //If the stopTitle is longer we can fit more lines while keeping a nice ratio
-            content.lines_layout_favorite.columnCount = when {
-                stop.stopTitle.length >= 24 -> 8
-                stop.stopTitle.length >= 18 -> 6
-                else -> 4
-            }
-            stop.lines.forEachIndexed { index, line ->
-                layoutInflater.inflate(R.layout.map_info_window_line, content.lines_layout_favorite)
-                val lineView = content.lines_layout_favorite.getChildAt(index) as TextView
-
-                val lineColor = if (stop.type == StopType.BUS) R.color.bus_color else R.color.tram_color
-                lineView.background.setColorFilter(
-                    ContextCompat.getColor(requireContext(), lineColor),
-                    PorterDuff.Mode.SRC_IN
-                )
-                lineView.text = line
-            }
-            content.number_text_info_window.text = stop.number
-            content.title_text_info_window.text = stop.stopTitle
-
-            return content
-        }
     }
 
     override fun onCreateView(
@@ -177,33 +94,23 @@ class MapFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        mapVM.init()
 
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.map_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment.newInstance(true, false)
+            mapFragment = CustomSupportMapFragment.newInstance(true)
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))
                 .commit()
             childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync { map ->
-            setupMap(map, !ZARAGOZA_BOUNDS.contains(map.cameraPosition.target))
-            mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
-                map.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                        context,
-                        if (isDarkMap) R.raw.map_style_dark else R.raw.map_style
-                    )
-                )
-            })
+            this.map = map
+            setupMap(!ZARAGOZA_BOUNDS.contains(map.cameraPosition.target))
         }
     }
 
-    private fun setupMap(googleMap: GoogleMap?, centerCamera: Boolean) {
-        map = checkNotNull(googleMap)
-
+    private fun setupMap(centerCamera: Boolean) {
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
@@ -216,19 +123,10 @@ class MapFragment : Fragment() {
         map.clear()
         busStops.clear()
         tramStops.clear()
+
         styleMap()
         setupClusterManager()
-
-        mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->
-            map.mapType = mapType
-        })
-        mapVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
-            map.isTrafficEnabled = enabled
-        })
-        mapVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
-        mapVM.tramFilterEnabled.observe(viewLifecycleOwner, tramFilterEnabledObserver)
-        mapVM.getBusStopLocations().observe(viewLifecycleOwner, busStopLocationsObserver)
-        mapVM.getTramStopLocations().observe(viewLifecycleOwner, tramStopLocationsObserver)
+        setupObservers()
 
         runWithPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -263,16 +161,70 @@ class MapFragment : Fragment() {
         map.setInfoWindowAdapter(clusterManager.markerManager)
         map.setOnInfoWindowClickListener(clusterManager)
         map.setOnCameraIdleListener(clusterManager)
-        clusterManager.markerCollection.setOnInfoWindowAdapter(StopInfoWindowAdapter())
+        clusterManager.markerCollection.setOnInfoWindowAdapter(StopInfoWindowAdapter(requireContext()))
         clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager)
 
         clusterManager.algorithm = CustomClusteringAlgorithm()
-        clusterManager.setOnClusterItemClickListener { item ->
-            clickedClusterItem = item
-            false
-        }
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
             findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
         }
+    }
+
+    private fun setupObservers() {
+        // Map options
+        mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->
+            map.mapType = mapType
+        })
+        mapVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+            map.isTrafficEnabled = enabled
+        })
+
+        // Map style
+        mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
+            map.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    context,
+                    if (isDarkMap) R.raw.map_style_dark else R.raw.map_style
+                )
+            )
+        })
+
+        // Stop type filters
+        mapVM.busFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+            if (enabled) {
+                clusterManager.addItems(busStops)
+            } else {
+                busStops.forEach { clusterManager.removeItem(it) }
+            }
+            clusterManager.cluster()
+        })
+        mapVM.tramFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+            if (enabled) {
+                clusterManager.addItems(tramStops)
+            } else {
+                tramStops.forEach { clusterManager.removeItem(it) }
+            }
+            clusterManager.cluster()
+        })
+
+        // Stops
+        mapVM.busStopLocations.observe(viewLifecycleOwner, Observer { stops ->
+            if (mapVM.busFilterEnabled.value == true) {
+                stops.forEach { clusterManager.removeItem(it) }
+                clusterManager.addItems(stops)
+                clusterManager.cluster()
+            }
+            busStops.clear()
+            busStops.addAll(stops)
+        })
+        mapVM.tramStopLocations.observe(viewLifecycleOwner, Observer { stops ->
+            if (mapVM.tramFilterEnabled.value == true) {
+                stops.forEach { clusterManager.removeItem(it) }
+                clusterManager.addItems(stops)
+                clusterManager.cluster()
+            }
+            tramStops.clear()
+            tramStops.addAll(stops)
+        })
     }
 }

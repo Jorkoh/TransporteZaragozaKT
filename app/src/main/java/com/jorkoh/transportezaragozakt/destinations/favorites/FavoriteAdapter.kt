@@ -2,20 +2,18 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.favorite_row.*
@@ -63,19 +61,7 @@ class FavoriteAdapter(
                 favorite_color.visibility = View.GONE
             }
             // Lines
-            lines_layout_favorite.removeAllViews()
-            val layoutInflater = LayoutInflater.from(context)
-            favorite.lines.forEachIndexed { index, line ->
-                layoutInflater.inflate(R.layout.map_info_window_line, lines_layout_favorite)
-                val lineView = lines_layout_favorite.getChildAt(index) as TextView
-
-                val lineColor = if (favorite.type == StopType.BUS) R.color.bus_color else R.color.tram_color
-                lineView.background.setColorFilter(
-                    ContextCompat.getColor(context, lineColor),
-                    PorterDuff.Mode.SRC_IN
-                )
-                lineView.text = line
-            }
+            favorite.lines.inflateLines(lines_layout_favorite, favorite.type, context)
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
                 openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId))

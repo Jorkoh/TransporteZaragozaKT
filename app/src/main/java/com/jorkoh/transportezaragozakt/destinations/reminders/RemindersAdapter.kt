@@ -2,19 +2,17 @@ package com.jorkoh.transportezaragozakt.destinations.reminders
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import kotlinx.android.synthetic.main.reminder_row.view.*
 
 class RemindersAdapter(
@@ -63,19 +61,7 @@ class RemindersAdapter(
                     reminder_color.visibility = View.GONE
                 }
 
-                itemView.lines_layout_favorite.removeAllViews()
-                val layoutInflater = LayoutInflater.from(context)
-                reminder.lines.forEachIndexed { index, line ->
-                    layoutInflater.inflate(R.layout.map_info_window_line, itemView.lines_layout_favorite)
-                    val lineView = itemView.lines_layout_favorite.getChildAt(index) as TextView
-
-                    val lineColor = if (reminder.type == StopType.BUS) R.color.bus_color else R.color.tram_color
-                    lineView.background.setColorFilter(
-                        ContextCompat.getColor(context, lineColor),
-                        PorterDuff.Mode.SRC_IN
-                    )
-                    lineView.text = line
-                }
+                reminder.lines.inflateLines(itemView.lines_layout_favorite, reminder.type, context)
 
                 setOnClickListener { edit(reminder) }
                 edit_view_reminder.setOnClickListener {

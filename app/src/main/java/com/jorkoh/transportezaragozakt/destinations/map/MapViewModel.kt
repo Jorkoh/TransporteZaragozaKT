@@ -10,33 +10,16 @@ import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 class MapViewModel(private val stopsRepository: StopsRepository, private val settingsRepository: SettingsRepository) :
     ViewModel() {
 
-    private lateinit var busStopLocations: LiveData<List<Stop>>
-    private lateinit var tramStopLocations: LiveData<List<Stop>>
+    val busStopLocations: LiveData<List<Stop>> = stopsRepository.loadStops(StopType.BUS)
+    val tramStopLocations: LiveData<List<Stop>> = stopsRepository.loadStops(StopType.TRAM)
 
     //Settings
-    lateinit var isDarkMap: LiveData<Boolean>
-    lateinit var mapType: LiveData<Int>
-    lateinit var trafficEnabled: LiveData<Boolean>
-    lateinit var busFilterEnabled: LiveData<Boolean>
-    lateinit var tramFilterEnabled: LiveData<Boolean>
+    val isDarkMap: LiveData<Boolean> = settingsRepository.loadIsDarkMap()
+    val mapType: LiveData<Int> = settingsRepository.loadMapType()
+    val trafficEnabled: LiveData<Boolean> = settingsRepository.loadTrafficEnabled()
+    val busFilterEnabled: LiveData<Boolean> = settingsRepository.loadBusFilterEnabled()
+    val tramFilterEnabled: LiveData<Boolean> = settingsRepository.loadTramFilterEnabled()
 
-    fun init() {
-        isDarkMap = settingsRepository.loadIsDarkMap()
-        mapType = settingsRepository.loadMapType()
-        trafficEnabled = settingsRepository.loadTrafficEnabled()
-        busFilterEnabled = settingsRepository.loadBusFilterEnabled()
-        tramFilterEnabled = settingsRepository.loadTramFilterEnabled()
-        busStopLocations = stopsRepository.loadStops(StopType.BUS)
-        tramStopLocations = stopsRepository.loadStops(StopType.TRAM)
-    }
-
-    fun getBusStopLocations(): LiveData<List<Stop>> {
-        return busStopLocations
-    }
-
-    fun getTramStopLocations(): LiveData<List<Stop>> {
-        return tramStopLocations
-    }
 
     fun setMapType(mapType: Int) {
         settingsRepository.setMapType(mapType)

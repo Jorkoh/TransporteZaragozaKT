@@ -4,14 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.location.Location
 import android.net.Uri
 import android.util.TypedValue
+import android.view.LayoutInflater
+import android.widget.GridLayout
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import com.google.android.gms.maps.model.LatLng
+import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
 
 //Includes transparent and black, used for colorpickers
@@ -72,4 +78,19 @@ fun lighter(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) factor: Floa
     val green = ((Color.green(color) * (1 - factor) / 255 + factor) * 255).toInt()
     val blue = ((Color.blue(color) * (1 - factor) / 255 + factor) * 255).toInt()
     return Color.argb(alpha, red, green, blue)
+}
+
+fun List<String>.inflateLines(container : GridLayout, stopType: StopType, context: Context ){
+    container.removeAllViews()
+    forEachIndexed { index, line ->
+        LayoutInflater.from(context).inflate(R.layout.map_info_window_line, container)
+        val lineView = container.getChildAt(index) as TextView
+
+        val lineColor = if (stopType == StopType.BUS) R.color.bus_color else R.color.tram_color
+        lineView.background.setColorFilter(
+            ContextCompat.getColor(context, lineColor),
+            PorterDuff.Mode.SRC_IN
+        )
+        lineView.text = line
+    }
 }
