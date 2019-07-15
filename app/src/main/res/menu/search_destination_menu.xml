@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+      xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
@@ -7,11 +8,12 @@
             android:icon="@drawable/ic_search_on_primary_24dp"
             android:title="@string/search_destination_title"
             app:actionViewClass="androidx.appcompat.widget.SearchView"
-            app:showAsAction="ifRoom|collapseActionView"/>
+            app:showAsAction="always|collapseActionView"/>
 
     <item
             android:id="@+id/item_scan"
             android:icon="@drawable/ic_qr_code"
             android:title="@string/qr_scan_menu_item"
-            app:showAsAction="ifRoom"/>
+            app:showAsAction="always"
+            tools:ignore="AlwaysShowAction"/>
 </menu>

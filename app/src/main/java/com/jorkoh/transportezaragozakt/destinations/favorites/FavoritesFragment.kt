@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -24,7 +23,6 @@ import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
 import com.jorkoh.transportezaragozakt.destinations.toHexFromColor
 import kotlinx.android.synthetic.main.favorites_destination.*
 import kotlinx.android.synthetic.main.favorites_destination.view.*
-import kotlinx.android.synthetic.main.main_container.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : Fragment() {
@@ -125,7 +123,6 @@ class FavoritesFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setupToolbar()
         val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
@@ -134,13 +131,6 @@ class FavoritesFragment : Fragment() {
         }
         itemTouchHelper.attachToRecyclerView(rootView.favorites_recycler_view)
         return rootView
-    }
-
-    private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.apply {
-            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
-            clear()
-        }
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {

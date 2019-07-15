@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -17,6 +16,7 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
+import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.search_destination.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -67,6 +67,7 @@ class SearchFragment : Fragment() {
         (menu.findItem(R.id.item_search).actionView as SearchView).apply {
             queryHint = getString(R.string.search_view_hint)
             findViewById<TextView>(androidx.appcompat.R.id.search_src_text).textSize = 16f
+            maxWidth = Int.MAX_VALUE
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
@@ -79,11 +80,8 @@ class SearchFragment : Fragment() {
                     return false
                 }
             })
-            imeOptions = EditorInfo.IME_ACTION_DONE
+
             if (!searchVM.query.value.isNullOrEmpty()) {
-                // This entire mess is ridiculous, this still doesn't work for orientation changes and the
-                // workarounds are worse than the problem. It already is hacky enough as it is
-                // https://github.com/cbeyls/fosdem-companion-android/issues/16
                 menu.findItem(R.id.item_search).expandActionView()
                 setQuery(searchVM.query.value, false)
                 clearFocus()
@@ -93,9 +91,15 @@ class SearchFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onDestroyView() {
+        (requireActivity().main_toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+        super.onDestroyView()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_scan -> {
+                // Opens the QR scanner activity
                 IntentIntegrator
                     .forSupportFragment(this)
                     .setOrientationLocked(false)
@@ -108,6 +112,7 @@ class SearchFragment : Fragment() {
         }
     }
 
+    // Handles opening stop information from successful QR scanning
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)

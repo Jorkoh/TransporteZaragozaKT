@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,7 +33,6 @@ import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
 import kotlinx.android.synthetic.main.line_details_destination.view.*
-import kotlinx.android.synthetic.main.main_container.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -128,17 +126,8 @@ class LineDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setupToolbar()
-        val rootView = inflater.inflate(R.layout.line_details_destination, container, false)
-        bottomSheetBehavior = BottomSheetBehavior.from(rootView.line_details_bottom_sheet)
-
-        return rootView
-    }
-
-    private fun setupToolbar() {
-        requireActivity().main_toolbar.menu.apply {
-            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
-            clear()
+        return inflater.inflate(R.layout.line_details_destination, container, false).also { rootView ->
+            bottomSheetBehavior = BottomSheetBehavior.from(rootView.line_details_bottom_sheet)
         }
     }
 

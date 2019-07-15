@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,7 +20,6 @@ import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
 import com.jorkoh.transportezaragozakt.destinations.materialColors
 import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
 import com.jorkoh.transportezaragozakt.destinations.toHexFromColor
-import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.reminders_destination.*
 import kotlinx.android.synthetic.main.reminders_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -138,7 +136,6 @@ class RemindersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setupToolbar()
         val rootView = inflater.inflate(R.layout.reminders_destination, container, false)
         rootView.reminders_recycler_view.apply {
             setHasFixedSize(true)
@@ -148,13 +145,6 @@ class RemindersFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(rootView.reminders_recycler_view)
 
         return rootView
-    }
-
-    private fun setupToolbar(){
-        requireActivity().main_toolbar.menu.apply {
-            (findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
-            clear()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

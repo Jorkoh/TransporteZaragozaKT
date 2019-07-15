@@ -8,7 +8,6 @@ import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.*
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -139,7 +138,6 @@ class StopDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setupToolbar()
         val args = StopDetailsFragmentArgs.fromBundle(requireArguments())
         stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
 
@@ -151,17 +149,15 @@ class StopDetailsFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        setupToolbar()
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Enables onCreateOptionsMenu() callback
+        setHasOptionsMenu(true)
     }
 
-    private fun setupToolbar() {
-        requireActivity().main_toolbar?.let { toolbar ->
-            (toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
-            toolbar.menu.clear()
-            toolbar.inflateMenu(R.menu.stop_details_destination_menu)
-        }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.stop_details_destination_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun setupFab() {
