@@ -14,10 +14,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.StopWithDistance
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
-import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.view.*
@@ -51,28 +50,25 @@ class NearbyStopsFragment : Fragment() {
 
     private val nearbyStopsAdapter = StopWithDistanceAdapter(openStop)
 
-    private val nearbyStopsObserver = Observer<List<StopWithDistance>> { nearbyStops ->
-        updateEmptyViewVisibility(nearbyStops.isEmpty())
-        nearbyStopsAdapter.setNewStops(nearbyStops)
-        nearbyStopsAdapter.filter.filter(searchVM.query.value)
-    }
-
-    private val queryObserver = Observer<String?> { query ->
-        nearbyStopsAdapter.filter.filter(query) { flag ->
-            //If the list went from actually filtered to initial state scroll back up to the top
-            if (query == "" && flag == 1) {
-                (view?.search_recycler_view_nearby_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(
-                    0,
-                    0
-                )
-            }
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        searchVM.nearbyStops.observe(viewLifecycleOwner, nearbyStopsObserver)
-        searchVM.query.observe(viewLifecycleOwner, queryObserver)
+
+        searchVM.nearbyStops.observe(viewLifecycleOwner, Observer { nearbyStops ->
+            updateEmptyViewVisibility(nearbyStops.isEmpty())
+            nearbyStopsAdapter.setNewStops(nearbyStops)
+            nearbyStopsAdapter.filter.filter(searchVM.query.value)
+        })
+        searchVM.query.observe(viewLifecycleOwner,  Observer { query ->
+            nearbyStopsAdapter.filter.filter(query) { flag ->
+                // If the list went from actually filtered to initial state scroll back up to the top
+                if (query == "" && flag == 1) {
+                    (view?.search_recycler_view_nearby_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(
+                        0,
+                        0
+                    )
+                }
+            }
+        })
     }
 
     override fun onCreateView(
@@ -109,8 +105,7 @@ class NearbyStopsFragment : Fragment() {
             )
         ) {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-            // Since this is only active while the nearby stops viewpager is on the screen
-            // it shouldn't be too heavy on the battery
+            // Since this is only active while the nearby stops viewpager is on the screen it shouldn't be too heavy on the battery
             fusedLocationClient?.requestLocationUpdates(
                 LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)

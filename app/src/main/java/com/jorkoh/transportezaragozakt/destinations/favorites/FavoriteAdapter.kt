@@ -27,7 +27,6 @@ class FavoriteAdapter(
     private val delete: (FavoriteStopExtended, Int) -> Unit
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    // Binding performance improvements https://proandroiddev.com/kotlin-android-extensions-using-view-binding-the-right-way-707cd0c9e648
     class FavoriteViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         val context : Context
@@ -101,7 +100,7 @@ class FavoriteAdapter(
     var favorites: List<FavoriteStopExtended> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_row, parent, false) as View
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorite_row, parent, false)
         return FavoriteViewHolder(view)
     }
 

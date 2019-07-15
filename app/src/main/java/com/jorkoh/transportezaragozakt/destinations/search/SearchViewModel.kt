@@ -18,27 +18,15 @@ class SearchViewModel(
 ) : ViewModel() {
 
     val query: MutableLiveData<String?> = MutableLiveData()
-
     val position: MutableLiveData<Location> = MutableLiveData()
+    val searchTabPosition = settingsRepository.loadSearchTabPosition()
 
-    lateinit var allStops: LiveData<List<Stop>>
-    lateinit var nearbyStops: LiveData<List<StopWithDistance>>
-    lateinit var lines: MutableLiveData<List<Line>>
-
-    private lateinit var tabPosition: LiveData<Int>
-
-    fun init() {
-        allStops = stopsRepository.loadStops()
-        lines = stopsRepository.loadLines()
-        tabPosition = settingsRepository.loadSearchTabPosition()
-        nearbyStops = Transformations.switchMap(position){
-            stopsRepository.loadNearbyStops(it.toLatLng(), 500.0)
-        }
+    val nearbyStops: LiveData<List<StopWithDistance>> = Transformations.switchMap(position){
+        stopsRepository.loadNearbyStops(it.toLatLng(), 500.0)
     }
+    val allStops: LiveData<List<Stop>> = stopsRepository.loadStops()
+    val lines: MutableLiveData<List<Line>> = stopsRepository.loadLines()
 
-    fun getSearchTabPosition(): LiveData<Int> {
-        return tabPosition
-    }
 
     fun setSearchTabPosition(position: Int) {
         settingsRepository.setSearchTabPosition(position)

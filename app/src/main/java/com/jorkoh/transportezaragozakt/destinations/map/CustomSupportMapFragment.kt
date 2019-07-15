@@ -58,14 +58,14 @@ class CustomSupportMapFragment : SupportMapFragment() {
         traffic_button.setImageResource(if (enabled) R.drawable.ic_layers_clear_black_24dp else R.drawable.ic_traffic_black_24dp)
     }
 
-    override fun onCreate(p0: Bundle?) {
-        super.onCreate(p0)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
         bottomMargin = arguments?.getInt(BOTTOM_MARGIN_KEY) ?: 0
     }
 
-    override fun onActivityCreated(bundle: Bundle?) {
-        super.onActivityCreated(bundle)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         if (displayFilters) {
             mapVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
@@ -75,10 +75,10 @@ class CustomSupportMapFragment : SupportMapFragment() {
         mapVM.trafficEnabled.observe(viewLifecycleOwner, trafficObserver)
     }
 
-    override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedState: Bundle?): View? {
+    override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
         val wrapper = FrameLayout(layoutInflater.context)
 
-        val mapView = super.onCreateView(layoutInflater, viewGroup, savedState)
+        val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
         wrapper.addView(mapView)
 
 
@@ -117,7 +117,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
         wrapper.addView(mapExtraControls)
         if (bottomMargin != 0) {
             wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
-                bottomMargin = bottomMargin.toPx()
+                this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomMargin.toPx()
             }
         }
     }

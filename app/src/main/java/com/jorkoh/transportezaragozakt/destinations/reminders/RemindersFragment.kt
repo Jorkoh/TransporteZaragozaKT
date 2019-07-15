@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.destinations.reminders
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +57,7 @@ class RemindersFragment : Fragment() {
         MaterialDialog(requireContext()).show {
             title(R.string.edit_reminder_dialog_title)
             timePicker(
-                show24HoursView = false,
+                show24HoursView = DateFormat.is24HourFormat(requireContext()),
                 currentTime = time,
                 daysOfWeek = reminder.daysOfWeek.days
             ) { _, time, daysOfWeek ->

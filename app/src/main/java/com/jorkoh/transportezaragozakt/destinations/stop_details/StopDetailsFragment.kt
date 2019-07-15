@@ -32,11 +32,10 @@ import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.Serializable
 
 
 class StopDetailsFragment : Fragment() {
-    companion object : Serializable {
+    companion object {
         const val FAVORITE_ITEM_FAB_POSITION = 0
     }
 
@@ -119,7 +118,6 @@ class StopDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.stop_details_destination, container, false)
-        setHasOptionsMenu(true)
         setupFab()
         rootView.favorites_recycler_view.apply {
             setHasFixedSize(true)
@@ -162,6 +160,7 @@ class StopDetailsFragment : Fragment() {
 
     private fun setupFab() {
         requireActivity().stop_details_fab?.apply {
+            // Items
             addActionItem(
                 SpeedDialActionItem.Builder(
                     R.id.stop_details_fab_favorite,
@@ -188,7 +187,7 @@ class StopDetailsFragment : Fragment() {
                         .create()
                 )
             }
-
+            // Listeners
             setOnActionSelectedListener { actionItem ->
                 when (actionItem.id) {
                     R.id.stop_details_fab_favorite -> {

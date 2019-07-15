@@ -28,8 +28,7 @@ class SearchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        searchVM.init()
-        searchVM.getSearchTabPosition().observeOnce(viewLifecycleOwner, Observer { position ->
+        searchVM.searchTabPosition.observeOnce(viewLifecycleOwner, Observer { position ->
             search_tab_layout.getTabAt(position)?.select()
         })
 
@@ -92,6 +91,7 @@ class SearchFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        // If the listener isn't removed the current listener gets a call with an empty query when the action item is destroyed
         (requireActivity().main_toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
         super.onDestroyView()
     }

@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.destinations.reminders
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,6 +14,8 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.inflateLines
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.reminder_row.*
 import kotlinx.android.synthetic.main.reminder_row.view.*
 
 class RemindersAdapter(
@@ -24,7 +27,11 @@ class RemindersAdapter(
     private val delete: (ReminderExtended, Int) -> Unit
 ) : RecyclerView.Adapter<RemindersAdapter.ReminderViewHolder>() {
 
-    class ReminderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ReminderViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        val context: Context
+            get() = itemView.context
+
         fun bind(
             reminder: ReminderExtended,
             edit: (ReminderExtended) -> Unit,
@@ -34,74 +41,74 @@ class RemindersAdapter(
             reorder: (RecyclerView.ViewHolder) -> Unit,
             delete: (ReminderExtended, Int) -> Unit
         ) {
-            itemView.apply {
-                @SuppressLint("SetTextI18n")
-                reminder_time_text.text = "${"%02d".format(reminder.hourOfDay)}:${"%02d".format(reminder.minute)}"
-
-                reminder_monday.isChecked = reminder.daysOfWeek.days[0]
-                reminder_tuesday.isChecked = reminder.daysOfWeek.days[1]
-                reminder_wednesday.isChecked = reminder.daysOfWeek.days[2]
-                reminder_thursday.isChecked = reminder.daysOfWeek.days[3]
-                reminder_friday.isChecked = reminder.daysOfWeek.days[4]
-                reminder_saturday.isChecked = reminder.daysOfWeek.days[5]
-                reminder_sunday.isChecked = reminder.daysOfWeek.days[6]
-
-                type_image_reminder.setImageResource(
-                    when (reminder.type) {
-                        StopType.BUS -> R.drawable.ic_bus
-                        StopType.TRAM -> R.drawable.ic_tram
-                    }
-                )
-                title_text_reminder.text = reminder.alias
-                if (reminder.colorHex.isNotEmpty()) {
-                    reminder_color.setBackgroundColor(Color.parseColor(reminder.colorHex))
-                    reminder_color.visibility = View.VISIBLE
-                } else {
-                    reminder_color.setBackgroundColor(Color.TRANSPARENT)
-                    reminder_color.visibility = View.GONE
+            // Stop type icon
+            type_image_reminder.setImageResource(
+                when (reminder.type) {
+                    StopType.BUS -> R.drawable.ic_bus
+                    StopType.TRAM -> R.drawable.ic_tram
                 }
-
-                reminder.lines.inflateLines(itemView.lines_layout_favorite, reminder.type, context)
-
-                setOnClickListener { edit(reminder) }
-                edit_view_reminder.setOnClickListener {
-                    PopupMenu(context, it).apply {
-                        menu.apply {
-                            add(context.resources.getString(R.string.reminder)).setOnMenuItemClickListener {
-                                edit(reminder)
-                                true
-                            }
-                            add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
-                                editAlias(reminder)
-                                true
-                            }
-                            add(context.resources.getString(R.string.color)).setOnMenuItemClickListener {
-                                editColor(reminder)
-                                true
-                            }
-                            add(context.resources.getString(R.string.restore)).setOnMenuItemClickListener {
-                                restore(reminder)
-                                true
-                            }
-                            add(context.resources.getString(R.string.delete)).setOnMenuItemClickListener {
-                                delete(reminder, adapterPosition)
-                                true
-                            }
+            )
+            // Days checkboxes
+            reminder_monday.isChecked = reminder.daysOfWeek.days[0]
+            reminder_tuesday.isChecked = reminder.daysOfWeek.days[1]
+            reminder_wednesday.isChecked = reminder.daysOfWeek.days[2]
+            reminder_thursday.isChecked = reminder.daysOfWeek.days[3]
+            reminder_friday.isChecked = reminder.daysOfWeek.days[4]
+            reminder_saturday.isChecked = reminder.daysOfWeek.days[5]
+            reminder_sunday.isChecked = reminder.daysOfWeek.days[6]
+            // Texts
+            @SuppressLint("SetTextI18n")
+            reminder_time_text.text = "${"%02d".format(reminder.hourOfDay)}:${"%02d".format(reminder.minute)}"
+            // Reminder user defined color
+            title_text_reminder.text = reminder.alias
+            if (reminder.colorHex.isNotEmpty()) {
+                reminder_color.setBackgroundColor(Color.parseColor(reminder.colorHex))
+                reminder_color.visibility = View.VISIBLE
+            } else {
+                reminder_color.setBackgroundColor(Color.TRANSPARENT)
+                reminder_color.visibility = View.GONE
+            }
+            // Lines
+            reminder.lines.inflateLines(itemView.lines_layout_favorite, reminder.type, context)
+            // Listeners
+            itemView.setOnClickListener { edit(reminder) }
+            edit_view_reminder.setOnClickListener {
+                PopupMenu(context, it).apply {
+                    menu.apply {
+                        add(context.resources.getString(R.string.reminder)).setOnMenuItemClickListener {
+                            edit(reminder)
+                            true
                         }
-                        show()
+                        add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
+                            editAlias(reminder)
+                            true
+                        }
+                        add(context.resources.getString(R.string.color)).setOnMenuItemClickListener {
+                            editColor(reminder)
+                            true
+                        }
+                        add(context.resources.getString(R.string.restore)).setOnMenuItemClickListener {
+                            restore(reminder)
+                            true
+                        }
+                        add(context.resources.getString(R.string.delete)).setOnMenuItemClickListener {
+                            delete(reminder, adapterPosition)
+                            true
+                        }
                     }
+                    show()
                 }
-                reorder_view_reminder.setOnTouchListener { _, event ->
-                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        reorder(this@ReminderViewHolder)
-                    }
-                    return@setOnTouchListener true
+            }
+            reorder_view_reminder.setOnTouchListener { _, event ->
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                    reorder(this@ReminderViewHolder)
                 }
+                return@setOnTouchListener true
             }
         }
     }
 
-    lateinit var reminders: List<ReminderExtended>
+    var reminders: List<ReminderExtended> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.reminder_row, parent, false) as View
@@ -112,38 +119,35 @@ class RemindersAdapter(
         holder.bind(reminders[position], edit, editAlias, editColor, restore, reorder, delete)
     }
 
-    override fun getItemCount(): Int = if (::reminders.isInitialized) reminders.size else 0
+    override fun getItemCount(): Int =reminders.size
 
     fun setNewReminders(newReminders: List<ReminderExtended>) {
-        if (::reminders.isInitialized) {
-            if (isOnlyPositionChange(newReminders)) {
-                reminders = newReminders
-            } else {
-                val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                    override fun getOldListSize() = reminders.size
-
-                    override fun getNewListSize() = newReminders.size
-
-                    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                        return reminders[oldItemPosition].reminderId == newReminders[newItemPosition].reminderId
-                    }
-
-                    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                        return reminders[oldItemPosition].daysOfWeek == newReminders[newItemPosition].daysOfWeek
-                                && reminders[oldItemPosition].hourOfDay == newReminders[newItemPosition].hourOfDay
-                                && reminders[oldItemPosition].minute == newReminders[newItemPosition].minute
-                                && reminders[oldItemPosition].alias == newReminders[newItemPosition].alias
-                                && reminders[oldItemPosition].colorHex == newReminders[newItemPosition].colorHex
-                                && reminders[oldItemPosition].lines == newReminders[newItemPosition].lines
-                                && reminders[oldItemPosition].type == newReminders[newItemPosition].type
-                    }
-                })
-                reminders = newReminders
-                result.dispatchUpdatesTo(this)
-            }
-        } else {
+        if (isOnlyPositionChange(newReminders)) {
+            // In the case of drag and drop positional changes the reordering has already taken place visually
             reminders = newReminders
-            notifyItemRangeInserted(0, reminders.size)
+        } else {
+            // In any other case the difference is calculated with DiffUtil
+            val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+                override fun getOldListSize() = reminders.size
+
+                override fun getNewListSize() = newReminders.size
+
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return reminders[oldItemPosition].reminderId == newReminders[newItemPosition].reminderId
+                }
+
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return reminders[oldItemPosition].daysOfWeek == newReminders[newItemPosition].daysOfWeek
+                            && reminders[oldItemPosition].hourOfDay == newReminders[newItemPosition].hourOfDay
+                            && reminders[oldItemPosition].minute == newReminders[newItemPosition].minute
+                            && reminders[oldItemPosition].alias == newReminders[newItemPosition].alias
+                            && reminders[oldItemPosition].colorHex == newReminders[newItemPosition].colorHex
+                            && reminders[oldItemPosition].lines == newReminders[newItemPosition].lines
+                            && reminders[oldItemPosition].type == newReminders[newItemPosition].type
+                }
+            })
+            reminders = newReminders
+            result.dispatchUpdatesTo(this)
         }
     }
 

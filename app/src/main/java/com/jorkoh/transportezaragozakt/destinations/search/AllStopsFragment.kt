@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.search_destination_all_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -32,24 +31,21 @@ class AllStopsFragment : Fragment() {
 
     private val allStopsAdapter = StopAdapter(openStop)
 
-    private val allStopsObserver = Observer<List<Stop>> { allStops ->
-        allStopsAdapter.setNewStops(allStops)
-        allStopsAdapter.filter.filter(searchVM.query.value)
-    }
-
-    private val queryObserver = Observer<String?> { query ->
-        allStopsAdapter.filter.filter(query) { flag ->
-            //If the list went from actually filtered to initial state scroll back up to the top
-            if (query == "" && flag == 1) {
-                (view?.search_recycler_view_all_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
-            }
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        searchVM.allStops.observe(viewLifecycleOwner, allStopsObserver)
-        searchVM.query.observe(viewLifecycleOwner, queryObserver)
+
+        searchVM.allStops.observe(viewLifecycleOwner, Observer { allStops ->
+            allStopsAdapter.setNewStops(allStops)
+            allStopsAdapter.filter.filter(searchVM.query.value)
+        })
+        searchVM.query.observe(viewLifecycleOwner, Observer { query ->
+            allStopsAdapter.filter.filter(query) { flag ->
+                // If the list went from actually filtered to initial state scroll back up to the top
+                if (query == "" && flag == 1) {
+                    (view?.search_recycler_view_all_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
+                }
+            }
+        })
     }
 
     override fun onCreateView(

@@ -10,12 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import kotlinx.android.synthetic.main.search_destination_lines.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class LinesFragment : Fragment(){
+class LinesFragment : Fragment() {
 
     private val searchVM: SearchViewModel by sharedViewModel()
 
@@ -33,25 +32,21 @@ class LinesFragment : Fragment(){
 
     private val linesAdapter = LineAdapter(openLine)
 
-    private val linesObserver = Observer<List<Line>> { lines ->
-        updateEmptyViewVisibility(lines.isEmpty())
-        linesAdapter.setNewLines(lines)
-        linesAdapter.filter.filter(searchVM.query.value)
-    }
-
-    private val queryObserver = Observer<String?> { query ->
-        linesAdapter.filter.filter(query) { flag ->
-            //If the list went from actually filtered to initial state scroll back up to the top
-            if (query == "" && flag == 1) {
-                (view?.search_recycler_view_lines?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
-            }
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        searchVM.lines.observe(viewLifecycleOwner, linesObserver)
-        searchVM.query.observe(viewLifecycleOwner, queryObserver)
+
+        searchVM.lines.observe(viewLifecycleOwner, Observer { lines ->
+            linesAdapter.setNewLines(lines)
+            linesAdapter.filter.filter(searchVM.query.value)
+        })
+        searchVM.query.observe(viewLifecycleOwner, Observer { query ->
+            linesAdapter.filter.filter(query) { flag ->
+                // If the list went from actually filtered to initial state scroll back up to the top
+                if (query == "" && flag == 1) {
+                    (view?.search_recycler_view_lines?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
+                }
+            }
+        })
     }
 
     override fun onCreateView(
@@ -67,15 +62,5 @@ class LinesFragment : Fragment(){
         }
 
         return rootView
-    }
-
-    private fun updateEmptyViewVisibility(isEmpty: Boolean) {
-//        val newVisibility = if (isEmpty) {
-//            View.VISIBLE
-//        } else {
-//            View.GONE
-//        }
-//        view?.no_search_result_animation_all_stops?.visibility = newVisibility
-//        view?.no_search_result_text_all_stops?.visibility = newVisibility
     }
 }
