@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.destinations.line_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
@@ -14,9 +15,12 @@ class LineDetailsViewModel(
     lateinit var lineId: String
     lateinit var lineType: LineType
 
-    lateinit var line: LiveData<Line>
-    lateinit var lineLocations: LiveData<List<LineLocation>>
+    val line: LiveData<Line>
+        get() = _line
+    private val _line = MutableLiveData<Line>()
+
     lateinit var stops: LiveData<List<Stop>>
+    lateinit var lineLocations: LiveData<List<LineLocation>>
 
     val selectedStopId = MutableLiveData<String>()
 
@@ -25,10 +29,11 @@ class LineDetailsViewModel(
         this.lineType = lineType
 
         lineLocations = stopsRepository.loadLineLocations(lineType, lineId)
-        line = stopsRepository.loadLine(lineType, lineId)
-    }
 
-    fun loadStops(stopIds: List<String>) {
-        stops = stopsRepository.loadStops(lineType.toStopType(), stopIds)
+        stops = Transformations.switchMap(stopsRepository.loadLine(lineType, lineId)) { line ->
+            _line.value = line
+            // Load the stops forming the line
+            stopsRepository.loadStops(line.type.toStopType(), line.stopIdsFirstDestination + line.stopIdsSecondDestination)
+        }
     }
 }

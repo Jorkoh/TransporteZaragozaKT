@@ -55,12 +55,15 @@ class StopDestinationsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         stopIds = arguments?.getStringArrayList(STOP_IDS_KEY)?.toList().orEmpty()
-        lineDetailsVM.stops.observe(viewLifecycleOwner, Observer {
-            val stops = lineDetailsVM.stops.value?.filter { it.stopId in stopIds }
-            val orderById = stopIds.withIndex().associate { it.value to it.index }
-            val sortedStops = stops?.sortedBy { orderById[it.stopId] }
-            if (!sortedStops.isNullOrEmpty()) {
-                stopsAdapter.setNewStops(sortedStops)
+        lineDetailsVM.stops.observe(viewLifecycleOwner, Observer { allStops ->
+            allStops?.let {
+                // Filter those with this destination
+                val stops = lineDetailsVM.stops.value?.filter { it.stopId in stopIds }
+                val orderById = stopIds.withIndex().associate { it.value to it.index }
+                val sortedStops = stops?.sortedBy { orderById[it.stopId] }
+                if (!sortedStops.isNullOrEmpty()) {
+                    stopsAdapter.setNewStops(sortedStops)
+                }
             }
         })
     }

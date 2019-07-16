@@ -113,9 +113,10 @@ class MapFragment : Fragment() {
         tramStops.clear()
 
         styleMap()
-        setupClusterManager()
+        configureMap()
         setupObservers()
 
+        // Enable "My Location" layer
         runWithPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,
             options = QuickPermissionsOptions(
@@ -142,7 +143,7 @@ class MapFragment : Fragment() {
         map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
     }
 
-    private fun setupClusterManager() {
+    private fun configureMap() {
         clusterManager = ClusterManager(context, map)
 
         map.setOnMarkerClickListener(clusterManager)
@@ -151,7 +152,6 @@ class MapFragment : Fragment() {
         map.setOnCameraIdleListener(clusterManager)
         clusterManager.markerCollection.setOnInfoWindowAdapter(StopInfoWindowAdapter(requireContext()))
         clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager)
-
         clusterManager.algorithm = CustomClusteringAlgorithm()
         clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
             findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
@@ -159,22 +159,15 @@ class MapFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        // Map options
+        // Map style
         mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->
             map.mapType = mapType
         })
         mapVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
             map.isTrafficEnabled = enabled
         })
-
-        // Map style
         mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
-            map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    context,
-                    if (isDarkMap) R.raw.map_style_dark else R.raw.map_style
-                )
-            )
+            map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, if (isDarkMap) R.raw.map_style_dark else R.raw.map_style))
         })
 
         // Stop type filters
