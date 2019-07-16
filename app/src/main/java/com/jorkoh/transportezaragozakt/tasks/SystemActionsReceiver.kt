@@ -6,7 +6,7 @@ import android.content.Intent
 import com.jorkoh.transportezaragozakt.R
 
 
-class BootCompleteReceiver : BroadcastReceiver() {
+class SystemActionsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {

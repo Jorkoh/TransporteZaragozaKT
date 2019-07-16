@@ -1,7 +1,10 @@
 package com.jorkoh.transportezaragozakt
 
 import android.animation.ValueAnimator
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -32,10 +35,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
+    companion object{
+        const val ACTION_SHORTCUT_PINNED = "ACTION_SHORTCUT_PINNED"
+    }
+
     private val mainActivityVM: MainActivityViewModel by viewModel()
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private var currentNavController: LiveData<NavController>? = null
+    private val shortcutPinnedReceiver = ShortcutPinnedReceiver()
 
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         // Bottom navigation showing and hiding
@@ -98,6 +106,8 @@ class MainActivity : AppCompatActivity() {
                 changeAmount < 0 -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
             }
         })
+        // Broadcast receiver for shortcut pinning callback
+        registerReceiver(shortcutPinnedReceiver, IntentFilter(ACTION_SHORTCUT_PINNED))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -163,9 +173,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = title
     }
 
-    //Log the destinations on firebase, it only supports activities by default. This
-    private fun logDestinationVisit(destinationId : Int){
-        val screenName = when(destinationId){
+    //Log the destinations in Firebase, it only supports activities by default
+    private fun logDestinationVisit(destinationId: Int) {
+        val screenName = when (destinationId) {
             R.id.favorites -> "Favorites"
             R.id.map -> "Map"
             R.id.search -> "Search"
@@ -247,6 +257,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 start()
             }
+        }
+    }
+
+    inner class ShortcutPinnedReceiver : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            makeSnackbar(getString(R.string.pinned_shortcut_snackbar))
         }
     }
 }

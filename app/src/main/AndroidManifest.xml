@@ -48,7 +48,7 @@
             <nav-graph android:value="@navigation/search_destination"/>
         </activity>
 
-        <receiver android:name=".tasks.BootCompleteReceiver">
+        <receiver android:name=".tasks.SystemActionsReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

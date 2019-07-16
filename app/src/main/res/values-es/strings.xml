@@ -142,4 +142,5 @@
     <string name="feedback_summary">¿Problemas? ¿Sugerencias? Pregúntame cualquier cosa</string>
     <string name="open_source_summary">Esta aplicación es código abierto, échale un vistazo en GitHub!</string>
     <string name="open_source_title">Código abierto</string>
+    <string name="pinned_shortcut_snackbar">¡Acceso directo creado!</string>
 </resources>

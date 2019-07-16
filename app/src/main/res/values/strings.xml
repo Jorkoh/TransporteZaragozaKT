@@ -56,6 +56,7 @@
     <string name="create_button" translatable="true">Create</string>
     <string name="shortcut_pinning_not_supported" translatable="true">Shortcuts not support in your device</string>
     <string name="refresh_menu_item" translatable="true">Refresh</string>
+    <string name="pinned_shortcut_snackbar" translatable="true">Created shortcut!</string>
 
     <!--Line details-->
     <string name="line" translatable="true">Line</string>

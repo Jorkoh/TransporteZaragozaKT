@@ -1,5 +1,7 @@
 package com.jorkoh.transportezaragozakt.destinations.stop_details
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
@@ -41,7 +43,7 @@ class StopDetailsFragment : Fragment() {
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
-    private val rate : Rate by inject()
+    private val rate: Rate by inject()
 
     private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
@@ -226,21 +228,27 @@ class StopDetailsFragment : Fragment() {
     private fun createShortcut(label: String) {
         if (SDK_INT >= O) {
             val shortcutManager = requireContext().getSystemService(ShortcutManager::class.java)
-            val shortcut = ShortcutInfo.Builder(requireContext(), stopDetailsVM.stopId)
-                .setShortLabel(label)
-                .setIcon(
-                    Icon.createWithResource(
-                        requireContext(),
-                        when (stopDetailsVM.stopType) {
-                            StopType.BUS -> R.mipmap.ic_bus_launcher
-                            StopType.TRAM -> R.mipmap.ic_tram_launcher
-                        }
-                    )
-                )
-                .setIntent(createStopDetailsDeepLink(stopDetailsVM.stopId, stopDetailsVM.stopType))
-                .build()
             if (shortcutManager.isRequestPinShortcutSupported) {
-                shortcutManager.requestPinShortcut(shortcut, null)
+                val shortcut = ShortcutInfo.Builder(requireContext(), stopDetailsVM.stopId)
+                    .setShortLabel(label)
+                    .setIcon(
+                        Icon.createWithResource(
+                            requireContext(),
+                            when (stopDetailsVM.stopType) {
+                                StopType.BUS -> R.mipmap.ic_bus_launcher
+                                StopType.TRAM -> R.mipmap.ic_tram_launcher
+                            }
+                        )
+                    )
+                    .setIntent(createStopDetailsDeepLink(stopDetailsVM.stopId, stopDetailsVM.stopType))
+                    .build()
+                val successCallback = PendingIntent.getBroadcast(
+                    requireContext(),
+                    0,
+                    Intent(MainActivity.ACTION_SHORTCUT_PINNED),
+                    0
+                )
+                shortcutManager.requestPinShortcut(shortcut, successCallback.intentSender)
             } else {
                 Snackbar.make(
                     stop_details_fab,
