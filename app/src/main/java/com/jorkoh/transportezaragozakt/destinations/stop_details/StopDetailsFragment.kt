@@ -19,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
@@ -44,6 +45,7 @@ class StopDetailsFragment : Fragment() {
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
     private val rate: Rate by inject()
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
@@ -67,7 +69,11 @@ class StopDetailsFragment : Fragment() {
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
                 } else {
-                    rate.showRequest(requireActivity().coordinator_layout, R.id.gap, requireContext())
+                    // Data loaded successfully, show the rate me snackbar if conditions are met
+                    if(rate.showRequest(requireActivity().coordinator_layout, R.id.gap, requireContext())){
+                        // If it has been shown record it on Firebase
+                        firebaseAnalytics.logEvent(getString(R.string.EVENT_RATE_ME_SHOWN), Bundle())
+                    }
                     View.GONE
                 }
             }
@@ -138,6 +144,7 @@ class StopDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
         val args = StopDetailsFragmentArgs.fromBundle(requireArguments())
         stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
 

@@ -194,6 +194,9 @@
     <!--RateMe-->
     <string name="feedback_mail_uri" translatable="true">mailto:jorge@jorkoh.com?subject=Zaragoza%20Transport%20Feedback&amp;body=Describe%20the%20problem%20or%20suggestion%20here…</string>
 
+    <!--Firebase-->
+    <string name="EVENT_RATE_ME_SHOWN" translatable="false">EVENT_RATE_ME_SHOWN</string>
+
     <!--Themes-->
     <string name="theme_zaragoza_transport" translatable="true">Zaragoza Transport</string>
     <string name="theme_kingfisher" translatable="true">Kingfisher</string>
