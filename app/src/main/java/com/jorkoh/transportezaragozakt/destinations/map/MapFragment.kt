@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -94,11 +95,11 @@ class MapFragment : Fragment() {
         }
         mapFragment.getMapAsync { map ->
             this.map = map
-            setupMap(!ZARAGOZA_BOUNDS.contains(map.cameraPosition.target))
+            setupMap(!ZARAGOZA_BOUNDS.contains(map.cameraPosition.target), mapFragment.viewLifecycleOwner)
         }
     }
 
-    private fun setupMap(centerCamera: Boolean) {
+    private fun setupMap(centerCamera: Boolean, mapLifecycleOwner: LifecycleOwner) {
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
@@ -114,7 +115,7 @@ class MapFragment : Fragment() {
 
         styleMap()
         configureMap()
-        setupObservers()
+        setupObservers(mapLifecycleOwner)
 
         // Enable "My Location" layer
         runWithPermissions(
@@ -158,20 +159,20 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun setupObservers() {
+    private fun setupObservers(mapLifecycleOwner: LifecycleOwner) {
         // Map style
-        mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->
+        mapVM.mapType.observe(mapLifecycleOwner, Observer { mapType ->
             map.mapType = mapType
         })
-        mapVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+        mapVM.trafficEnabled.observe(mapLifecycleOwner, Observer { enabled ->
             map.isTrafficEnabled = enabled
         })
-        mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
+        mapVM.isDarkMap.observe(mapLifecycleOwner, Observer { isDarkMap ->
             map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, if (isDarkMap) R.raw.map_style_dark else R.raw.map_style))
         })
 
         // Stop type filters
-        mapVM.busFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+        mapVM.busFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
             if (enabled) {
                 clusterManager.addItems(busStops)
             } else {
@@ -179,7 +180,7 @@ class MapFragment : Fragment() {
             }
             clusterManager.cluster()
         })
-        mapVM.tramFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+        mapVM.tramFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
             if (enabled) {
                 clusterManager.addItems(tramStops)
             } else {
@@ -189,7 +190,7 @@ class MapFragment : Fragment() {
         })
 
         // Stops
-        mapVM.busStopLocations.observe(viewLifecycleOwner, Observer { stops ->
+        mapVM.busStopLocations.observe(mapLifecycleOwner, Observer { stops ->
             if (mapVM.busFilterEnabled.value == true) {
                 stops.forEach { clusterManager.removeItem(it) }
                 clusterManager.addItems(stops)
@@ -198,7 +199,7 @@ class MapFragment : Fragment() {
             busStops.clear()
             busStops.addAll(stops)
         })
-        mapVM.tramStopLocations.observe(viewLifecycleOwner, Observer { stops ->
+        mapVM.tramStopLocations.observe(mapLifecycleOwner, Observer { stops ->
             if (mapVM.tramFilterEnabled.value == true) {
                 stops.forEach { clusterManager.removeItem(it) }
                 clusterManager.addItems(stops)
