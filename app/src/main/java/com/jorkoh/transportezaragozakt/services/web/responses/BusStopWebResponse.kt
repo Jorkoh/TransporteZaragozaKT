@@ -1,7 +1,5 @@
-package com.jorkoh.transportezaragozakt.services.web
+package com.jorkoh.transportezaragozakt.services.web.responses
 
-import android.content.Context
-import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.common.responses.BusStopResponse
 import pl.droidsonroids.jspoon.annotation.Selector
@@ -15,7 +13,7 @@ class BusStopWebResponse: BusStopResponse {
     @Selector("[xmlns] tbody:nth-of-type(1) tbody tr:not(:first-child)")
     lateinit var destinations: List<Destination>
 
-    override fun toStopDestinations(context: Context): List<StopDestination> {
+    override fun toStopDestinations(): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
         destinations.groupBy { it.line + it.name }.forEach { destinationTimes ->
             stopDestinations += StopDestination(
@@ -23,8 +21,8 @@ class BusStopWebResponse: BusStopResponse {
                 destinationTimes.value[0].name,
                 id.fixId(),
                 listOf(
-                    (destinationTimes.value[0].minutes).toMinutes(context),
-                    (destinationTimes.value.getOrNull(1)?.minutes ?: "").toMinutes(context)
+                    (destinationTimes.value[0].minutes),
+                    (destinationTimes.value.getOrNull(1)?.minutes ?: "")
                 ),
                 Date()
             )
@@ -32,18 +30,7 @@ class BusStopWebResponse: BusStopResponse {
         return stopDestinations
     }
 
-    private fun String.toMinutes(context: Context): String =
-        when (this) {
-            "Sin estimacin." -> context.getString(R.string.no_estimate)
-            "En la parada." -> context.getString(R.string.at_the_stop)
-            else -> {
-                when (val minutes = (this.split(" ")[0].toIntOrNull() ?: -1)) {
-                    -1 -> context.getString(R.string.no_estimate)
-                    1 -> minutes.toString() + " ${context.getString(R.string.minute)}"
-                    else -> minutes.toString() + " ${context.getString(R.string.minutes)}"
-                }
-            }
-        }
+
 
     private fun String.fixLine() =
         when (this) {

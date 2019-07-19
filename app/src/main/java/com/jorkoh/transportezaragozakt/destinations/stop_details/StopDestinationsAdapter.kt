@@ -43,13 +43,26 @@ class StopDestinationsAdapter(
             )
             // Texts
             destination_text.text = destination.destination
-            first_time_text.text = destination.times[0]
-            second_time_text.text = destination.times[1]
+            first_time_text.text = fixTimes(destination.times[0])
+            second_time_text.text = fixTimes(destination.times[1])
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
                 openLine(LineDetailsFragmentArgs(stopType.toLineType().name, destination.line, stopId))
             })
         }
+
+        private fun fixTimes(rawTime : String) =
+            when (rawTime) {
+                "Sin estimacin." -> context.getString(R.string.no_estimate)
+                "En la parada." -> context.getString(R.string.at_the_stop)
+                else -> {
+                    when (val minutes = (rawTime.split(" ")[0].toIntOrNull() ?: -1)) {
+                        -1 -> context.getString(R.string.no_estimate)
+                        1 -> minutes.toString() + " ${context.getString(R.string.minute)}"
+                        else -> minutes.toString() + " ${context.getString(R.string.minutes)}"
+                    }
+                }
+            }
     }
 
     private var stopDestinations = listOf<StopDestination>()

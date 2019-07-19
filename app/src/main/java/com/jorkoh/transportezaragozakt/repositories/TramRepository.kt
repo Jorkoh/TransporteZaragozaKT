@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
@@ -25,8 +24,7 @@ class TramRepositoryImplementation(
     private val appExecutors: AppExecutors,
     private val apiService: APIService,
     private val stopsDao: StopsDao,
-    private val db: AppDatabase,
-    private val context: Context
+    private val db: AppDatabase
 ) : TramRepository {
 
     override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
@@ -34,7 +32,7 @@ class TramRepositoryImplementation(
             override fun saveCallResult(item: TramStopResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(tramStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations(context))
+                    stopsDao.insertStopDestinations(item.toStopDestinations())
                 }
             }
 

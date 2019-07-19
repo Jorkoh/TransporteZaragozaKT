@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
@@ -8,7 +7,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWit
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.api.APIService
 import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusStopAPIResponse
-import com.jorkoh.transportezaragozakt.services.web.BusStopWebResponse
+import com.jorkoh.transportezaragozakt.services.web.responses.BusStopWebResponse
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
@@ -23,8 +22,7 @@ class BusRepositoryImplementation(
     private val appExecutors: AppExecutors,
     private val apiService: APIService,
     private val stopsDao: StopsDao,
-    private val db: AppDatabase,
-    private val context: Context
+    private val db: AppDatabase
 ) : BusRepository {
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
@@ -32,14 +30,14 @@ class BusRepositoryImplementation(
             override fun savePrimaryCallResult(item: BusStopAPIResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations(context))
+                    stopsDao.insertStopDestinations(item.toStopDestinations())
                 }
             }
 
             override fun saveSecondaryCallResult(item: BusStopWebResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations(context))
+                    stopsDao.insertStopDestinations(item.toStopDestinations())
                 }
             }
 

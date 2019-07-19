@@ -5,7 +5,7 @@ import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusSt
 import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop_locations.BusStopLocationsResponse
 import com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop.TramStopResponse
 import com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop_locations.TramStopLocationsResponse
-import com.jorkoh.transportezaragozakt.services.web.BusStopWebResponse
+import com.jorkoh.transportezaragozakt.services.web.responses.BusStopWebResponse
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
