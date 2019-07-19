@@ -85,13 +85,13 @@ class StopDetailsFragment : Fragment() {
             }
             Status.LOADING -> {
                 swiperefresh?.isRefreshing = true
-                View.GONE
+                stop_details_no_data_animation.visibility
             }
         }
 
-        stop_details_no_data_animation?.visibility = newVisibility
-        stop_details_no_data_text?.visibility = newVisibility
-        stop_details_no_data_help?.visibility = newVisibility
+        stop_details_no_data_animation.visibility = newVisibility
+        stop_details_no_data_text.visibility = newVisibility
+        stop_details_no_data_help.visibility = newVisibility
     }
 
     private val stopFavoriteStatusObserver = Observer<Boolean> { isFavorited ->

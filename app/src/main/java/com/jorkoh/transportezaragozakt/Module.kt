@@ -24,6 +24,7 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import pl.droidsonroids.retrofit2.JspoonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
@@ -39,6 +40,7 @@ val appModule = module {
     single<APIService> {
         Retrofit.Builder()
             .baseUrl(APIService.BASE_URL)
+            .addConverterFactory(JspoonConverterFactory.create())
             .addConverterFactory(
                 MoshiConverterFactory.create(
                     Moshi.Builder()

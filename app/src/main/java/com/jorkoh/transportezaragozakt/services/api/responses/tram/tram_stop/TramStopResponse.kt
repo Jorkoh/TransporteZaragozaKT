@@ -9,27 +9,6 @@ import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class TramStopResponse(
-    @Json(name = "features")
-    val features: List<Feature>,
-
-    @Json(name = "type")
-    val itemType: String
-)
-
-@JsonClass(generateAdapter = true)
-data class Feature(
-    @Json(name = "geometry")
-    val geometry: Geometry,
-
-    @Json(name = "properties")
-    val properties: Properties,
-
-    @Json(name = "type")
-    val type: String
-)
-
-@JsonClass(generateAdapter = true)
-data class Properties(
     @Json(name = "id")
     val id: String,
 
@@ -52,7 +31,10 @@ data class Properties(
     val destinos: List<Destino>?,
 
     @Json(name = "description")
-    val description: String
+    val description: String,
+
+    @Json(name = "geometry")
+    val geometry: Geometry
 )
 
 @JsonClass(generateAdapter = true)
@@ -78,19 +60,17 @@ data class Geometry(
 
 fun TramStopResponse.toStopDestinations(context: Context): List<StopDestination> {
     val stopDestinations = mutableListOf<StopDestination>()
-    features.first().properties.destinos?.let { destinations ->
-        destinations.forEach { destination ->
-            stopDestinations += StopDestination(
-                destination.linea,
-                destination.destino,
-                features.first().properties.id,
-                listOf(
-                    (features.first().properties.destinos?.getOrNull(0)?.minutos ?: -1).toMinutes(context),
-                    (features.first().properties.destinos?.getOrNull(1)?.minutos ?: -1).toMinutes(context)
-                ),
-                Date()
-            )
-        }
+    destinos?.groupBy { it.destino }?.forEach { destinationTimes ->
+        stopDestinations += StopDestination(
+            destinationTimes.value[0].linea,
+            destinationTimes.value[0].destino,
+            id,
+            listOf(
+                (destinationTimes.value[0].minutos).toMinutes(context),
+                (destinationTimes.value.getOrNull(1)?.minutos ?: -1).toMinutes(context)
+            ),
+            Date()
+        )
     }
     return stopDestinations
 }

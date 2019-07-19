@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
-import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResource
+import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWithBackup
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.api.APIService
-import com.jorkoh.transportezaragozakt.services.api.ApiResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusStopResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.toStopDestinations
+import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusStopAPIResponse
+import com.jorkoh.transportezaragozakt.services.web.BusStopWebResponse
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
@@ -29,8 +28,15 @@ class BusRepositoryImplementation(
 ) : BusRepository {
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
-        return object : NetworkBoundResource<List<StopDestination>, BusStopResponse>(appExecutors) {
-            override fun saveCallResult(item: BusStopResponse) {
+        return object : NetworkBoundResourceWithBackup<List<StopDestination>, BusStopAPIResponse, BusStopWebResponse>(appExecutors) {
+            override fun savePrimaryCallResult(item: BusStopAPIResponse) {
+                db.runInTransaction {
+                    stopsDao.deleteStopDestinations(busStopId)
+                    stopsDao.insertStopDestinations(item.toStopDestinations(context))
+                }
+            }
+
+            override fun saveSecondaryCallResult(item: BusStopWebResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
                     stopsDao.insertStopDestinations(item.toStopDestinations(context))
@@ -43,7 +49,10 @@ class BusRepositoryImplementation(
 
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(busStopId)
 
-            override fun createCall(): LiveData<ApiResponse<BusStopResponse>> = apiService.getBusStop(busStopId)
+            override fun createPrimaryCall() = apiService.getBusStopAPI(busStopId)
+
+            // Not even the ids on this API are consistent between the different services ¯\_(ツ)_/¯
+            override fun createSecondaryCall() = apiService.getBusStopWeb(busStopId.split("-")[1])
         }.asLiveData()
     }
 

@@ -14,8 +14,8 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 10
-        versionName "1.0.4"
+        versionCode 11
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,7 +26,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders = [crashlytics:"false"]
+        }
         release {
+            manifestPlaceholders = [crashlytics:"true"]
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -113,6 +117,10 @@ dependencies {
     implementation deps.moshi.moshi_kotlin
     implementation deps.moshi.moshi
     kapt deps.moshi.moshi_kotlin_codegen
+
+    //Jspoon
+    implementation deps.jspoon.core
+    implementation deps.jspoon.retrofit_converter
 
     //Koin
     implementation deps.koin.core
