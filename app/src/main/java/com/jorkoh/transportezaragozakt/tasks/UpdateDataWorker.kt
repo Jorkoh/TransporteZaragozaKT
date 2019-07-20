@@ -25,140 +25,79 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     private val executors: AppExecutors by inject()
     private val sharedPreferences: SharedPreferences by inject()
 
+    // May fire multiple times? https://issuetracker.google.com/issues/119886476
     override fun doWork(): Result {
-        // May fire multiple times?
-        // https://issuetracker.google.com/issues/119886476
-        checkBusStopsUpdate()
-        checkTramStopsUpdate()
-        checkBusLinesUpdate()
-        checkTramLinesUpdate()
-        checkBusLinesLocationsUpdate()
-        checkTramLinesLocationsUpdate()
+
+        // Bus stops
+        checkUpdate(
+            applicationContext.getString(R.string.parse_bus_stops_collection),
+            applicationContext.getString(R.string.saved_bus_stops_version_number_key),
+            2,
+            updateBusStops
+        )
+
+        // Tram stops
+        checkUpdate(
+            applicationContext.getString(R.string.parse_tram_stops_collection),
+            applicationContext.getString(R.string.saved_tram_stops_version_number_key),
+            2,
+            updateTramStops
+        )
+
+        // Bus lines
+        checkUpdate(
+            applicationContext.getString(R.string.parse_bus_lines_collection),
+            applicationContext.getString(R.string.saved_bus_lines_version_number_key),
+            1,
+            updateBusLines
+        )
+
+        // Tram lines
+        checkUpdate(
+            applicationContext.getString(R.string.parse_tram_lines_collection),
+            applicationContext.getString(R.string.saved_tram_lines_version_number_key),
+            1,
+            updateTramLines
+        )
+
+        // Bus lines locations
+        checkUpdate(
+            applicationContext.getString(R.string.parse_bus_lines_locations_collection),
+            applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key),
+            1,
+            updateBusLinesLocations
+        )
+
+        // Tram lines locations
+        checkUpdate(
+            applicationContext.getString(R.string.parse_tram_lines_locations_collection),
+            applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
+            1,
+            updateTramLinesLocations
+        )
+
+        // TODO Changelog
 
         return Result.success()
     }
 
-    private fun checkBusStopsUpdate() {
-        with(ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_stops_collection))) {
+    private fun checkUpdate(collectionName: String, versionKey: String, defaultVersion: Int, update: (document: ParseObject) -> Unit) {
+        with(ParseQuery.getQuery<ParseObject>(collectionName)) {
             orderByDescending("version")
             limit = 1
-            getFirstInBackground { busStopDocument, e ->
-                if (e == null && isNewBusStopsVersion(busStopDocument)) {
-                    updateBusStops(busStopDocument)
+            getFirstInBackground { document, e ->
+                if (e == null && isNewVersion(document, versionKey, defaultVersion)) {
+                    update(document)
                     showUpdateNotification()
                 }
             }
         }
     }
 
-    private fun checkTramStopsUpdate() {
-        with(ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_stops_collection))) {
-            orderByDescending("version")
-            limit = 1
-            getFirstInBackground { tramStopDocument, e ->
-                if (e == null && isNewTramStopsVersion(tramStopDocument)) {
-                    updateTramStops(tramStopDocument)
-                    showUpdateNotification()
-                }
-            }
-        }
-    }
+    private fun isNewVersion(document: ParseObject, versionKey: String, defaultVersion: Int) =
+        document.getInt("version") > sharedPreferences.getInt(versionKey, defaultVersion)
 
-    private fun checkBusLinesUpdate() {
-        with(ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_collection))) {
-            orderByDescending("version")
-            limit = 1
-            getFirstInBackground { busLinesDocument, e ->
-                if (e == null && isNewBusLinesVersion(busLinesDocument)) {
-                    updateBusLines(busLinesDocument)
-                    showUpdateNotification()
-                }
-            }
-        }
-    }
-
-    private fun checkTramLinesUpdate() {
-        with(ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_collection))) {
-            orderByDescending("version")
-            limit = 1
-            getFirstInBackground { tramLinesDocument, e ->
-                if (e == null && isNewTramLinesVersion(tramLinesDocument)) {
-                    updateTramLines(tramLinesDocument)
-                    showUpdateNotification()
-                }
-            }
-        }
-    }
-
-    private fun checkBusLinesLocationsUpdate() {
-        with(ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_locations_collection))) {
-            orderByDescending("version")
-            limit = 1
-            getFirstInBackground { busLinesLocationsDocument, e ->
-                if (e == null && isNewBusLinesLocationsVersion(busLinesLocationsDocument)) {
-                    updateBusLinesLocations(busLinesLocationsDocument)
-                    showUpdateNotification()
-                }
-            }
-        }
-    }
-
-    private fun checkTramLinesLocationsUpdate() {
-        with(ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_locations_collection))) {
-            orderByDescending("version")
-            limit = 1
-            getFirstInBackground { tramLinesLocationsDocument, e ->
-                if (e == null && isNewTramLinesLocationsVersion(tramLinesLocationsDocument)) {
-                    updateTramLinesLocations(tramLinesLocationsDocument)
-                    showUpdateNotification()
-                }
-            }
-        }
-    }
-
-    private fun isNewBusStopsVersion(busStopDocument: ParseObject): Boolean {
-        return busStopDocument.getInt("version") > sharedPreferences.getInt(
-            applicationContext.getString(R.string.saved_bus_stops_version_number_key),
-            2
-        )
-    }
-
-    private fun isNewTramStopsVersion(tramStopDocument: ParseObject): Boolean {
-        return tramStopDocument.getInt("version") > sharedPreferences.getInt(
-            applicationContext.getString(R.string.saved_tram_stops_version_number_key),
-            2
-        )
-    }
-
-    private fun isNewBusLinesVersion(busLinesDocument: ParseObject): Boolean {
-        return busLinesDocument.getInt("version") > sharedPreferences.getInt(
-            applicationContext.getString(R.string.saved_bus_lines_version_number_key),
-            1
-        )
-    }
-
-    private fun isNewTramLinesVersion(tramLinesDocument: ParseObject): Boolean {
-        return tramLinesDocument.getInt("version") > sharedPreferences.getInt(
-            applicationContext.getString(R.string.saved_tram_lines_version_number_key),
-            1
-        )
-    }
-
-    private fun isNewBusLinesLocationsVersion(busLinesLocationsDocument: ParseObject): Boolean {
-        return busLinesLocationsDocument.getInt("version") > sharedPreferences.getInt(
-            applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key),
-            1
-        )
-    }
-
-    private fun isNewTramLinesLocationsVersion(tramLinesLocationsDocument: ParseObject): Boolean {
-        return tramLinesLocationsDocument.getInt("version") > sharedPreferences.getInt(
-            applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
-            1
-        )
-    }
-
-    private fun updateBusStops(busStopDocument: ParseObject) {
+    private val updateBusStops = { busStopDocument: ParseObject ->
         val busStopEntities = mutableListOf<Stop>()
         val stopsJson = checkNotNull(busStopDocument.getJSONArray("stops"))
         for (i in 0 until stopsJson.length()) {
@@ -196,7 +135,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun updateTramStops(tramStopDocument: ParseObject) {
+    private val updateTramStops = { tramStopDocument: ParseObject ->
         val tramStopEntities = mutableListOf<Stop>()
         val stopsJson = checkNotNull(tramStopDocument.getJSONArray("stops"))
         for (i in 0 until stopsJson.length()) {
@@ -234,7 +173,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun updateBusLines(busLinesDocument: ParseObject) {
+    private val updateBusLines = { busLinesDocument: ParseObject ->
         val busLinesEntities = mutableListOf<Line>()
         val linesJson = checkNotNull(busLinesDocument.getJSONArray("lines"))
         for (i in 0 until linesJson.length()) {
@@ -279,7 +218,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun updateTramLines(tramLinesDocument: ParseObject) {
+    private val updateTramLines = { tramLinesDocument: ParseObject ->
         val tramLinesEntities = mutableListOf<Line>()
         val linesJson = checkNotNull(tramLinesDocument.getJSONArray("lines"))
         for (i in 0 until linesJson.length()) {
@@ -324,7 +263,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun updateBusLinesLocations(busLinesLocationsDocument: ParseObject) {
+    private val updateBusLinesLocations = { busLinesLocationsDocument: ParseObject ->
         val busLinesLocationsEntities = mutableListOf<LineLocation>()
         val linesLocationsJson = checkNotNull(busLinesLocationsDocument.getJSONArray("lines"))
         for (i in 0 until linesLocationsJson.length()) {
@@ -356,7 +295,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun updateTramLinesLocations(tramLinesLocationsDocument: ParseObject) {
+    private val updateTramLinesLocations = { tramLinesLocationsDocument: ParseObject ->
         val tramLinesLocationsEntities = mutableListOf<LineLocation>()
         val linesLocationsJson = checkNotNull(tramLinesLocationsDocument.getJSONArray("lines"))
         for (i in 0 until linesLocationsJson.length()) {
@@ -388,7 +327,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun showUpdateNotification(){
+    private fun showUpdateNotification() {
         val updateNotification =
             NotificationCompat.Builder(
                 applicationContext,

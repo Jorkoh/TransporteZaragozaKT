@@ -1,11 +1,13 @@
-package com.jorkoh.transportezaragozakt.services.web.responses
+package com.jorkoh.transportezaragozakt.services.bus_web.responses
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.services.bus_web.busWebToOfficialAPIId
+import com.jorkoh.transportezaragozakt.services.bus_web.fixLine
 import com.jorkoh.transportezaragozakt.services.common.responses.BusStopResponse
 import pl.droidsonroids.jspoon.annotation.Selector
 import java.util.*
 
-class BusStopWebResponse: BusStopResponse {
+class BusStopBusWebResponse: BusStopResponse {
 
     @Selector("h4")
     lateinit var id: String
@@ -19,7 +21,7 @@ class BusStopWebResponse: BusStopResponse {
             stopDestinations += StopDestination(
                 destinationTimes.value[0].line.fixLine(),
                 destinationTimes.value[0].name,
-                id.fixId(),
+                id.busWebToOfficialAPIId(),
                 listOf(
                     (destinationTimes.value[0].minutes),
                     (destinationTimes.value.getOrNull(1)?.minutes ?: "")
@@ -29,18 +31,6 @@ class BusStopWebResponse: BusStopResponse {
         }
         return stopDestinations
     }
-
-
-
-    private fun String.fixLine() =
-        when (this) {
-            "CI1" -> "Ci1"
-            "CI2" -> "Ci2"
-            else -> this
-        }
-
-    private fun String.fixId() =
-        "tuzsa-${this.split(" ")[1]}"
 }
 
 class Destination{

@@ -1,12 +1,13 @@
-package com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop
+package com.jorkoh.transportezaragozakt.services.official_api.responses.tram
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
+import com.jorkoh.transportezaragozakt.services.common.responses.TramStopResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.*
 
 @JsonClass(generateAdapter = true)
-data class TramStopResponse(
+data class TramStopOfficialAPIResponse(
     @Json(name = "id")
     val id: String,
 
@@ -33,7 +34,25 @@ data class TramStopResponse(
 
     @Json(name = "geometry")
     val geometry: Geometry
-)
+) : TramStopResponse {
+
+    override fun toStopDestinations(): List<StopDestination> {
+        val stopDestinations = mutableListOf<StopDestination>()
+        destinos?.groupBy { it.destino }?.forEach { destinationTimes ->
+            stopDestinations += StopDestination(
+                destinationTimes.value[0].linea,
+                destinationTimes.value[0].destino,
+                id,
+                listOf(
+                    (destinationTimes.value[0].minutos),
+                    (destinationTimes.value.getOrNull(1)?.minutos ?: "")
+                ),
+                Date()
+            )
+        }
+        return stopDestinations
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class Destino(
@@ -55,20 +74,3 @@ data class Geometry(
     @Json(name = "type")
     val type: String
 )
-
-fun TramStopResponse.toStopDestinations(): List<StopDestination> {
-    val stopDestinations = mutableListOf<StopDestination>()
-    destinos?.groupBy { it.destino }?.forEach { destinationTimes ->
-        stopDestinations += StopDestination(
-            destinationTimes.value[0].linea,
-            destinationTimes.value[0].destino,
-            id,
-            listOf(
-                (destinationTimes.value[0].minutos),
-                (destinationTimes.value.getOrNull(1)?.minutos ?: "")
-            ),
-            Date()
-        )
-    }
-    return stopDestinations
-}

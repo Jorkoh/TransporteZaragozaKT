@@ -3,12 +3,13 @@ package com.jorkoh.transportezaragozakt.repositories
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
-import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResource
+import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWithBackup
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
-import com.jorkoh.transportezaragozakt.services.api.APIService
-import com.jorkoh.transportezaragozakt.services.api.ApiResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop.TramStopResponse
-import com.jorkoh.transportezaragozakt.services.api.responses.tram.tram_stop.toStopDestinations
+import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
+import com.jorkoh.transportezaragozakt.services.official_api.responses.tram.TramStopOfficialAPIResponse
+import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
+import com.jorkoh.transportezaragozakt.services.tram_api.officialAPIToTramAPIId
+import com.jorkoh.transportezaragozakt.services.tram_api.responses.TramStopTramAPIResponse
 
 
 interface TramRepository {
@@ -22,14 +23,23 @@ interface TramRepository {
 
 class TramRepositoryImplementation(
     private val appExecutors: AppExecutors,
-    private val apiService: APIService,
+    private val officialApiService: OfficialAPIService,
+    private val tramAPIService: TramAPIService,
     private val stopsDao: StopsDao,
     private val db: AppDatabase
 ) : TramRepository {
 
     override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
-        return object : NetworkBoundResource<List<StopDestination>, TramStopResponse>(appExecutors) {
-            override fun saveCallResult(item: TramStopResponse) {
+        return object :
+            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse>(appExecutors) {
+            override fun savePrimaryCallResult(item: TramStopOfficialAPIResponse) {
+                db.runInTransaction {
+                    stopsDao.deleteStopDestinations(tramStopId)
+                    stopsDao.insertStopDestinations(item.toStopDestinations())
+                }
+            }
+
+            override fun saveSecondaryCallResult(item: TramStopTramAPIResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(tramStopId)
                     stopsDao.insertStopDestinations(item.toStopDestinations())
@@ -37,12 +47,15 @@ class TramRepositoryImplementation(
             }
 
             override fun shouldFetch(data: List<StopDestination>?): Boolean {
-                return (data == null || data.isEmpty() || !data.isFresh(APIService.FRESH_TIMEOUT_TRAM))
+                return (data == null || data.isEmpty() || !data.isFresh(OfficialAPIService.FRESH_TIMEOUT_OFFICIAL_API))
             }
 
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(tramStopId)
 
-            override fun createCall(): LiveData<ApiResponse<TramStopResponse>> = apiService.getTramStop(tramStopId)
+            override fun createPrimaryCall() = officialApiService.getTramStopOfficialAPI(tramStopId)
+
+            // Ids unfortunately are not consistent between API calls on different services
+            override fun createSecondaryCall() = tramAPIService.getTramStopTramAPI(tramStopId.officialAPIToTramAPIId())
         }.asLiveData()
     }
 

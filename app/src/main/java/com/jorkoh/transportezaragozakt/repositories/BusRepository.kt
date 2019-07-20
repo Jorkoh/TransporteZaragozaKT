@@ -5,9 +5,11 @@ import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWithBackup
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
-import com.jorkoh.transportezaragozakt.services.api.APIService
-import com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop.BusStopAPIResponse
-import com.jorkoh.transportezaragozakt.services.web.responses.BusStopWebResponse
+import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
+import com.jorkoh.transportezaragozakt.services.bus_web.officialAPIToBusWebId
+import com.jorkoh.transportezaragozakt.services.bus_web.responses.BusStopBusWebResponse
+import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
+import com.jorkoh.transportezaragozakt.services.official_api.responses.bus.BusStopOfficialAPIResponse
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
@@ -20,21 +22,22 @@ interface BusRepository {
 
 class BusRepositoryImplementation(
     private val appExecutors: AppExecutors,
-    private val apiService: APIService,
+    private val officialApiService: OfficialAPIService,
+    private val busWebService: BusWebService,
     private val stopsDao: StopsDao,
     private val db: AppDatabase
 ) : BusRepository {
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
-        return object : NetworkBoundResourceWithBackup<List<StopDestination>, BusStopAPIResponse, BusStopWebResponse>(appExecutors) {
-            override fun savePrimaryCallResult(item: BusStopAPIResponse) {
+        return object : NetworkBoundResourceWithBackup<List<StopDestination>, BusStopOfficialAPIResponse, BusStopBusWebResponse>(appExecutors) {
+            override fun savePrimaryCallResult(item: BusStopOfficialAPIResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
                     stopsDao.insertStopDestinations(item.toStopDestinations())
                 }
             }
 
-            override fun saveSecondaryCallResult(item: BusStopWebResponse) {
+            override fun saveSecondaryCallResult(item: BusStopBusWebResponse) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
                     stopsDao.insertStopDestinations(item.toStopDestinations())
@@ -42,15 +45,15 @@ class BusRepositoryImplementation(
             }
 
             override fun shouldFetch(data: List<StopDestination>?): Boolean {
-                return (data == null || data.isEmpty() || !data.isFresh(APIService.FRESH_TIMEOUT_BUS))
+                return (data == null || data.isEmpty() || !data.isFresh(OfficialAPIService.FRESH_TIMEOUT_OFFICIAL_API))
             }
 
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(busStopId)
 
-            override fun createPrimaryCall() = apiService.getBusStopAPI(busStopId)
+            override fun createPrimaryCall() = officialApiService.getBusStopOfficialAPI(busStopId)
 
-            // Not even the ids on this API are consistent between the different services ¯\_(ツ)_/¯
-            override fun createSecondaryCall() = apiService.getBusStopWeb(busStopId.split("-")[1])
+            // Ids unfortunately are not consistent between API calls on different services
+            override fun createSecondaryCall() = busWebService.getBusStopBusWeb(busStopId.officialAPIToBusWebId())
         }.asLiveData()
     }
 

@@ -1,6 +1,5 @@
-package com.jorkoh.transportezaragozakt.services.api.responses.bus.bus_stop
+package com.jorkoh.transportezaragozakt.services.official_api.responses.bus
 
-import android.content.Context
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.common.responses.BusStopResponse
 import com.squareup.moshi.Json
@@ -8,7 +7,7 @@ import com.squareup.moshi.JsonClass
 import java.util.*
 
 @JsonClass(generateAdapter = true)
-data class BusStopAPIResponse(
+data class BusStopOfficialAPIResponse(
     @Json(name = "id")
     val id: String,
 

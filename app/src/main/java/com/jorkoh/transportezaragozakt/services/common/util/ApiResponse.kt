@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.api
+package com.jorkoh.transportezaragozakt.services.common.util
 
 import retrofit2.Response
 

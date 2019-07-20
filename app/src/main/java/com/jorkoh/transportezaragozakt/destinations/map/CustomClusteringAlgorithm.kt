@@ -95,7 +95,7 @@ class CustomClusteringAlgorithm<T : ClusterItem> : Algorithm<T> {
         val itemToCluster = HashMap<QuadItem<T>, StaticCluster<T>>()
 
         synchronized(mQuadTree) {
-            for (candidate in getClusteringItems(mQuadTree, discreteZoom)) {
+            for (candidate in mItems) {
                 if (visitedCandidates.contains(candidate)) {
                     // Candidate is already part of another cluster.
                     continue
@@ -133,10 +133,6 @@ class CustomClusteringAlgorithm<T : ClusterItem> : Algorithm<T> {
             }
         }
         return results
-    }
-
-    private fun getClusteringItems(quadTree: PointQuadTree<QuadItem<T>>, discreteZoom: Int): Collection<QuadItem<T>> {
-        return mItems
     }
 
     override fun getItems(): Collection<T> {

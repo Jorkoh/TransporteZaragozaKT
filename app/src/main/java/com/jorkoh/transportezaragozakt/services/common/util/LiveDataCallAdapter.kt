@@ -1,7 +1,6 @@
-package com.jorkoh.transportezaragozakt.repositories.util
+package com.jorkoh.transportezaragozakt.services.common.util
 
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.services.api.ApiResponse
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Callback
