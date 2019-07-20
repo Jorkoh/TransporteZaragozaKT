@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.services.official_api.responses.bus
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.common.responses.BusStopResponse
+import com.jorkoh.transportezaragozakt.services.official_api.fixLine
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.*
@@ -46,13 +47,6 @@ data class BusStopOfficialAPIResponse(
         }
         return stopDestinations
     }
-
-    private fun String.fixLine() =
-        when (this) {
-            "CI1" -> "Ci1"
-            "CI2" -> "Ci2"
-            else -> this
-        }
 }
 
 @JsonClass(generateAdapter = true)

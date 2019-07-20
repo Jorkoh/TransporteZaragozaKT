@@ -31,3 +31,10 @@ interface OfficialAPIService {
     @GET("parada-tranvia/{stopId}")
     fun getTramStopOfficialAPI(@Path("stopId") id: String): LiveData<ApiResponse<TramStopOfficialAPIResponse>>
 }
+
+fun String.fixLine() =
+    when (this) {
+        "CI1" -> "Ci1"
+        "CI2" -> "Ci2"
+        else -> this
+    }

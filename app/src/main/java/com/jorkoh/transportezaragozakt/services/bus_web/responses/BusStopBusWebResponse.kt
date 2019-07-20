@@ -7,17 +7,17 @@ import com.jorkoh.transportezaragozakt.services.common.responses.BusStopResponse
 import pl.droidsonroids.jspoon.annotation.Selector
 import java.util.*
 
-class BusStopBusWebResponse: BusStopResponse {
+class BusStopBusWebResponse : BusStopResponse {
 
     @Selector("h4")
     lateinit var id: String
 
     @Selector("[xmlns] tbody:nth-of-type(1) tbody tr:not(:first-child)")
-    lateinit var destinations: List<Destination>
+    var destinations: List<Destination>? = null
 
     override fun toStopDestinations(): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
-        destinations.groupBy { it.line + it.name }.forEach { destinationTimes ->
+        destinations?.groupBy { it.line + it.name }?.forEach { destinationTimes ->
             stopDestinations += StopDestination(
                 destinationTimes.value[0].line.fixLine(),
                 destinationTimes.value[0].name,
@@ -33,7 +33,7 @@ class BusStopBusWebResponse: BusStopResponse {
     }
 }
 
-class Destination{
+class Destination {
     @Selector(" .digital:nth-of-type(2)")
     lateinit var name: String
 
