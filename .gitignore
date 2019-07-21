@@ -6,9 +6,13 @@
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
+/.idea/codeStyles
+/.idea/encodings.xml
 /.idea/assetWizardSettings.xml
 /.idea/vcs.xml
 .DS_Store
 /build
 /captures
+/app/release
 .externalNativeBuild
+google-services.json
