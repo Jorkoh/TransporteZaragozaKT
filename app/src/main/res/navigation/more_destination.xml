@@ -12,6 +12,9 @@
         <action
                 android:id="@+id/action_more_to_ThemePicker"
                 app:destination="@id/ThemePicker"/>
+        <deepLink
+                android:id="@+id/deepLinkChangelog"
+                app:uri="launchTZ://viewChangelog/"/>
     </fragment>
     <fragment
             android:id="@+id/ThemePicker"

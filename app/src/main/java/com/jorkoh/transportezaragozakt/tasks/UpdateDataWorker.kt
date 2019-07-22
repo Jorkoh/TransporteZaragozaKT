@@ -1,8 +1,10 @@
 package com.jorkoh.transportezaragozakt.tasks
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.work.Worker
@@ -11,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.destinations.createChangelogDeepLink
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import org.koin.core.KoinComponent
@@ -76,7 +79,13 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             updateTramLinesLocations
         )
 
-        // TODO Changelog
+        // Changelog
+        checkUpdate(
+            applicationContext.getString(R.string.parse_changelog_collection),
+            applicationContext.getString(R.string.saved_changelog_version_number_key),
+            2,
+            updateChangelog
+        )
 
         return Result.success()
     }
@@ -327,19 +336,48 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun showUpdateNotification() {
-        val updateNotification =
-            NotificationCompat.Builder(
-                applicationContext,
-                applicationContext.getString(R.string.notification_channel_id_updates)
+    private val updateChangelog = { changelogDocument: ParseObject ->
+        with(PreferenceManager.getDefaultSharedPreferences(applicationContext).edit()) {
+            putString(
+                applicationContext.getString(R.string.saved_changelog_en_key),
+                changelogDocument.getString("textEN")
             )
-                .apply {
-                    setSmallIcon(R.drawable.ic_notification_icon)
-                    setContentTitle(applicationContext.getString(R.string.updated_stops_lines_title))
-                    setContentText(applicationContext.getString(R.string.updated_stops_lines_message))
-                    priority = NotificationCompat.PRIORITY_LOW
-                    setOnlyAlertOnce(true)
-                }
+            putString(
+                applicationContext.getString(R.string.saved_changelog_es_key),
+                changelogDocument.getString("textES")
+            )
+
+            putInt(
+                applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
+                changelogDocument.getInt("version")
+            )
+
+            apply()
+        }
+    }
+
+    private fun showUpdateNotification() {
+        //NavDeepLinkBuilder doesn't work with bottom navigation view navigation so let's create the deep link normally
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            -50,
+            createChangelogDeepLink(),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val updateNotification = NotificationCompat.Builder(
+            applicationContext,
+            applicationContext.getString(R.string.notification_channel_id_updates)
+        ).apply {
+            setSmallIcon(R.drawable.ic_notification_icon)
+            setContentTitle(applicationContext.getString(R.string.updated_stops_lines_title))
+            setContentText(applicationContext.getString(R.string.updated_stops_lines_message))
+            setContentIntent(pendingIntent)
+            // If the notification is clicked the app opens into the stop details so notification is deleted
+            setAutoCancel(true)
+            priority = NotificationCompat.PRIORITY_LOW
+            setOnlyAlertOnce(true)
+        }
 
         (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
             -50,

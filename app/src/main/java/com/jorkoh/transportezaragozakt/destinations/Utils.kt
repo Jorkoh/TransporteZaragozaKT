@@ -63,6 +63,13 @@ fun createStopDetailsDeepLink(stopId: String, stopType: StopType) = Intent(
     flags = Intent.FLAG_ACTIVITY_NEW_TASK
 }
 
+fun createChangelogDeepLink() = Intent(
+    Intent.ACTION_VIEW,
+    Uri.parse("launchTZ://viewChangelog/")
+).apply {
+    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+}
+
 fun Context.getColorFromAttr(
     @AttrRes attrColor: Int,
     typedValue: TypedValue = TypedValue(),

@@ -3,11 +3,14 @@ package com.jorkoh.transportezaragozakt.destinations.more
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
+import androidx.core.os.ConfigurationCompat
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jorkoh.transportezaragozakt.R
+import java.util.*
 
 
 class MoreFragment : PreferenceFragmentCompat() {
@@ -22,45 +25,63 @@ class MoreFragment : PreferenceFragmentCompat() {
         }
 
         // Recharge card
-        findPreference<Preference>(getString(R.string.recharge_card_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://recargazaragoza.avanzagrupo.com")))
-            true
-        }
+        findPreference<Preference>(getString(R.string.recharge_card_key))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://recargazaragoza.avanzagrupo.com")))
+                true
+            }
 
-        // Avanza Twitter
-        findPreference<Preference>(getString(R.string.avanza_twitter_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/buszaragoza")))
-            true
-        }
+        // Tram Twitter
+        findPreference<Preference>(getString(R.string.tram_twitter_key))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/tranviadezgz")))
+                true
+            }
+
+        // Bus Twitter
+        findPreference<Preference>(getString(R.string.bus_twitter_key))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/buszaragoza")))
+                true
+            }
 
         // Feedback
-        findPreference<Preference>(getString(R.string.feedback_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener{
+        findPreference<Preference>(getString(R.string.feedback_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             composeFeedbackEmail()
             true
         }
 
         // Privacy policy
-        findPreference<Preference>(getString(R.string.privacy_policy_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy")))
-            true
-        }
-
-        // Libraries and credits
-        findPreference<Preference>(getString(R.string.libraries_and_credits_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            MaterialDialog(requireContext()).show {
-                title(R.string.libraries_and_credits_title)
-                message(R.string.libraries_and_credits_message) {
-                    html()
-                }
+        findPreference<Preference>(getString(R.string.privacy_policy_key))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy")))
+                true
             }
-            true
-        }
 
         // Open source
         findPreference<Preference>(getString(R.string.open_source_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Jorkoh/TransporteZaragozaKT")))
             true
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Changelog
+        val isSpanish = ConfigurationCompat.getLocales(resources.configuration)[0].language == Locale("es").language
+        val savedChangelogKey = getString(if (isSpanish) R.string.saved_changelog_es_key else R.string.saved_changelog_en_key)
+        val changelog = android.preference.PreferenceManager.getDefaultSharedPreferences(context).getString(savedChangelogKey, "")
+        findPreference<Preference>(getString(R.string.changelog_key))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                MaterialDialog(requireContext()).show {
+                    title(R.string.changelog_title)
+                    @Suppress("DEPRECATION")
+                    message(text = Html.fromHtml(changelog))
+                }
+                true
+            }
+        handleDeepLinks()
     }
 
     private fun composeFeedbackEmail() {
@@ -71,6 +92,19 @@ class MoreFragment : PreferenceFragmentCompat() {
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_message_text))
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(intent)
+        }
+    }
+
+    // Handles opening stops information directly from notifications or shortcuts
+    private fun handleDeepLinks() {
+        // Jetpack's Navigation doesn't quite work with the multi-graph setup
+        // required for bottom navigation with multi-stack so it's handled manually here
+        requireActivity().intent = requireActivity().intent.apply {
+            dataString?.let { uri ->
+                if (uri == "launchTZ://viewChangelog/") {
+                    findPreference<Preference>(getString(R.string.changelog_key))?.performClick()
+                }
+            }
         }
     }
 }

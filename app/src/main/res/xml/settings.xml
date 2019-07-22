@@ -30,9 +30,13 @@
                 app:iconSpaceReserved="false"/>
 
         <Preference
-                app:key="@string/avanza_twitter_key"
-                app:title="@string/avanza_twitter_title"
-                android:summary="@string/avanza_twitter_summary"
+                app:key="@string/tram_twitter_key"
+                app:title="@string/tram_twitter_title"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
+                app:key="@string/bus_twitter_key"
+                app:title="@string/bus_twitter_title"
                 app:iconSpaceReserved="false"/>
 
         <Preference
@@ -52,6 +56,12 @@
             app:iconSpaceReserved="false">
 
         <Preference
+                app:key="@string/changelog_key"
+                app:title="@string/changelog_title"
+                android:summary="@string/changelog_summary"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
                 app:key="@string/feedback_key"
                 app:title="@string/feedback_title"
                 app:summary="@string/feedback_summary"
@@ -66,11 +76,6 @@
         <Preference
                 app:key="@string/privacy_policy_key"
                 app:title="@string/privacy_policy_title"
-                app:iconSpaceReserved="false"/>
-
-        <Preference
-                app:key="@string/libraries_and_credits_key"
-                app:title="@string/libraries_and_credits_title"
                 app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 

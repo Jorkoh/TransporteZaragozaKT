@@ -104,28 +104,31 @@ class AlarmService : LifecycleService() {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val reminderNotification =
-            NotificationCompat.Builder(this, getString(R.string.notification_channel_id_reminders)).apply {
-                if (stopDestinations.status == Status.SUCCESS && !stopDestinations.data.isNullOrEmpty()) {
-                    val notificationRemoteViews = createRemoteViews(stopType, stopDestinations, reminderAlias)
-                    setCustomHeadsUpContentView(notificationRemoteViews.contentRemoteView)    //256dp max height
-                    setCustomContentView(notificationRemoteViews.contentRemoteView)           //256dp max height
-                    setCustomBigContentView(notificationRemoteViews.bigContentRemoteView)     //no max height
-                    setContentTitle("")
-                    setContentText("")
-                } else {
-                    setContentTitle(reminderAlias)
-                    setContentText(getString(R.string.notification_error))
-                }
-                setSmallIcon(R.drawable.ic_notification_icon)
-                // High priority to enable heads up
-                priority = NotificationCompat.PRIORITY_HIGH
-                // If the notification is clicked the app opens into the stop details so notification is deleted
-                setAutoCancel(true)
-                setDefaults(NotificationCompat.DEFAULT_SOUND)
-                setContentIntent(pendingIntent)
-                setChannelId(getString(R.string.notification_channel_id_reminders))
+        val reminderNotification = NotificationCompat.Builder(
+            this,
+            getString(R.string.notification_channel_id_reminders)
+        ).apply {
+            if (stopDestinations.status == Status.SUCCESS && !stopDestinations.data.isNullOrEmpty()) {
+                val notificationRemoteViews = createRemoteViews(stopType, stopDestinations, reminderAlias)
+                setCustomHeadsUpContentView(notificationRemoteViews.contentRemoteView)    //256dp max height
+                setCustomContentView(notificationRemoteViews.contentRemoteView)           //256dp max height
+                setCustomBigContentView(notificationRemoteViews.bigContentRemoteView)     //no max height
+                setContentTitle("")
+                setContentText("")
+            } else {
+                setContentTitle(reminderAlias)
+                setContentText(getString(R.string.notification_error))
             }
+            setSmallIcon(R.drawable.ic_notification_icon)
+            // High priority to enable heads up
+            priority = NotificationCompat.PRIORITY_HIGH
+            // If the notification is clicked the app opens into the stop details so notification is deleted
+            setAutoCancel(true)
+            setDefaults(NotificationCompat.DEFAULT_SOUND)
+            setContentIntent(pendingIntent)
+            setChannelId(getString(R.string.notification_channel_id_reminders))
+        }
+
         setupNotificationChannels(this)
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(reminderId, reminderNotification.build())
     }

@@ -51,6 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <nav-graph android:value="@navigation/search_destination"/>
+            <nav-graph android:value="@navigation/more_destination"/>
         </activity>
 
         <receiver android:name=".tasks.SystemActionsReceiver">

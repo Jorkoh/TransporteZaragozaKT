@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.db
 
 import android.content.Context
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -133,16 +134,24 @@ abstract class StopsDao {
         val initialTramLines = getInitialTramLines(context)
         val initialBusLineLocations = getInitialBusLineLocations(context)
         val initialTramLineLocations = getInitialTramLineLocations(context)
+        val initialChangelog = getInitialChangelog(context)
+        Log.d("TESTING STUFF", initialChangelog.version.toString())
+        Log.d("TESTING STUFF", initialChangelog.textEN)
+        Log.d("TESTING STUFF", initialChangelog.textES)
 
         with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
-            //This should run before the update data worker, if it doesn't there may be problems with the data versions
-            //It should because the data worker forces the database creation and this callback uses the same executor
+            // Data, save versions
             putInt(context.getString(R.string.saved_bus_stops_version_number_key), initialBusStops.version)
             putInt(context.getString(R.string.saved_tram_stops_version_number_key), initialTramStops.version)
             putInt(context.getString(R.string.saved_bus_lines_version_number_key), initialBusLines.version)
             putInt(context.getString(R.string.saved_tram_lines_version_number_key), initialTramLines.version)
             putInt(context.getString(R.string.saved_bus_lines_locations_version_number_key), initialBusLineLocations.version)
             putInt(context.getString(R.string.saved_tram_lines_locations_version_number_key), initialTramLineLocations.version)
+            // Changelog, save version and multiple languages
+            putInt(context.getString(R.string.saved_changelog_version_number_key), initialChangelog.version)
+            putString(context.getString(R.string.saved_changelog_en_key), initialChangelog.textEN)
+            putString(context.getString(R.string.saved_changelog_es_key), initialChangelog.textES)
+            // Default settings
             putBoolean(context.getString(R.string.is_dark_map_key), false)
             putInt(context.getString(R.string.map_type_key), 1)
             putBoolean(context.getString(R.string.traffic_key), false)
@@ -150,8 +159,10 @@ abstract class StopsDao {
             putBoolean(context.getString(R.string.tram_filter_key), true)
             putInt(context.getString(R.string.search_tab_position_key), 0)
             putBoolean(context.getString(R.string.is_first_launch_key), true)
+
             apply()
         }
+        // Insert initial data
         insertStops(initialBusStops.stops.plus(initialTramStops.stops))
         insertLines(initialBusLines.lines.plus(initialTramLines.lines))
         insertLinesLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations))

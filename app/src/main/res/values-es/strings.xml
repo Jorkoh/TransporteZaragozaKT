@@ -67,25 +67,7 @@
     <string name="removed_reminder_snackbar">Notificación eliminada.</string>
     <string name="qr_not_recognized">Código QR no reconocido.</string>
     <string name="location_outside_zaragoza_bounds">Función no disponible fuera de Zaragoza.</string>
-    <string name="libraries_and_credits_message">
-        <![CDATA[<ul>
-<li><a href="https://developer.android.com/jetpack/">Componentes Jetpack</a>. Room, LiveData, ViewModels, Navegación, WorkManager y más. Los pilares básicos de una aplicación Android moderna.</li>
-<li><a href="https://github.com/square/retrofit">Retrofit</a>. Cliente HTTP tipado para Android, facilita enormemente el trabajo con cualquier API REST.</li>
-<li><a href="https://github.com/square/moshi">Moshi</a>. Actúa como adaptador transformando las respuestas JSON de Retrofit a objetos.</li>
-<li><a href="https://github.com/InsertKoinIO/koin">Koin</a>. Inyección de dependencias por y para Kotlin.</li>
-<li><a href="https://github.com/parse-community/Parse-SDK-Android">Parse SDK para Android</a>. Permite a la aplicación acceder al the backend formado por <a href="https://heroku.com">Heroku</a>+<a href="https://parseplatform.org">Parse</a>+<a href="https://www.mongodb.com">MongoDB</a> para actualizar información de paradas y líneas sin actualizar la propia aplicación mediante Google Play.</li>
-<li><a href="https://github.com/airbnb/lottie-android">Lottie</a>. Animaciones de Adobe After Effects vector animations renderizadas nativamente, usada a lo largo de la aplicación para mostrar estados de falta de datos.</li>
-<li><a href="https://github.com/leinardi/FloatingActionButtonSpeedDial">FAB Speed Dial</a>. Implementación del <a href="https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions">Material Design speed dial</a> usado en la pantalla de tiempos de parada. Creada por <a href="https://github.com/leinardi/">Roberto Leinardi</a> y modificada por mí para adaptarse al cambio de temas.</li>
-<li><a href="https://github.com/Daio-io/dresscode">Dresscode</a>. Pequeña libraría que permite cambiar el tema de la aplicación durante la ejecución de la misma. Creada por <a href="https://github.com/Daio-io">Dai Williams</a> y modificada por mí.</li>
-<li><a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. Todo tipo de ventanas emergentes por <a href="https://github.com/afollestad">Aidan Follestad</a>. Las esquinas redondeadas de esta misma ventana son fruto de su trabajo.</li>
-<li><a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Simplifica la petición y control de permisos, creada por <a href="https://github.com/kirtan403">Kirtan403</a>. Traducida y modificada por mi para utilizar Material Dialogs.</li>
-<li><a href="https://github.com/journeyapps/zxing-android-embedded">ZXing Android Embedded</a>. Escaneo de códigos QR mediante la librería ZXing sin descargas adicionales.</li>
-<li> <a href="https://github.com/TangoAgency/material-intro-screen">Material Intro Screen</a>. Diapositivas de bienvenida para presentar las características de la aplicación. Modificada por mi para soportar animated vector drawables.</li>
-<li> <a href="https://github.com/Pixplicity/gene-rate">Gene-rate</a>. Permite pedir opiniones al usuario sin interrumpir su uso en la app cuando ciertas condiciones se cumplen. Modificada profundamente por mi con ideas de otras librerías como <a href="https://github.com/mediavrog/integrated-rating-request">Integrated Rating Request</a>.</li>
-<li>Múltiples iconos de <a href="https://www.freepik.com/">Freepik</a> en <a href="https://www.flaticon.com">flaticon.com</a></li>
-</ul>]]>
-    </string>
-    <string name="libraries_and_credits_title">Librerías y créditos</string>
+    <string name="changelog_title">Registro de cambios</string>
     <string name="privacy_policy_title">Política de privacidad</string>
     <string name="style_category_title">Estilo</string>
     <string name="dark_map_title">Mapa nocturno</string>
@@ -93,9 +75,9 @@
     <string name="themes_summary">Personaliza la aplicación con tus colores favoritos seleccionando un tema</string>
     <string name="useful_links_title">Cosas útiles</string>
     <string name="recharge_card_summary">Recarga online tu tarjeta de bus mensual o anual</string>
-    <string name="avanza_twitter_title">Twitter de Avanza</string>
+    <string name="tram_twitter_title">Twitter del tranvía</string>
+    <string name="bus_twitter_title">Twitter del bus</string>
     <string name="recharge_card_title">Recargar tarjeta</string>
-    <string name="avanza_twitter_summary">Mantente actualizado con las últimas noticias mediante el twitter oficial de Avanza</string>
     <string name="about_category_title">Acerca de</string>
     <string name="notification_channel_description_updates">Actualizaciones de paradas y líneas.</string>
     <string name="notification_channel_name_updates">Actualizaciones</string>
@@ -142,4 +124,5 @@
     <string name="open_source_summary">Esta aplicación es código abierto, échale un vistazo en GitHub!</string>
     <string name="open_source_title">Código abierto</string>
     <string name="pinned_shortcut_snackbar">¡Acceso directo creado!</string>
+    <string name="changelog_summary">Lista de cambios en información de paradas y líneas</string>
 </resources>

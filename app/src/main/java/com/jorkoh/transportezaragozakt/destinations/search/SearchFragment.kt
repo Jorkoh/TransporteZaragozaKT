@@ -147,6 +147,9 @@ class SearchFragment : Fragment() {
                     )
                     data = Uri.EMPTY
                 }
+//                else if (uri == "launchTZ://viewChangelog/"){
+//                    //TODO
+//                }
             }
         }
     }

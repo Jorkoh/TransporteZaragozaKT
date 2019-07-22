@@ -99,6 +99,9 @@
     <string name="saved_tram_lines_version_number_key" translatable="false">SAVED_TRAM_LINES_VERSION_NUMBER_KEY</string>
     <string name="saved_bus_lines_locations_version_number_key" translatable="false">SAVED_BUS_LINES_LOCATIONS_VERSION_NUMBER_KEY</string>
     <string name="saved_tram_lines_locations_version_number_key" translatable="false">SAVED_TRAM_LINES_LOCATIONS_VERSION_NUMBER_KEY</string>
+    <string name="saved_changelog_version_number_key" translatable="false">SAVED_CHANGELOG_VERSION_NUMBER_KEY</string>
+    <string name="saved_changelog_en_key" translatable="false">SAVED_CHANGELOG_EN_KEY</string>
+    <string name="saved_changelog_es_key" translatable="false">SAVED_CHANGELOG_ES_KEY</string>
     <string name="is_dark_map_key" translatable="false">IS_DARK_MAP_KEY</string>
     <string name="map_type_key" translatable="false">MAP_TYPE_KEY</string>
     <string name="traffic_key" translatable="false">TRAFFIC_KEY</string>
@@ -109,10 +112,11 @@
     <string name="is_first_launch_key" translatable="false">IS_FIRST_LAUNCH_KEY</string>
 
     <string name="themes_key" translatable="false">THEMES_KEY</string>
-    <string name="avanza_twitter_key" translatable="false">AVANZA_TWITTER_KEY</string>
+    <string name="tram_twitter_key" translatable="false">TRAM_TWITTER_KEY</string>
+    <string name="bus_twitter_key" translatable="false">BUS_TWITTER_KEY</string>
     <string name="recharge_card_key" translatable="false">RECHARGE_CARD_KEY</string>
     <string name="play_intro_key" translatable="false">PLAY_INTRO_KEY</string>
-    <string name="libraries_and_credits_key" translatable="false">LIBRARIES_AND_CREDITS_KEY</string>
+    <string name="changelog_key" translatable="false">CHANGELOG_KEY</string>
     <string name="privacy_policy_key" translatable="false">PRIVACY_POLICY_KEY</string>
     <string name="feedback_key" translatable="false">FEEDBACK_KEY</string>
     <string name="open_source_key" translatable="false">OPEN_SOURCE_KEY</string>
@@ -125,13 +129,14 @@
     <string name="useful_links_title" translatable="true">Useful stuff</string>
     <string name="recharge_card_title" translatable="true">Recharge card</string>
     <string name="recharge_card_summary" translatable="true">Recharge your monthly or yearly bus card online</string>
-    <string name="avanza_twitter_title" translatable="true">Avanza twitter</string>
-    <string name="avanza_twitter_summary" translatable="true">Stay up to date with the latest news about the bus service through the official twitter</string>
+    <string name="tram_twitter_title" translatable="true">Tram twitter</string>
+    <string name="bus_twitter_title" translatable="true">Bus twitter</string>
     <string name="play_intro_title" translatable="true">App introduction</string>
     <string name="play_intro_summary" translatable="true">Like it was your first time</string>
     <string name="about_category_title" translatable="true">About</string>
     <string name="privacy_policy_title" translatable="true">Privacy policy</string>
-    <string name="libraries_and_credits_title" translatable="true">Libraries and credits</string>
+    <string name="changelog_title" translatable="true">Changelog</string>
+    <string name="changelog_summary" translatable="true">List of changes to stop and lines data</string>
     <string name="feedback_title" translatable="true">Contact</string>
     <string name="feedback_summary" translatable="true">Problems? Suggestions? Ask me anything</string>
     <string name="open_source_title" translatable="true">Open Source</string>
@@ -139,7 +144,7 @@
     <string name="feedback_message_address" translatable="false">jorge@jorkoh.com</string>
     <string name="feedback_message_subject" translatable="true">Transporte Zaragoza Feedback</string>
     <string name="feedback_message_text" translatable="true">Describe the problem, question or suggestion here…</string>
-    <string name="libraries_and_credits_message" translatable="true">
+    <string name="libraries_and_credits_message" translatable="false">
         <![CDATA[<ul>
 <li> <a href="https://developer.android.com/jetpack/">Jetpack components</a>. Room, LiveData, ViewModels, Navigation, WorkManager and more. The building blocks of a modern Android application.</li>
 <li> <a href="https://github.com/square/retrofit">Retrofit</a>.&nbsp;Type-safe HTTP client for Android, makes dealing with any API an enjoyable experience.</li>
@@ -167,6 +172,7 @@
     <string name="parse_tram_lines_collection" translatable="false">tram_lines</string>
     <string name="parse_bus_lines_locations_collection" translatable="false">bus_lines_locations</string>
     <string name="parse_tram_lines_locations_collection" translatable="false">tram_lines_locations</string>
+    <string name="parse_changelog_collection" translatable="false">changelog</string>
     <string name="update_data_work_name" translatable="false">UPDATE_DATA_WORK_NAME</string>
 
     <!--Notifications-->

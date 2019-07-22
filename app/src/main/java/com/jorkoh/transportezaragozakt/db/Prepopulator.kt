@@ -95,12 +95,12 @@ fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
 
     val busLinesLocationsEntities = mutableListOf<LineLocation>()
     for (line in busLinesLocationsJson.lines) {
-        for((i, location) in line.coordinates.withIndex()){
+        for ((i, location) in line.coordinates.withIndex()) {
             busLinesLocationsEntities.add(
                 LineLocation(
                     line.id,
                     LineType.BUS,
-                    i+1,
+                    i + 1,
                     LatLng(location[1], location[0])
                 )
             )
@@ -115,12 +115,12 @@ fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
 
     val tramLinesLocationsEntities = mutableListOf<LineLocation>()
     for (line in tramLinesLocationsJson.lines) {
-        for((i, location) in line.coordinates.withIndex()){
+        for ((i, location) in line.coordinates.withIndex()) {
             tramLinesLocationsEntities.add(
                 LineLocation(
                     line.id,
                     LineType.TRAM,
-                    i+1,
+                    i + 1,
                     LatLng(location[1], location[0])
                 )
             )
@@ -129,12 +129,20 @@ fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
     return InitialLineLocationsMessage(tramLinesLocationsEntities, tramLinesLocationsJson.version)
 }
 
+fun getInitialChangelog(context: Context): InitialChangelog {
+    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_changelog)))
+    val changelogJson = parse(ChangelogJson.serializer(), buffer.readUtf8())
+
+    return InitialChangelog(changelogJson.textEN, changelogJson.textES, changelogJson.version)
+}
 
 data class InitialStopsMessage(val stops: List<Stop>, val version: Int)
 
 data class InitialLinesMessage(val lines: List<Line>, val version: Int)
 
 data class InitialLineLocationsMessage(val lineLocations: List<LineLocation>, val version: Int)
+
+data class InitialChangelog(val textEN: String, val textES: String, val version: Int)
 
 @Serializable
 data class StopsJson(val version: Int, val recordedAt: String, val stops: List<StopJson>)
@@ -146,10 +154,19 @@ data class LinesJson(val version: Int, val recordedAt: String, val lines: List<L
 data class LinesLocationsJson(val version: Int, val recordedAt: String, val lines: List<LineLocationsJson>)
 
 @Serializable
-data class StopJson(val id: String, val number : String, val title: String, val location: List<Double>, val lines: List<String>)
+data class ChangelogJson(val version: Int, val textEN: String, val textES: String)
 
 @Serializable
-data class LineJson(val id: String, val name : String, val destinations: List<String>, val stopsFirstDestination: List<String>, val stopsSecondDestination: List<String>)
+data class StopJson(val id: String, val number: String, val title: String, val location: List<Double>, val lines: List<String>)
+
+@Serializable
+data class LineJson(
+    val id: String,
+    val name: String,
+    val destinations: List<String>,
+    val stopsFirstDestination: List<String>,
+    val stopsSecondDestination: List<String>
+)
 
 @Serializable
 data class LineLocationsJson(val id: String, val coordinates: List<List<Double>>)
