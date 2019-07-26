@@ -36,13 +36,13 @@ data class TramStopOfficialAPIResponse(
     val geometry: Geometry
 ) : TramStopResponse {
 
-    override fun toStopDestinations(): List<StopDestination> {
+    override fun toStopDestinations(tramStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
-        destinos?.groupBy { it.destino }?.forEach { destinationTimes ->
+        destinos?.groupBy { it.linea + it.destino }?.forEach { destinationTimes ->
             stopDestinations += StopDestination(
                 destinationTimes.value[0].linea,
                 destinationTimes.value[0].destino,
-                id,
+                tramStopId,
                 listOf(
                     (destinationTimes.value[0].minutos),
                     (destinationTimes.value.getOrNull(1)?.minutos ?: "")

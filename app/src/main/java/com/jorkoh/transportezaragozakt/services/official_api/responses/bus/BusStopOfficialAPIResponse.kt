@@ -31,13 +31,13 @@ data class BusStopOfficialAPIResponse(
     val geometry: Geometry
 ) : BusStopResponse {
 
-    override fun toStopDestinations(): List<StopDestination> {
+    override fun toStopDestinations(busStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
         destinos?.forEach { destination ->
             stopDestinations += StopDestination(
                 destination.linea.fixLine(),
                 destination.destino.dropLast(1),
-                id,
+                busStopId,
                 listOf(
                     destination.primero,
                     destination.segundo

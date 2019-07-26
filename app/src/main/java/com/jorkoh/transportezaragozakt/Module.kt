@@ -16,6 +16,7 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsView
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
 import com.jorkoh.transportezaragozakt.services.common.util.LiveDataCallAdapterFactory
+import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.moshi_adapters.LatLngAdapter
 import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
@@ -23,6 +24,7 @@ import com.pixplicity.generate.Rate
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -83,6 +85,35 @@ val appModule = module {
             .build()
             .create(TramAPIService::class.java)
     }
+    single<CtazAPIService> {
+        Retrofit.Builder()
+            .baseUrl(CtazAPIService.BASE_URL)
+            .client(OkHttpClient()
+                .newBuilder()
+                .addInterceptor { chain ->
+                    val response = chain.proceed(chain.request())
+                    val rawJson = response.body()?.string() ?: ""
+                    val correctedJson = if(rawJson.startsWith("nada(")){
+                        rawJson.substring(5, rawJson.length-1)
+                    }else{
+                        rawJson
+                    }
+                    response.newBuilder().body(ResponseBody.create(response.body()?.contentType(), correctedJson)).build()
+                }
+                .build()
+            )
+            .addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder()
+                        .add(LatLngAdapter())
+                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                        .build()
+                )
+            )
+            .addCallAdapterFactory(get<LiveDataCallAdapterFactory>())
+            .build()
+            .create(CtazAPIService::class.java)
+    }
 
     // Room
     single {
@@ -119,8 +150,8 @@ val appModule = module {
     // Repositories
     single<SettingsRepository> { SettingsRepositoryImplementation(get(), androidContext()) }
     single<StopsRepository> { StopsRepositoryImplementation(get(), get(), get(), get()) }
-    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get()) }
-    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get()) }
+    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
+    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
     single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
 

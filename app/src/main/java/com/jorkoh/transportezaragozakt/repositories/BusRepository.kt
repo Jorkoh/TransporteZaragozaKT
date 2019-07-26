@@ -8,6 +8,10 @@ import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
 import com.jorkoh.transportezaragozakt.services.bus_web.officialAPIToBusWebId
 import com.jorkoh.transportezaragozakt.services.bus_web.responses.BusStopBusWebResponse
+import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
+import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
+import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.bus.BusStopCtazAPIResponse
+import com.jorkoh.transportezaragozakt.services.ctaz_api.stopIdToCtazAPIBusStopUrl
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.responses.bus.BusStopOfficialAPIResponse
 
@@ -24,23 +28,29 @@ class BusRepositoryImplementation(
     private val appExecutors: AppExecutors,
     private val officialApiService: OfficialAPIService,
     private val busWebService: BusWebService,
+    private val ctazAPIService: CtazAPIService,
     private val stopsDao: StopsDao,
     private val db: AppDatabase
 ) : BusRepository {
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
-        return object : NetworkBoundResourceWithBackup<List<StopDestination>, BusStopOfficialAPIResponse, BusStopBusWebResponse>(appExecutors) {
-            override fun savePrimaryCallResult(item: BusStopOfficialAPIResponse) {
-                db.runInTransaction {
-                    stopsDao.deleteStopDestinations(busStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations())
-                }
+        return object : NetworkBoundResourceWithBackup<List<StopDestination>, BusStopOfficialAPIResponse, BusStopBusWebResponse, BusStopCtazAPIResponse>(appExecutors) {
+            override fun processPrimaryResponse(response: ApiSuccessResponse<BusStopOfficialAPIResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(busStopId)
             }
 
-            override fun saveSecondaryCallResult(item: BusStopBusWebResponse) {
+            override fun processSecondaryResponse(response: ApiSuccessResponse<BusStopBusWebResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(busStopId)
+            }
+
+            override fun processTertiaryResponse(response: ApiSuccessResponse<BusStopCtazAPIResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(busStopId)
+            }
+
+            override fun saveCallResult(result: List<StopDestination>) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(busStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations())
+                    stopsDao.insertStopDestinations(result)
                 }
             }
 
@@ -52,8 +62,9 @@ class BusRepositoryImplementation(
 
             override fun createPrimaryCall() = officialApiService.getBusStopOfficialAPI(busStopId)
 
-            // Ids unfortunately are not consistent between API calls on different services
             override fun createSecondaryCall() = busWebService.getBusStopBusWeb(busStopId.officialAPIToBusWebId())
+
+            override fun createTertiaryCall() = ctazAPIService.getBusStopCtazAPI(busStopId.stopIdToCtazAPIBusStopUrl())
         }.asLiveData()
     }
 

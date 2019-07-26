@@ -5,6 +5,10 @@ import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWithBackup
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
+import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
+import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.tram.TramStopCtazAPIResponse
+import com.jorkoh.transportezaragozakt.services.ctaz_api.stopIdToCtazAPITramStopUrl
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.responses.tram.TramStopOfficialAPIResponse
 import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
@@ -25,24 +29,30 @@ class TramRepositoryImplementation(
     private val appExecutors: AppExecutors,
     private val officialApiService: OfficialAPIService,
     private val tramAPIService: TramAPIService,
+    private val ctazAPIService: CtazAPIService,
     private val stopsDao: StopsDao,
     private val db: AppDatabase
 ) : TramRepository {
 
     override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
         return object :
-            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse>(appExecutors) {
-            override fun savePrimaryCallResult(item: TramStopOfficialAPIResponse) {
-                db.runInTransaction {
-                    stopsDao.deleteStopDestinations(tramStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations())
-                }
+            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse, TramStopCtazAPIResponse>(appExecutors) {
+            override fun processPrimaryResponse(response: ApiSuccessResponse<TramStopOfficialAPIResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(tramStopId)
             }
 
-            override fun saveSecondaryCallResult(item: TramStopTramAPIResponse) {
+            override fun processSecondaryResponse(response: ApiSuccessResponse<TramStopTramAPIResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(tramStopId)
+            }
+
+            override fun processTertiaryResponse(response: ApiSuccessResponse<TramStopCtazAPIResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(tramStopId)
+            }
+
+            override fun saveCallResult(result: List<StopDestination>) {
                 db.runInTransaction {
                     stopsDao.deleteStopDestinations(tramStopId)
-                    stopsDao.insertStopDestinations(item.toStopDestinations())
+                    stopsDao.insertStopDestinations(result)
                 }
             }
 
@@ -54,8 +64,9 @@ class TramRepositoryImplementation(
 
             override fun createPrimaryCall() = officialApiService.getTramStopOfficialAPI(tramStopId)
 
-            // Ids unfortunately are not consistent between API calls on different services
             override fun createSecondaryCall() = tramAPIService.getTramStopTramAPI(tramStopId.officialAPIToTramAPIId())
+
+            override fun createTertiaryCall() = ctazAPIService.getTramStopCtazAPI(tramStopId.stopIdToCtazAPITramStopUrl())
         }.asLiveData()
     }
 

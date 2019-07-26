@@ -23,8 +23,6 @@ interface BusWebService {
     fun getBusStopBusWeb(@Query("poste") id: String): LiveData<ApiResponse<BusStopBusWebResponse>>
 }
 
-fun String.busWebToOfficialAPIId() = "tuzsa-${this.split(" ")[1]}"
-
 fun String.officialAPIToBusWebId() = this.split("-")[1]
 
 fun String.fixLine() =

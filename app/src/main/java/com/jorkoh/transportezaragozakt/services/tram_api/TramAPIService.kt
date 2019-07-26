@@ -25,8 +25,6 @@ interface TramAPIService {
 
 fun String.officialAPIToTramAPIId() = officialToTramIds[this] ?: ""
 
-fun Pair<String, String>.tramAPIToOfficialAPIId() = tramToOfficialIds[this] ?: ""
-
 val officialToTramIds = mapOf(
     "2502" to "1",
     "2422" to "2",
@@ -76,55 +74,4 @@ val officialToTramIds = mapOf(
     "2101" to "51",
     "2301" to "52",
     "2401" to "53"
-)
-
-val tramToOfficialIds = mapOf(
-    Pair("Mago de Oz", "Parque Goya") to "2502",
-    Pair("Un Americano en París", "Parque Goya") to "2422",
-    Pair("La Ventana Indiscreta", "Parque Goya") to "2322",
-    Pair("Los Olvidados", "Parque Goya") to "2102",
-    Pair("Argualas", "Parque Goya") to "2002",
-    Pair("Casablanca", "Parque Goya") to "1902",
-    Pair("Romareda", "Parque Goya") to "1802",
-    Pair("Emperador Carlos V", "Parque Goya") to "1702",
-    Pair("Plaza de San Francisco", "Parque Goya") to "1602",
-    Pair("Fernando el Católico", "Parque Goya") to "1502",
-    Pair("Gran Vía", "Parque Goya") to "1402",
-    Pair("Plaza Aragón", "Parque Goya") to "1312",
-    Pair("Plaza de España", "Parque Goya") to "1302",
-    Pair("César Augusto", "Parque Goya") to "1202",
-    Pair("Plaza del Pilar-Murallas", "Parque Goya") to "1102",
-    Pair("La Chimenea", "Parque Goya") to "1002",
-    Pair("María Montessori", "Parque Goya") to "902",
-    Pair("León Felipe", "Parque Goya") to "802",
-    Pair("Pablo Neruda", "Parque Goya") to "702",
-    Pair("Adolfo Aznar", "Parque Goya") to "602",
-    Pair("García Abril", "Parque Goya") to "502",
-    Pair("Campus Río Ebro", "Parque Goya") to "402",
-    Pair("Juslibol", "Parque Goya") to "302",
-    Pair("Parque Goya", "Parque Goya") to "202",
-    Pair("Avenida de la Academia", "Valdespartera") to "101",
-    Pair("Parque Goya", "Valdespartera") to "201",
-    Pair("Juslibol", "Valdespartera") to "301",
-    Pair("Campus Río Ebro", "Valdespartera") to "401",
-    Pair("Margarita Xirgu", "Valdespartera") to "501",
-    Pair("Legaz Lacambra", "Valdespartera") to "601",
-    Pair("Clara Campoamor", "Valdespartera") to "701",
-    Pair("Rosalía de Castro", "Valdespartera") to "801",
-    Pair("Martínez Soria", "Valdespartera") to "901",
-    Pair("La Chimenea", "Valdespartera") to "1001",
-    Pair("Plaza del Pilar-Murallas", "Valdespartera") to "1101",
-    Pair("César Augusto", "Valdespartera") to "1201",
-    Pair("Plaza de España", "Valdespartera") to "1301",
-    Pair("Plaza Aragón", "Valdespartera") to "1311",
-    Pair("Gran Vía", "Valdespartera") to "1401",
-    Pair("Fernando el Católico", "Valdespartera") to "1501",
-    Pair("Plaza de San Francisco", "Valdespartera") to "1601",
-    Pair("Emperador Carlos V", "Valdespartera") to "1701",
-    Pair("Romareda", "Valdespartera") to "1801",
-    Pair("Casablanca", "Valdespartera") to "1901",
-    Pair("Argualas", "Valdespartera") to "2001",
-    Pair("Los Olvidados", "Valdespartera") to "2101",
-    Pair("Los Pájaros", "Valdespartera") to "2301",
-    Pair("Cantando bajo la Lluvia", "Valdespartera") to "2401"
 )

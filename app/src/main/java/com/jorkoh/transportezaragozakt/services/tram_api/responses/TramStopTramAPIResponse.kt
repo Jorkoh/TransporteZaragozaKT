@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.services.tram_api.responses
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.common.responses.TramStopResponse
-import com.jorkoh.transportezaragozakt.services.tram_api.tramAPIToOfficialAPIId
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.*
@@ -19,13 +18,13 @@ data class TramStopTramAPIResponse(
     val result: List<Result>
 ) : TramStopResponse {
 
-    override fun toStopDestinations(): List<StopDestination> {
+    override fun toStopDestinations(tramStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
-        result.groupBy { it.destino }.forEach { destinationTimes ->
+        result.groupBy { it.linea + it.destino }.forEach { destinationTimes ->
             stopDestinations += StopDestination(
                 destinationTimes.value[0].linea,
                 destinationTimes.value[0].destino,
-                Pair(stop, sense).tramAPIToOfficialAPIId(),
+                tramStopId,
                 listOf(
                     (destinationTimes.value[0].minutos.toString()),
                     (destinationTimes.value.getOrNull(1)?.minutos?.toString() ?: "")

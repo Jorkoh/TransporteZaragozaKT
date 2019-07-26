@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.services.common.util
 
+import okhttp3.HttpUrl
 import retrofit2.Response
 
 /**
@@ -20,7 +21,8 @@ sealed class ApiResponse<T> {
                     ApiEmptyResponse()
                 } else {
                     ApiSuccessResponse(
-                        body = body
+                        body = body,
+                        requestURL = response.raw().request().url()
                     )
                 }
             } else {
@@ -42,7 +44,8 @@ sealed class ApiResponse<T> {
 class ApiEmptyResponse<T> : ApiResponse<T>()
 
 data class ApiSuccessResponse<T>(
-    val body: T
+    val body: T,
+    val requestURL : HttpUrl
 ) : ApiResponse<T>()
 
 data class ApiErrorResponse<T>(val errorMessage: String) : ApiResponse<T>()
