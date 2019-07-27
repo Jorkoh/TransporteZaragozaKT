@@ -25,70 +25,69 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.datetime.internal.TimeChangeListener
 import com.afollestad.materialdialogs.datetime.utils.*
-import com.afollestad.materialdialogs.datetime.utils.getTimePicker
-import com.afollestad.materialdialogs.datetime.utils.hour
-import com.afollestad.materialdialogs.datetime.utils.isFutureTime
-import com.afollestad.materialdialogs.datetime.utils.minute
-import com.afollestad.materialdialogs.datetime.utils.toCalendar
 import com.afollestad.materialdialogs.utils.MDUtil.isLandscape
-import java.util.Calendar
+import java.util.*
 
 /**
  * Makes the dialog a time picker.
  */
 fun MaterialDialog.timePicker(
-  currentTime: Calendar? = null,
-  requireFutureTime: Boolean = false,
-  show24HoursView: Boolean = true,
-  daysOfWeek : List<Boolean>? = null,
-  timeCallback: TimeCallback = null
+    currentTime: Calendar? = null,
+    requireFutureTime: Boolean = false,
+    show24HoursView: Boolean = true,
+    daysOfWeek: List<Boolean>? = null,
+    timeCallback: TimeCallback = null
 ): MaterialDialog {
-  customView(
-      R.layout.md_datetime_picker_time,
-      noVerticalPadding = true,
-      dialogWrapContent = windowContext.isLandscape()
-  )
+    customView(
+        R.layout.md_datetime_picker_time,
+        noVerticalPadding = true,
+        scrollable = true,
+        dialogWrapContent = windowContext.isLandscape()
+    )
 
-  with(getTimePicker()) {
-    setIs24HourView(show24HoursView)
-    if(daysOfWeek != null && daysOfWeek.count() == 7){
-      setDaysOfWeek(daysOfWeek)
+    with(getTimePicker()) {
+        setIs24HourView(show24HoursView)
+        if (daysOfWeek != null && daysOfWeek.count() == 7) {
+            setDaysOfWeek(daysOfWeek)
+        }
+        if (currentTime != null) {
+            hour(currentTime.get(Calendar.HOUR_OF_DAY))
+            minute(currentTime.get(Calendar.MINUTE))
+        }
+        setOnTimeChangedListener { _, _, _ ->
+            val isFutureTime = isFutureTime()
+            setActionButtonEnabled(
+                POSITIVE,
+                !requireFutureTime || isFutureTime
+            )
+        }
     }
-    if (currentTime != null) {
-      hour(currentTime.get(Calendar.HOUR_OF_DAY))
-      minute(currentTime.get(Calendar.MINUTE))
-    }
-    setOnTimeChangedListener { _, _, _ ->
-      val isFutureTime = isFutureTime()
-      setActionButtonEnabled(
-          POSITIVE,
-          !requireFutureTime || isFutureTime
-      )
-    }
-  }
 
-  positiveButton(android.R.string.ok) {
-    timeCallback?.invoke(it, getTimePicker().toCalendar(), getDaysOfWeek())
-  }
-  negativeButton(android.R.string.cancel)
+    tintCheckBoxes()
 
-  if (requireFutureTime) {
-    val changeListener = TimeChangeListener(windowContext, getTimePicker()) {
-      val isFutureTime = it.isFutureTime()
-      setActionButtonEnabled(
-          POSITIVE,
-          !requireFutureTime || isFutureTime
-      )
+    positiveButton(android.R.string.ok) {
+        timeCallback?.invoke(it, getTimePicker().toCalendar(), getDaysOfWeek())
     }
-    onDismiss { changeListener.dispose() }
-  }
+    negativeButton(android.R.string.cancel)
 
-  return this
+    if (requireFutureTime) {
+        val changeListener = TimeChangeListener(windowContext, getTimePicker()) {
+            val isFutureTime = it.isFutureTime()
+            setActionButtonEnabled(
+                POSITIVE,
+                !requireFutureTime || isFutureTime
+            )
+        }
+        onDismiss { changeListener.dispose() }
+    }
+
+    return this
 }
 
 /**
  * Gets the currently selected time from a time picker dialog.
  */
-@CheckResult fun MaterialDialog.selectedTime(): Calendar {
-  return getTimePicker().toCalendar()
+@CheckResult
+fun MaterialDialog.selectedTime(): Calendar {
+    return getTimePicker().toCalendar()
 }

@@ -106,8 +106,6 @@ class MainActivity : AppCompatActivity() {
                 changeAmount < 0 -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
             }
         })
-        // Broadcast receiver for shortcut pinning callback
-        registerReceiver(shortcutPinnedReceiver, IntentFilter(ACTION_SHORTCUT_PINNED))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -151,6 +149,17 @@ class MainActivity : AppCompatActivity() {
         if (currentNavController?.value?.popBackStack() != true) {
             super.onBackPressed()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Broadcast receiver for shortcut pinning callback
+        registerReceiver(shortcutPinnedReceiver, IntentFilter(ACTION_SHORTCUT_PINNED))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(shortcutPinnedReceiver)
     }
 
     fun makeSnackbar(text: String) {

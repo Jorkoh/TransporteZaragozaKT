@@ -23,7 +23,6 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/monday_letter"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -36,7 +35,6 @@
                 android:button="@null"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/tuesday_letter"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -49,7 +47,6 @@
                 android:button="@null"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/wednesday_letter"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -62,7 +59,6 @@
                 android:button="@null"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/thursday_letter"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -75,7 +71,6 @@
                 android:button="@null"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/friday_letter"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -88,7 +83,6 @@
                 android:button="@null"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/saturday_letter"/>
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -101,7 +95,6 @@
                 android:button="@null"
                 android:textAlignment="center"
                 android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
-                android:drawableTint="?colorOnBackground"
                 android:text="@string/sunday_letter"/>
     </LinearLayout>
 
@@ -109,7 +102,7 @@
             android:layout_weight="0.5"
             android:id="@+id/datetimeTimePicker"
             android:theme="@style/testing"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/picker_days_layout"

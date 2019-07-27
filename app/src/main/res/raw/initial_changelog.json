@@ -1,5 +1,5 @@
 {
   "version": 2,
-  "textEN": "<ul><li>(30/06/18) Version 2: fixed a bunch of stop locations with more recent data.</li><li>(15/06/18) Version 1: initial version of stops and lines.</li></ul>",
-  "textES": "<ul><li>(30/06/18) Versión 2: corregidas múltiples paradas con información más reciente.</li><li>(15/06/18) Versión 1: versión inicial de paradas y líneas.</li></ul>"
+  "textEN": "(30/06/18) Version 2: fixed a bunch of stop locations with more recent data.\n\n(15/06/18) Version 1: initial version of stops and lines.",
+  "textES": "(30/06/18) Versión 2: corregidas múltiples paradas con información más reciente.\n\n(15/06/18) Versión 1: versión inicial de paradas y líneas."
 }

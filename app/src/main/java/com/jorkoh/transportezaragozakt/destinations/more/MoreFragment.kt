@@ -3,7 +3,6 @@ package com.jorkoh.transportezaragozakt.destinations.more
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Html
 import androidx.core.os.ConfigurationCompat
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
@@ -76,8 +75,7 @@ class MoreFragment : PreferenceFragmentCompat() {
             Preference.OnPreferenceClickListener {
                 MaterialDialog(requireContext()).show {
                     title(R.string.changelog_title)
-                    @Suppress("DEPRECATION")
-                    message(text = Html.fromHtml(changelog))
+                    message(text = changelog ?: "")
                 }
                 true
             }

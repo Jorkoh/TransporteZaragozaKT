@@ -25,8 +25,6 @@ import android.util.TypedValue
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.TimePicker
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat.getColor
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.R
@@ -101,8 +99,8 @@ internal fun getOnBackgroundColor(context: Context): Int {
     return color
 }
 
-internal fun CheckBox.setDrawableColor(@ColorRes color: Int) {
+internal fun CheckBox.setDrawableColor(color: Int) {
     compoundDrawables.filterNotNull().forEach {
-        it.colorFilter = PorterDuffColorFilter(getColor(context, color), PorterDuff.Mode.SRC_IN)
+        it.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 }

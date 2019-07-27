@@ -11,22 +11,24 @@ import java.util.*
 data class BusStopCtazAPIResponse(
     @Json(name = "urban_arrival_time")
     val urban_arrival_times: List<UrbanTime>
-) : BusStopResponse{
+) : BusStopResponse {
 
-    override fun toStopDestinations(busStopId : String): List<StopDestination> {
+    override fun toStopDestinations(busStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
-        urban_arrival_times.groupBy { it.line + it.destination }.forEach { destinationTimes ->
-            stopDestinations += StopDestination(
-                destinationTimes.value[0].line.fixLine(),
-                destinationTimes.value[0].destination,
-                busStopId,
-                listOf(
-                    (destinationTimes.value[0].arrival_time),
-                    (destinationTimes.value.getOrNull(1)?.arrival_time ?: "")
-                ),
-                Date()
-            )
-        }
+        urban_arrival_times
+            .filterNot { it.line == "Sin información" || it.destination == "Sin destino" }
+            .groupBy { it.line + it.destination }.forEach { destinationTimes ->
+                stopDestinations += StopDestination(
+                    destinationTimes.value[0].line.fixLine(),
+                    destinationTimes.value[0].destination,
+                    busStopId,
+                    listOf(
+                        (destinationTimes.value[0].arrival_time),
+                        (destinationTimes.value.getOrNull(1)?.arrival_time ?: "")
+                    ),
+                    Date()
+                )
+            }
         return stopDestinations
     }
 }
@@ -40,9 +42,9 @@ data class UrbanTime(
     val destination: String,
 
     @Json(name = "arrival_time")
-    val arrival_time : String,
+    val arrival_time: String,
 
     @Json(name = "narrival_time")
-    val narrival_time : Int
+    val narrival_time: Int?
 )
 
