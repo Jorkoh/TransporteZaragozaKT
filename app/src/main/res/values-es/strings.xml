@@ -7,7 +7,7 @@
     <string name="more_destination_title">Más</string>
     <string name="no_favorites">¡Aún no tienes paradas favoritas!</string>
     <string name="no_data_available">Sin información disponible</string>
-    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo.\n\nPara obtener los tiempos de llegada se usan todas las fuentes disponibles: la API pública del ayuntamiento, las webs de bus y tranvía de Avanza y el servicio del CTAZ. Si el problema persiste seguramente todo el sistema está de mantenimiento y es imposible obtener la información.\n\nAlgunas paradas no reciben información, especialmente fuera de horario.</string>
+    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo.\n\nPara obtener los tiempos de llegada se usan todas las fuentes disponibles: la API pública del ayuntamiento, las webs de bus y tranvía de Avanza y el servicio del CTAZ. Si el problema persiste seguramente todo el sistema está de mantenimiento y es imposible obtener la información.\n\nAlgunas paradas no reciben actualizaciones, especialmente fuera de horario.</string>
     <string name="notification_channel_name_reminders">Notificaciones</string>
     <string name="notification_channel_description_reminders">Notificaciones definidas por el usuario con información de una parada. Administradas desde la pantalla de notificaciones.</string>
     <string name="no_estimate">Sin estimación</string>
@@ -18,7 +18,7 @@
     <string name="edit_favorite_dialog_title">Editar favorito</string>
     <string name="stop_type_content_description">Tipo de parada</string>
     <string name="edit_favorite_dialog_restore">Restaurar</string>
-    <string name="location_rationale">Este permiso es usado para mostrar tu localización en el mapa y encontrar paradas cercanas. La información de localización nunca será usada para otro propósito</string>
+    <string name="location_rationale">Este permiso es usado para mostrar tu localización en el mapa y encontrar paradas cercanas. La información de localización nunca será usada para otro propósito.</string>
     <string name="no_reminders">¡Aún no tienes notificaciones!</string>
     <string name="reminders_destination_title">Notificaciones</string>
     <string name="fab_add_favorite">Añadir a favoritos</string>

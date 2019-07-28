@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- The launcher theme. It sets the main window background to the launch_screen drawable -->
     <style name="BaseTheme.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
@@ -30,6 +30,7 @@
         <item name="android:numbersBackgroundColor">?colorPrimaryVariant</item>
         <item name="android:numbersSelectorColor">?colorPrimary</item>
         <item name="android:numbersTextColor">?colorOnPrimary</item>
+        <item name="android:numbersInnerTextColor" tools:targetApi="m">?colorOnPrimary</item>
     </style>
 
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
