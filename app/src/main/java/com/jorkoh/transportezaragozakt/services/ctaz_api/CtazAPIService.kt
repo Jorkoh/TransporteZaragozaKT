@@ -8,7 +8,6 @@ import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.tram.TramStop
 import retrofit2.http.GET
 import retrofit2.http.Url
 
-//TODO
 /**
  * Unofficial API service behind CTAZ website, barely anyone know that this website provides bus and tram arrival times.
  * It's not a real API since it doesn't have actual endpoints, the JSON responses are malformed and the content type is clear text

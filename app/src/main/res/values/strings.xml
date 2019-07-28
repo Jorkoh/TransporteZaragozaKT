@@ -42,7 +42,7 @@
 
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available</string>
-    <string name="no_data_available_suggestions" translatable="true">Please check your internet connection and try again.\n\nArrival times are provided by a city council service, when this service fails the information is extracted directly from the official Avanza websites. If the problem persists the entire system is probably undergoing maintenance.\n\nSome stops and lines don\'t receive time updates, specially outside of their schedule. </string>
+    <string name="no_data_available_suggestions" translatable="true">Please check your internet connection and try again.\n\nArrival times are obtained from every available source: the city council public API, the Avanza tram and bus websites and the CTAZ service. If the problem persists the entire system is probably undergoing maintenance and the information is impossible to obtain.\n\nSome stops don\'t receive time updates, specially outside of their schedule.</string>
     <string name="no_estimate" translatable="true">No estimate</string>
     <string name="minutes" translatable="true">minutes</string>
     <string name="minute" translatable="true">minute</string>

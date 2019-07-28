@@ -7,7 +7,7 @@
     <string name="more_destination_title">Más</string>
     <string name="no_favorites">¡Aún no tienes paradas favoritas!</string>
     <string name="no_data_available">Sin información disponible</string>
-    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo.\n\nEl ayuntamiento proporciona los tiempos de llegada, cuando este servicio falla la información es obtenida directamente de las webs oficiales de Avanza. Si el problema persiste seguramente todo el sistema está de mantenimiento.\n\nAlgunas paradas y líneas no reciben información, especialmente fuera de horario.</string>
+    <string name="no_data_available_suggestions">Por favor, comprueba tu conexión a internet e inténtalo de nuevo.\n\nPara obtener los tiempos de llegada se usan todas las fuentes disponibles: la API pública del ayuntamiento, las webs de bus y tranvía de Avanza y el servicio del CTAZ. Si el problema persiste seguramente todo el sistema está de mantenimiento y es imposible obtener la información.\n\nAlgunas paradas no reciben información, especialmente fuera de horario.</string>
     <string name="notification_channel_name_reminders">Notificaciones</string>
     <string name="notification_channel_description_reminders">Notificaciones definidas por el usuario con información de una parada. Administradas desde la pantalla de notificaciones.</string>
     <string name="no_estimate">Sin estimación</string>
