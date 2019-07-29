@@ -37,7 +37,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     private var displayFilters: Boolean = true
     private var bottomMargin: Int = 0
 
-    private val mapVM: MapViewModel by sharedViewModel()
+    private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private val busFilterEnabledObserver = Observer<Boolean> { enabled ->
         bus_chip.isChecked = enabled
@@ -68,11 +68,11 @@ class CustomSupportMapFragment : SupportMapFragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (displayFilters) {
-            mapVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
-            mapVM.tramFilterEnabled.observe(viewLifecycleOwner, tramFilterEnabledObserver)
+            mapSettingsVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
+            mapSettingsVM.tramFilterEnabled.observe(viewLifecycleOwner, tramFilterEnabledObserver)
         }
-        mapVM.mapType.observe(viewLifecycleOwner, mapTypesObserver)
-        mapVM.trafficEnabled.observe(viewLifecycleOwner, trafficObserver)
+        mapSettingsVM.mapType.observe(viewLifecycleOwner, mapTypesObserver)
+        mapSettingsVM.trafficEnabled.observe(viewLifecycleOwner, trafficObserver)
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -93,10 +93,10 @@ class CustomSupportMapFragment : SupportMapFragment() {
     private fun setupFilters(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
         val filterChipsView = layoutInflater.inflate(R.layout.map_filters, wrapper, false)
         filterChipsView.bus_chip.setOnClickListener {
-            mapVM.setBusFilterEnabled(it.bus_chip.isChecked)
+            mapSettingsVM.setBusFilterEnabled(it.bus_chip.isChecked)
         }
         filterChipsView.tram_chip.setOnClickListener {
-            mapVM.setTramFilterEnabled(it.tram_chip.isChecked)
+            mapSettingsVM.setTramFilterEnabled(it.tram_chip.isChecked)
         }
         wrapper.addView(filterChipsView)
     }
@@ -104,14 +104,14 @@ class CustomSupportMapFragment : SupportMapFragment() {
     private fun setupExtraMapControls(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
         val mapExtraControls = layoutInflater.inflate(R.layout.map_extra_controls, wrapper, false)
         mapExtraControls.map_type_button.setOnClickListener {
-            if (mapVM.mapType.value == GoogleMap.MAP_TYPE_NORMAL) {
-                mapVM.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
+            if (mapSettingsVM.mapType.value == GoogleMap.MAP_TYPE_NORMAL) {
+                mapSettingsVM.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
             } else {
-                mapVM.setMapType(GoogleMap.MAP_TYPE_NORMAL)
+                mapSettingsVM.setMapType(GoogleMap.MAP_TYPE_NORMAL)
             }
         }
         mapExtraControls.traffic_button.setOnClickListener {
-            mapVM.setTrafficEnabled(mapVM.trafficEnabled.value != true)
+            mapSettingsVM.setTrafficEnabled(mapSettingsVM.trafficEnabled.value != true)
         }
         wrapper.addView(mapExtraControls)
         if (bottomMargin != 0) {

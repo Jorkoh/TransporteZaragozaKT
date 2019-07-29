@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -30,7 +31,7 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MA
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MIN_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
-import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
+import com.jorkoh.transportezaragozakt.destinations.map.MapSettingsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MarkerIcons
 import com.jorkoh.transportezaragozakt.destinations.map.StopInfoWindowAdapter
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
@@ -44,8 +45,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LineDetailsFragment : Fragment() {
 
-    private val mapVM: MapViewModel by sharedViewModel()
     private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this })
+    private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var map: GoogleMap
@@ -109,12 +110,12 @@ class LineDetailsFragment : Fragment() {
         }
         mapFragment.getMapAsync { map ->
             this.map = map
-            setupMap(!ZARAGOZA_BOUNDS.contains(map.cameraPosition.target))
+            setupMap(!ZARAGOZA_BOUNDS.contains(map.cameraPosition.target), mapFragment.viewLifecycleOwner)
         }
     }
 
-    private fun setupMap(centerCamera: Boolean) {
-        map.setPadding(0, 0, 0, 160)
+    private fun setupMap(centerCamera: Boolean, mapLifecycleOwner: LifecycleOwner) {
+        map.setPadding(0, 0, 0, 160.toPx())
 
         if (centerCamera) {
             map.moveCamera(
@@ -129,7 +130,7 @@ class LineDetailsFragment : Fragment() {
 
         styleMap()
         configureMap()
-        setupObservers()
+        setupObservers(mapLifecycleOwner)
 
         // Enable "My Location" layer
         runWithPermissions(
@@ -175,20 +176,20 @@ class LineDetailsFragment : Fragment() {
         }
     }
 
-    private fun setupObservers() {
+    private fun setupObservers(mapLifecycleOwner: LifecycleOwner) {
         // Map style
-        mapVM.mapType.observe(viewLifecycleOwner, Observer { mapType ->
+        mapSettingsVM.mapType.observe(mapLifecycleOwner, Observer { mapType ->
             map.mapType = mapType
         })
-        mapVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+        mapSettingsVM.trafficEnabled.observe(mapLifecycleOwner, Observer { enabled ->
             map.isTrafficEnabled = enabled
         })
-        mapVM.isDarkMap.observe(viewLifecycleOwner, Observer { isDarkMap ->
+        mapSettingsVM.isDarkMap.observe(mapLifecycleOwner, Observer { isDarkMap ->
             map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, if (isDarkMap) R.raw.map_style_dark else R.raw.map_style))
         })
 
         // Line route locations
-        lineDetailsVM.lineLocations.observe(viewLifecycleOwner, Observer { locations ->
+        lineDetailsVM.lineLocations.observe(mapLifecycleOwner, Observer { locations ->
             val line = PolylineOptions()
                 .clickable(false)
                 .color(
@@ -208,9 +209,7 @@ class LineDetailsFragment : Fragment() {
             if (lineDetailsVM.selectedStopId.value.isNullOrEmpty()
                 && SphericalUtil.computeDistanceBetween(map.cameraPosition.target, ZARAGOZA_CENTER) < 1
             ) {
-                map.setPadding(0, 0, 0, 160.toPx())
                 map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
-                map.setPadding(0, 0, 0, 0)
             }
         })
 
@@ -229,7 +228,7 @@ class LineDetailsFragment : Fragment() {
         })
 
         // Line stops
-        lineDetailsVM.stops.observe(viewLifecycleOwner, Observer { stops ->
+        lineDetailsVM.stops.observe(mapLifecycleOwner, Observer { stops ->
             stops?.let {
                 // Get rid of the old markers and set up new markers
                 renewMarkers(stops)

@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsViewModel
+import com.jorkoh.transportezaragozakt.destinations.map.MapSettingsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MarkerIcons
 import com.jorkoh.transportezaragozakt.destinations.reminders.RemindersViewModel
@@ -157,7 +158,8 @@ val appModule = module {
 
     // ViewModels
     viewModel { FavoritesViewModel(get()) }
-    viewModel { MapViewModel(get(), get()) }
+    viewModel { MapViewModel(get()) }
+    viewModel { MapSettingsViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }
     viewModel { StopDetailsViewModel(get(), get(), get()) }

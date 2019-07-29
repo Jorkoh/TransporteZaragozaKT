@@ -1,6 +1,7 @@
 package com.jorkoh.transportezaragozakt.destinations.map
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -13,7 +14,12 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MA
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterManager: ClusterManager<Stop>) :
+class CustomClusterRenderer(
+    val context: Context,
+    val map: GoogleMap,
+    clusterManager: ClusterManager<Stop>,
+    val selectedStopId: MutableLiveData<String>
+) :
     DefaultClusterRenderer<Stop>(context, map, clusterManager), GoogleMap.OnCameraIdleListener, KoinComponent {
 
     private val markerIcons: MarkerIcons by inject()
@@ -46,6 +52,11 @@ class CustomClusterRenderer(val context: Context, val map: GoogleMap, clusterMan
     }
 
     override fun onClusterItemRendered(clusterItem: Stop?, marker: Marker?) {
-        marker?.tag = clusterItem
+        marker?.let {
+            marker.tag = clusterItem
+            if (selectedStopId.value == (marker.tag as Stop?)?.stopId) {
+                marker.showInfoWindow()
+            }
+        }
     }
 }
