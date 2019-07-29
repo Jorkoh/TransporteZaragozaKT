@@ -6,6 +6,7 @@
         android:id="@+id/reminders_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="56dp"
         tools:context="com.jorkoh.transportezaragozakt.destinations.reminders.RemindersFragment">
 
     <androidx.recyclerview.widget.RecyclerView

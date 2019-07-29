@@ -35,7 +35,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         const val ACTION_SHORTCUT_PINNED = "ACTION_SHORTCUT_PINNED"
     }
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         // Bottom navigation showing and hiding
         when (destination.id) {
-            R.id.stopDetails, R.id.lineDetails -> hideBottomNavigation()
+            R.id.stopDetails, R.id.lineDetails, R.id.ThemePicker -> hideBottomNavigation()
             else -> showBottomNavigation()
         }
         // Fab showing and hiding. Ideally the fab would just be part of that fragment layout but to have it properly react to snackbars
@@ -213,7 +213,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        nav_host_container.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
         with(bottom_navigation) {
             bottomNavigationShowing = false
             currentAnimator?.end()
@@ -240,6 +239,7 @@ class MainActivity : AppCompatActivity() {
             // Avoid duplicating animations
             return
         }
+
         with(bottom_navigation) {
             bottomNavigationShowing = true
             currentAnimator?.end()
@@ -256,13 +256,6 @@ class MainActivity : AppCompatActivity() {
                 duration = 250
                 doOnStart {
                     visibility = View.VISIBLE
-                }
-                doOnEnd {
-                    if (bottomNavigationShowing) {
-                        nav_host_container.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-                            bottomMargin = resources.getDimension(R.dimen.design_bottom_navigation_height).toInt()
-                        }
-                    }
                 }
                 start()
             }

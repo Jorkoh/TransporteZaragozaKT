@@ -12,7 +12,6 @@
             android:id="@+id/map_fragment_container_line"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
     </FrameLayout>
 
     <FrameLayout

@@ -87,11 +87,14 @@ class MapFragment : Fragment() {
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.map_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment.newInstance(true)
+            mapFragment =
+                CustomSupportMapFragment.newInstance(
+                    displayFilters = true,
+                    bottomMargin = 56
+                )
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))
                 .commit()
-            childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync { map ->
             this.map = map
@@ -100,6 +103,8 @@ class MapFragment : Fragment() {
     }
 
     private fun setupMap(centerCamera: Boolean, mapLifecycleOwner: LifecycleOwner) {
+        map.setPadding(0, 0, 0, 56)
+
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(

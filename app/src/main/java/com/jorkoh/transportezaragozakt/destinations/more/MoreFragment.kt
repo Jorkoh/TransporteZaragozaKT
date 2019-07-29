@@ -9,6 +9,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.toPx
 import java.util.*
 
 
@@ -80,6 +81,11 @@ class MoreFragment : PreferenceFragmentCompat() {
                 true
             }
         handleDeepLinks()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        view?.setPadding(0, 0, 0, 56.toPx())
     }
 
     private fun composeFeedbackEmail() {

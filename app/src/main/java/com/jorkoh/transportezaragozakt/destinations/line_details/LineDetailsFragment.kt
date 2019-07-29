@@ -106,7 +106,6 @@ class LineDetailsFragment : Fragment() {
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container_line, mapFragment, getString(R.string.line_destination_map_fragment_tag))
                 .commit()
-            childFragmentManager.executePendingTransactions()
         }
         mapFragment.getMapAsync { map ->
             this.map = map
@@ -115,6 +114,8 @@ class LineDetailsFragment : Fragment() {
     }
 
     private fun setupMap(centerCamera: Boolean) {
+        map.setPadding(0, 0, 0, 160)
+
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(

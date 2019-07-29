@@ -52,11 +52,9 @@ open class ThemePickerFragment : Fragment(), OnItemClickListener {
             }
         }
         if (selectedTheme != -1) {
-            gridView.post {
                 if (selectedTheme < gridView.firstVisiblePosition || selectedTheme > gridView.lastVisiblePosition) {
                     gridView.setSelection(selectedTheme)
                 }
-            }
         }
     }
 
