@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val mainActivityVM: MainActivityViewModel by viewModel()
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private var currentNavController: LiveData<NavController>? = null
+    var currentNavController: LiveData<NavController>? = null
     private val shortcutPinnedReceiver = ShortcutPinnedReceiver()
 
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -50,6 +50,11 @@ class MainActivity : AppCompatActivity() {
         when (destination.id) {
             R.id.stopDetails, R.id.lineDetails, R.id.ThemePicker -> hideBottomNavigation()
             else -> showBottomNavigation()
+        }
+        // Stop details has its own collapsing toolbar
+        when (destination.id) {
+            R.id.stopDetails -> main_toolbar.visibility = View.GONE
+            else -> main_toolbar.visibility = View.VISIBLE
         }
         // Fab showing and hiding. Ideally the fab would just be part of that fragment layout but to have it properly react to snackbars
         // and the bottom navigation animations it has to be a direct child of the main_container coordinator layout.

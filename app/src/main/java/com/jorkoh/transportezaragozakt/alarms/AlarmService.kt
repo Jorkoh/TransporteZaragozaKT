@@ -61,7 +61,7 @@ class AlarmService : LifecycleService() {
             val stopType = StopType.valueOf(requireNotNull(extras.getString(STOP_TYPE_KEY_ALARM)))
             val reminderId = extras.getInt(REMINDER_ID_KEY_ALARM)
             CombinedLiveData(
-                stopsRepository.loadStopDestinations(stopId, stopType),
+                stopsRepository.loadStopDestinations(stopType, stopId),
                 remindersRepository.loadReminderAlias(reminderId)
             ) { x, y -> Pair(x, y) }.observe(this, Observer { info ->
                 if (info.first?.status != Status.LOADING) {

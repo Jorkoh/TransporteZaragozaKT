@@ -9,11 +9,14 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
@@ -25,6 +28,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
+import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
@@ -70,7 +74,7 @@ class StopDetailsFragment : Fragment() {
                     View.VISIBLE
                 } else {
                     // Data loaded successfully, show the rate me snackbar if conditions are met
-                    if(rate.showRequest(requireActivity().coordinator_layout, R.id.gap, requireContext())){
+                    if (rate.showRequest(requireActivity().coordinator_layout, R.id.gap, requireContext())) {
                         // If it has been shown record it on Firebase
                         firebaseAnalytics.logEvent(getString(R.string.EVENT_RATE_ME_SHOWN), Bundle())
                     }
@@ -154,20 +158,38 @@ class StopDetailsFragment : Fragment() {
         stopDetailsVM.stopDestinations.observe(viewLifecycleOwner, stopDestinationsObserver)
         stopDetailsVM.refreshStopDestinations()
         stopDetailsVM.stopIsFavorited.observe(viewLifecycleOwner, stopFavoriteStatusObserver)
-        stopDetailsVM.stopTitle.observe(viewLifecycleOwner, Observer { stopTitle ->
-            (requireActivity() as MainActivity).setActionBarTitle(stopTitle)
+        stopDetailsVM.stop.observe(viewLifecycleOwner, Observer { stop ->
+            // Setup the toolbar
+            type_image_stop_details.setImageResource(
+                when (stop.type) {
+                    StopType.BUS -> R.drawable.ic_bus
+                    StopType.TRAM -> R.drawable.ic_tram
+                }
+            )
+            stop_details_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
+            stop_details_title_text_view.text = stop.stopTitle
+            stop.lines.inflateLines(stop_details_lines_layout, stop.type, requireContext())
         })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Enables onCreateOptionsMenu() callback
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.stop_details_destination_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    override fun onResume() {
+        super.onResume()
+        // Setup toolbar, unfortunately due to bottom navigation multiple navigation controller juggling we can't setup
+        // earlier on the lifecycle. We have to wait for activity onRestoreInstanceState() which happens after onStart()
+        stop_details_toolbar.apply {
+            menu.clear()
+            inflateMenu(R.menu.stop_details_destination_menu)
+            setupWithNavController(requireNotNull((requireActivity() as MainActivity).currentNavController?.value))
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.item_refresh -> {
+                        stopDetailsVM.refreshStopDestinations()
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(item)
+                }
+            }
+        }
     }
 
     private fun setupFab() {
@@ -222,7 +244,7 @@ class StopDetailsFragment : Fragment() {
                     R.id.stop_details_fab_shortcut -> {
                         MaterialDialog(requireContext()).show {
                             title(R.string.create_shortcut)
-                            input(prefill = stopDetailsVM.stopTitle.value) { _, text ->
+                            input(prefill = stopDetailsVM.stop.value?.title ?: "") { _, text ->
                                 createShortcut(text.toString())
                             }
                             positiveButton(R.string.create_button)
@@ -266,16 +288,6 @@ class StopDetailsFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.item_refresh -> {
-                stopDetailsVM.refreshStopDestinations()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 }

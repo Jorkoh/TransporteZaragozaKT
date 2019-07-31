@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.destinations.stop_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
@@ -25,14 +26,14 @@ class StopDetailsViewModel(
     val stopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()
 
     lateinit var stopIsFavorited: LiveData<Boolean>
-    lateinit var stopTitle: LiveData<String>
+    lateinit var stop: LiveData<Stop>
 
     fun init(stopId: String, stopType: StopType) {
         this.stopId = stopId
         this.stopType = stopType
 
         stopIsFavorited = favoritesRepository.isFavoriteStop(stopId)
-        stopTitle = stopsRepository.loadStopTitle(stopId)
+        stop = stopsRepository.loadStop(stopType, stopId)
     }
 
     fun toggleStopFavorite() {
@@ -43,7 +44,7 @@ class StopDetailsViewModel(
         if (::tempStopDestinations.isInitialized) {
             stopDestinations.removeSource(tempStopDestinations)
         }
-        tempStopDestinations = stopsRepository.loadStopDestinations(stopId, stopType)
+        tempStopDestinations = stopsRepository.loadStopDestinations(stopType, stopId)
         stopDestinations.addSource(tempStopDestinations) { value ->
             stopDestinations.postValue(value)
         }

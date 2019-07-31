@@ -18,6 +18,7 @@ import com.jorkoh.transportezaragozakt.services.tram_api.responses.TramStopTramA
 
 interface TramRepository {
     fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>>
+    fun loadStop(tramStopId: String): LiveData<Stop>
     fun loadStops(): LiveData<List<Stop>>
     fun loadLines(): LiveData<List<Line>>
     fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
@@ -36,7 +37,9 @@ class TramRepositoryImplementation(
 
     override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
         return object :
-            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse, TramStopCtazAPIResponse>(appExecutors) {
+            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse, TramStopCtazAPIResponse>(
+                appExecutors
+            ) {
             override fun processPrimaryResponse(response: ApiSuccessResponse<TramStopOfficialAPIResponse>): List<StopDestination> {
                 return response.body.toStopDestinations(tramStopId)
             }
@@ -68,6 +71,10 @@ class TramRepositoryImplementation(
 
             override fun createTertiaryCall() = ctazAPIService.getTramStopCtazAPI(tramStopId.stopIdToCtazAPITramStopUrl())
         }.asLiveData()
+    }
+
+    override fun loadStop(tramStopId: String): LiveData<Stop> {
+        return stopsDao.getStop(tramStopId)
     }
 
     override fun loadStops(): LiveData<List<Stop>> {

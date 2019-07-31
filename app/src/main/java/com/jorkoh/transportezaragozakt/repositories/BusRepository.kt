@@ -17,6 +17,7 @@ import com.jorkoh.transportezaragozakt.services.official_api.responses.bus.BusSt
 
 interface BusRepository {
     fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
+    fun loadStop(busStopId: String): LiveData<Stop>
     fun loadStops(): LiveData<List<Stop>>
     fun loadLines(): LiveData<List<Line>>
     fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
@@ -34,7 +35,10 @@ class BusRepositoryImplementation(
 ) : BusRepository {
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
-        return object : NetworkBoundResourceWithBackup<List<StopDestination>, BusStopOfficialAPIResponse, BusStopBusWebResponse, BusStopCtazAPIResponse>(appExecutors) {
+        return object :
+            NetworkBoundResourceWithBackup<List<StopDestination>, BusStopOfficialAPIResponse, BusStopBusWebResponse, BusStopCtazAPIResponse>(
+                appExecutors
+            ) {
             override fun processPrimaryResponse(response: ApiSuccessResponse<BusStopOfficialAPIResponse>): List<StopDestination> {
                 return response.body.toStopDestinations(busStopId)
             }
@@ -68,11 +72,15 @@ class BusRepositoryImplementation(
         }.asLiveData()
     }
 
+    override fun loadStop(busStopId: String): LiveData<Stop> {
+        return stopsDao.getStop(busStopId)
+    }
+
     override fun loadStops(): LiveData<List<Stop>> {
         return stopsDao.getStopsByType(StopType.BUS)
     }
 
-    override fun loadStops(stopIds : List<String>): LiveData<List<Stop>> {
+    override fun loadStops(stopIds: List<String>): LiveData<List<Stop>> {
         return stopsDao.getStops(stopIds)
     }
 
@@ -80,11 +88,11 @@ class BusRepositoryImplementation(
         return stopsDao.getLinesByType(LineType.BUS)
     }
 
-    override fun loadLineLocations(lineId : String): LiveData<List<LineLocation>> {
+    override fun loadLineLocations(lineId: String): LiveData<List<LineLocation>> {
         return stopsDao.getLineLocations(lineId)
     }
 
-    override fun loadLine(lineId : String) : LiveData<Line>{
+    override fun loadLine(lineId: String): LiveData<Line> {
         return stopsDao.getLine(lineId)
     }
 }

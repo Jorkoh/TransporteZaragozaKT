@@ -1,20 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment">
+        android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/stop_details_appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/stop_details_collapsing_toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="?attr/colorPrimary"
+                app:titleEnabled="false"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                android:theme="@style/ActionBarTheme">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.5">
+
+                <ImageView
+                        android:id="@+id/type_image_stop_details"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginBottom="8dp"
+                        android:contentDescription="@string/stop_type_content_description"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/stop_details_title_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="?colorOnPrimary"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/type_image_stop_details"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                <GridLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/stop_details_lines_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/type_image_stop_details"
+                        app:layout_constraintTop_toBottomOf="@+id/stop_details_title_text_view"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/stop_details_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    android:theme="@style/ActionBarTheme"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/stop_details_no_data_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_rawRes="@raw/stop_lottie"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                app:lottie_scale="0.3"
+                android:scaleType="centerInside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/stop_details_no_data_text"
+                android:visibility="gone"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="0.2"/>
+
+        <TextView
+                android:id="@+id/stop_details_no_data_text"
+                android:text="@string/no_data_available"
+                android:textColor="?colorOnBackground"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth_default="wrap"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/stop_details_no_data_help"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stop_details_no_data_animation"
+                android:visibility="gone"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:layout_marginEnd="4dp"
+                android:textAlignment="center"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginTop="32dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/stop_details_no_data_help"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_help_outline_black_24dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="@+id/stop_details_no_data_text"
+                app:layout_constraintBottom_toBottomOf="@+id/stop_details_no_data_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/stop_details_no_data_text"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swiperefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favorites_recycler_view"
@@ -27,58 +149,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/stop_details_no_data_animation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:lottie_rawRes="@raw/stop_lottie"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
-            app:lottie_scale="0.3"
-            android:scaleType="centerInside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/stop_details_no_data_text"
-            android:visibility="gone"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0.2"/>
-
-    <TextView
-            android:id="@+id/stop_details_no_data_text"
-            android:text="@string/no_data_available"
-            android:textColor="?colorOnBackground"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_default="wrap"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/stop_details_no_data_help"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/stop_details_no_data_animation"
-            android:visibility="gone"
-            android:layout_marginStart="8dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline"
-            android:layout_marginEnd="4dp"
-            android:textAlignment="center"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:layout_marginTop="32dp"/>
-
-    <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/stop_details_no_data_help"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_help_outline_black_24dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="@+id/stop_details_no_data_text"
-            app:layout_constraintBottom_toBottomOf="@+id/stop_details_no_data_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/stop_details_no_data_text"
-            android:visibility="gone"
-            android:layout_marginEnd="8dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

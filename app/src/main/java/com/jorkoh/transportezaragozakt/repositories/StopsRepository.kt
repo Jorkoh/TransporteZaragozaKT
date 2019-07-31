@@ -6,18 +6,17 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import java.util.*
 
 interface StopsRepository {
-    fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>>
+    fun loadStop(stopType: StopType, stopId: String): LiveData<Stop>
+    fun loadStopDestinations(stopType: StopType, stopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStops(stopType: StopType): LiveData<List<Stop>>
     fun loadStops(): MediatorLiveData<List<Stop>>
     fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): LiveData<List<StopWithDistance>>
-    fun loadStopTitle(stopId: String): LiveData<String>
     fun loadLines(lineType: LineType): LiveData<List<Line>>
     fun loadLines(): MutableLiveData<List<Line>>
     fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>
@@ -27,12 +26,17 @@ interface StopsRepository {
 
 class StopsRepositoryImplementation(
     private val busRepository: BusRepository,
-    private val tramRepository: TramRepository,
-    private val stopsDao: StopsDao,
-    private val appExecutors: AppExecutors
+    private val tramRepository: TramRepository
 ) : StopsRepository {
 
-    override fun loadStopDestinations(stopId: String, stopType: StopType): LiveData<Resource<List<StopDestination>>> {
+    override fun loadStop(stopType: StopType, stopId: String): LiveData<Stop> {
+        return when (stopType){
+            StopType.BUS -> busRepository.loadStop(stopId)
+            StopType.TRAM -> tramRepository.loadStop(stopId)
+        }
+    }
+
+    override fun loadStopDestinations(stopType: StopType, stopId: String): LiveData<Resource<List<StopDestination>>> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStopDestinations(stopId)
             StopType.TRAM -> tramRepository.loadStopDestinations(stopId)
@@ -109,10 +113,6 @@ class StopsRepositoryImplementation(
             }
             newStopsWithDistance.sortedBy { it.distance }
         }
-    }
-
-    override fun loadStopTitle(stopId: String): LiveData<String> {
-        return stopsDao.getStopTitle(stopId)
     }
 }
 
