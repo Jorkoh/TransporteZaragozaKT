@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
@@ -176,6 +177,10 @@ class StopDetailsFragment : Fragment() {
         super.onResume()
         // Setup toolbar, unfortunately due to bottom navigation multiple navigation controller juggling we can't setup
         // earlier on the lifecycle. We have to wait for activity onRestoreInstanceState() which happens after onStart()
+        setupToolbarActionItems()
+    }
+
+    private fun setupToolbarActionItems() {
         stop_details_toolbar.apply {
             menu.clear()
             inflateMenu(R.menu.stop_details_destination_menu)
@@ -184,6 +189,17 @@ class StopDetailsFragment : Fragment() {
                 when (item.itemId) {
                     R.id.item_refresh -> {
                         stopDetailsVM.refreshStopDestinations()
+                        true
+                    }
+                    R.id.item_directions -> {
+                        stopDetailsVM.stop.value?.location?.let { location ->
+                            val mapIntent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("google.navigation:q=${location.latitude},${location.longitude}&mode=w")
+                            )
+                            mapIntent.setPackage("com.google.android.apps.maps")
+                            startActivity(mapIntent)
+                        }
                         true
                     }
                     else -> super.onOptionsItemSelected(item)
