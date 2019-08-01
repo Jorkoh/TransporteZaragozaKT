@@ -44,6 +44,54 @@ val materialColors = intArrayOf(
     Color.BLACK
 )
 
+fun String.officialLineIdToBusWebLineId() = officialToBusWebLineIds[this] ?: ""
+
+val officialToBusWebLineIds = mapOf(
+    "21" to "021",
+    "22" to "022",
+    "23" to "023",
+    "24" to "024",
+    "25" to "025",
+    "28" to "028",
+    "29" to "029",
+    "30" to "030",
+    "31" to "031",
+    "32" to "032",
+    "33" to "033",
+    "34" to "034",
+    "35" to "035",
+    "36" to "036",
+    "38" to "038",
+    "39" to "039",
+    "40" to "040",
+    "41" to "041",
+    "42" to "042",
+    "43" to "043",
+    "44" to "044",
+    "50" to "050",
+    "51" to "051",
+    "52" to "052",
+    "53" to "053",
+    "54" to "054",
+    "55" to "055",
+    "56" to "056",
+    "57" to "057",
+    "58" to "058",
+    "59" to "059",
+    "60" to "060",
+    "C1" to "0C1",
+    "C4" to "0C4",
+    "Ci1" to "CI1",
+    "Ci2" to "CI2",
+    "N1" to "N01",
+    "N2" to "N02",
+    "N3" to "N03",
+    "N4" to "N04",
+    "N5" to "N05",
+    "N6" to "N06",
+    "N7" to "N07"
+)
+
 // Color is saved as hex in persistence so it has to be masked, there is no Android utility for this available on API >=21.
 // Transparent is equivalent to no color selected
 fun Int.toHexFromColor() = if (this == Color.TRANSPARENT) "" else String.format("#%06X", 0xFFFFFF and this)

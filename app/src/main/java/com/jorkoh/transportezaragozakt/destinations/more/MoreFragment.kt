@@ -34,14 +34,24 @@ class MoreFragment : PreferenceFragmentCompat() {
         // Tram Twitter
         findPreference<Preference>(getString(R.string.tram_twitter_key))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/tranviadezgz")))
+                findNavController().navigate(
+                    MoreFragmentDirections.actionMoreToWebView(
+                        url = "https://twitter.com/tranviadezgz",
+                        isTwitterTimeline = true
+                    )
+                )
                 true
             }
 
         // Bus Twitter
         findPreference<Preference>(getString(R.string.bus_twitter_key))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/buszaragoza")))
+                findNavController().navigate(
+                    MoreFragmentDirections.actionMoreToWebView(
+                        url = "https://twitter.com/buszaragoza",
+                        isTwitterTimeline = true
+                    )
+                )
                 true
             }
 
@@ -54,7 +64,7 @@ class MoreFragment : PreferenceFragmentCompat() {
         // Privacy policy
         findPreference<Preference>(getString(R.string.privacy_policy_key))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy")))
+                findNavController().navigate(MoreFragmentDirections.actionMoreToWebView(url = "https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy"))
                 true
             }
 

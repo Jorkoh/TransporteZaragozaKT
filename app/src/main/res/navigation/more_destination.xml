@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/more_destination"
             app:startDestination="@id/more">
 
@@ -10,14 +9,36 @@
             android:name="com.jorkoh.transportezaragozakt.destinations.more.MoreFragment"
             android:label="@string/more_destination_title">
         <action
-                android:id="@+id/action_more_to_ThemePicker"
-                app:destination="@id/ThemePicker"/>
+                android:id="@+id/action_more_to_themePicker"
+                app:destination="@id/themePicker"/>
         <deepLink
                 android:id="@+id/deepLinkChangelog"
                 app:uri="launchTZ://viewChangelog/"/>
+        <action
+                android:id="@+id/action_more_to_webView"
+                app:destination="@id/webView">
+        </action>
     </fragment>
     <fragment
-            android:id="@+id/ThemePicker"
+            android:id="@+id/themePicker"
             android:name="com.jorkoh.transportezaragozakt.destinations.more.ThemePickerFragment"
             android:label="@string/theme_picker_title"/>
+    <fragment
+            android:id="@id/webView"
+            android:name="com.jorkoh.transportezaragozakt.destinations.web_view.WebViewFragment"
+            >
+        <argument
+                android:name="url"
+                app:argType="string"
+                />
+        <argument
+                android:name="javascript"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="null"/>
+        <argument
+                android:name="isTwitterTimeline"
+                app:argType="boolean"
+                android:defaultValue="false"/>
+    </fragment>
 </navigation>

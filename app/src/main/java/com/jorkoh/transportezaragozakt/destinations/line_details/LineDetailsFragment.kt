@@ -4,9 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -34,6 +32,7 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZA
 import com.jorkoh.transportezaragozakt.destinations.map.MapSettingsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MarkerIcons
 import com.jorkoh.transportezaragozakt.destinations.map.StopInfoWindowAdapter
+import com.jorkoh.transportezaragozakt.destinations.officialLineIdToBusWebLineId
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.destinations.toPx
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
@@ -85,6 +84,12 @@ class LineDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.line_details_destination, container, false).also { rootView ->
             bottomSheetBehavior = BottomSheetBehavior.from(rootView.line_details_bottom_sheet)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Enables onCreateOptionsMenu() callback
+        setHasOptionsMenu(true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -265,6 +270,34 @@ class LineDetailsFragment : Fragment() {
             val marker = map.addMarker(markerOptions)
             marker.tag = stop
             markers.add(marker)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.line_details_destination_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_schedule -> {
+                if (lineDetailsVM.lineType == LineType.TRAM) {
+                    findNavController().navigate(
+                        LineDetailsFragmentDirections.actionLineDetailsToWebView(
+                            url = "https://www.tranviasdezaragoza.es/es/informacion/horaires",
+                            javascript = getString(R.string.tram_line_javascript)
+                        )
+                    )
+                } else {
+                    findNavController().navigate(
+                        LineDetailsFragmentDirections.actionLineDetailsToWebView(
+                            url = "http://zaragoza.avanzagrupo.com/frm_esquemaparadas.php?tipoPag=Linea&LINEASEL=${lineDetailsVM.lineId.officialLineIdToBusWebLineId()}",
+                            javascript = getString(R.string.bus_line_javascript)
+                        )
+                    )
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

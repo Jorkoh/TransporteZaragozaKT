@@ -49,5 +49,24 @@
         <action
                 android:id="@id/action_lineDetails_to_stopDetails"
                 app:destination="@id/stopDetails"/>
+        <action
+                android:id="@+id/action_lineDetails_to_webView"
+                app:destination="@id/webView"/>
+    </fragment>
+    <fragment
+            android:id="@+id/webView"
+            android:name="com.jorkoh.transportezaragozakt.destinations.web_view.WebViewFragment">
+        <argument
+                android:name="url"
+                app:argType="string"/>
+        <argument
+                android:name="javascript"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue="null"/>
+        <argument
+                android:name="isTwitterTimeline"
+                app:argType="boolean"
+                android:defaultValue="false"/>
     </fragment>
 </navigation>

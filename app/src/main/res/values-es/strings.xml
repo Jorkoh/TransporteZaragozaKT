@@ -127,4 +127,5 @@
     <string name="changelog_summary">Lista de cambios en información de paradas y líneas</string>
     <string name="stop">Parada</string>
     <string name="directions_menu_item">Direcciones</string>
+    <string name="schedule_menu_item">Horario</string>
 </resources>

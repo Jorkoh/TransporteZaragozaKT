@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
         // Bottom navigation showing and hiding
         when (destination.id) {
-            R.id.stopDetails, R.id.lineDetails, R.id.ThemePicker -> hideBottomNavigation()
+            R.id.stopDetails, R.id.lineDetails, R.id.themePicker, R.id.webView -> hideBottomNavigation()
             else -> showBottomNavigation()
         }
         // Stop details has its own collapsing toolbar
@@ -197,7 +197,7 @@ class MainActivity : AppCompatActivity() {
             R.id.more -> "More"
             R.id.stopDetails -> "StopDetails"
             R.id.lineDetails -> "LineDetails"
-            R.id.ThemePicker -> "ThemePicker"
+            R.id.themePicker -> "ThemePicker"
             else -> "Unknown"
         }
         firebaseAnalytics.setCurrentScreen(this, screenName, screenName)
