@@ -63,8 +63,12 @@
     <!--Line details-->
     <string name="line" translatable="true">Line</string>
     <string name="schedule_menu_item" translatable="true">Schedule</string>
-    <string name="tram_line_javascript" translatable="false">javascript:(function(){$(\'#menu_responsive\').hide();$(\'#wrraperContainerMenu\').hide();$(\'.entry-content.clearfix\').appendTo(\'body\');})()</string>
-    <string name="bus_line_javascript" translatable="false">javascript:(function(){document.querySelector(\'#cabecera\').style.display = \'none\';document.querySelector(\'#pie\').style.display = \'none\';document.querySelector(\'#contenido > div.hgroup\').style.display = \'none\';document.querySelector(\'#paradas > div.select\').style.display = \'none\';document.querySelector(\'#linea\').style.display = \'none\';})()</string>
+    <string name="tram_line_schedule_url" translatable="false">https://www.tranviasdezaragoza.es/es/informacion/horaires</string>
+    <string name="bus_line_schedule_url" translatable="false">http://zaragoza.avanzagrupo.com/frm_esquemaparadas.php?tipoPag=Linea&amp;LINEASEL=%</string>
+    <string name="tram_line_schedule_title" translatable="true">Tram line schedule</string>
+    <string name="bus_line_schedule_title" translatable="true">Bus line % schedule</string>
+    <string name="tram_line_schedule_javascript" translatable="false">javascript:(function(){$(\'#menu_responsive\').hide();$(\'#wrraperContainerMenu\').hide();$(\'.entry-content.clearfix\').appendTo(\'body\');})()</string>
+    <string name="bus_line_schedule_javascript" translatable="false">javascript:(function(){document.querySelector(\'#cabecera\').style.display = \'none\';document.querySelector(\'#pie\').style.display = \'none\';document.querySelector(\'#contenido > div.hgroup\').style.display = \'none\';document.querySelector(\'#paradas > div.select\').style.display = \'none\';document.querySelector(\'#linea\').style.display = \'none\';})()</string>
 
     <!--Reminders-->
     <string name="reminder" translatable="true">Reminder</string>

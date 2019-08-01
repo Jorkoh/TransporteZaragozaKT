@@ -37,6 +37,7 @@ class MoreFragment : PreferenceFragmentCompat() {
                 findNavController().navigate(
                     MoreFragmentDirections.actionMoreToWebView(
                         url = "https://twitter.com/tranviadezgz",
+                        title = getString(R.string.tram_twitter_title),
                         isTwitterTimeline = true
                     )
                 )
@@ -49,6 +50,7 @@ class MoreFragment : PreferenceFragmentCompat() {
                 findNavController().navigate(
                     MoreFragmentDirections.actionMoreToWebView(
                         url = "https://twitter.com/buszaragoza",
+                        title = getString(R.string.bus_twitter_title),
                         isTwitterTimeline = true
                     )
                 )
@@ -64,7 +66,12 @@ class MoreFragment : PreferenceFragmentCompat() {
         // Privacy policy
         findPreference<Preference>(getString(R.string.privacy_policy_key))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                findNavController().navigate(MoreFragmentDirections.actionMoreToWebView(url = "https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy"))
+                findNavController().navigate(
+                    MoreFragmentDirections.actionMoreToWebView(
+                        url = "https://jorkoh.github.io/TransporteZaragoza/PrivacyPolicy",
+                        title = getString(R.string.privacy_policy_title)
+                    )
+                )
                 true
             }
 

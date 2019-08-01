@@ -283,15 +283,17 @@ class LineDetailsFragment : Fragment() {
                 if (lineDetailsVM.lineType == LineType.TRAM) {
                     findNavController().navigate(
                         LineDetailsFragmentDirections.actionLineDetailsToWebView(
-                            url = "https://www.tranviasdezaragoza.es/es/informacion/horaires",
-                            javascript = getString(R.string.tram_line_javascript)
+                            url = getString(R.string.tram_line_schedule_url),
+                            title = getString(R.string.tram_line_schedule_title),
+                            javascript = getString(R.string.tram_line_schedule_javascript)
                         )
                     )
                 } else {
                     findNavController().navigate(
                         LineDetailsFragmentDirections.actionLineDetailsToWebView(
-                            url = "http://zaragoza.avanzagrupo.com/frm_esquemaparadas.php?tipoPag=Linea&LINEASEL=${lineDetailsVM.lineId.officialLineIdToBusWebLineId()}",
-                            javascript = getString(R.string.bus_line_javascript)
+                            url = getString(R.string.bus_line_schedule_url).replace("%", lineDetailsVM.lineId.officialLineIdToBusWebLineId()),
+                            title = getString(R.string.bus_line_schedule_title).replace("%", lineDetailsVM.lineId),
+                            javascript = getString(R.string.bus_line_schedule_javascript)
                         )
                     )
                 }

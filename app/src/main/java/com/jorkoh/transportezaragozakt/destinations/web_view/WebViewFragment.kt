@@ -10,6 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.web_view_destination.view.*
 
@@ -20,6 +21,7 @@ class WebViewFragment : Fragment() {
         return inflater.inflate(R.layout.web_view_destination, container, false).apply {
             val args = WebViewFragmentArgs.fromBundle(requireArguments())
 
+            (requireActivity() as MainActivity).setActionBarTitle(args.title)
 
             web_view.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {

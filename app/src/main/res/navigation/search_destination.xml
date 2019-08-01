@@ -66,12 +66,13 @@
 
     <fragment
             android:id="@id/webView"
-            android:name="com.jorkoh.transportezaragozakt.destinations.web_view.WebViewFragment"
-            >
+            android:name="com.jorkoh.transportezaragozakt.destinations.web_view.WebViewFragment">
         <argument
                 android:name="url"
-                app:argType="string"
-                />
+                app:argType="string"/>
+        <argument
+                android:name="title"
+                app:argType="string"/>
         <argument
                 android:name="javascript"
                 app:argType="string"
