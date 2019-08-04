@@ -24,27 +24,20 @@
                 app:titleEnabled="false"
                 app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <FrameLayout
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@id/fragment_toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/search_tab_layout"
-                        app:tabMaxWidth="0dp"
-                        app:tabGravity="fill"
-                        android:paddingTop="?attr/actionBarSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                <androidx.appcompat.widget.Toolbar
-                        android:id="@id/fragment_toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
-                        android:theme="@style/ActionBarTheme"/>
-
-            </FrameLayout>
-
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/ActionBarTheme"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/search_tab_layout"
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

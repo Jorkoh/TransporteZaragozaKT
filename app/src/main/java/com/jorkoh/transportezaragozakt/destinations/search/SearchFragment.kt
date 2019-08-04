@@ -42,7 +42,6 @@ class SearchFragment : FragmentWithToolbar() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
 
             override fun onTabSelected(tab: TabLayout.Tab) {
-                search_appBar.setExpanded(true)
                 // Save the selected search tab for future launches
                 searchVM.setSearchTabPosition(tab.position)
             }
