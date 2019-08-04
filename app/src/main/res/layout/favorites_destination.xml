@@ -1,62 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/favorites_fragment_container"
+        tools:context="com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="56dp"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesFragment">
+        android:paddingBottom="56dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/favorites_recycler_view"
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@id/fragment_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ActionBarTheme"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/favorites_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/no_favorites_animation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:lottie_rawRes="@raw/favorites_lottie"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
-            app:lottie_scale="0.3"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/no_favorites_text"
-            android:visibility="gone"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0.2"
-            />
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favorites_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-            android:id="@+id/no_favorites_text"
-            android:text="@string/no_favorites"
-            android:textColor="?colorOnBackground"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/no_favorites_animation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline"
-            android:layout_marginTop="32dp"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:visibility="gone"
-            android:textAlignment="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/no_favorites_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_rawRes="@raw/favorites_lottie"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                app:lottie_scale="0.3"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/no_favorites_text"
+                android:visibility="gone"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintVertical_bias="0.2"/>
+
+        <TextView
+                android:id="@+id/no_favorites_text"
+                android:text="@string/no_favorites"
+                android:textColor="?colorOnBackground"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/no_favorites_animation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:layout_marginTop="32dp"
+                app:layout_constraintHorizontal_bias="0.5"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

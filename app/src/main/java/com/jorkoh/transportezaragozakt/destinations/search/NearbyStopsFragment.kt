@@ -133,7 +133,7 @@ class NearbyStopsFragment : Fragment() {
         } else {
             View.GONE
         }
-        view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
-        view?.no_search_result_text_nearby_stops?.visibility = newVisibility
+//        view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
+//        view?.no_search_result_text_nearby_stops?.visibility = newVisibility
     }
 }

@@ -34,7 +34,6 @@
     <fragment
             android:id="@+id/lineDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
-            android:label="@string/line_details_title"
             tools:layout="@layout/line_details_destination">
         <argument
                 android:name="lineType"

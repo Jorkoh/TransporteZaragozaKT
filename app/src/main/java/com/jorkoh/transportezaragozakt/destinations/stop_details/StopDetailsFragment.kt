@@ -13,11 +13,10 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
@@ -28,6 +27,7 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
 import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
@@ -42,12 +42,14 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class StopDetailsFragment : Fragment() {
+class StopDetailsFragment : FragmentWithToolbar() {
     companion object {
         const val FAVORITE_ITEM_FAB_POSITION = 0
     }
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
+
+    private val args : StopDetailsFragmentArgs by navArgs()
 
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -133,29 +135,28 @@ class StopDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.stop_details_destination, container, false)
-        setupFab()
-        rootView.favorites_recycler_view.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = stopDestinationsAdapter
-        }
+        return inflater.inflate(R.layout.stop_details_destination, container, false).apply {
+            setupFab()
+            favorites_recycler_view.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = stopDestinationsAdapter
+            }
 
-        rootView.stop_details_no_data_text.setOnClickListener(noDataOnClickListener)
-        rootView.stop_details_no_data_help.setOnClickListener(noDataOnClickListener)
-        rootView.swiperefresh.setOnRefreshListener {
-            stopDetailsVM.refreshStopDestinations()
+            stop_details_no_data_text.setOnClickListener(noDataOnClickListener)
+            stop_details_no_data_help.setOnClickListener(noDataOnClickListener)
+            swiperefresh.setOnRefreshListener {
+                stopDetailsVM.refreshStopDestinations()
+            }
+            setupToolbar(this)
         }
-
-        return rootView
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
-        val args = StopDetailsFragmentArgs.fromBundle(requireArguments())
-        stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
 
+        stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
         stopDetailsVM.stopDestinations.observe(viewLifecycleOwner, stopDestinationsObserver)
         stopDetailsVM.refreshStopDestinations()
         stopDetailsVM.stopIsFavorited.observe(viewLifecycleOwner, stopFavoriteStatusObserver)
@@ -167,24 +168,16 @@ class StopDetailsFragment : Fragment() {
                     StopType.TRAM -> R.drawable.ic_tram
                 }
             )
-            stop_details_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
+            fragment_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
             stop_details_title_text_view.text = stop.stopTitle
             stop.lines.inflateLines(stop_details_lines_layout, stop.type, requireContext())
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Setup toolbar, unfortunately due to bottom navigation multiple navigation controller juggling we can't setup
-        // earlier on the lifecycle. We have to wait for activity onRestoreInstanceState() which happens after onStart()
-        setupToolbarActionItems()
-    }
-
-    private fun setupToolbarActionItems() {
-        stop_details_toolbar.apply {
+    private fun setupToolbar(rootView : View) {
+        rootView.fragment_toolbar.apply {
             menu.clear()
             inflateMenu(R.menu.stop_details_destination_menu)
-            setupWithNavController(requireNotNull((requireActivity() as MainActivity).currentNavController?.value))
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.item_refresh -> {

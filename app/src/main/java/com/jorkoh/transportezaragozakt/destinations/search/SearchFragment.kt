@@ -3,11 +3,12 @@ package com.jorkoh.transportezaragozakt.destinations.search
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
@@ -15,13 +16,14 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
-import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.search_destination.*
+import kotlinx.android.synthetic.main.search_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : FragmentWithToolbar() {
 
     private val searchVM: SearchViewModel by sharedViewModel()
 
@@ -40,6 +42,7 @@ class SearchFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
 
             override fun onTabSelected(tab: TabLayout.Tab) {
+                search_appBar.setExpanded(true)
                 // Save the selected search tab for future launches
                 searchVM.setSearchTabPosition(tab.position)
             }
@@ -52,64 +55,61 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.search_destination, container, false)
+        return inflater.inflate(R.layout.search_destination, container, false).apply {
+            setupToolbar(this)
+        }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Enables onCreateOptionsMenu() callback
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_destination_menu, menu)
-        (menu.findItem(R.id.item_search).actionView as SearchView).apply {
-            queryHint = getString(R.string.search_view_hint)
-            findViewById<TextView>(androidx.appcompat.R.id.search_src_text).textSize = 16f
-            maxWidth = Int.MAX_VALUE
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (!this@apply.isIconified && isVisible) {
-                        searchVM.query.value = newText
+    private fun setupToolbar(rootView: View) {
+        rootView.fragment_toolbar.apply {
+            menu.clear()
+            inflateMenu(R.menu.search_destination_menu)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.item_scan -> {
+                        // Opens the QR scanner activity
+                        IntentIntegrator
+                            .forSupportFragment(this@SearchFragment)
+                            .setOrientationLocked(false)
+                            .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+                            .setPrompt(getString(R.string.qr_scan_prompt))
+                            .initiateScan()
+                        true
                     }
-                    return false
+                    else -> super.onOptionsItemSelected(item)
                 }
-            })
+            }
+            // Search action stuff
+            (menu.findItem(R.id.item_search).actionView as SearchView).apply {
+                queryHint = getString(R.string.search_view_hint)
+                findViewById<TextView>(androidx.appcompat.R.id.search_src_text).textSize = 16f
+                maxWidth = Int.MAX_VALUE
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
 
-            if (!searchVM.query.value.isNullOrEmpty()) {
-                menu.findItem(R.id.item_search).expandActionView()
-                setQuery(searchVM.query.value, false)
-                clearFocus()
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        if (!this@apply.isIconified && isVisible) {
+                            searchVM.query.value = newText
+                        }
+                        return false
+                    }
+                })
+
+                if (!searchVM.query.value.isNullOrEmpty()) {
+                    rootView.fragment_toolbar.menu.findItem(R.id.item_search).expandActionView()
+                    setQuery(searchVM.query.value, false)
+                    clearFocus()
+                }
             }
         }
-
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {
         // If the listener isn't removed the current listener gets a call with an empty query when the action item is destroyed
-        (requireActivity().main_toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
+        (fragment_toolbar.menu.findItem(R.id.item_search)?.actionView as SearchView?)?.setOnQueryTextListener(null)
         super.onDestroyView()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.item_scan -> {
-                // Opens the QR scanner activity
-                IntentIntegrator
-                    .forSupportFragment(this)
-                    .setOrientationLocked(false)
-                    .setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-                    .setPrompt(getString(R.string.qr_scan_prompt))
-                    .initiateScan()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     // Handles opening stop information from successful QR scanning

@@ -4,10 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -23,6 +24,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.map.CustomSupportMapFragment
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
@@ -42,7 +44,7 @@ import kotlinx.android.synthetic.main.line_details_destination.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class LineDetailsFragment : Fragment() {
+class LineDetailsFragment : FragmentWithToolbar() {
 
     private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this })
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
@@ -81,15 +83,10 @@ class LineDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.line_details_destination, container, false).also { rootView ->
-            bottomSheetBehavior = BottomSheetBehavior.from(rootView.line_details_bottom_sheet)
+        return inflater.inflate(R.layout.line_details_destination, container, false).apply {
+            bottomSheetBehavior = BottomSheetBehavior.from(line_details_bottom_sheet)
+            setupToolbar(this)
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // Enables onCreateOptionsMenu() callback
-        setHasOptionsMenu(true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -222,7 +219,7 @@ class LineDetailsFragment : Fragment() {
         lineDetailsVM.line.observe(viewLifecycleOwner, Observer { line ->
             line?.let {
                 // Set the action bar title
-                (requireActivity() as MainActivity).setActionBarTitle("${getString(R.string.line)} ${line.name}")
+                fragment_toolbar.title = "${getString(R.string.line)} ${line.name}"
                 // Load the bottom sheet with the stops by destination
                 line_details_viewpager.adapter = StopDestinationsPagerAdapter(
                     childFragmentManager,
@@ -273,33 +270,38 @@ class LineDetailsFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.line_details_destination_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.item_schedule -> {
-                if (lineDetailsVM.lineType == LineType.TRAM) {
-                    findNavController().navigate(
-                        LineDetailsFragmentDirections.actionLineDetailsToWebView(
-                            url = getString(R.string.tram_line_schedule_url),
-                            title = getString(R.string.tram_line_schedule_title),
-                            javascript = getString(R.string.tram_line_schedule_javascript)
-                        )
-                    )
-                } else {
-                    findNavController().navigate(
-                        LineDetailsFragmentDirections.actionLineDetailsToWebView(
-                            url = getString(R.string.bus_line_schedule_url).replace("%", lineDetailsVM.lineId.officialLineIdToBusWebLineId()),
-                            title = getString(R.string.bus_line_schedule_title).replace("%", lineDetailsVM.lineId),
-                            javascript = getString(R.string.bus_line_schedule_javascript)
-                        )
-                    )
+    private fun setupToolbar(rootView: View) {
+        rootView.fragment_toolbar.apply {
+            menu.clear()
+            inflateMenu(R.menu.line_details_destination_menu)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.item_schedule -> {
+                        if (lineDetailsVM.lineType == LineType.TRAM) {
+                            findNavController().navigate(
+                                LineDetailsFragmentDirections.actionLineDetailsToWebView(
+                                    url = getString(R.string.tram_line_schedule_url),
+                                    title = getString(R.string.tram_line_schedule_title),
+                                    javascript = getString(R.string.tram_line_schedule_javascript)
+                                )
+                            )
+                        } else {
+                            findNavController().navigate(
+                                LineDetailsFragmentDirections.actionLineDetailsToWebView(
+                                    url = getString(R.string.bus_line_schedule_url).replace(
+                                        "%",
+                                        lineDetailsVM.lineId.officialLineIdToBusWebLineId()
+                                    ),
+                                    title = getString(R.string.bus_line_schedule_title).replace("%", lineDetailsVM.lineId),
+                                    javascript = getString(R.string.bus_line_schedule_javascript)
+                                )
+                            )
+                        }
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(item)
                 }
-                true
             }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

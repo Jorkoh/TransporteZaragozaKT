@@ -33,12 +33,17 @@
         <item name="android:numbersInnerTextColor" tools:targetApi="m">?colorOnPrimary</item>
     </style>
 
+    <style name="BaseTheme.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
+        <item name="android:layout">@layout/more_destination</item>
+    </style>
+
     <style name="BaseTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:scrollbars">none</item>
         <item name="android:fontFamily">@font/manrope_medium</item>
         <item name="android:timePickerStyle">@style/CustomTimePickerTheme</item>
         <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="tabStyle">@style/CustomTabStyle</item>
+        <item name="preferenceTheme">@style/BaseTheme.PreferenceThemeOverlay</item>
         <item name="colorBackgroundFloating">?android:colorBackground</item>
         <item name="android:textColorPrimary">?colorOnBackground</item>
         <item name="android:textColorSecondary">?colorOnBackground</item>

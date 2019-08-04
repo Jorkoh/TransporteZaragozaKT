@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
-import androidx.fragment.app.Fragment
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import daio.io.dresscode.dressCodeStyleId
 import daio.io.dresscode.getDressCodes
 
@@ -18,7 +18,7 @@ import daio.io.dresscode.getDressCodes
 /**
  * Fragment containing the theme picker
  */
-open class ThemePickerFragment : Fragment(), OnItemClickListener {
+open class ThemePickerFragment : FragmentWithToolbar(), OnItemClickListener {
 
 
     private lateinit var gridView: GridView

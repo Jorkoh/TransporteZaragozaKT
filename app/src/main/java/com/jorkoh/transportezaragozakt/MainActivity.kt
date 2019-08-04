@@ -15,10 +15,8 @@ import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.view.updateLayoutParams
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.destinations.getColorFromAttr
@@ -42,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     private val mainActivityVM: MainActivityViewModel by viewModel()
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    var currentNavController: LiveData<NavController>? = null
     private val shortcutPinnedReceiver = ShortcutPinnedReceiver()
 
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -50,11 +47,6 @@ class MainActivity : AppCompatActivity() {
         when (destination.id) {
             R.id.stopDetails, R.id.lineDetails, R.id.themePicker, R.id.webView -> hideBottomNavigation()
             else -> showBottomNavigation()
-        }
-        // Stop details has its own collapsing toolbar
-        when (destination.id) {
-            R.id.stopDetails -> main_toolbar.visibility = View.GONE
-            else -> main_toolbar.visibility = View.VISIBLE
         }
         // Fab showing and hiding. Ideally the fab would just be part of that fragment layout but to have it properly react to snackbars
         // and the bottom navigation animations it has to be a direct child of the main_container coordinator layout.
@@ -84,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_container)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        setSupportActionBar(main_toolbar)
+
         if (savedInstanceState == null) {
             // Every time the app is started from scratch count up the engagement events towards displaying the rate-me flow
             rate.count()
@@ -111,6 +103,10 @@ class MainActivity : AppCompatActivity() {
                 changeAmount < 0 -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
             }
         })
+        mainActivityVM.currentNavController.observe(this, Observer { navController ->
+            navController.removeOnDestinationChangedListener(onDestinationChangedListener)
+            navController.addOnDestinationChangedListener(onDestinationChangedListener)
+        })
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -129,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
         // "bottomNavigationShowing" is passed to avoid users with quick fingers navigating into another destination while the
         // bottom navigation is in the process of hiding. Easier and cleaner than trying to directly disable clicks on it
-        val controller = bottom_navigation.setupWithNavController(
+        val newController = bottom_navigation.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
             containerId = R.id.nav_host_container,
@@ -137,21 +133,15 @@ class MainActivity : AppCompatActivity() {
             isAnimationDisabled = { !bottomNavigationShowing },
             firstLaunch = firstLaunch
         )
-
-        controller.observe(this, Observer { navController ->
-            setupActionBarWithNavController(navController)
-            navController.removeOnDestinationChangedListener(onDestinationChangedListener)
-            navController.addOnDestinationChangedListener(onDestinationChangedListener)
-        })
-        currentNavController = controller
+        mainActivityVM.setController(newController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return currentNavController?.value?.navigateUp() ?: false
+        return mainActivityVM.currentNavController.value?.navigateUp() ?: false
     }
 
     override fun onBackPressed() {
-        if (currentNavController?.value?.popBackStack() != true) {
+        if (mainActivityVM.currentNavController.value?.popBackStack() != true) {
             super.onBackPressed()
         }
     }
@@ -181,10 +171,6 @@ class MainActivity : AppCompatActivity() {
             view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
                 .setTextColor(getColorFromAttr(R.attr.colorOnSnackbar))
         }.show()
-    }
-
-    fun setActionBarTitle(title: String) {
-        supportActionBar?.title = title
     }
 
     //Log the destinations in Firebase, it only supports activities by default

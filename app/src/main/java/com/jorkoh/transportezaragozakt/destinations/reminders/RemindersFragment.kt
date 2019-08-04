@@ -5,7 +5,6 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +16,7 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
+import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
 import com.jorkoh.transportezaragozakt.destinations.materialColors
 import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.reminders_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
-class RemindersFragment : Fragment() {
+class RemindersFragment : FragmentWithToolbar() {
 
     private val remindersVM: RemindersViewModel by viewModel()
 

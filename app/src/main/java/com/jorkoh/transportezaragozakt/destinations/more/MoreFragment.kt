@@ -6,14 +6,14 @@ import android.os.Bundle
 import androidx.core.os.ConfigurationCompat
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.PreferenceFragmentCompatWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toPx
 import java.util.*
 
 
-class MoreFragment : PreferenceFragmentCompat() {
+class MoreFragment : PreferenceFragmentCompatWithToolbar() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)

@@ -9,19 +9,19 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.Fragment
-import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
+import kotlinx.android.synthetic.main.web_view_destination.*
 import kotlinx.android.synthetic.main.web_view_destination.view.*
 
-class WebViewFragment : Fragment() {
+class WebViewFragment : FragmentWithToolbar() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.web_view_destination, container, false).apply {
             val args = WebViewFragmentArgs.fromBundle(requireArguments())
 
-            (requireActivity() as MainActivity).setActionBarTitle(args.title)
+            fragment_toolbar.title = args.title
 
             web_view.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
@@ -30,20 +30,17 @@ class WebViewFragment : Fragment() {
                 }
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    web_view.visibility = View.INVISIBLE
-                    loading_web_view_animation.visibility = View.VISIBLE
+                    changeLoadingViewVisibility(true)
                     super.onPageStarted(view, url, favicon)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     if (args.javascript != null) {
                         view?.evaluateJavascript(args.javascript) {
-                            view.visibility = View.VISIBLE
-                            loading_web_view_animation.visibility = View.INVISIBLE
+                            changeLoadingViewVisibility(false)
                         }
                     } else {
-                        view?.visibility = View.VISIBLE
-                        loading_web_view_animation.visibility = View.INVISIBLE
+                        changeLoadingViewVisibility(false)
                     }
                 }
             }
@@ -61,6 +58,16 @@ class WebViewFragment : Fragment() {
             } else {
                 web_view.loadUrl(args.url)
             }
+        }
+    }
+
+    private fun changeLoadingViewVisibility(isLoading : Boolean){
+        if(isLoading){
+            web_view?.visibility = View.INVISIBLE
+            loading_web_view_animation?.visibility = View.VISIBLE
+        }else{
+            web_view?.visibility = View.VISIBLE
+            loading_web_view_animation?.visibility = View.INVISIBLE
         }
     }
 }

@@ -1,8 +1,10 @@
 package com.jorkoh.transportezaragozakt
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
@@ -13,6 +15,9 @@ class MainActivityViewModel(
     private val settingsRepository: SettingsRepository
 ) :
     ViewModel() {
+
+    val currentNavController = MediatorLiveData<NavController>()
+//    val currentNavController3  = MutableLiveData<NavController>()
 
     private var favoriteCount: Int = -1
     private var reminderCount: Int = -1
@@ -42,7 +47,14 @@ class MainActivityViewModel(
                 diff
             }
         }
+
     }
 
     fun isFirstLaunch() = settingsRepository.isFirstLaunch()
+
+    fun setController(newNavController: LiveData<NavController>) {
+        currentNavController.addSource(newNavController) {
+            currentNavController.value = it
+        }
+    }
 }

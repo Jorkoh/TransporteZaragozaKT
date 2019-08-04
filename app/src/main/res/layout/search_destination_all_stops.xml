@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.search.SearchFragment">
+        android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:scrollbars="none"
             android:id="@+id/search_recycler_view_all_stops"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:clipToPadding="false"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:scrollbars="none"/>
+
+</FrameLayout>
