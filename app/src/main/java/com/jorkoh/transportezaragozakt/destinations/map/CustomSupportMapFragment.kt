@@ -39,25 +39,6 @@ class CustomSupportMapFragment : SupportMapFragment() {
 
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
-    private val busFilterEnabledObserver = Observer<Boolean> { enabled ->
-        bus_chip.isChecked = enabled
-    }
-
-    private val tramFilterEnabledObserver = Observer<Boolean> { enabled ->
-        tram_chip.isChecked = enabled
-    }
-
-    private val mapTypesObserver = Observer<Int> { mapType ->
-        when (mapType) {
-            GoogleMap.MAP_TYPE_NORMAL -> map_type_button.setImageResource(R.drawable.ic_satellite_black_24dp)
-            GoogleMap.MAP_TYPE_SATELLITE -> map_type_button.setImageResource(R.drawable.ic_map_black_24dp)
-        }
-    }
-
-    private val trafficObserver = Observer<Boolean> { enabled ->
-        traffic_button.setImageResource(if (enabled) R.drawable.ic_layers_clear_black_24dp else R.drawable.ic_traffic_black_24dp)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
@@ -68,11 +49,22 @@ class CustomSupportMapFragment : SupportMapFragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (displayFilters) {
-            mapSettingsVM.busFilterEnabled.observe(viewLifecycleOwner, busFilterEnabledObserver)
-            mapSettingsVM.tramFilterEnabled.observe(viewLifecycleOwner, tramFilterEnabledObserver)
+            mapSettingsVM.busFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+                bus_chip.isChecked = enabled
+            })
+            mapSettingsVM.tramFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+                tram_chip.isChecked = enabled
+            })
         }
-        mapSettingsVM.mapType.observe(viewLifecycleOwner, mapTypesObserver)
-        mapSettingsVM.trafficEnabled.observe(viewLifecycleOwner, trafficObserver)
+        mapSettingsVM.mapType.observe(viewLifecycleOwner, Observer<Int> { mapType ->
+            when (mapType) {
+                GoogleMap.MAP_TYPE_NORMAL -> map_type_button.setImageResource(R.drawable.ic_satellite_black_24dp)
+                GoogleMap.MAP_TYPE_SATELLITE -> map_type_button.setImageResource(R.drawable.ic_map_black_24dp)
+            }
+        })
+        mapSettingsVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+            traffic_button.setImageResource(if (enabled) R.drawable.ic_layers_clear_black_24dp else R.drawable.ic_traffic_black_24dp)
+        })
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
