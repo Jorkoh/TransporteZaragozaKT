@@ -131,6 +131,8 @@ dependencies {
     implementation deps.firebase
     implementation deps.crashlytics
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+
     //Testing
     testImplementation deps.junit
     testImplementation deps.androidx.jUnitRunner

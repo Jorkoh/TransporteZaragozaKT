@@ -17,7 +17,7 @@ class MainActivityViewModel(
     ViewModel() {
 
     val currentNavController = MediatorLiveData<NavController>()
-//    val currentNavController3  = MutableLiveData<NavController>()
+    var currentNavControllerSource: LiveData<NavController>? = null
 
     private var favoriteCount: Int = -1
     private var reminderCount: Int = -1
@@ -53,6 +53,12 @@ class MainActivityViewModel(
     fun isFirstLaunch() = settingsRepository.isFirstLaunch()
 
     fun setController(newNavController: LiveData<NavController>) {
+        currentNavControllerSource?.let {
+            currentNavController.removeSource(it)
+        }
+
+        currentNavControllerSource = newNavController
+
         currentNavController.addSource(newNavController) {
             currentNavController.value = it
         }

@@ -118,8 +118,7 @@ class RemindersFragment : FragmentWithToolbar() {
         }
     }
 
-    private val remindersAdapter: RemindersAdapter =
-        RemindersAdapter(edit, editAlias, editColor, restore, reorder, delete)
+    private val remindersAdapter: RemindersAdapter = RemindersAdapter(edit, editAlias, editColor, restore, reorder, delete)
 
     private val remindersObserver = Observer<List<ReminderExtended>> { reminders ->
         reminders?.let {
@@ -161,5 +160,12 @@ class RemindersFragment : FragmentWithToolbar() {
         }
         rootView?.no_reminders_animation?.visibility = newVisibility
         rootView?.no_reminders_text?.visibility = newVisibility
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Avoid leaks
+        reminders_recycler_view?.adapter = null
+        itemTouchHelper.attachToRecyclerView(null)
     }
 }

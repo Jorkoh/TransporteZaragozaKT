@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
+import kotlinx.android.synthetic.main.search_destination_lines.*
 import kotlinx.android.synthetic.main.search_destination_lines.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -62,5 +63,11 @@ class LinesFragment : Fragment() {
         }
 
         return rootView
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Avoid leaks
+        search_recycler_view_lines?.adapter = null
     }
 }

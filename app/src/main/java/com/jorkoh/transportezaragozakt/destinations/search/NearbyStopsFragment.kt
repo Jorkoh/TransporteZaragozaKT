@@ -19,6 +19,7 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFrag
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import kotlinx.android.synthetic.main.search_destination_nearby_stops.*
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -28,14 +29,17 @@ class NearbyStopsFragment : Fragment() {
 
     private var fusedLocationClient: FusedLocationProviderClient? = null
 
-    private val locationCallback = object : LocationCallback() {
+    //Avoid leaks
+    private val locationCallback = WeakLocationCallback(object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
-            locationResult ?: return
-            for (location in locationResult.locations){
-                searchVM.position.postValue(location)
+            super.onLocationResult(locationResult)
+            locationResult?.let {
+                for (location in locationResult.locations) {
+                    searchVM.position.postValue(location)
+                }
             }
         }
-    }
+    })
 
     private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
@@ -58,7 +62,7 @@ class NearbyStopsFragment : Fragment() {
             nearbyStopsAdapter.setNewStops(nearbyStops)
             nearbyStopsAdapter.filter.filter(searchVM.query.value)
         })
-        searchVM.query.observe(viewLifecycleOwner,  Observer { query ->
+        searchVM.query.observe(viewLifecycleOwner, Observer { query ->
             nearbyStopsAdapter.filter.filter(query) { flag ->
                 // If the list went from actually filtered to initial state scroll back up to the top
                 if (query == "" && flag == 1) {
@@ -133,7 +137,13 @@ class NearbyStopsFragment : Fragment() {
         } else {
             View.GONE
         }
-//        view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
-//        view?.no_search_result_text_nearby_stops?.visibility = newVisibility
+        view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
+        view?.no_search_result_text_nearby_stops?.visibility = newVisibility
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Avoid leaks
+        search_recycler_view_nearby_stops?.adapter = null
     }
 }

@@ -142,4 +142,11 @@ class FavoritesFragment : FragmentWithToolbar() {
         view?.no_favorites_animation?.visibility = newVisibility
         view?.no_favorites_text?.visibility = newVisibility
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Avoid leaks
+        favorites_recycler_view?.adapter = null
+        itemTouchHelper.attachToRecyclerView(null)
+    }
 }

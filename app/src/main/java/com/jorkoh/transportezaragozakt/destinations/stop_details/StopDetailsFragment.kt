@@ -299,4 +299,10 @@ class StopDetailsFragment : FragmentWithToolbar() {
             }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Avoid leaks
+        activity?.stop_details_fab?.setOnActionSelectedListener(null)
+    }
 }

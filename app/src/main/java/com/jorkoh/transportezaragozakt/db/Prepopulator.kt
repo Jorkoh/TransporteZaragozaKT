@@ -5,10 +5,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json.Companion.parse
-import okio.Okio
+import okio.buffer
+import okio.source
 
 fun getInitialBusStops(context: Context): InitialStopsMessage {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_bus_stops)))
+    val buffer = context.resources.openRawResource(R.raw.initial_bus_stops).source().buffer()
     val busStopsJson = parse(StopsJson.serializer(), buffer.readUtf8())
 
     val busStopEntities = mutableListOf<Stop>()
@@ -29,7 +30,7 @@ fun getInitialBusStops(context: Context): InitialStopsMessage {
 }
 
 fun getInitialTramStops(context: Context): InitialStopsMessage {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_tram_stops)))
+    val buffer = context.resources.openRawResource(R.raw.initial_tram_stops).source().buffer()
     val tramStopsJson = parse(StopsJson.serializer(), buffer.readUtf8())
 
     val tramStopEntities = mutableListOf<Stop>()
@@ -50,7 +51,7 @@ fun getInitialTramStops(context: Context): InitialStopsMessage {
 }
 
 fun getInitialBusLines(context: Context): InitialLinesMessage {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_bus_lines)))
+    val buffer = context.resources.openRawResource(R.raw.initial_bus_lines).source().buffer()
     val busLinesJson = parse(LinesJson.serializer(), buffer.readUtf8())
 
     val busLinesEntities = mutableListOf<Line>()
@@ -70,7 +71,7 @@ fun getInitialBusLines(context: Context): InitialLinesMessage {
 }
 
 fun getInitialTramLines(context: Context): InitialLinesMessage {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_tram_lines)))
+    val buffer = context.resources.openRawResource(R.raw.initial_tram_lines).source().buffer()
     val tramLinesJson = parse(LinesJson.serializer(), buffer.readUtf8())
 
     val tramLinesEntities = mutableListOf<Line>()
@@ -90,7 +91,7 @@ fun getInitialTramLines(context: Context): InitialLinesMessage {
 }
 
 fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_bus_lines_coordinates)))
+    val buffer = context.resources.openRawResource(R.raw.initial_bus_lines_coordinates).source().buffer()
     val busLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
 
     val busLinesLocationsEntities = mutableListOf<LineLocation>()
@@ -110,7 +111,7 @@ fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
 }
 
 fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_tram_lines_coordinates)))
+    val buffer = context.resources.openRawResource(R.raw.initial_tram_lines_coordinates).source().buffer()
     val tramLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
 
     val tramLinesLocationsEntities = mutableListOf<LineLocation>()
@@ -130,7 +131,7 @@ fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
 }
 
 fun getInitialChangelog(context: Context): InitialChangelog {
-    val buffer = Okio.buffer(Okio.source(context.resources.openRawResource(R.raw.initial_changelog)))
+    val buffer = context.resources.openRawResource(R.raw.initial_changelog).source().buffer()
     val changelogJson = parse(ChangelogJson.serializer(), buffer.readUtf8())
 
     return InitialChangelog(changelogJson.textEN, changelogJson.textES, changelogJson.version)
