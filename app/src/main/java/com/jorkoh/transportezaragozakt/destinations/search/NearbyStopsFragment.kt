@@ -29,7 +29,7 @@ class NearbyStopsFragment : Fragment() {
 
     private var fusedLocationClient: FusedLocationProviderClient? = null
 
-    //Avoid leaks
+    // Avoid leaks
     private val locationCallback = WeakLocationCallback(object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult?) {
             super.onLocationResult(locationResult)

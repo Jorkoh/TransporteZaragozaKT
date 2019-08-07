@@ -89,11 +89,10 @@ class MapFragment : FragmentWithToolbar() {
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.map_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment =
-                CustomSupportMapFragment.newInstance(
-                    displayFilters = true,
-                    bottomMargin = 56
-                )
+            mapFragment = CustomSupportMapFragment.newInstance(
+                displayFilters = true,
+                bottomMargin = 56
+            )
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))
                 .commit()
@@ -228,6 +227,10 @@ class MapFragment : FragmentWithToolbar() {
     override fun onDestroyView() {
         // Clearing the markers activates this listener so it has to be unregistered to avoid issues when the map fragment is reused
         map.setOnInfoWindowCloseListener(null)
+
+        @SuppressLint("MissingPermission")
+        map.isMyLocationEnabled = false
+
         super.onDestroyView()
     }
 }

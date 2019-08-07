@@ -137,7 +137,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
     ): View? {
         return inflater.inflate(R.layout.stop_details_destination, container, false).apply {
             setupFab()
-            favorites_recycler_view.apply {
+            stop_details_recycler_view.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
                 adapter = stopDestinationsAdapter
@@ -303,6 +303,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
     override fun onDestroyView() {
         super.onDestroyView()
         // Avoid leaks
+        stop_details_recycler_view?.adapter = null
         activity?.stop_details_fab?.setOnActionSelectedListener(null)
     }
 }

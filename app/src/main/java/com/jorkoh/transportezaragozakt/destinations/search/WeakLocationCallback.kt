@@ -5,6 +5,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import java.lang.ref.WeakReference
 
+// https://github.com/googlesamples/android-play-location/issues/26/
 class WeakLocationCallback(locationCallback: LocationCallback) : LocationCallback() {
 
     private val weakLocationCallback = WeakReference(locationCallback)

@@ -15,7 +15,7 @@ android {
 
         applicationId "com.jorkoh.transportezaragozakt"
         versionCode 13
-        versionName "1.0.7-dev"
+        versionName "1.0.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -131,7 +131,7 @@ dependencies {
     implementation deps.firebase
     implementation deps.crashlytics
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+    debugImplementation deps.leakcanary
 
     //Testing
     testImplementation deps.junit
