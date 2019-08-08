@@ -104,7 +104,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment.newInstance(displayFilters = false, bottomMargin = 160)
+            mapFragment = CustomSupportMapFragment.newInstance(
+                displayFilters = false,
+                bottomPaddingDimen = R.dimen.line_details_destination_map_view_bottom_padding
+            )
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container_line, mapFragment, getString(R.string.line_destination_map_fragment_tag))
                 .commit()

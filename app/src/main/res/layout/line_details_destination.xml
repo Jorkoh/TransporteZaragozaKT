@@ -40,7 +40,7 @@
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
                 app:behavior_hideable="false"
                 app:layout_insetEdge="bottom"
-                app:behavior_peekHeight="160dp">
+                app:behavior_peekHeight="@dimen/line_details_destination_map_view_bottom_padding">
 
             <androidx.viewpager.widget.ViewPager
                     android:id="@+id/line_details_viewpager"

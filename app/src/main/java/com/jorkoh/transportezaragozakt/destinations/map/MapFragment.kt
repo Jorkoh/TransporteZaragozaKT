@@ -90,7 +90,7 @@ class MapFragment : FragmentWithToolbar() {
         if (mapFragment == null) {
             mapFragment = CustomSupportMapFragment.newInstance(
                 displayFilters = true,
-                bottomMargin = 56
+                bottomPaddingDimen = R.dimen.map_destination_map_view_bottom_padding
             )
             childFragmentManager.beginTransaction()
                 .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))

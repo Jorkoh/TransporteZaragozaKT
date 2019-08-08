@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_filters.*
@@ -22,27 +21,29 @@ class CustomSupportMapFragment : SupportMapFragment() {
 
     companion object {
         const val DISPLAY_FILTERS_KEY = "DISPLAY_FILTERS_KEY"
-        const val BOTTOM_MARGIN_KEY = "BOTTOM_MARGIN_KEY"
+        const val BOTTOM_PADDING_DIMEN_KEY = "BOTTOM_PADDING_DIMEN_KEY"
 
-        fun newInstance(displayFilters: Boolean = true, bottomMargin: Int = 0): CustomSupportMapFragment {
+        fun newInstance(displayFilters: Boolean = true, bottomPaddingDimen: Int = 0): CustomSupportMapFragment {
             val instance = CustomSupportMapFragment()
             instance.arguments = Bundle().apply {
                 putBoolean(DISPLAY_FILTERS_KEY, displayFilters)
-                putInt(BOTTOM_MARGIN_KEY, bottomMargin)
+                putInt(BOTTOM_PADDING_DIMEN_KEY, bottomPaddingDimen)
             }
             return instance
         }
     }
 
     private var displayFilters: Boolean = true
-    private var bottomMargin: Int = 0
+    private var bottomPadding: Int = 0
 
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
-        bottomMargin = arguments?.getInt(BOTTOM_MARGIN_KEY) ?: 0
+        (arguments?.getInt(BOTTOM_PADDING_DIMEN_KEY) ?: 0).takeIf { it != 0 }?.let { bottomPaddingDimen ->
+            bottomPadding = resources.getDimensionPixelOffset(bottomPaddingDimen)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -71,7 +72,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
         val wrapper = FrameLayout(layoutInflater.context)
 
         val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
-        mapView?.setPadding(0, 0, 0, bottomMargin.toPx())
+        mapView?.setPadding(0, 0, 0, bottomPadding)
         wrapper.addView(mapView)
 
         if (displayFilters) {
@@ -107,7 +108,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
         wrapper.addView(mapExtraControls)
         wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
-            this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomMargin.toPx()
+            this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomPadding
         }
     }
 
