@@ -36,7 +36,6 @@ import com.jorkoh.transportezaragozakt.destinations.map.MarkerIcons
 import com.jorkoh.transportezaragozakt.destinations.map.StopInfoWindowAdapter
 import com.jorkoh.transportezaragozakt.destinations.officialLineIdToBusWebLineId
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
-import com.jorkoh.transportezaragozakt.destinations.toPx
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
@@ -117,8 +116,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
     }
 
     private fun setupMap(centerCamera: Boolean, mapLifecycleOwner: LifecycleOwner) {
-        map.setPadding(0, 0, 0, 160.toPx())
-
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(

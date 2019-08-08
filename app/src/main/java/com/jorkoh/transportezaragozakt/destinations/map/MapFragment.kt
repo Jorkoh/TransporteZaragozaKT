@@ -24,7 +24,6 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
-import com.jorkoh.transportezaragozakt.destinations.toPx
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -104,8 +103,6 @@ class MapFragment : FragmentWithToolbar() {
     }
 
     private fun setupMap(centerCamera: Boolean, mapLifecycleOwner: LifecycleOwner) {
-        map.setPadding(0, 0, 0, 56.toPx())
-
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(

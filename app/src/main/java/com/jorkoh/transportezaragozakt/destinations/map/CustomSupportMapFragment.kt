@@ -71,13 +71,12 @@ class CustomSupportMapFragment : SupportMapFragment() {
         val wrapper = FrameLayout(layoutInflater.context)
 
         val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
-        //TODO mapView?.paddingBottom
+        mapView?.setPadding(0, 0, 0, bottomMargin.toPx())
         wrapper.addView(mapView)
 
         if (displayFilters) {
             setupFilters(layoutInflater, wrapper)
         }
-
         setupExtraMapControls(layoutInflater, wrapper)
 
         return wrapper
@@ -107,10 +106,8 @@ class CustomSupportMapFragment : SupportMapFragment() {
             mapSettingsVM.setTrafficEnabled(mapSettingsVM.trafficEnabled.value != true)
         }
         wrapper.addView(mapExtraControls)
-        if (bottomMargin != 0) {
-            wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
-                this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomMargin.toPx()
-            }
+        wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
+            this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomMargin.toPx()
         }
     }
 
