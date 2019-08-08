@@ -46,6 +46,7 @@ Some of the technologies used to develop Transporte Zaragoza:
 * [JUnit](https://junit.org/junit4/) + [Mockito](https://site.mockito.org/), local and instrumented unit testing.
 * [Espresso](https://developer.android.com/training/testing/espresso), E2E UI testing.
 * [Firebase Analytics and Crashlytics](https://firebase.google.com/), app usage and crash monitoring.
+* [LeakCanary](https://square.github.io/leakcanary/), memory leak detection.
 * [Lottie](https://airbnb.design/lottie/), After Effects animations rendered natively.
 * [ShapeShifter](https://github.com/alexjlockwood/ShapeShifter), Animated Vector Drawable animations.
 
