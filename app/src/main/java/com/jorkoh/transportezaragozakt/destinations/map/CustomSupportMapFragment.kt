@@ -71,6 +71,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
         val wrapper = FrameLayout(layoutInflater.context)
 
         val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
+        //TODO mapView?.paddingBottom
         wrapper.addView(mapView)
 
         if (displayFilters) {

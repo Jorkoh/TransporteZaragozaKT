@@ -226,10 +226,13 @@ class MapFragment : FragmentWithToolbar() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Clearing the markers activates this listener so it has to be unregistered to avoid issues when the map fragment is reused
-        map.setOnInfoWindowCloseListener(null)
-        // Avoid leaks
-        @SuppressLint("MissingPermission")
-        map.isMyLocationEnabled = false
+
+        if (::map.isInitialized) {
+            // Clearing the markers activates this listener so it has to be unregistered to avoid issues when the map fragment is reused
+            map.setOnInfoWindowCloseListener(null)
+            // Avoid leaks
+            @SuppressLint("MissingPermission")
+            map.isMyLocationEnabled = false
+        }
     }
 }
