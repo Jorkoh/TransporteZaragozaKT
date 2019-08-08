@@ -27,10 +27,10 @@ android {
 
     buildTypes {
         debug {
-            manifestPlaceholders = [crashlytics:"false"]
+            manifestPlaceholders = [crashlytics: "false"]
         }
         release {
-            manifestPlaceholders = [crashlytics:"true"]
+            manifestPlaceholders = [crashlytics: "true"]
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -117,6 +117,9 @@ dependencies {
     implementation deps.moshi.moshi_kotlin
     implementation deps.moshi.moshi
     kapt deps.moshi.moshi_kotlin_codegen
+
+    //Okio
+    implementation deps.okio
 
     //Jspoon
     implementation deps.jspoon.core

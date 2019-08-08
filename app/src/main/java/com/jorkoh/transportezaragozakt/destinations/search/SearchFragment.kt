@@ -60,10 +60,10 @@ class SearchFragment : FragmentWithToolbar() {
     }
 
     private fun setupToolbar(rootView: View) {
-        rootView.fragment_toolbar.apply {
-            menu.clear()
-            inflateMenu(R.menu.search_destination_menu)
-            setOnMenuItemClickListener { item ->
+        rootView.fragment_toolbar.also {toolbar ->
+            toolbar.menu.clear()
+            toolbar.inflateMenu(R.menu.search_destination_menu)
+            toolbar.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.item_scan -> {
                         // Opens the QR scanner activity
@@ -79,7 +79,7 @@ class SearchFragment : FragmentWithToolbar() {
                 }
             }
             // Search action stuff
-            (menu.findItem(R.id.item_search).actionView as SearchView).apply {
+            (toolbar.menu.findItem(R.id.item_search).actionView as SearchView).apply {
                 queryHint = getString(R.string.search_view_hint)
                 findViewById<TextView>(androidx.appcompat.R.id.search_src_text).textSize = 16f
                 maxWidth = Int.MAX_VALUE

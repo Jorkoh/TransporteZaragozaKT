@@ -83,6 +83,7 @@ buildscript {
                     'core': "org.koin:koin-androidx-viewmodel:2.0.1",
                     'test': "org.koin:koin-test:2.0.1"
             ],
+            'okio'                 : "com.squareup.okio:okio:2.3.0",
             'parse'                : "com.github.parse-community.Parse-SDK-Android:parse:1.19.0",
             'lottie'               : "com.airbnb.android:lottie:3.0.0",
             'nullaway'             : "com.uber.nullaway:nullaway:0.6.6",
