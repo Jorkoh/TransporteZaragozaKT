@@ -49,7 +49,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel()
 
-    private val args : StopDetailsFragmentArgs by navArgs()
+    private val args: StopDetailsFragmentArgs by navArgs()
 
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -174,7 +174,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
         })
     }
 
-    private fun setupToolbar(rootView : View) {
+    private fun setupToolbar(rootView: View) {
         rootView.fragment_toolbar.apply {
             menu.clear()
             inflateMenu(R.menu.stop_details_destination_menu)
@@ -191,7 +191,9 @@ class StopDetailsFragment : FragmentWithToolbar() {
                                 Uri.parse("google.navigation:q=${location.latitude},${location.longitude}&mode=w")
                             )
                             mapIntent.setPackage("com.google.android.apps.maps")
-                            startActivity(mapIntent)
+                            if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
+                                startActivity(mapIntent)
+                            }
                         }
                         true
                     }
