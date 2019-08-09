@@ -242,7 +242,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                             (marker.tag as Stop).stopId == stopId
                         }?.let { selectedMarker ->
                             selectedMarker.showInfoWindow()
-                            map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as Stop).location))
+                            map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as Stop).location), 240, null)
                             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
                     }
