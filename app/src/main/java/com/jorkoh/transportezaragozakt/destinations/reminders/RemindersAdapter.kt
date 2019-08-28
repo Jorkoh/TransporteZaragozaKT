@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.getOnBackgroundColor
 import com.jorkoh.transportezaragozakt.destinations.inflateLines
+import com.jorkoh.transportezaragozakt.destinations.setDrawableColor
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.reminder_row.*
 import kotlinx.android.synthetic.main.reminder_row.view.*
@@ -56,6 +58,15 @@ class RemindersAdapter(
             reminder_friday.isChecked = reminder.daysOfWeek.days[4]
             reminder_saturday.isChecked = reminder.daysOfWeek.days[5]
             reminder_sunday.isChecked = reminder.daysOfWeek.days[6]
+
+            val color = getOnBackgroundColor(context)
+            reminder_monday.setDrawableColor(color)
+            reminder_tuesday.setDrawableColor(color)
+            reminder_wednesday.setDrawableColor(color)
+            reminder_thursday.setDrawableColor(color)
+            reminder_friday.setDrawableColor(color)
+            reminder_saturday.setDrawableColor(color)
+            reminder_sunday.setDrawableColor(color)
             // Texts
             @SuppressLint("SetTextI18n")
             reminder_time_text.text = "${"%02d".format(reminder.hourOfDay)}:${"%02d".format(reminder.minute)}"

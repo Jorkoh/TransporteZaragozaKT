@@ -5,10 +5,12 @@ import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.location.Location
 import android.net.Uri
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.widget.CheckBox
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.annotation.AttrRes
@@ -125,6 +127,23 @@ fun Context.getColorFromAttr(
 ): Int {
     theme.resolveAttribute(attrColor, typedValue, resolveRefs)
     return typedValue.data
+}
+
+fun getOnBackgroundColor(context: Context): Int {
+    val typedValue = TypedValue()
+
+    val a = context.obtainStyledAttributes(typedValue.data, intArrayOf(R.attr.colorOnBackground))
+    val color = a.getColor(0, 0)
+
+    a.recycle()
+
+    return color
+}
+
+fun CheckBox.setDrawableColor(color: Int) {
+    compoundDrawables.filterNotNull().forEach {
+        it.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+    }
 }
 
 fun lighter(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) factor: Float = 0.15f): Int {
