@@ -18,6 +18,7 @@ import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFrag
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.line_row.*
 
+// Used to display lines on LinesFragment RecyclerView
 class LineAdapter(
     private val openLine: (LineDetailsFragmentArgs) -> Unit
 ) : RecyclerView.Adapter<LineAdapter.LineViewHolder>(), Filterable {

@@ -5,7 +5,7 @@
     <item
             android:id="@+id/item_directions"
             android:icon="@drawable/ic_directions_on_primary_24dp"
-            android:title="@string/refresh_menu_item"
+            android:title="@string/directions_menu_item"
             app:showAsAction="ifRoom"/>
 
     <item

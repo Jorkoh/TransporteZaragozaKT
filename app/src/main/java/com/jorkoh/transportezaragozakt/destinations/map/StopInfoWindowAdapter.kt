@@ -33,6 +33,11 @@ class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter 
                 StopType.TRAM -> R.drawable.ic_tram
             }
         )
+        content.type_image_info_window.contentDescription =
+            when (stop.type) {
+                StopType.BUS -> context.getString(R.string.stop_type_bus)
+                StopType.TRAM -> context.getString(R.string.stop_type_tram)
+            }
 
         // If the stopTitle is longer we can fit more lines while keeping a nice ratio
         content.lines_layout_favorite.columnCount = when {

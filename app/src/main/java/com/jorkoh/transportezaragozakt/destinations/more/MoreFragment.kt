@@ -111,7 +111,7 @@ class MoreFragment : PreferenceFragmentCompatWithToolbar() {
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.feedback_message_address)))
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_message_subject))
         intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_message_text))
-        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+        intent.resolveActivity(requireActivity().packageManager)?.run {
             startActivity(intent)
         }
     }

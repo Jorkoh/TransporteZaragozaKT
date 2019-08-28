@@ -17,7 +17,7 @@ class MainActivityViewModel(
     ViewModel() {
 
     val currentNavController = MediatorLiveData<NavController>()
-    var currentNavControllerSource: LiveData<NavController>? = null
+    private var currentNavControllerSource: LiveData<NavController>? = null
 
     private var favoriteCount: Int = -1
     private var reminderCount: Int = -1

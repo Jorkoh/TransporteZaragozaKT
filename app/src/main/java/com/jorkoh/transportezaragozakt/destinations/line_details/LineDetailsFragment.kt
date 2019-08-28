@@ -292,7 +292,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                                         "%",
                                         lineDetailsVM.lineId.officialLineIdToBusWebLineId()
                                     ),
-                                    title = getString(R.string.bus_line_schedule_title).replace("%", lineDetailsVM.lineId),
+                                    title = getString(R.string.bus_line_schedule_title, lineDetailsVM.lineId),
                                     javascript = getString(R.string.bus_line_schedule_javascript)
                                 )
                             )

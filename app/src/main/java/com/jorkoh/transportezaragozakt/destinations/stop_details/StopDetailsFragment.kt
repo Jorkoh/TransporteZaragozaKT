@@ -191,7 +191,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                                 Uri.parse("google.navigation:q=${location.latitude},${location.longitude}&mode=w")
                             )
                             mapIntent.setPackage("com.google.android.apps.maps")
-                            if (mapIntent.resolveActivity(requireActivity().packageManager) != null) {
+                            mapIntent.resolveActivity(requireActivity().packageManager)?.run {
                                 startActivity(mapIntent)
                             }
                         }
@@ -255,7 +255,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                     R.id.stop_details_fab_shortcut -> {
                         MaterialDialog(requireContext()).show {
                             title(R.string.create_shortcut)
-                            input(prefill = stopDetailsVM.stop.value?.title ?: "") { _, text ->
+                            input(prefill = stopDetailsVM.stop.value?.stopTitle ?: "") { _, text ->
                                 createShortcut(text.toString())
                             }
                             positiveButton(R.string.create_button)

@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.destinations.getColorFromAttr
 import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
+import com.jorkoh.transportezaragozakt.destinations.toPx
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -236,7 +237,7 @@ class MainActivity : AppCompatActivity() {
             currentAnimator?.end()
             currentAnimator = ValueAnimator.ofInt(
                 measuredHeight,
-                resources.getDimension(R.dimen.design_bottom_navigation_height).toInt()
+                56.toPx()
             ).apply {
                 addUpdateListener { valueAnimator ->
                     updateLayoutParams {

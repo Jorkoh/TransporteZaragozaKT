@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 
 abstract class SharedPreferencesLiveData<T>(
     val sharedPrefs: SharedPreferences,
-    val key: String,
-    val defValue: T
+    private val key: String,
+    private val defValue: T
 ) : LiveData<T>() {
 
     private val preferenceChangeListener =
@@ -37,7 +37,7 @@ class SharedPreferenceIntLiveData(sharedPrefs: SharedPreferences, key: String, d
 
 class SharedPreferenceStringLiveData(sharedPrefs: SharedPreferences, key: String, defValue: String) :
     SharedPreferencesLiveData<String>(sharedPrefs, key, defValue) {
-    override fun getValueFromPreferences(key: String, defValue: String): String = sharedPrefs.getString(key, defValue)
+    override fun getValueFromPreferences(key: String, defValue: String): String = sharedPrefs.getString(key, defValue) ?: ""
 }
 
 class SharedPreferenceBooleanLiveData(sharedPrefs: SharedPreferences, key: String, defValue: Boolean) :
@@ -59,7 +59,7 @@ class SharedPreferenceLongLiveData(sharedPrefs: SharedPreferences, key: String, 
 class SharedPreferenceStringSetLiveData(sharedPrefs: SharedPreferences, key: String, defValue: Set<String>) :
     SharedPreferencesLiveData<Set<String>>(sharedPrefs, key, defValue) {
     override fun getValueFromPreferences(key: String, defValue: Set<String>): Set<String> =
-        sharedPrefs.getStringSet(key, defValue)
+        sharedPrefs.getStringSet(key, defValue) ?: emptySet()
 }
 
 fun SharedPreferences.intLiveData(key: String, defValue: Int): SharedPreferencesLiveData<Int> {

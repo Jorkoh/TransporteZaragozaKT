@@ -39,7 +39,7 @@ class MapFragment : FragmentWithToolbar() {
         const val DEFAULT_ZOOM = 16f
         const val MAX_CLUSTERING_ZOOM = 15.5f
         val ZARAGOZA_BOUNDS = LatLngBounds(
-            LatLng(41.614155, -0.984636), LatLng(41.774594, -0.7933)
+            LatLng(41.601261, -0.980633), LatLng(41.766645, -0.792816)
         )
         val ZARAGOZA_CENTER = LatLng(41.656362, -0.878920)
     }

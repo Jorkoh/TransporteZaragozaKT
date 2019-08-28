@@ -14,10 +14,8 @@
     <string name="minutes">minutos</string>
     <string name="minute">minuto</string>
     <string name="at_the_stop">En la parada</string>
-    <string name="stop_details_title">Información de la parada</string>
     <string name="edit_favorite_dialog_title">Editar favorito</string>
-    <string name="stop_type_content_description">Tipo de parada</string>
-    <string name="edit_favorite_dialog_restore">Restaurar</string>
+    <string name="stop_type">Tipo de parada</string>
     <string name="location_rationale">Este permiso es usado para mostrar tu localización en el mapa y encontrar paradas cercanas. La información de localización nunca será usada para otro propósito.</string>
     <string name="no_reminders">¡Aún no tienes notificaciones!</string>
     <string name="reminders_destination_title">Notificaciones</string>
@@ -48,7 +46,6 @@
     <string name="delete">Borrar</string>
     <string name="delete_favorite_message">¿Estas seguro de que quieres borrar este favorito? Esta operación no se puede deshacer.</string>
     <string name="delete_favorite_title">Borrar favorito</string>
-    <string name="line_details_title">Información de la línea</string>
     <string name="line">Línea</string>
     <string name="bus_chip">BUS</string>
     <string name="tram_chip">TRANVÍA</string>
@@ -129,5 +126,8 @@
     <string name="directions_menu_item">Direcciones</string>
     <string name="schedule_menu_item">Horario</string>
     <string name="tram_line_schedule_title">Horario línea de tranvía</string>
-    <string name="bus_line_schedule_title">Horario línea de bus %</string>
+    <string name="bus_line_schedule_title">Horario línea de bus %1$s</string>
+    <string name="favorite_status">Estado favorito</string>
+    <string name="stop_type_bus">Tipo de parada bus</string>
+    <string name="stop_type_tram">Tipo de parada tranvía</string>
 </resources>

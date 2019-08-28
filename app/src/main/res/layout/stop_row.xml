@@ -23,7 +23,7 @@
                 android:id="@+id/type_image_stop"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:contentDescription="@string/stop_type_content_description"
+                android:contentDescription="@string/stop_type"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -86,7 +86,8 @@
                 app:layout_constraintEnd_toStartOf="@id/number_text_stop"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/favorite_status" />
 
         <TextView
                 android:id="@+id/number_text_stop"

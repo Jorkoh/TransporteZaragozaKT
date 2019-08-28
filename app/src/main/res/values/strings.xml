@@ -7,8 +7,6 @@
     <string name="search_destination_title" translatable="true">Search</string>
     <string name="reminders_destination_title" translatable="true">Reminders</string>
     <string name="more_destination_title" translatable="true">More</string>
-    <string name="stop_details_title" translatable="true">Stop Details</string>
-    <string name="line_details_title" translatable="true">Line Details</string>
     <string name="theme_picker_title" translatable="true">Themes</string>
 
     <!--Intro-->
@@ -27,8 +25,9 @@
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
     <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
     <string name="edit_button" translatable="true">Edit</string>
-    <string name="stop_type_content_description" translatable="true">Stop type</string>
-    <string name="edit_favorite_dialog_restore" translatable="true">Restore</string>
+    <string name="stop_type" translatable="true">Stop type</string>
+    <string name="stop_type_bus" translatable="true">Stop type bus</string>
+    <string name="stop_type_tram" translatable="true">Stop type tram</string>
     <string name="alias" translatable="true">Alias</string>
     <string name="color" translatable="true">Color</string>
     <string name="restore" translatable="true">Restore</string>
@@ -66,7 +65,7 @@
     <string name="tram_line_schedule_url" translatable="false">https://www.tranviasdezaragoza.es/es/informacion/horaires</string>
     <string name="bus_line_schedule_url" translatable="false">http://zaragoza.avanzagrupo.com/frm_esquemaparadas.php?tipoPag=Linea&amp;LINEASEL=%</string>
     <string name="tram_line_schedule_title" translatable="true">Tram line schedule</string>
-    <string name="bus_line_schedule_title" translatable="true">Bus line % schedule</string>
+    <string name="bus_line_schedule_title" translatable="true">Bus line %1$s schedule</string>
     <string name="tram_line_schedule_javascript" translatable="false">javascript:(function(){$(\'#menu_responsive\').hide();$(\'#wrraperContainerMenu\').hide();$(\'.entry-content.clearfix\').appendTo(\'body\');})()</string>
     <string name="bus_line_schedule_javascript" translatable="false">javascript:(function(){document.querySelector(\'#cabecera\').style.display = \'none\';document.querySelector(\'#pie\').style.display = \'none\';document.querySelector(\'#contenido > div.hgroup\').style.display = \'none\';document.querySelector(\'#paradas > div.select\').style.display = \'none\';document.querySelector(\'#linea\').style.display = \'none\';})()</string>
 
@@ -96,12 +95,12 @@
     <string name="qr_scan_prompt" translatable="true">Place the stop QR code on the center of the screen</string>
     <string name="qr_not_recognized" translatable="true">QR code not recognized.</string>
     <string name="search_nearby_stops_empty" translatable="true">No stops nearby!</string>
+    <string name="favorite_status" translatable="true">Favorite status</string>
 
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>
 
     <!--Preferences-->
-    <string name="preferences" translatable="false">com.jorkoh.transportezaragozakt.PREFERENCES</string>
     <string name="saved_bus_stops_version_number_key" translatable="false">SAVED_BUS_STOPS_VERSION_NUMBER_KEY</string>
     <string name="saved_tram_stops_version_number_key" translatable="false">SAVED_TRAM_STOPS_VERSION_NUMBER_KEY</string>
     <string name="saved_bus_lines_version_number_key" translatable="false">SAVED_BUS_LINES_VERSION_NUMBER_KEY</string>
@@ -153,24 +152,6 @@
     <string name="feedback_message_address" translatable="false">jorge@jorkoh.com</string>
     <string name="feedback_message_subject" translatable="true">Transporte Zaragoza Feedback</string>
     <string name="feedback_message_text" translatable="true">Describe the problem, question or suggestion here…</string>
-    <string name="libraries_and_credits_message" translatable="false">
-        <![CDATA[<ul>
-<li> <a href="https://developer.android.com/jetpack/">Jetpack components</a>. Room, LiveData, ViewModels, Navigation, WorkManager and more. The building blocks of a modern Android application.</li>
-<li> <a href="https://github.com/square/retrofit">Retrofit</a>.&nbsp;Type-safe HTTP client for Android, makes dealing with any API an enjoyable experience.</li>
-<li> <a href="https://github.com/square/moshi">Moshi</a>. Acts as an adapter parsing the JSON Retrofit responses into objects.</li>
-<li> <a href="https://github.com/InsertKoinIO/koin">Koin</a>. Dependency Injection for Kotlin.</li>
-<li> <a href="https://github.com/parse-community/Parse-SDK-Android">Parse SDK for Android</a>. Allows the app to access the <a href="https://heroku.com">Heroku</a>+<a href="https://parseplatform.org">Parse</a>+<a href="https://www.mongodb.com">MongoDB</a> backend to update lines and stops data automatically without updating the app itself.</li>
-<li> <a href="https://github.com/airbnb/lottie-android">Lottie</a>. Adobe After Effects vector animations rendered natively, used throughout the app to display empty states.</li>
-<li> <a href="https://github.com/leinardi/FloatingActionButtonSpeedDial">FAB Speed Dial</a>. Implementation of the <a href="https://material.io/design/components/buttons-floating-action-button.html#types-of-transitions">Material Design speed dial</a> used in the stop information destination. Created by <a href="https://github.com/leinardi/">Roberto Leinardi</a> and modified by me.</li>
-<li> <a href="https://github.com/Daio-io/dresscode">Dresscode</a>. Tiny convenience library that allows theme changing on runtime. Created by <a href="https://github.com/Daio-io">Dai Williams</a>&nbsp;and modified by me.</li>
-<li> <a href="https://github.com/afollestad/material-dialogs">Material Dialogs</a>. All kinds of dialogs made easy thanks to <a href="https://github.com/afollestad">Aidan Follestad</a>. The rounded corners of the dialog you are reading right now are his work.</li>
-<li> <a href="https://github.com/QuickPermissions/QuickPermissions">Quick Permissions</a>. Handling runtime permissions with less boilerplate by <a href="https://github.com/kirtan403">Kirtan403</a>. Modified by me to use Material Dialogs and other small stuff.</li>
-<li> <a href="https://github.com/journeyapps/zxing-android-embedded">ZXing Android Embedded</a>. ZXing QR scanning capabilities without extra downloads.</li>
-<li> <a href="https://github.com/TangoAgency/material-intro-screen">Material Intro Screen</a>. Welcoming slides to introduce the user to the app features. Modified by me to support animated vector drawables.</li>
-<li> <a href="https://github.com/Pixplicity/gene-rate">Gene-rate</a>. Asks for ratings without interrupting the user's flow after conditions are met. Heavily modified by me with ideas from other libraries like <a href="https://github.com/mediavrog/integrated-rating-request">Integrated Rating Request</a>.</li>
-<li> Multiple Icons by <a href="https://www.freepik.com/">Freepik</a> from <a href="https://www.flaticon.com">flaticon.com</a></li>
-</ul>]]>
-    </string>
 
     <!--Parse-->
     <string name="parse_application_id" translatable="false">transporte-zaragoza</string>

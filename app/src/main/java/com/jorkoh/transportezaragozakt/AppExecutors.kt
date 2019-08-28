@@ -14,21 +14,15 @@ import java.util.concurrent.Executors
  */
 open class AppExecutors(
     private val diskIO: Executor,
-    private val networkIO: Executor,
     private val mainThread: Executor
 ) {
     constructor() : this(
         Executors.newSingleThreadExecutor(),
-        Executors.newFixedThreadPool(3),
         MainThreadExecutor()
     )
 
     fun diskIO(): Executor {
         return diskIO
-    }
-
-    fun networkIO(): Executor {
-        return networkIO
     }
 
     fun mainThread(): Executor {

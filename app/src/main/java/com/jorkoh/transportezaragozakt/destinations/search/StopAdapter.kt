@@ -18,7 +18,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.stop_row.*
 import kotlinx.android.synthetic.main.stop_row.view.*
 
-
+// Used to display plain stops on AllStopsFragment RecyclerView
 class StopAdapter(
     private val openStop: (StopDetailsFragmentArgs) -> Unit
 ) : RecyclerView.Adapter<StopAdapter.StopViewHolder>(), Filterable {
@@ -39,6 +39,12 @@ class StopAdapter(
                     StopType.TRAM -> R.drawable.ic_tram
                 }
             )
+            type_image_stop.contentDescription =
+                when (stop.type) {
+                    StopType.BUS -> context.getString(R.string.stop_type_bus)
+                    StopType.TRAM -> context.getString(R.string.stop_type_tram)
+                }
+
             // Texts
             title_text_stop.text = stop.stopTitle
             number_text_stop.text = stop.number

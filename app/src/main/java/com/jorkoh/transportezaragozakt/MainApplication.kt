@@ -7,6 +7,7 @@ import daio.io.dresscode.declareDressCode
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
+@Suppress("unused")
 class MainApplication : Application() {
 
     override fun onCreate() {

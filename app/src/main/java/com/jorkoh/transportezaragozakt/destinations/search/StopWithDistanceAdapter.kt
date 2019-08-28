@@ -20,6 +20,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.stop_row.*
 import kotlinx.android.synthetic.main.stop_row.view.*
 
+// Used to display stops with distance on NearbyStopsFragment RecyclerView
 class StopWithDistanceAdapter(
     private val openStop: (StopDetailsFragmentArgs) -> Unit
 ) : RecyclerView.Adapter<StopWithDistanceAdapter.StopViewHolder>(), Filterable {

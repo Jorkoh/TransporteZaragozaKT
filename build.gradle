@@ -3,7 +3,7 @@ buildscript {
             compileSdk  : 28,
             targetSdk   : 28,
             minSdk      : 21,
-            gradlePlugin: '3.4.2'
+            gradlePlugin: '3.5.0'
     ]
 
     ext.deps = [

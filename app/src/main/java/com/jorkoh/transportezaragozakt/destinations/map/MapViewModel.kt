@@ -7,7 +7,7 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 
-class MapViewModel(private val stopsRepository: StopsRepository) :
+class MapViewModel(stopsRepository: StopsRepository) :
     ViewModel() {
 
     val busStopLocations: LiveData<List<Stop>> = stopsRepository.loadStops(StopType.BUS)

@@ -18,7 +18,7 @@ class CustomClusterRenderer(
     val context: Context,
     val map: GoogleMap,
     clusterManager: ClusterManager<Stop>,
-    val selectedStopId: MutableLiveData<String>
+    private val selectedStopId: MutableLiveData<String>
 ) :
     DefaultClusterRenderer<Stop>(context, map, clusterManager), GoogleMap.OnCameraIdleListener, KoinComponent {
 

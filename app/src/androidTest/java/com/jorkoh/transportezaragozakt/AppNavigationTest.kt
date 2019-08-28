@@ -23,7 +23,7 @@ class AppNavigationTest {
         // Check that it opened
         onView(withId(R.id.favorites_fragment_container)).check(ViewAssertions.matches(isDisplayed()))
         // Check that the toolbar title is correct
-        onView(withId(R.id.main_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.favorites_destination_title))))
+        onView(withId(R.id.fragment_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.favorites_destination_title))))
 
         // Navigate to map destination
         onView(withId(R.id.map_destination)).perform(ViewActions.click())
@@ -32,7 +32,7 @@ class AppNavigationTest {
         // Check that it opened
         onView(withId(R.id.map_fragment_container)).check(ViewAssertions.matches(isDisplayed()))
         // Check that the toolbar title is correct
-        onView(withId(R.id.main_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.map_destination_title))))
+        onView(withId(R.id.fragment_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.map_destination_title))))
 
         // Navigate to search destination
         onView(withId(R.id.search_destination)).perform(ViewActions.click())
@@ -41,7 +41,7 @@ class AppNavigationTest {
         // Check that it opened
         onView(withId(R.id.search_fragment_container)).check(ViewAssertions.matches(isDisplayed()))
         // Check that the toolbar title is correct
-        onView(withId(R.id.main_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.search_destination_title))))
+        onView(withId(R.id.fragment_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.search_destination_title))))
 
         // Navigate to reminders destination
         onView(withId(R.id.reminders_destination)).perform(ViewActions.click())
@@ -50,7 +50,7 @@ class AppNavigationTest {
         // Check that it opened
         onView(withId(R.id.reminders_fragment_container)).check(ViewAssertions.matches(isDisplayed()))
         // Check that the toolbar title is correct
-        onView(withId(R.id.main_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.reminders_destination_title))))
+        onView(withId(R.id.fragment_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.reminders_destination_title))))
 
         // Navigate to more destination
         onView(withId(R.id.more_destination)).perform(ViewActions.click())
@@ -59,6 +59,6 @@ class AppNavigationTest {
         // Check that it opened, PreferenceMatchers doesn't seem to work with AndroidX preferences...
         onView(withId(R.id.recycler_view)).check(ViewAssertions.matches(hasDescendant(withText(R.string.style_category_title))))
         // Check that the toolbar title is correct
-        onView(withId(R.id.main_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.more_destination_title))))
+        onView(withId(R.id.fragment_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.more_destination_title))))
     }
 }
