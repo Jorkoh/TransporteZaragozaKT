@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="monday_letter" translatable="true">Mon.</string>
+    <string name="monday_description" translatable="true">monday</string>
     <string name="tuesday_letter" translatable="true">Tue.</string>
+    <string name="tuesday_description" translatable="true">tuesday</string>
     <string name="wednesday_letter" translatable="true">Wed.</string>
+    <string name="wednesday_description" translatable="true">wednesday</string>
     <string name="thursday_letter" translatable="true">Thu.</string>
+    <string name="thursday_description" translatable="true">thursday</string>
     <string name="friday_letter" translatable="true">Fri.</string>
+    <string name="friday_description" translatable="true">friday</string>
     <string name="saturday_letter" translatable="true">Sat.</string>
+    <string name="saturday_description" translatable="true">saturday</string>
     <string name="sunday_letter" translatable="true">Sun.</string>
+    <string name="sunday_description" translatable="true">sunday</string>
 </resources>

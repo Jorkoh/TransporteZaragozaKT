@@ -7,4 +7,11 @@
     <string name="monday_letter">Lun.</string>
     <string name="thursday_letter">Jue.</string>
     <string name="tuesday_letter">Mar.</string>
+    <string name="friday_description">viernes</string>
+    <string name="monday_description">lunes</string>
+    <string name="saturday_description">sábado</string>
+    <string name="sunday_description">domingo</string>
+    <string name="thursday_description">jueves</string>
+    <string name="tuesday_description">martes</string>
+    <string name="wednesday_description">miércoles</string>
 </resources>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="mis_grant_permissions">Conceder permiso</string>
+    <string name="mis_impassable_slide">No se puede pasar esta diapositiva.</string>
+    <string name="mis_please_grant_permissions">Por favor, concede los permisos necesarios</string>
 </resources>

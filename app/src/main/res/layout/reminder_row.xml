@@ -62,6 +62,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/monday_letter"
+                    android:contentDescription="@string/monday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />
@@ -76,6 +77,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/tuesday_letter"
+                    android:contentDescription="@string/tuesday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />
@@ -90,6 +92,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/wednesday_letter"
+                    android:contentDescription="@string/wednesday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />
@@ -104,6 +107,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/thursday_letter"
+                    android:contentDescription="@string/thursday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />
@@ -118,6 +122,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/friday_letter"
+                    android:contentDescription="@string/friday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />
@@ -132,6 +137,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/saturday_letter"
+                    android:contentDescription="@string/saturday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />
@@ -146,6 +152,7 @@
                     android:clickable="false"
                     android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
                     android:text="@string/sunday_letter"
+                    android:contentDescription="@string/sunday_description"
                     android:textAlignment="center"
                     android:textColor="?colorOnBackground"
                     app:useMaterialThemeColors="true" />

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.jorkoh.transportezaragozakt.repositories.util
 
 import android.content.SharedPreferences
