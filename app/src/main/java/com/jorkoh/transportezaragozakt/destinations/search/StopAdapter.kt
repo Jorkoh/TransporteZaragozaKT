@@ -23,7 +23,8 @@ class StopAdapter(
     private val openStop: (StopDetailsFragmentArgs) -> Unit
 ) : RecyclerView.Adapter<StopAdapter.StopViewHolder>(), Filterable {
 
-    class StopViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class StopViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+        LayoutContainer {
 
         val context: Context
             get() = itemView.context
@@ -33,25 +34,27 @@ class StopAdapter(
             openStop: (StopDetailsFragmentArgs) -> Unit
         ) {
             // Stop type icon
-            type_image_stop.setImageResource(
-                when (stop.type) {
-                    StopType.BUS -> R.drawable.ic_bus
-                    StopType.TRAM -> R.drawable.ic_tram
+            when (stop.type) {
+                StopType.BUS -> {
+                    type_image_stop.setImageResource(R.drawable.ic_bus)
+                    type_image_stop.contentDescription = context.getString(R.string.stop_type_bus)
                 }
-            )
-            type_image_stop.contentDescription =
-                when (stop.type) {
-                    StopType.BUS -> context.getString(R.string.stop_type_bus)
-                    StopType.TRAM -> context.getString(R.string.stop_type_tram)
+                StopType.TRAM -> {
+                    type_image_stop.setImageResource(R.drawable.ic_tram)
+                    type_image_stop.contentDescription = context.getString(R.string.stop_type_tram)
                 }
-
+            }
             // Texts
             title_text_stop.text = stop.stopTitle
             number_text_stop.text = stop.number
             // Favorite icon
-            favorite_icon_stop.setImageResource(
-                if (stop.isFavorite) R.drawable.ic_favorite_black_24dp else R.drawable.ic_favorite_border_black_24dp
-            )
+            if (stop.isFavorite){
+                favorite_icon_stop.setImageResource(R.drawable.ic_favorite_black_24dp)
+                favorite_icon_stop.contentDescription = context.getString(R.string.stop_favorited)
+            }else{
+                favorite_icon_stop.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+                favorite_icon_stop.contentDescription = context.getString(R.string.stop_not_favorited)
+            }
             // Lines
             stop.lines.inflateLines(itemView.lines_layout_stop, stop.type, context)
             // Listeners
@@ -81,18 +84,24 @@ class StopAdapter(
     }
 
     override fun getFilter(): Filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults = FilterResults().apply {
-            values = if (constraint.isNullOrEmpty()) {
-                stopsFull
-            } else {
-                val filterPattern = constraint.toString().trim()
-                // Filtering by number and title
-                stopsFull.filter { (it.number + it.stopTitle).contains(filterPattern, ignoreCase = true) }
+        override fun performFiltering(constraint: CharSequence?): FilterResults =
+            FilterResults().apply {
+                values = if (constraint.isNullOrEmpty()) {
+                    stopsFull
+                } else {
+                    val filterPattern = constraint.toString().trim()
+                    // Filtering by number and title
+                    stopsFull.filter {
+                        (it.number + it.stopTitle).contains(
+                            filterPattern,
+                            ignoreCase = true
+                        )
+                    }
+                }
+                @Suppress("UNCHECKED_CAST")
+                //Flag to control whether the recycler view should scroll to the top
+                count = if ((values as List<Stop>).count() != displayedStops.count()) 1 else 0
             }
-            @Suppress("UNCHECKED_CAST")
-            //Flag to control whether the recycler view should scroll to the top
-            count = if ((values as List<Stop>).count() != displayedStops.count()) 1 else 0
-        }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             @Suppress("UNCHECKED_CAST")
@@ -108,7 +117,10 @@ class StopAdapter(
                     return displayedStops[oldItemPosition].stopId == filteredStops[newItemPosition].stopId
                 }
 
-                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                override fun areContentsTheSame(
+                    oldItemPosition: Int,
+                    newItemPosition: Int
+                ): Boolean {
                     return displayedStops[oldItemPosition].type == filteredStops[newItemPosition].type
                             && displayedStops[oldItemPosition].lines == filteredStops[newItemPosition].lines
                             && displayedStops[oldItemPosition].stopTitle == filteredStops[newItemPosition].stopTitle

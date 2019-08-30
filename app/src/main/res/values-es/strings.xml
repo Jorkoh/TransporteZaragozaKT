@@ -130,4 +130,6 @@
     <string name="favorite_status">Estado favorito</string>
     <string name="stop_type_bus">Tipo de parada bus</string>
     <string name="stop_type_tram">Tipo de parada tranvía</string>
+    <string name="stop_favorited">Parada favorita</string>
+    <string name="stop_not_favorited">Parada no favorita</string>
 </resources>

@@ -134,7 +134,7 @@ dependencies {
     implementation deps.firebase
     implementation deps.crashlytics
 
-    debugImplementation deps.leakcanary
+//    debugImplementation deps.leakcanary
 
     //Testing
     testImplementation deps.junit

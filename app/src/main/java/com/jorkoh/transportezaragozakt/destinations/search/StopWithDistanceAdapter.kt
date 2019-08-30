@@ -25,7 +25,8 @@ class StopWithDistanceAdapter(
     private val openStop: (StopDetailsFragmentArgs) -> Unit
 ) : RecyclerView.Adapter<StopWithDistanceAdapter.StopViewHolder>(), Filterable {
 
-    class StopViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class StopViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+        LayoutContainer {
 
         val context: Context
             get() = itemView.context
@@ -47,14 +48,27 @@ class StopWithDistanceAdapter(
             @SuppressLint("SetTextI18n")
             distance_text_stop.text = "${"%.2f".format(stopWithDistance.distance)} m."
             // Favorite icon
-            favorite_icon_stop.setImageResource(
-                if (stopWithDistance.stop.isFavorite) R.drawable.ic_favorite_black_24dp else R.drawable.ic_favorite_border_black_24dp
-            )
+            if (stopWithDistance.stop.isFavorite) {
+                favorite_icon_stop.setImageResource(R.drawable.ic_favorite_black_24dp)
+                favorite_icon_stop.contentDescription = context.getString(R.string.stop_favorited)
+            } else {
+                favorite_icon_stop.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+                favorite_icon_stop.contentDescription = context.getString(R.string.stop_not_favorited)
+            }
             // Lines
-            stopWithDistance.stop.lines.inflateLines(itemView.lines_layout_stop, stopWithDistance.stop.type, context)
+            stopWithDistance.stop.lines.inflateLines(
+                itemView.lines_layout_stop,
+                stopWithDistance.stop.type,
+                context
+            )
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
-                openStop(StopDetailsFragmentArgs(stopWithDistance.stop.type.name, stopWithDistance.stop.stopId))
+                openStop(
+                    StopDetailsFragmentArgs(
+                        stopWithDistance.stop.type.name,
+                        stopWithDistance.stop.stopId
+                    )
+                )
             })
         }
     }
@@ -79,18 +93,24 @@ class StopWithDistanceAdapter(
     }
 
     override fun getFilter(): Filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults = FilterResults().apply {
-            values = if (constraint.isNullOrEmpty()) {
-                stopsFull
-            } else {
-                val filterPattern = constraint.toString().trim()
-                // Filtering by number and title
-                stopsFull.filter { (it.stop.number + it.stop.stopTitle).contains(filterPattern, ignoreCase = true) }
+        override fun performFiltering(constraint: CharSequence?): FilterResults =
+            FilterResults().apply {
+                values = if (constraint.isNullOrEmpty()) {
+                    stopsFull
+                } else {
+                    val filterPattern = constraint.toString().trim()
+                    // Filtering by number and title
+                    stopsFull.filter {
+                        (it.stop.number + it.stop.stopTitle).contains(
+                            filterPattern,
+                            ignoreCase = true
+                        )
+                    }
+                }
+                @Suppress("UNCHECKED_CAST")
+                // Flag to control whether the recycler view should scroll to the top
+                count = if ((values as List<Stop>).count() != displayedStops.count()) 1 else 0
             }
-            @Suppress("UNCHECKED_CAST")
-            // Flag to control whether the recycler view should scroll to the top
-            count = if ((values as List<Stop>).count() != displayedStops.count()) 1 else 0
-        }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             @Suppress("UNCHECKED_CAST")
@@ -106,7 +126,10 @@ class StopWithDistanceAdapter(
                     return displayedStops[oldItemPosition].stop.stopId == filteredStops[newItemPosition].stop.stopId
                 }
 
-                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                override fun areContentsTheSame(
+                    oldItemPosition: Int,
+                    newItemPosition: Int
+                ): Boolean {
                     return displayedStops[oldItemPosition].stop.type == filteredStops[newItemPosition].stop.type
                             && displayedStops[oldItemPosition].stop.lines == filteredStops[newItemPosition].stop.lines
                             && displayedStops[oldItemPosition].stop.stopTitle == filteredStops[newItemPosition].stop.stopTitle

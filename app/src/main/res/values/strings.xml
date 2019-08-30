@@ -96,6 +96,8 @@
     <string name="qr_not_recognized" translatable="true">QR code not recognized.</string>
     <string name="search_nearby_stops_empty" translatable="true">No stops nearby!</string>
     <string name="favorite_status" translatable="true">Favorite status</string>
+    <string name="stop_favorited" translatable="true">Favorited stop</string>
+    <string name="stop_not_favorited" translatable="true">Not favorited stop</string>
 
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>
