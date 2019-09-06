@@ -47,11 +47,12 @@ class StopAdapter(
             // Texts
             title_text_stop.text = stop.stopTitle
             number_text_stop.text = stop.number
+            number_text_stop.contentDescription = context.getString(R.string.number_template, stop.number)
             // Favorite icon
-            if (stop.isFavorite){
+            if (stop.isFavorite) {
                 favorite_icon_stop.setImageResource(R.drawable.ic_favorite_black_24dp)
                 favorite_icon_stop.contentDescription = context.getString(R.string.stop_favorited)
-            }else{
+            } else {
                 favorite_icon_stop.setImageResource(R.drawable.ic_favorite_border_black_24dp)
                 favorite_icon_stop.contentDescription = context.getString(R.string.stop_not_favorited)
             }

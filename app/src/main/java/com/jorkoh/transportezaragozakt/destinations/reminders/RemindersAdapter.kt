@@ -44,12 +44,16 @@ class RemindersAdapter(
             delete: (ReminderExtended, Int) -> Unit
         ) {
             // Stop type icon
-            type_image_reminder.setImageResource(
-                when (reminder.type) {
-                    StopType.BUS -> R.drawable.ic_bus
-                    StopType.TRAM -> R.drawable.ic_tram
+            when (reminder.type) {
+                StopType.BUS -> {
+                    type_image_reminder.setImageResource(R.drawable.ic_bus)
+                    type_image_reminder.contentDescription = context.getString(R.string.stop_type_bus)
                 }
-            )
+                StopType.TRAM -> {
+                    type_image_reminder.setImageResource(R.drawable.ic_tram)
+                    type_image_reminder.contentDescription = context.getString(R.string.stop_type_tram)
+                }
+            }
             // Days checkboxes
             reminder_monday.isChecked = reminder.daysOfWeek.days[0]
             reminder_tuesday.isChecked = reminder.daysOfWeek.days[1]

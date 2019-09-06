@@ -33,6 +33,7 @@ class StopDestinationsAdapter(
         ) {
             // Line number and color
             line_text.text = destination.line
+            line_text.contentDescription = context.getString(R.string.line_template, destination.line)
             line_text.setBackgroundColor(
                 ContextCompat.getColor(
                     context, when (stopType) {

@@ -21,17 +21,29 @@ class StopDestinationsAdapter(
             selectStop: (String) -> Unit
         ) {
             itemView.apply {
-                type_image_stop.setImageResource(
-                    when (stop.type) {
-                        StopType.BUS -> R.drawable.ic_bus
-                        StopType.TRAM -> R.drawable.ic_tram
+                // Stop type icon
+                when (stop.type) {
+                    StopType.BUS -> {
+                        type_image_stop.setImageResource(R.drawable.ic_bus)
+                        type_image_stop.contentDescription = context.getString(R.string.stop_type_bus)
                     }
-                )
+                    StopType.TRAM -> {
+                        type_image_stop.setImageResource(R.drawable.ic_tram)
+                        type_image_stop.contentDescription = context.getString(R.string.stop_type_tram)
+                    }
+                }
+                // Texts
                 title_text_stop.text = stop.stopTitle
                 number_text_stop.text = stop.number
-                favorite_icon_stop.setImageResource(
-                    if (stop.isFavorite) R.drawable.ic_favorite_black_24dp else R.drawable.ic_favorite_border_black_24dp
-                )
+                number_text_stop.contentDescription = context.getString(R.string.number_template, stop.number)
+                // Favorite icon
+                if (stop.isFavorite){
+                    favorite_icon_stop.setImageResource(R.drawable.ic_favorite_black_24dp)
+                    favorite_icon_stop.contentDescription = context.getString(R.string.stop_favorited)
+                }else{
+                    favorite_icon_stop.setImageResource(R.drawable.ic_favorite_border_black_24dp)
+                    favorite_icon_stop.contentDescription = context.getString(R.string.stop_not_favorited)
+                }
 
                 stop.lines.inflateLines(itemView.lines_layout_stop, stop.type, context)
 

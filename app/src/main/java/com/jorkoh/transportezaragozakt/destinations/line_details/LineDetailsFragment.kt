@@ -219,7 +219,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         lineDetailsVM.line.observe(viewLifecycleOwner, Observer { line ->
             line?.let {
                 // Set the action bar title
-                fragment_toolbar.title = "${getString(R.string.line)} ${line.name}"
+                fragment_toolbar.title = getString(R.string.line_template, line.name)
                 // Load the bottom sheet with the stops by destination
                 line_details_viewpager.adapter = StopDestinationsPagerAdapter(
                     childFragmentManager,

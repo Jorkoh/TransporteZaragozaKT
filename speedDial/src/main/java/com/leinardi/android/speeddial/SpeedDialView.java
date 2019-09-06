@@ -17,7 +17,6 @@
 package com.leinardi.android.speeddial;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -50,6 +49,7 @@ import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -678,7 +678,9 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
     }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
+        setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         mMainFab = createMainFab(context);
+        mMainFab.setContentDescription(getContext().getString(R.string.speeddial_closed));
         addView(mMainFab);
         setClipChildren(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -753,6 +755,7 @@ public class SpeedDialView extends LinearLayout implements CoordinatorLayout.Att
         if (isOpen() == show) {
             return;
         }
+        mMainFab.setContentDescription(getContext().getString(show ? R.string.speeddial_opened : R.string.speeddial_closed));
         mInstanceState.mIsOpen = show;
         visibilitySetup(show, animate, mInstanceState.mUseReverseAnimationOnClose);
         updateMainFabDrawable(animate);

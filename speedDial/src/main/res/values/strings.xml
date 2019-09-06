@@ -22,4 +22,6 @@
     <string name="speeddial_scrolling_view_snackbar_behavior" tools:ignore="UnusedResources" translatable="false">
         com.leinardi.android.speeddial.SpeedDialView$ScrollingViewSnackbarBehavior
     </string>
+    <string name="speeddial_closed" translatable="true">options menu closed</string>
+    <string name="speeddial_opened" translatable="true">options menu opened</string>
 </resources>

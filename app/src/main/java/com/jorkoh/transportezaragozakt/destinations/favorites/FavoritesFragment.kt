@@ -66,7 +66,7 @@ class FavoritesFragment : FragmentWithToolbar() {
                 input(prefill = favorite.alias) { _, newAlias ->
                     favoritesVM.updateFavorite(favorite.stopId, newAlias.toString(), favorite.colorHex)
                 }
-                positiveButton(R.string.edit_button)
+                positiveButton(R.string.edit)
             }
     }
 
@@ -76,7 +76,7 @@ class FavoritesFragment : FragmentWithToolbar() {
             colorChooser(materialColors, initialSelection = favorite.colorHex.toColorFromHex()) { _, color ->
                 favoritesVM.updateFavorite(favorite.stopId, favorite.alias, color.toHexFromColor())
             }
-            positiveButton(R.string.edit_button)
+            positiveButton(R.string.edit)
         }
     }
 

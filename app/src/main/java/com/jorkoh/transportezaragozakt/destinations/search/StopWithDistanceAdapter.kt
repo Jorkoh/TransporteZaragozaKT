@@ -36,15 +36,20 @@ class StopWithDistanceAdapter(
             openStop: (StopDetailsFragmentArgs) -> Unit
         ) {
             // Stop type icon
-            type_image_stop.setImageResource(
-                when (stopWithDistance.stop.type) {
-                    StopType.BUS -> R.drawable.ic_bus
-                    StopType.TRAM -> R.drawable.ic_tram
+            when (stopWithDistance.stop.type) {
+                StopType.BUS -> {
+                    type_image_stop.setImageResource(R.drawable.ic_bus)
+                    type_image_stop.contentDescription = context.getString(R.string.stop_type_bus)
                 }
-            )
+                StopType.TRAM -> {
+                    type_image_stop.setImageResource(R.drawable.ic_tram)
+                    type_image_stop.contentDescription = context.getString(R.string.stop_type_tram)
+                }
+            }
             // Texts
             title_text_stop.text = stopWithDistance.stop.stopTitle
             number_text_stop.text = stopWithDistance.stop.number
+            number_text_stop.contentDescription = context.getString(R.string.number_template, stopWithDistance.stop.number)
             @SuppressLint("SetTextI18n")
             distance_text_stop.text = "${"%.2f".format(stopWithDistance.distance)} m."
             // Favorite icon

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="speeddial_closed">menú de opciones cerrado</string>
+    <string name="speeddial_opened">menú de opciones abierto</string>
+</resources>

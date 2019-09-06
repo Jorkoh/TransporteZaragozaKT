@@ -10,6 +10,7 @@ import android.location.Location
 import android.net.Uri
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.CheckBox
 import android.widget.GridLayout
 import android.widget.TextView
@@ -154,7 +155,7 @@ fun lighter(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) factor: Floa
     return Color.argb(alpha, red, green, blue)
 }
 
-fun List<String>.inflateLines(container : GridLayout, stopType: StopType, context: Context ){
+fun List<String>.inflateLines(container: GridLayout, stopType: StopType, context: Context) {
     container.removeAllViews()
     forEachIndexed { index, line ->
         LayoutInflater.from(context).inflate(R.layout.map_info_window_line, container)
@@ -166,5 +167,7 @@ fun List<String>.inflateLines(container : GridLayout, stopType: StopType, contex
             PorterDuff.Mode.SRC_IN
         )
         lineView.text = line
+        lineView.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
     }
+    container.contentDescription = "${context.getString(R.string.lines)}: ${joinToString(separator = ", ")}"
 }

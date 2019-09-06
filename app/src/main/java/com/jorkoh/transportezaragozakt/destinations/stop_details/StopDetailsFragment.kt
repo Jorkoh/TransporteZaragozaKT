@@ -162,12 +162,16 @@ class StopDetailsFragment : FragmentWithToolbar() {
         stopDetailsVM.stopIsFavorited.observe(viewLifecycleOwner, stopFavoriteStatusObserver)
         stopDetailsVM.stop.observe(viewLifecycleOwner, Observer { stop ->
             // Setup the toolbar
-            type_image_stop_details.setImageResource(
-                when (stop.type) {
-                    StopType.BUS -> R.drawable.ic_bus
-                    StopType.TRAM -> R.drawable.ic_tram
+            when (stop.type) {
+                StopType.BUS -> {
+                    type_image_stop_details.setImageResource(R.drawable.ic_bus)
+                    type_image_stop_details.contentDescription = getString(R.string.stop_type_bus)
                 }
-            )
+                StopType.TRAM -> {
+                    type_image_stop_details.setImageResource(R.drawable.ic_tram)
+                    type_image_stop_details.contentDescription = getString(R.string.stop_type_tram)
+                }
+            }
             fragment_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
             stop_details_title_text_view.text = stop.stopTitle
             stop.lines.inflateLines(stop_details_lines_layout, stop.type, requireContext())

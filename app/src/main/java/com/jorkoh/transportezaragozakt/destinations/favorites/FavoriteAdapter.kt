@@ -42,15 +42,20 @@ class FavoriteAdapter(
             delete: (FavoriteStopExtended, Int) -> Unit
         ) {
             // Stop type icon
-            type_image_favorite.setImageResource(
-                when (favorite.type) {
-                    StopType.BUS -> R.drawable.ic_bus
-                    StopType.TRAM -> R.drawable.ic_tram
+            when (favorite.type) {
+                StopType.BUS -> {
+                    type_image_favorite.setImageResource(R.drawable.ic_bus)
+                    type_image_favorite.contentDescription = context.getString(R.string.stop_type_bus)
                 }
-            )
+                StopType.TRAM -> {
+                    type_image_favorite.setImageResource(R.drawable.ic_tram)
+                    type_image_favorite.contentDescription = context.getString(R.string.stop_type_tram)
+                }
+            }
             // Texts
             title_text_favorite.text = favorite.alias
             number_text_favorite.text = favorite.number
+            number_text_favorite.contentDescription = context.getString(R.string.number_template, favorite.number)
             // Favorite user defined color
             if (favorite.colorHex.isNotEmpty()) {
                 favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))

@@ -63,7 +63,7 @@ class RemindersFragment : FragmentWithToolbar() {
             ) { _, time, daysOfWeek ->
                 remindersVM.updateReminder(reminder.reminderId, daysOfWeek, time)
             }
-            positiveButton(R.string.edit_button)
+            positiveButton(R.string.edit)
         }
     }
 
@@ -74,7 +74,7 @@ class RemindersFragment : FragmentWithToolbar() {
                 input(prefill = reminder.alias) { _, newAlias ->
                     remindersVM.updateReminder(reminder.reminderId, newAlias.toString(), reminder.colorHex)
                 }
-                positiveButton(R.string.edit_button)
+                positiveButton(R.string.edit)
             }
     }
 
@@ -84,7 +84,7 @@ class RemindersFragment : FragmentWithToolbar() {
             colorChooser(materialColors, initialSelection = reminder.colorHex.toColorFromHex()) { _, color ->
                 remindersVM.updateReminder(reminder.reminderId, reminder.alias, color.toHexFromColor())
             }
-            positiveButton(R.string.edit_button)
+            positiveButton(R.string.edit)
         }
     }
 

@@ -24,7 +24,8 @@
     <!--Favorites-->
     <string name="no_favorites" translatable="true">No favorite stops yet!</string>
     <string name="edit_favorite_dialog_title" translatable="true">Edit favorite</string>
-    <string name="edit_button" translatable="true">Edit</string>
+    <string name="edit" translatable="true">Edit</string>
+    <string name="rearrange" translatable="true">Rearrange</string>
     <string name="stop_type" translatable="true">Stop type</string>
     <string name="stop_type_bus" translatable="true">Stop type bus</string>
     <string name="stop_type_tram" translatable="true">Stop type tram</string>
@@ -58,9 +59,11 @@
     <string name="refresh_menu_item" translatable="true">Refresh</string>
     <string name="pinned_shortcut_snackbar" translatable="true">Created shortcut!</string>
     <string name="stop" translatable="true">Stop</string>
+    <string name="number_template" translatable="true">Number %1$s</string>
 
     <!--Line details-->
-    <string name="line" translatable="true">Line</string>
+    <string name="line_template" translatable="true">Line %1$s</string>
+    <string name="lines" translatable="true">Lines</string>
     <string name="schedule_menu_item" translatable="true">Schedule</string>
     <string name="tram_line_schedule_url" translatable="false">https://www.tranviasdezaragoza.es/es/informacion/horaires</string>
     <string name="bus_line_schedule_url" translatable="false">http://zaragoza.avanzagrupo.com/frm_esquemaparadas.php?tipoPag=Linea&amp;LINEASEL=%</string>
@@ -98,6 +101,7 @@
     <string name="favorite_status" translatable="true">Favorite status</string>
     <string name="stop_favorited" translatable="true">Favorited stop</string>
     <string name="stop_not_favorited" translatable="true">Not favorited stop</string>
+    <string name="search" translatable="true">Search</string>
 
     <!--Permissions-->
     <string name="location_rationale" translatable="true">This permission is used to display your location on the map and to find nearby stops. Location information will never be used for any other purpose.</string>
