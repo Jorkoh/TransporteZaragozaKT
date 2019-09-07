@@ -136,4 +136,12 @@
     <string name="number_template">Número %1$s</string>
     <string name="rearrange">Reordenar</string>
     <string name="search">Buscar</string>
+    <string name="bus_chip_description">filtro paradas de bus</string>
+    <string name="tram_chip_description">filtro paradas de tranvía</string>
+    <string name="traffic_layer_description">información de tráfico</string>
+    <string name="traffic_layer_disabled_description">dehabilitar información de tráfico</string>
+    <string name="traffic_layer_enabled_description">habilitar información de tráfico</string>
+    <string name="map_type_normal_description">habilitar vista de mapa</string>
+    <string name="map_type_satellite_description">habilitar vista de satélite</string>
+    <string name="map_type_description">tipo de vista de mapa</string>
 </resources>

@@ -21,6 +21,7 @@
             android:layout_margin="8dp"
             android:id="@+id/traffic_button"
             android:src="@drawable/ic_traffic_black_24dp"
+            android:contentDescription="@string/traffic_layer_description"
             android:background="@drawable/mapbutton_background"/>
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -30,6 +31,7 @@
             android:layout_margin="8dp"
             android:id="@+id/map_type_button"
             android:src="@drawable/ic_satellite_black_24dp"
+            android:contentDescription="@string/map_type_description"
             android:background="@drawable/mapbutton_background"/>
 
 </LinearLayout>

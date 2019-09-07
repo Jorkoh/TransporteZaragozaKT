@@ -59,12 +59,25 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
         mapSettingsVM.mapType.observe(viewLifecycleOwner, Observer<Int> { mapType ->
             when (mapType) {
-                GoogleMap.MAP_TYPE_NORMAL -> map_type_button.setImageResource(R.drawable.ic_satellite_black_24dp)
-                GoogleMap.MAP_TYPE_SATELLITE -> map_type_button.setImageResource(R.drawable.ic_map_black_24dp)
+                GoogleMap.MAP_TYPE_NORMAL -> {
+                    map_type_button.setImageResource(R.drawable.ic_satellite_black_24dp)
+                    map_type_button.contentDescription = getString(R.string.map_type_satellite_description)
+                }
+                GoogleMap.MAP_TYPE_SATELLITE -> {
+                    map_type_button.setImageResource(R.drawable.ic_map_black_24dp)
+                    map_type_button.contentDescription = getString(R.string.map_type_normal_description)
+                }
             }
         })
         mapSettingsVM.trafficEnabled.observe(viewLifecycleOwner, Observer { enabled ->
-            traffic_button.setImageResource(if (enabled) R.drawable.ic_layers_clear_black_24dp else R.drawable.ic_traffic_black_24dp)
+            if (enabled) {
+                traffic_button.setImageResource(R.drawable.ic_layers_clear_black_24dp)
+                traffic_button.contentDescription = getString(R.string.traffic_layer_disabled_description)
+            } else {
+                traffic_button.setImageResource(R.drawable.ic_traffic_black_24dp)
+                traffic_button.contentDescription = getString(R.string.traffic_layer_enabled_description)
+            }
+
         })
     }
 

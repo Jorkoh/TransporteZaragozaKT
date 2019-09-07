@@ -86,8 +86,16 @@
 
     <!--Map-->
     <string name="bus_chip" translatable="true">BUS</string>
+    <string name="bus_chip_description" translatable="true">bus stops filter</string>
     <string name="tram_chip" translatable="true">TRAM</string>
+    <string name="tram_chip_description" translatable="true">tram stops filter</string>
     <string name="location_outside_zaragoza_bounds" translatable="true">Function not available outside of Zaragoza.</string>
+    <string name="traffic_layer_description" translatable="true">traffic information</string>
+    <string name="traffic_layer_disabled_description" translatable="true">disable traffic information</string>
+    <string name="traffic_layer_enabled_description" translatable="true">enable traffic information</string>
+    <string name="map_type_description" translatable="true">map view type</string>
+    <string name="map_type_satellite_description" translatable="true">enable satellite view</string>
+    <string name="map_type_normal_description" translatable="true">enable map view</string>
 
     <!--Search-->
     <string name="search_view_hint" translatable="true">Name, destination or number…</string>
