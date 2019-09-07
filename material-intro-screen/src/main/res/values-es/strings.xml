@@ -3,4 +3,7 @@
     <string name="mis_grant_permissions">Conceder permiso</string>
     <string name="mis_impassable_slide">No se puede pasar esta diapositiva.</string>
     <string name="mis_please_grant_permissions">Por favor, concede los permisos necesarios</string>
+    <string name="mis_next_slide">Siguiente diapositiva</string>
+    <string name="mis_previous_slide">Diapositiva anterior</string>
+    <string name="mis_skip_intro">Saltar introducción</string>
 </resources>

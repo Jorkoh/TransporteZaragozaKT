@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <agency.tango.materialintroscreen.parallax.ParallaxLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/slide_background"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="16dp"
-    android:baselineAligned="false"
-    android:clipToPadding="false"
-    android:fitsSystemWindows="false"
-    android:padding="16dp">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/slide_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="false"
+        android:padding="16dp">
 
     <ImageView
-        android:id="@+id/image_slide"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="128dp"
-        android:layout_marginRight="16dp"
-        android:layout_weight="1"
-        android:adjustViewBounds="true"
-        android:paddingTop="32dp"
-        android:visibility="gone"
-        app:mis_layout_parallaxFactor="0.6"
-        android:tint="#FAFAFA"
-        tools:visibility="visible" />
+            android:id="@+id/image_slide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="128dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:paddingTop="32dp"
+            android:tint="#FAFAFA"
+            android:visibility="gone"
+            app:mis_layout_parallaxFactor="0.6"
+            tools:visibility="visible" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txt_title_slide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:id="@+id/txt_title_slide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
-            android:id="@+id/txt_description_slide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+                android:id="@+id/txt_description_slide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     </LinearLayout>
 </agency.tango.materialintroscreen.parallax.ParallaxLinearLayout>
