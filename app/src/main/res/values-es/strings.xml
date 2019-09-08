@@ -144,4 +144,5 @@
     <string name="map_type_normal_description">habilitar vista de mapa</string>
     <string name="map_type_satellite_description">habilitar vista de satélite</string>
     <string name="map_type_description">tipo de vista de mapa</string>
+    <string name="time_template">hora %1$s</string>
 </resources>

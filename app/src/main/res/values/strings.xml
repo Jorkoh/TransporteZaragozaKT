@@ -83,6 +83,7 @@
     <string name="delete" translatable="true">Delete</string>
     <string name="added_reminder_snackbar" translatable="true">Reminder added!</string>
     <string name="removed_reminder_snackbar" translatable="true">Reminder removed.</string>
+    <string name="time_template" translatable="true">time %1$s</string>
 
     <!--Map-->
     <string name="bus_chip" translatable="true">BUS</string>

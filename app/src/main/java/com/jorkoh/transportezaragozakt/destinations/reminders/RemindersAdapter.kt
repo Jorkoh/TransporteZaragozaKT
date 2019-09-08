@@ -73,7 +73,9 @@ class RemindersAdapter(
             reminder_sunday.setDrawableColor(color)
             // Texts
             @SuppressLint("SetTextI18n")
-            reminder_time_text.text = "${"%02d".format(reminder.hourOfDay)}:${"%02d".format(reminder.minute)}"
+            val timeString = "${"%02d".format(reminder.hourOfDay)}:${"%02d".format(reminder.minute)}"
+            reminder_time_text.text = timeString
+            reminder_time_text.contentDescription = context.getString(R.string.time_template, timeString)
             // Reminder user defined color
             title_text_reminder.text = reminder.alias
             if (reminder.colorHex.isNotEmpty()) {

@@ -3,6 +3,7 @@
     <string name="mis_please_grant_permissions" translatable="true">Please grant needed permissions</string>
     <string name="mis_impassable_slide" translatable="true">Can\'t pass this slide.</string>
     <string name="mis_next_slide" translatable="true">Next slide</string>
+    <string name="mis_finish_intro" translatable="true">Finish introduction</string>
     <string name="mis_previous_slide" translatable="true">Previous slide</string>
     <string name="mis_skip_intro" translatable="true">Skip introduction</string>
 </resources>

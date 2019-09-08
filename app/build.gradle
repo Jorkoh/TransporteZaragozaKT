@@ -14,8 +14,8 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 15
-        versionName "1.0.9-dev"
+        versionCode 16
+        versionName "1.0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -134,7 +134,7 @@ dependencies {
     implementation deps.firebase
     implementation deps.crashlytics
 
-//    debugImplementation deps.leakcanary
+    debugImplementation deps.leakcanary
 
     //Testing
     testImplementation deps.junit

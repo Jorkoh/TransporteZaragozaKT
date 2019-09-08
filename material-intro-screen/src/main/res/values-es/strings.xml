@@ -6,4 +6,5 @@
     <string name="mis_next_slide">Siguiente diapositiva</string>
     <string name="mis_previous_slide">Diapositiva anterior</string>
     <string name="mis_skip_intro">Saltar introducción</string>
+    <string name="mis_finish_intro">Terminar introducción</string>
 </resources>

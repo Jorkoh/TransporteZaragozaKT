@@ -1,17 +1,5 @@
 package agency.tango.materialintroscreen;
 
-import agency.tango.materialintroscreen.adapter.SlidesAdapter;
-import agency.tango.materialintroscreen.animations.ViewTranslationWrapper;
-import agency.tango.materialintroscreen.animations.wrappers.*;
-import agency.tango.materialintroscreen.behaviours.MessageButtonBehaviour;
-import agency.tango.materialintroscreen.fragments.SlideFragment;
-import agency.tango.materialintroscreen.fragments.SlideFragmentBase;
-import agency.tango.materialintroscreen.listeners.*;
-import agency.tango.materialintroscreen.listeners.click.PermissionNotGrantedClickListener;
-import agency.tango.materialintroscreen.listeners.scroll.ParallaxScrollListener;
-import agency.tango.materialintroscreen.widgets.InkPageIndicator;
-import agency.tango.materialintroscreen.widgets.OverScrollViewPager;
-import agency.tango.materialintroscreen.widgets.SwipeableViewPager;
 import android.animation.ArgbEvaluator;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -24,12 +12,39 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import androidx.annotation.*;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+
 import com.google.android.material.snackbar.Snackbar;
+
+import agency.tango.materialintroscreen.adapter.SlidesAdapter;
+import agency.tango.materialintroscreen.animations.ViewTranslationWrapper;
+import agency.tango.materialintroscreen.animations.wrappers.BackButtonTranslationWrapper;
+import agency.tango.materialintroscreen.animations.wrappers.NextButtonTranslationWrapper;
+import agency.tango.materialintroscreen.animations.wrappers.PageIndicatorTranslationWrapper;
+import agency.tango.materialintroscreen.animations.wrappers.SkipButtonTranslationWrapper;
+import agency.tango.materialintroscreen.animations.wrappers.ViewPagerTranslationWrapper;
+import agency.tango.materialintroscreen.behaviours.MessageButtonBehaviour;
+import agency.tango.materialintroscreen.fragments.SlideFragment;
+import agency.tango.materialintroscreen.fragments.SlideFragmentBase;
+import agency.tango.materialintroscreen.listeners.IFinishListener;
+import agency.tango.materialintroscreen.listeners.IPageScrolledListener;
+import agency.tango.materialintroscreen.listeners.IPageSelectedListener;
+import agency.tango.materialintroscreen.listeners.MessageButtonBehaviourOnPageSelected;
+import agency.tango.materialintroscreen.listeners.ViewBehavioursOnPageChangeListener;
+import agency.tango.materialintroscreen.listeners.click.PermissionNotGrantedClickListener;
+import agency.tango.materialintroscreen.listeners.scroll.ParallaxScrollListener;
+import agency.tango.materialintroscreen.widgets.InkPageIndicator;
+import agency.tango.materialintroscreen.widgets.OverScrollViewPager;
+import agency.tango.materialintroscreen.widgets.SwipeableViewPager;
 
 @SuppressWarnings("unused")
 public abstract class MaterialIntroActivity extends AppCompatActivity {
@@ -366,12 +381,15 @@ public abstract class MaterialIntroActivity extends AppCompatActivity {
         boolean hasPermissionToGrant = fragment.hasNeededPermissionsToGrant();
         if (hasPermissionToGrant) {
             nextButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mis_ic_next));
+            nextButton.setContentDescription(getString(R.string.mis_next_slide));
             nextButton.setOnClickListener(permissionNotGrantedClickListener);
         } else if (adapter.isLastSlide(position)) {
             nextButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mis_ic_finish));
+            nextButton.setContentDescription(getString(R.string.mis_finish_intro));
             nextButton.setOnClickListener(finishScreenClickListener);
         } else {
             nextButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.mis_ic_next));
+            nextButton.setContentDescription(getString(R.string.mis_next_slide));
             nextButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
