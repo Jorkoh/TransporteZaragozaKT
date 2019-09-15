@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -118,7 +119,11 @@ class MapFragment : FragmentWithToolbar() {
 
         styleMap()
         configureMap()
-        setupObservers(mapLifecycleOwner)
+        with(mapLifecycleOwner) {
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                setupObservers(this)
+            }
+        }
 
         // Enable "My Location" layer
         runWithPermissions(

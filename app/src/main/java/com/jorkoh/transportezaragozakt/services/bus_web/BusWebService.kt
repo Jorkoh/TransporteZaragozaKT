@@ -29,5 +29,12 @@ fun String.fixLine() =
     when (this) {
         "CI1" -> "Ci1"
         "CI2" -> "Ci2"
+        "N01" -> "N1"
+        "N02" -> "N2"
+        "N03" -> "N3"
+        "N04" -> "N4"
+        "N05" -> "N5"
+        "N06" -> "N6"
+        "N07" -> "N7"
         else -> this
     }
