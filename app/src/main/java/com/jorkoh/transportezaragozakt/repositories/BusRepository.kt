@@ -10,8 +10,8 @@ import com.jorkoh.transportezaragozakt.services.bus_web.officialAPIToBusWebId
 import com.jorkoh.transportezaragozakt.services.bus_web.responses.BusStopBusWebResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
+import com.jorkoh.transportezaragozakt.services.ctaz_api.officialAPIToCtazAPIId
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.bus.BusStopCtazAPIResponse
-import com.jorkoh.transportezaragozakt.services.ctaz_api.stopIdToCtazAPIBusStopUrl
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.responses.bus.BusStopOfficialAPIResponse
 
@@ -33,6 +33,11 @@ class BusRepositoryImplementation(
     private val stopsDao: StopsDao,
     private val db: AppDatabase
 ) : BusRepository {
+
+    companion object {
+        //Just to limit users a bit from spamming requests
+        const val FRESH_TIMEOUT = 10
+    }
 
     override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
         return object :
@@ -59,7 +64,7 @@ class BusRepositoryImplementation(
             }
 
             override fun shouldFetch(data: List<StopDestination>?): Boolean {
-                return (data == null || data.isEmpty() || !data.isFresh(OfficialAPIService.FRESH_TIMEOUT_OFFICIAL_API))
+                return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
             }
 
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(busStopId)
@@ -68,7 +73,7 @@ class BusRepositoryImplementation(
 
             override fun createSecondaryCall() = busWebService.getBusStopBusWeb(busStopId.officialAPIToBusWebId())
 
-            override fun createTertiaryCall() = ctazAPIService.getBusStopCtazAPI(busStopId.stopIdToCtazAPIBusStopUrl())
+            override fun createTertiaryCall() = ctazAPIService.getBusStopCtazAPI(busStopId.officialAPIToCtazAPIId())
         }.asLiveData()
     }
 

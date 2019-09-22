@@ -15,16 +15,14 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.*
 import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
+import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -223,6 +221,14 @@ class MapFragment : FragmentWithToolbar() {
             }
             tramStops.clear()
             tramStops.addAll(stops)
+        })
+        //TESTING TRACKERS
+        mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
+            when(trackings.status){
+                Status.SUCCESS -> trackings.data?.forEach { map.addMarker(MarkerOptions().position(it.location).title(it.vehicleId + " - " + it.lineId).zIndex(1f)) }
+                Status.ERROR -> (requireActivity() as MainActivity).makeSnackbar("ERROR LOADING TRACKINGS")
+                Status.LOADING -> (requireActivity() as MainActivity).makeSnackbar("LOADING TRACKINGS")
+            }
         })
     }
 

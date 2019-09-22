@@ -11,7 +11,8 @@ import androidx.room.TypeConverters
         FavoriteStop::class,
         Reminder::class,
         Line::class,
-        LineLocation::class
+        LineLocation::class,
+        RuralTracking::class
     ],
     exportSchema = false,
     version = 1
@@ -23,5 +24,6 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     abstract fun stopsDao(): StopsDao
+    abstract fun trackingsDao(): TrackingsDao
     abstract fun remindersDao(): RemindersDao
 }

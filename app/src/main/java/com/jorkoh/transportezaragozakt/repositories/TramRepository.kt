@@ -8,7 +8,6 @@ import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.tram.TramStopCtazAPIResponse
-import com.jorkoh.transportezaragozakt.services.ctaz_api.stopIdToCtazAPITramStopUrl
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.responses.tram.TramStopOfficialAPIResponse
 import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
@@ -35,6 +34,11 @@ class TramRepositoryImplementation(
     private val db: AppDatabase
 ) : TramRepository {
 
+    companion object {
+        //Just to limit users a bit from spamming requests
+        const val FRESH_TIMEOUT = 10
+    }
+
     override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
         return object :
             NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse, TramStopCtazAPIResponse>(
@@ -60,7 +64,7 @@ class TramRepositoryImplementation(
             }
 
             override fun shouldFetch(data: List<StopDestination>?): Boolean {
-                return (data == null || data.isEmpty() || !data.isFresh(OfficialAPIService.FRESH_TIMEOUT_OFFICIAL_API))
+                return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
             }
 
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(tramStopId)
@@ -69,7 +73,7 @@ class TramRepositoryImplementation(
 
             override fun createSecondaryCall() = tramAPIService.getTramStopTramAPI(tramStopId.officialAPIToTramAPIId())
 
-            override fun createTertiaryCall() = ctazAPIService.getTramStopCtazAPI(tramStopId.stopIdToCtazAPITramStopUrl())
+            override fun createTertiaryCall() = ctazAPIService.getTramStopCtazAPI(tramStopId)
         }.asLiveData()
     }
 

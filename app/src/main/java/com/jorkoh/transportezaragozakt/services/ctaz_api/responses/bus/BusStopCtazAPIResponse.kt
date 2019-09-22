@@ -17,7 +17,8 @@ data class BusStopCtazAPIResponse(
         val stopDestinations = mutableListOf<StopDestination>()
         urban_arrival_times
             .filterNot { it.line == "Sin información" || it.destination == "Sin destino" }
-            .groupBy { it.line + it.destination }.forEach { destinationTimes ->
+            .groupBy { it.line + it.destination }
+            .forEach { destinationTimes ->
                 stopDestinations += StopDestination(
                     destinationTimes.value[0].line.fixLine(),
                     destinationTimes.value[0].destination,

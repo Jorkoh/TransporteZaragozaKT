@@ -6,14 +6,6 @@ import com.jorkoh.transportezaragozakt.services.tram_api.responses.TramStopTramA
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Unofficial API service behind the shiny website for Zaragoza's tram, the site itself looks great but the endpoints
- * are a mess. It obviously doesn't use the same stop ids than the other services because that would make too much sense
- * and requests are mostly random parameter chaining. Luckily for our use case most parameters can be safely removed.
- *
- * It's currently being used as a backup when the official API fails. It would probably be more effective as
- * the main source considering the state of the official API but it would be bad manners.
- */
 interface TramAPIService {
     companion object {
         const val BASE_URL = "https://www.tranviasdezaragoza.es/es/tranvia-info/"

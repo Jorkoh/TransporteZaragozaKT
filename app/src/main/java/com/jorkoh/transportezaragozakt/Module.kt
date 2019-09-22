@@ -25,7 +25,6 @@ import com.pixplicity.generate.Rate
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -89,20 +88,7 @@ val appModule = module {
     single<CtazAPIService> {
         Retrofit.Builder()
             .baseUrl(CtazAPIService.BASE_URL)
-            .client(OkHttpClient()
-                .newBuilder()
-                .addInterceptor { chain ->
-                    val response = chain.proceed(chain.request())
-                    val rawJson = response.body()?.string() ?: ""
-                    val correctedJson = if(rawJson.startsWith("nada(")){
-                        rawJson.substring(5, rawJson.length-1)
-                    }else{
-                        rawJson
-                    }
-                    response.newBuilder().body(ResponseBody.create(response.body()?.contentType(), correctedJson)).build()
-                }
-                .build()
-            )
+            .client(OkHttpClient())
             .addConverterFactory(
                 MoshiConverterFactory.create(
                     Moshi.Builder()
@@ -131,6 +117,7 @@ val appModule = module {
     }
     single { get<AppDatabase>().stopsDao() }
     single { get<AppDatabase>().remindersDao() }
+    single { get<AppDatabase>().trackingsDao() }
 
     single { PreferenceManager.getDefaultSharedPreferences(androidContext()) }
 
@@ -153,12 +140,13 @@ val appModule = module {
     single<StopsRepository> { StopsRepositoryImplementation(get(), get()) }
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
+    single <RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
     single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
 
     // ViewModels
     viewModel { FavoritesViewModel(get()) }
-    viewModel { MapViewModel(get()) }
+    viewModel { MapViewModel(get(), get()) }
     viewModel { MapSettingsViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }

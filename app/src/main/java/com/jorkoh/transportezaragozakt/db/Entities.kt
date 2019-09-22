@@ -123,6 +123,22 @@ data class LineLocation(
     var location: LatLng
 )
 
+@Entity(tableName = "ruralTrackings")
+data class RuralTracking(
+    @PrimaryKey
+    @ColumnInfo(name = "vehicleId")
+    var vehicleId: String,
+
+    @ColumnInfo(name = "lineId")
+    var lineId: String,
+
+    @ColumnInfo(name = "location")
+    var location: LatLng,
+
+    @ColumnInfo(name = "updatedAt")
+    var updatedAt: Date
+)
+
 @Entity(tableName = "favoriteStops")
 data class FavoriteStop(
     @PrimaryKey

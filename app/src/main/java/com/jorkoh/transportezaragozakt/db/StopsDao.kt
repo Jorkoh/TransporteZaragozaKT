@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.db
 
 import android.content.Context
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -132,9 +131,6 @@ abstract class StopsDao {
         val initialBusLineLocations = getInitialBusLineLocations(context)
         val initialTramLineLocations = getInitialTramLineLocations(context)
         val initialChangelog = getInitialChangelog(context)
-        Log.d("TESTING STUFF", initialChangelog.version.toString())
-        Log.d("TESTING STUFF", initialChangelog.textEN)
-        Log.d("TESTING STUFF", initialChangelog.textES)
 
         with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
             // Data, save versions
