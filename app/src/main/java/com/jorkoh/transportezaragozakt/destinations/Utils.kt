@@ -161,7 +161,11 @@ fun List<String>.inflateLines(container: GridLayout, stopType: StopType, context
         LayoutInflater.from(context).inflate(R.layout.map_info_window_line, container)
         val lineView = container.getChildAt(index) as TextView
 
-        val lineColor = if (stopType == StopType.BUS) R.color.bus_color else R.color.tram_color
+        val lineColor = when(stopType){
+            StopType.BUS -> R.color.bus_color
+            StopType.TRAM -> R.color.tram_color
+            StopType.RURAL -> R.color.rural_color
+        }
         lineView.background.setColorFilter(
             ContextCompat.getColor(context, lineColor),
             PorterDuff.Mode.SRC_IN

@@ -164,7 +164,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 )
             )
         }
-        map.setInfoWindowAdapter(StopInfoWindowAdapter(requireContext()))
+        map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
         map.setOnMarkerClickListener { marker ->
             lineDetailsVM.selectedStopId.postValue((marker.tag as CustomClusterItem).stop?.stopId)
             false

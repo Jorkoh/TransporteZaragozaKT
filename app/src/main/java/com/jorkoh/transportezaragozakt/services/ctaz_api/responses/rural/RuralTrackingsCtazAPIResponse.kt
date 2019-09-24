@@ -21,6 +21,7 @@ data class RuralTrackingsCtazAPIResponse(
                 ruralTrackings += RuralTracking(
                     ruralTrackingResponse.vehicleId,
                     ruralTrackingResponse.line,
+                    ruralTrackingResponse.lineName.replace("-", "-\u200b"),
                     LatLng(ruralTrackingResponse.latitude, ruralTrackingResponse.longitude),
                     Date()
                 )

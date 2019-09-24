@@ -173,7 +173,7 @@ class MapFragment : FragmentWithToolbar() {
         map.setInfoWindowAdapter(clusterManager.markerManager)
         map.setOnInfoWindowClickListener(clusterManager)
         map.setOnCameraIdleListener(clusterManager)
-        clusterManager.markerCollection.setOnInfoWindowAdapter(StopInfoWindowAdapter(requireContext()))
+        clusterManager.markerCollection.setOnInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
 
         clusterManager.renderer = clusterRenderer
         clusterManager.algorithm = clusteringAlgorithm

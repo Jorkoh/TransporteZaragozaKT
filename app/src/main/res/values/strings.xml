@@ -93,6 +93,7 @@
     <string name="tram_chip_description" translatable="true">tram stops filter</string>
     <string name="rural_chip" translatable="true">RURAL</string>
     <string name="rural_chip_description" translatable="true">rural stops filter</string>
+    <string name="rural_tracking" translatable="true">Rural bus tracking</string>
     <string name="location_outside_zaragoza_bounds" translatable="true">Function not available outside of Zaragoza.</string>
     <string name="traffic_layer_description" translatable="true">traffic information</string>
     <string name="traffic_layer_disabled_description" translatable="true">disable traffic information</string>

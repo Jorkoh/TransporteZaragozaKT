@@ -38,11 +38,11 @@ class StopWithDistanceAdapter(
             // Stop type icon
             when (stopWithDistance.stop.type) {
                 StopType.BUS -> {
-                    type_image_stop.setImageResource(R.drawable.ic_bus)
+                    type_image_stop.setImageResource(R.drawable.ic_bus_stop)
                     type_image_stop.contentDescription = context.getString(R.string.stop_type_bus)
                 }
                 StopType.TRAM -> {
-                    type_image_stop.setImageResource(R.drawable.ic_tram)
+                    type_image_stop.setImageResource(R.drawable.ic_tram_stop)
                     type_image_stop.contentDescription = context.getString(R.string.stop_type_tram)
                 }
             }

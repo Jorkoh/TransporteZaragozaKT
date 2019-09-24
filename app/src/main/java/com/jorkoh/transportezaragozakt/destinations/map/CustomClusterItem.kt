@@ -14,13 +14,29 @@ data class CustomClusterItem(
 ) : ClusterItem {
 
     enum class ClusterItemType {
-        BUS_NORMAL,
-        BUS_FAVORITE,
-        TRAM_NORMAL,
-        TRAM_FAVORITE,
-        RURAL_NORMAL,
-        RURAL_FAVORITE,
-        RURAL_TRACKING
+        BUS_NORMAL {
+            override fun isStop() = true
+        },
+        BUS_FAVORITE {
+            override fun isStop() = true
+        },
+        TRAM_NORMAL {
+            override fun isStop() = true
+        },
+        TRAM_FAVORITE {
+            override fun isStop() = true
+        },
+        RURAL_NORMAL {
+            override fun isStop() = true
+        },
+        RURAL_FAVORITE {
+            override fun isStop() = true
+        },
+        RURAL_TRACKING {
+            override fun isStop() = false
+        };
+
+        abstract fun isStop(): Boolean
     }
 
     override fun getSnippet() = ""

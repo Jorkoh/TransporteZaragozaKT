@@ -46,11 +46,11 @@ class RemindersAdapter(
             // Stop type icon
             when (reminder.type) {
                 StopType.BUS -> {
-                    type_image_reminder.setImageResource(R.drawable.ic_bus)
+                    type_image_reminder.setImageResource(R.drawable.ic_bus_stop)
                     type_image_reminder.contentDescription = context.getString(R.string.stop_type_bus)
                 }
                 StopType.TRAM -> {
-                    type_image_reminder.setImageResource(R.drawable.ic_tram)
+                    type_image_reminder.setImageResource(R.drawable.ic_tram_stop)
                     type_image_reminder.contentDescription = context.getString(R.string.stop_type_tram)
                 }
             }

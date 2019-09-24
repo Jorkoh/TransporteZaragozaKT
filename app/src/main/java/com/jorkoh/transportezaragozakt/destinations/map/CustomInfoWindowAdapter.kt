@@ -13,7 +13,7 @@ import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import kotlinx.android.synthetic.main.map_info_window.view.*
 
-class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
+class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
 
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -24,31 +24,31 @@ class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter 
     @SuppressLint("InflateParams")
     override fun getInfoContents(marker: Marker?): View? {
         val item = marker?.tag
-        return if (item is CustomClusterItem && item.type != CustomClusterItem.ClusterItemType.RURAL_TRACKING) {
-            if (item.type != CustomClusterItem.ClusterItemType.RURAL_TRACKING) {
+        return if (item is CustomClusterItem) {
+            if (item.type.isStop()) {
                 inflateStopInfoContents(requireNotNull(item.stop))
             } else {
                 inflateTrackingInfoContents(requireNotNull(item.ruralTracking))
             }
-        } else{
+        } else {
             null
         }
     }
 
-    private fun inflateStopInfoContents(stop : Stop) : View {
+    private fun inflateStopInfoContents(stop: Stop): View {
         val content = layoutInflater.inflate(R.layout.map_info_window, null)
 
         when (stop.type) {
             StopType.BUS -> {
-                content.type_image_info_window.setImageResource(R.drawable.ic_bus)
+                content.type_image_info_window.setImageResource(R.drawable.ic_bus_stop)
                 content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_bus)
             }
             StopType.TRAM -> {
-                content.type_image_info_window.setImageResource(R.drawable.ic_tram)
+                content.type_image_info_window.setImageResource(R.drawable.ic_tram_stop)
                 content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_tram)
             }
             StopType.RURAL -> {
-                content.type_image_info_window.setImageResource(R.drawable.ic_rural)
+                content.type_image_info_window.setImageResource(R.drawable.ic_rural_stop)
                 content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_rural)
             }
         }
@@ -67,8 +67,24 @@ class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter 
         return content
     }
 
-    private fun inflateTrackingInfoContents(ruralTracking: RuralTracking) : View?{
+    private fun inflateTrackingInfoContents(tracking: RuralTracking): View? {
+        val content = layoutInflater.inflate(R.layout.map_info_window, null)
+
+        content.type_image_info_window.setImageResource(R.drawable.ic_rural_tracking)
+        content.type_image_info_window.contentDescription = context.getString(R.string.rural_tracking)
+
+        // If the stopTitle is longer we can fit more lines while keeping a nice ratio
+        content.lines_layout_favorite.columnCount = when {
+            tracking.lineId.length >= 24 -> 8
+            tracking.lineId.length >= 18 -> 6
+            else -> 4
+        }
+
+        listOf(tracking.lineId).inflateLines(content.lines_layout_favorite, StopType.RURAL, context)
+        content.number_text_info_window.text = tracking.vehicleId
         //TODO
-        return null
+        content.title_text_info_window.text = tracking.lineName
+
+        return content
     }
 }

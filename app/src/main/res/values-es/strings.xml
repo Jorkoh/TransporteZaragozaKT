@@ -128,8 +128,8 @@
     <string name="tram_line_schedule_title">Horario línea de tranvía</string>
     <string name="bus_line_schedule_title">Horario línea de bus %1$s</string>
     <string name="favorite_status">Estado favorito</string>
-    <string name="stop_type_bus">Tipo de parada bus</string>
-    <string name="stop_type_tram">Tipo de parada tranvía</string>
+    <string name="stop_type_bus">Parada de tipo bus</string>
+    <string name="stop_type_tram">Parada de tipo tranvía</string>
     <string name="stop_favorited">Parada favorita</string>
     <string name="stop_not_favorited">Parada no favorita</string>
     <string name="lines">Líneas</string>
@@ -147,5 +147,6 @@
     <string name="time_template">hora %1$s</string>
     <string name="rural_chip">RURAL</string>
     <string name="rural_chip_description">filtro paradas bus rural</string>
-    <string name="stop_type_rural">Tipo de parada rural</string>
+    <string name="stop_type_rural">Parada de tipo rural</string>
+    <string name="rural_tracking">Rastreo de tipo rural</string>
 </resources>

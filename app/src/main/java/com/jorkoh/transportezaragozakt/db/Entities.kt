@@ -127,6 +127,9 @@ data class RuralTracking(
     @ColumnInfo(name = "lineId")
     var lineId: String,
 
+    @ColumnInfo(name = "lineName")
+    var lineName: String,
+
     @ColumnInfo(name = "location")
     var location: LatLng,
 
