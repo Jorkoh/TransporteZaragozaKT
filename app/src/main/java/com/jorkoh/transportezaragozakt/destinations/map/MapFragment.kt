@@ -15,11 +15,13 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.repositories.util.Status
@@ -32,6 +34,7 @@ class MapFragment : FragmentWithToolbar() {
 
     companion object {
         const val ICON_SIZE = 55
+        const val ICON_TRACKING_SIZE = 66
         const val ICON_FAV_SIZE = 70
         const val MAX_ZOOM = 17.5f
         const val MIN_ZOOM = 12f
@@ -47,11 +50,14 @@ class MapFragment : FragmentWithToolbar() {
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var clusterManager: ClusterManager<Stop>
+    private lateinit var clusterManager: ClusterManager<CustomClusterItem>
+    private lateinit var clusterRenderer: CustomClusterRenderer
+    private lateinit var clusteringAlgorithm: CustomClusteringAlgorithm<CustomClusterItem>
     private lateinit var map: GoogleMap
 
-    private val busStops = mutableListOf<Stop>()
-    private val tramStops = mutableListOf<Stop>()
+    private val busStopsItems = mutableListOf<CustomClusterItem>()
+    private val tramStopsItems = mutableListOf<CustomClusterItem>()
+    private val ruralTrackingsItems = mutableListOf<CustomClusterItem>()
 
     @SuppressLint("MissingPermission")
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
@@ -111,10 +117,6 @@ class MapFragment : FragmentWithToolbar() {
             )
         }
 
-        map.clear()
-        busStops.clear()
-        tramStops.clear()
-
         styleMap()
         configureMap()
         with(mapLifecycleOwner) {
@@ -152,24 +154,41 @@ class MapFragment : FragmentWithToolbar() {
 
     private fun configureMap() {
         clusterManager = ClusterManager(context, map)
+        clusterRenderer = CustomClusterRenderer(
+            requireContext(),
+            map,
+            clusterManager,
+            mapVM.selectedStopId,
+            mapSettingsVM.busFilterEnabled,
+            mapSettingsVM.tramFilterEnabled,
+            mapSettingsVM.ruralFilterEnabled
+        )
+        clusteringAlgorithm = CustomClusteringAlgorithm(
+            mapSettingsVM.busFilterEnabled,
+            mapSettingsVM.tramFilterEnabled,
+            mapSettingsVM.ruralFilterEnabled
+        )
 
         map.setOnMarkerClickListener(clusterManager)
         map.setInfoWindowAdapter(clusterManager.markerManager)
         map.setOnInfoWindowClickListener(clusterManager)
         map.setOnCameraIdleListener(clusterManager)
         clusterManager.markerCollection.setOnInfoWindowAdapter(StopInfoWindowAdapter(requireContext()))
-        clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager, mapVM.selectedStopId)
-        clusterManager.algorithm = CustomClusteringAlgorithm()
-        clusterManager.setOnClusterItemClickListener { stop ->
-            mapVM.selectedStopId.postValue(stop.stopId)
+
+        clusterManager.renderer = clusterRenderer
+        clusterManager.algorithm = clusteringAlgorithm
+        clusterManager.setOnClusterItemClickListener { item ->
+            mapVM.selectedStopId.postValue(item?.stop?.stopId ?: "")
             false
         }
         map.setOnInfoWindowCloseListener {
             mapVM.selectedStopId.postValue("")
         }
 
-        clusterManager.setOnClusterItemInfoWindowClickListener { stop ->
-            findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
+        clusterManager.setOnClusterItemInfoWindowClickListener { item ->
+            item.stop?.let { stop ->
+                findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
+            }
         }
     }
 
@@ -187,47 +206,56 @@ class MapFragment : FragmentWithToolbar() {
 
         // Stop type filters
         mapSettingsVM.busFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
-            if (enabled) {
-                clusterManager.addItems(busStops)
-            } else {
-                busStops.forEach { clusterManager.removeItem(it) }
-            }
+            clusteringAlgorithm.removeItems(busStopsItems)
+            clusterManager.addItems(busStopsItems)
             clusterManager.cluster()
         })
         mapSettingsVM.tramFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
-            if (enabled) {
-                clusterManager.addItems(tramStops)
-            } else {
-                tramStops.forEach { clusterManager.removeItem(it) }
-            }
+            clusteringAlgorithm.removeItems(tramStopsItems)
+            clusterManager.addItems(tramStopsItems)
+            clusterManager.cluster()
+        })
+        mapSettingsVM.ruralFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
+            clusteringAlgorithm.removeItems(ruralTrackingsItems)
+            clusterManager.addItems(ruralTrackingsItems)
             clusterManager.cluster()
         })
 
         // Stops
         mapVM.busStopLocations.observe(mapLifecycleOwner, Observer { stops ->
-            if (mapSettingsVM.busFilterEnabled.value == true) {
-                stops.forEach { clusterManager.removeItem(it) }
-                clusterManager.addItems(stops)
-                clusterManager.cluster()
-            }
-            busStops.clear()
-            busStops.addAll(stops)
+            val items = stops.map { CustomClusterItem(it) }
+            busStopsItems.minus(items).forEach { clusterManager.removeItem(it) }
+            clusterManager.addItems(items.minus(busStopsItems))
+            clusterManager.cluster()
+            busStopsItems.clear()
+            busStopsItems.addAll(items)
         })
         mapVM.tramStopLocations.observe(mapLifecycleOwner, Observer { stops ->
-            if (mapSettingsVM.tramFilterEnabled.value == true) {
-                stops.forEach { clusterManager.removeItem(it) }
-                clusterManager.addItems(stops)
-                clusterManager.cluster()
-            }
-            tramStops.clear()
-            tramStops.addAll(stops)
+            val items = stops.map { CustomClusterItem(it) }
+            tramStopsItems.minus(items).forEach { clusterManager.removeItem(it) }
+            clusterManager.addItems(items.minus(tramStopsItems))
+            clusterManager.cluster()
+            tramStopsItems.clear()
+            tramStopsItems.addAll(items)
         })
         //TESTING TRACKERS
         mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
-            when(trackings.status){
-                Status.SUCCESS -> trackings.data?.forEach { map.addMarker(MarkerOptions().position(it.location).title(it.vehicleId + " - " + it.lineId).zIndex(1f)) }
-                Status.ERROR -> (requireActivity() as MainActivity).makeSnackbar("ERROR LOADING TRACKINGS")
-                Status.LOADING -> (requireActivity() as MainActivity).makeSnackbar("LOADING TRACKINGS")
+            when (trackings.status) {
+                Status.SUCCESS -> {
+                    trackings.data?.map { CustomClusterItem(it) }?.let { items ->
+                        ruralTrackingsItems.minus(items).forEach { clusterManager.removeItem(it) }
+                        clusterManager.addItems(items.minus(ruralTrackingsItems))
+                        clusterManager.cluster()
+                        ruralTrackingsItems.clear()
+                        ruralTrackingsItems.addAll(items)
+                    }
+                }
+                Status.ERROR -> {
+                    (requireActivity() as MainActivity).makeSnackbar("ERROR LOADING TRACKINGS")
+                }
+                Status.LOADING -> {
+                    (requireActivity() as MainActivity).makeSnackbar("LOADING TRACKINGS")
+                }
             }
         })
     }
@@ -241,6 +269,7 @@ class MapFragment : FragmentWithToolbar() {
             // Avoid leaks
             @SuppressLint("MissingPermission")
             map.isMyLocationEnabled = false
+            map.clear()
         }
     }
 }

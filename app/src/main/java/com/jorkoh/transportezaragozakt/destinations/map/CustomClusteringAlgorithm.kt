@@ -1,21 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.map
 
-/*
- * Copyright 2013 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import androidx.lifecycle.LiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterItem
@@ -25,32 +10,24 @@ import com.google.maps.android.geometry.Bounds
 import com.google.maps.android.geometry.Point
 import com.google.maps.android.projection.SphericalMercatorProjection
 import com.google.maps.android.quadtree.PointQuadTree
+import com.jorkoh.transportezaragozakt.destinations.map.CustomClusterItem.ClusterItemType.*
 
 import java.util.*
+import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.math.pow
 
-/**
- * A simple clustering algorithm with O(nlog n) performance. Resulting clusters are not
- * hierarchical.
- *
- *
- * High level algorithm:<br></br>
- * 1. Iterate over items in the order they were added (candidate clusters).<br></br>
- * 2. Create a cluster with the center of the item. <br></br>
- * 3. Add all items that are within a certain distance to the cluster. <br></br>
- * 4. Move any items out of an existing cluster if they are closer to another cluster. <br></br>
- * 5. Remove those items from the list of candidate clusters.
- *
- *
- * Clusters have the center of the first element (not the centroid of the items within it).
- */
-class CustomClusteringAlgorithm<T : ClusterItem> : Algorithm<T> {
+class CustomClusteringAlgorithm<T : ClusterItem>(
+    private val busFilterEnabled: LiveData<Boolean>,
+    private val tramFilterEnabled: LiveData<Boolean>,
+    private val ruralFilterEnabled: LiveData<Boolean>
+) : Algorithm<T> {
 
     companion object {
         private const val DEFAULT_MAX_DISTANCE_AT_ZOOM = 85
         private val PROJECTION = SphericalMercatorProjection(1.0)
     }
 
+    private val lock = ReentrantReadWriteLock()
     private val mItems = HashSet<QuadItem<T>>()
     private val mQuadTree = PointQuadTree<QuadItem<T>>(0.0, 1.0, 0.0, 1.0)
 
@@ -84,6 +61,24 @@ class CustomClusteringAlgorithm<T : ClusterItem> : Algorithm<T> {
         }
     }
 
+    fun removeItems(items: Collection<T>){
+        lock.writeLock().lock()
+        try {
+            for(item in items){
+                removeItem(item)
+            }
+        } finally {
+            lock.writeLock().unlock()
+        }
+    }
+
+    private fun satisfiesMapFilters(candidate : QuadItem<T>) =
+        when ((candidate.mClusterItem as CustomClusterItem).type) {
+            BUS_NORMAL, BUS_FAVORITE -> busFilterEnabled.value == true
+            TRAM_NORMAL, TRAM_FAVORITE -> tramFilterEnabled.value == true
+            RURAL_NORMAL, RURAL_FAVORITE, RURAL_TRACKING -> ruralFilterEnabled.value == true
+        }
+
     override fun getClusters(zoom: Double): Set<Cluster<T>> {
         val discreteZoom = zoom.toInt()
 
@@ -95,16 +90,17 @@ class CustomClusteringAlgorithm<T : ClusterItem> : Algorithm<T> {
         val itemToCluster = HashMap<QuadItem<T>, StaticCluster<T>>()
 
         synchronized(mQuadTree) {
-            for (candidate in mItems) {
+            for (candidate in mItems.filter{satisfiesMapFilters(it)}) {
                 if (visitedCandidates.contains(candidate)) {
                     // Candidate is already part of another cluster.
                     continue
                 }
 
                 val searchBounds = createBoundsFromSpan(candidate.point, zoomSpecificSpan)
-                val clusterItems: Collection<QuadItem<T>>
-                clusterItems = mQuadTree.search(searchBounds)
-                if (clusterItems.size == 1) {
+                val clusterItems: Collection<QuadItem<T>> = mQuadTree.search(searchBounds)
+                val filteredClusterItems = clusterItems.filter{satisfiesMapFilters(it)}
+
+                if (filteredClusterItems.size == 1) {
                     // Only the current marker is in range. Just add the single item to the results.
                     results.add(candidate)
                     visitedCandidates.add(candidate)
@@ -114,7 +110,7 @@ class CustomClusteringAlgorithm<T : ClusterItem> : Algorithm<T> {
                 val cluster = StaticCluster<T>(candidate.mClusterItem.position)
                 results.add(cluster)
 
-                for (clusterItem in clusterItems) {
+                for (clusterItem in filteredClusterItems) {
                     val existingDistance = distanceToCluster[clusterItem]
                     val distance = distanceSquared(clusterItem.point, candidate.point)
                     if (existingDistance != null) {

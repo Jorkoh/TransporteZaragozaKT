@@ -12,6 +12,7 @@ class MapSettingsViewModel(private val settingsRepository: SettingsRepository) :
     val trafficEnabled: LiveData<Boolean> = settingsRepository.loadTrafficEnabled()
     val busFilterEnabled: LiveData<Boolean> = settingsRepository.loadBusFilterEnabled()
     val tramFilterEnabled: LiveData<Boolean> = settingsRepository.loadTramFilterEnabled()
+    val ruralFilterEnabled: LiveData<Boolean> = settingsRepository.loadRuralFilterEnabled()
 
 
     fun setMapType(mapType: Int) {
@@ -30,5 +31,9 @@ class MapSettingsViewModel(private val settingsRepository: SettingsRepository) :
 
     fun setTramFilterEnabled(enabled: Boolean) {
         settingsRepository.setTramFilterEnabled(enabled)
+    }
+
+    fun setRuralFilterEnabled(enabled: Boolean) {
+        settingsRepository.setRuralFilterEnabled(enabled)
     }
 }

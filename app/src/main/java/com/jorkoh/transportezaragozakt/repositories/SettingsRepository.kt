@@ -18,6 +18,8 @@ interface SettingsRepository {
     fun setBusFilterEnabled(enabled: Boolean)
     fun loadTramFilterEnabled(): LiveData<Boolean>
     fun setTramFilterEnabled(enabled: Boolean)
+    fun loadRuralFilterEnabled(): LiveData<Boolean>
+    fun setRuralFilterEnabled(enabled: Boolean)
     fun loadSearchTabPosition(): LiveData<Int>
     fun setSearchTabPosition(tabPosition: Int)
     fun isFirstLaunch(): Boolean
@@ -109,6 +111,23 @@ class SettingsRepositoryImplementation(
         with(sharedPreferences.edit()) {
             putBoolean(
                 context.getString(com.jorkoh.transportezaragozakt.R.string.tram_filter_key),
+                enabled
+            )
+            apply()
+        }
+    }
+
+    override fun loadRuralFilterEnabled(): LiveData<Boolean> {
+        return sharedPreferences.booleanLiveData(
+            context.getString(com.jorkoh.transportezaragozakt.R.string.rural_filter_key),
+            false
+        )
+    }
+
+    override fun setRuralFilterEnabled(enabled: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean(
+                context.getString(com.jorkoh.transportezaragozakt.R.string.rural_filter_key),
                 enabled
             )
             apply()

@@ -56,6 +56,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
             mapSettingsVM.tramFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
                 tram_chip.isChecked = enabled
             })
+            mapSettingsVM.ruralFilterEnabled.observe(viewLifecycleOwner, Observer { enabled ->
+                rural_chip.isChecked = enabled
+            })
         }
         mapSettingsVM.mapType.observe(viewLifecycleOwner, Observer<Int> { mapType ->
             when (mapType) {
@@ -103,6 +106,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
         filterChipsView.tram_chip.setOnClickListener {
             mapSettingsVM.setTramFilterEnabled(it.tram_chip.isChecked)
+        }
+        filterChipsView.rural_chip.setOnClickListener {
+            mapSettingsVM.setRuralFilterEnabled(it.rural_chip.isChecked)
         }
         wrapper.addView(filterChipsView)
     }

@@ -145,4 +145,7 @@
     <string name="map_type_satellite_description">habilitar vista de satélite</string>
     <string name="map_type_description">tipo de vista de mapa</string>
     <string name="time_template">hora %1$s</string>
+    <string name="rural_chip">RURAL</string>
+    <string name="rural_chip_description">filtro paradas bus rural</string>
+    <string name="stop_type_rural">Tipo de parada rural</string>
 </resources>

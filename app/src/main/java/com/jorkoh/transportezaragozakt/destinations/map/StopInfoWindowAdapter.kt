@@ -7,6 +7,7 @@ import android.view.View
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.inflateLines
@@ -22,9 +23,19 @@ class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter 
 
     @SuppressLint("InflateParams")
     override fun getInfoContents(marker: Marker?): View? {
-        if (marker == null) return null
+        val item = marker?.tag
+        return if (item is CustomClusterItem && item.type != CustomClusterItem.ClusterItemType.RURAL_TRACKING) {
+            if (item.type != CustomClusterItem.ClusterItemType.RURAL_TRACKING) {
+                inflateStopInfoContents(requireNotNull(item.stop))
+            } else {
+                inflateTrackingInfoContents(requireNotNull(item.ruralTracking))
+            }
+        } else{
+            null
+        }
+    }
 
-        val stop = marker.tag as Stop
+    private fun inflateStopInfoContents(stop : Stop) : View {
         val content = layoutInflater.inflate(R.layout.map_info_window, null)
 
         when (stop.type) {
@@ -35,6 +46,10 @@ class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter 
             StopType.TRAM -> {
                 content.type_image_info_window.setImageResource(R.drawable.ic_tram)
                 content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_tram)
+            }
+            StopType.RURAL -> {
+                content.type_image_info_window.setImageResource(R.drawable.ic_rural)
+                content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_rural)
             }
         }
 
@@ -50,5 +65,10 @@ class StopInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter 
         content.title_text_info_window.text = stop.stopTitle
 
         return content
+    }
+
+    private fun inflateTrackingInfoContents(ruralTracking: RuralTracking) : View?{
+        //TODO
+        return null
     }
 }

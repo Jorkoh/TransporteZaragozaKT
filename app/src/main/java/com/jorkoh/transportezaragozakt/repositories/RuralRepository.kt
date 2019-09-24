@@ -57,8 +57,7 @@ class RuralRepositoryImplementation(
 }
 
 // The list is fresh if its oldest member is fresh
-fun List<RuralTracking>.isFresh(timeoutInSeconds: Int) =
-    (this.minBy { it.updatedAt }?.isFresh(timeoutInSeconds) ?: false)
+fun List<RuralTracking>.isFresh(timeoutInSeconds: Int) = (this.minBy { it.updatedAt }?.isFresh(timeoutInSeconds) ?: false)
 
 // The destination is fresh if the time elapsed since the last update is less than the timeout
 fun RuralTracking.isFresh(timeoutInSeconds: Int): Boolean = ((Date().time - updatedAt.time) / 1000) < timeoutInSeconds

@@ -2,25 +2,26 @@ package com.jorkoh.transportezaragozakt.db
 
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.clustering.ClusterItem
 import java.util.*
 
 enum class StopType {
-    BUS, TRAM
+    BUS, TRAM, RURAL
 }
 
 enum class LineType {
-    BUS, TRAM
+    BUS, TRAM, RURAL
 }
 
 fun StopType.toLineType() = when (this) {
     StopType.BUS -> LineType.BUS
     StopType.TRAM -> LineType.TRAM
+    StopType.RURAL -> LineType.RURAL
 }
 
 fun LineType.toStopType() = when (this) {
     LineType.BUS -> StopType.BUS
     LineType.TRAM -> StopType.TRAM
+    LineType.RURAL -> StopType.RURAL
 }
 
 @Entity(tableName = "stops")
@@ -46,13 +47,7 @@ data class Stop(
 
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean
-) : ClusterItem {
-    override fun getSnippet(): String = ""
-
-    override fun getTitle(): String = ""
-
-    override fun getPosition(): LatLng = location
-}
+)
 
 @Entity(
     tableName = "stopDestinations",
@@ -234,9 +229,9 @@ data class ReminderExtended(
 )
 
 //https://stackoverflow.com/questions/54938256/typeconverter-not-working-when-updating-listboolean-in-room-database
-data class DaysOfWeek(val days: List<Boolean>){
+data class DaysOfWeek(val days: List<Boolean>) {
     init {
-        require(days.count() == 7){
+        require(days.count() == 7) {
             "Argument has to be a list of exactly 7 days"
         }
     }

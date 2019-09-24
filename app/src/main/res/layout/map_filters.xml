@@ -34,4 +34,16 @@
             app:chipIconVisible="true"
             app:checkedIconVisible="false"
             app:chipIcon="@drawable/animation_chip"/>
+
+    <com.google.android.material.chip.Chip
+            style="@style/CustomChipChoice"
+            android:id="@+id/rural_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rural_chip"
+            android:contentDescription="@string/rural_chip_description"
+            android:textAppearance="@android:style/TextAppearance.Material.Widget"
+            app:chipIconVisible="true"
+            app:checkedIconVisible="false"
+            app:chipIcon="@drawable/animation_chip"/>
 </com.google.android.material.chip.ChipGroup>

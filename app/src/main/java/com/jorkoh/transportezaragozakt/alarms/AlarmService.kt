@@ -148,6 +148,7 @@ class AlarmService : LifecycleService() {
         val destinationRowLayout = when (stopType) {
             StopType.BUS -> R.layout.notification_destination_row_bus
             StopType.TRAM -> R.layout.notification_destination_row_tram
+            StopType.RURAL -> TODO()
         }
 
         stopDestinations.data?.forEachIndexed { index, stopDestination ->

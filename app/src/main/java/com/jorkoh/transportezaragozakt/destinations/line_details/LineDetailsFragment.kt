@@ -23,17 +23,13 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.map.CustomSupportMapFragment
+import com.jorkoh.transportezaragozakt.destinations.map.*
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MIN_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
-import com.jorkoh.transportezaragozakt.destinations.map.MapSettingsViewModel
-import com.jorkoh.transportezaragozakt.destinations.map.MarkerIcons
-import com.jorkoh.transportezaragozakt.destinations.map.StopInfoWindowAdapter
 import com.jorkoh.transportezaragozakt.destinations.officialLineIdToBusWebLineId
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
@@ -160,7 +156,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private fun configureMap() {
         map.setOnInfoWindowClickListener { marker ->
-            val stop = marker.tag as Stop
+            val stop = requireNotNull((marker.tag as CustomClusterItem).stop)
             findNavController().navigate(
                 LineDetailsFragmentDirections.actionLineDetailsToStopDetails(
                     stop.type.name,
@@ -170,7 +166,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
         map.setInfoWindowAdapter(StopInfoWindowAdapter(requireContext()))
         map.setOnMarkerClickListener { marker ->
-            lineDetailsVM.selectedStopId.postValue((marker.tag as Stop).stopId)
+            lineDetailsVM.selectedStopId.postValue((marker.tag as CustomClusterItem).stop?.stopId)
             false
         }
         map.setOnInfoWindowCloseListener {
@@ -239,10 +235,14 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 lineDetailsVM.selectedStopId.observe(viewLifecycleOwner, Observer { stopId ->
                     if (!stopId.isNullOrEmpty()) {
                         markers.find { marker ->
-                            (marker.tag as Stop).stopId == stopId
+                            (marker.tag as CustomClusterItem).stop?.stopId == stopId
                         }?.let { selectedMarker ->
                             selectedMarker.showInfoWindow()
-                            map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as Stop).location), 240, null)
+                            map.animateCamera(
+                                CameraUpdateFactory.newLatLng((selectedMarker.tag as CustomClusterItem).stop?.location),
+                                240,
+                                null
+                            )
                             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
                     }
@@ -255,17 +255,13 @@ class LineDetailsFragment : FragmentWithToolbar() {
         markers.forEach { it.remove() }
         markers.clear()
         stops.forEach { stop ->
+            val item = CustomClusterItem(stop)
             val markerOptions = MarkerOptions().apply {
                 position(stop.location)
-                icon(
-                    when (stop.type) {
-                        StopType.BUS -> if (stop.isFavorite) markerIcons.favoriteBus else markerIcons.normalBus
-                        StopType.TRAM -> if (stop.isFavorite) markerIcons.favoriteTram else markerIcons.normalTram
-                    }
-                )
+                icon(item.type.getMarkerIcon(markerIcons))
             }
             val marker = map.addMarker(markerOptions)
-            marker.tag = stop
+            marker.tag = item
             markers.add(marker)
         }
     }

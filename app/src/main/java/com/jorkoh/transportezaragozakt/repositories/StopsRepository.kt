@@ -26,13 +26,15 @@ interface StopsRepository {
 
 class StopsRepositoryImplementation(
     private val busRepository: BusRepository,
-    private val tramRepository: TramRepository
+    private val tramRepository: TramRepository,
+    private val ruralRepository: RuralRepository
 ) : StopsRepository {
 
     override fun loadStop(stopType: StopType, stopId: String): LiveData<Stop> {
         return when (stopType){
             StopType.BUS -> busRepository.loadStop(stopId)
             StopType.TRAM -> tramRepository.loadStop(stopId)
+            StopType.RURAL -> TODO()
         }
     }
 
@@ -40,6 +42,7 @@ class StopsRepositoryImplementation(
         return when (stopType) {
             StopType.BUS -> busRepository.loadStopDestinations(stopId)
             StopType.TRAM -> tramRepository.loadStopDestinations(stopId)
+            StopType.RURAL -> TODO()
         }
     }
 
@@ -47,6 +50,7 @@ class StopsRepositoryImplementation(
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops()
             StopType.TRAM -> tramRepository.loadStops()
+            StopType.RURAL -> TODO()
         }
     }
 
@@ -54,6 +58,7 @@ class StopsRepositoryImplementation(
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops(stopIds)
             StopType.TRAM -> tramRepository.loadStops(stopIds)
+            StopType.RURAL -> TODO()
         }
     }
 
@@ -61,6 +66,7 @@ class StopsRepositoryImplementation(
         return when (lineType) {
             LineType.BUS -> busRepository.loadLines()
             LineType.TRAM -> tramRepository.loadLines()
+            LineType.RURAL -> TODO()
         }
     }
 
@@ -68,6 +74,7 @@ class StopsRepositoryImplementation(
         return when (lineType) {
             LineType.BUS -> busRepository.loadLineLocations(lineId)
             LineType.TRAM -> tramRepository.loadLineLocations(lineId)
+            LineType.RURAL -> TODO()
         }
     }
 
@@ -89,6 +96,7 @@ class StopsRepositoryImplementation(
         return when (lineType) {
             LineType.BUS -> busRepository.loadLine(lineId)
             LineType.TRAM -> tramRepository.loadLine(lineId)
+            LineType.RURAL -> TODO()
         }
     }
 

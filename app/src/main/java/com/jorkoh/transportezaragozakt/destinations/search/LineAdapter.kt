@@ -38,6 +38,7 @@ class LineAdapter(
                     context, when (line.type) {
                         LineType.BUS -> R.color.bus_color
                         LineType.TRAM -> R.color.tram_color
+                        LineType.RURAL -> R.color.rural_color
                     }
                 )
             )

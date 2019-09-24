@@ -39,6 +39,7 @@ class StopDestinationsAdapter(
                     context, when (stopType) {
                         StopType.BUS -> R.color.bus_color
                         StopType.TRAM -> R.color.tram_color
+                        StopType.RURAL -> R.color.rural_color
                     }
                 )
             )

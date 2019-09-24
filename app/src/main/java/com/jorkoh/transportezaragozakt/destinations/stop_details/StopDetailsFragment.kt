@@ -284,6 +284,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                             when (stopDetailsVM.stopType) {
                                 StopType.BUS -> R.mipmap.ic_bus_launcher
                                 StopType.TRAM -> R.mipmap.ic_tram_launcher
+                                StopType.RURAL -> TODO()
                             }
                         )
                     )

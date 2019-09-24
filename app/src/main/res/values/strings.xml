@@ -29,6 +29,7 @@
     <string name="stop_type" translatable="true">Stop type</string>
     <string name="stop_type_bus" translatable="true">Stop type bus</string>
     <string name="stop_type_tram" translatable="true">Stop type tram</string>
+    <string name="stop_type_rural" translatable="true">Stop type rural</string>
     <string name="alias" translatable="true">Alias</string>
     <string name="color" translatable="true">Color</string>
     <string name="restore" translatable="true">Restore</string>
@@ -90,6 +91,8 @@
     <string name="bus_chip_description" translatable="true">bus stops filter</string>
     <string name="tram_chip" translatable="true">TRAM</string>
     <string name="tram_chip_description" translatable="true">tram stops filter</string>
+    <string name="rural_chip" translatable="true">RURAL</string>
+    <string name="rural_chip_description" translatable="true">rural stops filter</string>
     <string name="location_outside_zaragoza_bounds" translatable="true">Function not available outside of Zaragoza.</string>
     <string name="traffic_layer_description" translatable="true">traffic information</string>
     <string name="traffic_layer_disabled_description" translatable="true">disable traffic information</string>
@@ -130,6 +133,7 @@
     <string name="traffic_key" translatable="false">TRAFFIC_KEY</string>
     <string name="bus_filter_key" translatable="false">BUS_FILTER_KEY</string>
     <string name="tram_filter_key" translatable="false">TRAM_FILTER_KEY</string>
+    <string name="rural_filter_key" translatable="false">RURAL_FILTER_KEY</string>
     <string name="search_tab_position_key" translatable="false">SEARCH_TAB_POSITION_KEY</string>
 
     <string name="is_first_launch_key" translatable="false">IS_FIRST_LAUNCH_KEY</string>
