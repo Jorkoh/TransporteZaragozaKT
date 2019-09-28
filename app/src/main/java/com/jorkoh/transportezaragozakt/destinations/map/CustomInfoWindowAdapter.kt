@@ -82,7 +82,6 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
 
         listOf(tracking.lineId).inflateLines(content.lines_layout_favorite, StopType.RURAL, context)
         content.number_text_info_window.text = tracking.vehicleId
-        //TODO
         content.title_text_info_window.text = tracking.lineName
 
         return content

@@ -17,7 +17,7 @@ import org.koin.core.inject
 class CustomClusterRenderer(
     context: Context,
     private val map: GoogleMap,
-    private val clusterManager: ClusterManager<CustomClusterItem>,
+    clusterManager: ClusterManager<CustomClusterItem>,
     private val selectedItemId: MutableLiveData<String>,
     private val busFilterEnabled: LiveData<Boolean>,
     private val tramFilterEnabled: LiveData<Boolean>,
@@ -33,14 +33,19 @@ class CustomClusterRenderer(
         currentZoom = map.cameraPosition.zoom
     }
 
-    override fun shouldRenderAsCluster(cluster: Cluster<CustomClusterItem>): Boolean {
-        // Avoid clustering if the zoom level is above a threshold or it's just one stop
-        // There is a limitation to this, see the issue https://github.com/googlemaps/android-maps-utils/issues/408
+    override fun shouldRenderAsClusterWithAnimation(cluster: Cluster<CustomClusterItem>): Boolean {
+        // Should cluster taking into account zoom to avoid issue
+        // https://github.com/googlemaps/android-maps-utils/issues/408
         return if (currentZoom >= MAX_CLUSTERING_ZOOM) {
             false
         } else {
             cluster.size > 1
         }
+    }
+
+    override fun shouldRenderAsCluster(cluster: Cluster<CustomClusterItem>): Boolean {
+        // Should cluster by cluster size limitation
+        return cluster.size > 1
     }
 
     override fun onBeforeClusterItemRendered(item: CustomClusterItem?, markerOptions: MarkerOptions?) {
@@ -60,7 +65,7 @@ class CustomClusterRenderer(
 
     override fun onClusterItemRendered(clusterItem: CustomClusterItem?, marker: Marker?) {
         marker?.let {
-            //Stop is added as a tag to be able to render the InfoWindow
+            // ClusterItem is added as a tag to recover information when building the info window
             marker.tag = clusterItem
             if (selectedItemId.value == clusterItem?.stop?.stopId ?: clusterItem?.ruralTracking?.vehicleId) {
                 marker.showInfoWindow()

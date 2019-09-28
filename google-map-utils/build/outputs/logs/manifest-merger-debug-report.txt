@@ -1,0 +1,27 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:2:1-11:12
+INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:2:1-11:12
+INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:2:1-11:12
+	package
+		ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:3:5-38
+		INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml
+		INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:2:11-69
+application
+ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:5:5-10:19
+meta-data#com.google.android.gms.version
+ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:6:9-8:69
+	android:value
+		ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:8:13-66
+	android:name
+		ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml:7:13-58
+uses-sdk
+INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml
+INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml
+		ADDED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml
+		INJECTED from C:\Users\Kohru\AndroidStudioProjects\TransporteZaragozaKT\google-map-utils\AndroidManifest.xml

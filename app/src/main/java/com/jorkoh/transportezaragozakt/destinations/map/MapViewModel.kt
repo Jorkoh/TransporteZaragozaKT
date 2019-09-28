@@ -15,7 +15,6 @@ class MapViewModel(stopsRepository: StopsRepository, trackingsRepository: RuralR
 
     val busStopLocations: LiveData<List<Stop>> = stopsRepository.loadStops(StopType.BUS)
     val tramStopLocations: LiveData<List<Stop>> = stopsRepository.loadStops(StopType.TRAM)
-    //TESTING TRACKERS
     val ruralTrackings: LiveData<Resource<List<RuralTracking>>> = trackingsRepository.loadTrackings()
 
     val selectedStopId = MutableLiveData<String>()

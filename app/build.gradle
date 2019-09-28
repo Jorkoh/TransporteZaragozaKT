@@ -78,7 +78,7 @@ dependencies {
     //Google Play Services
     implementation deps.playServices.maps
     implementation deps.playServices.location
-    implementation deps.maps_utils
+    implementation project(':google-map-utils')
 
     //Parse
     implementation deps.parse
