@@ -13,30 +13,77 @@ data class CustomClusterItem(
     val ruralTracking: RuralTracking? = null
 ) : ClusterItem {
 
+    override fun getTypeOrdinal() = type.ordinal
+
     enum class ClusterItemType {
         BUS_NORMAL {
+            override fun isBus() = true
+
+            override fun isTram() = false
+
+            override fun isRural() = false
+
             override fun isStop() = true
         },
         BUS_FAVORITE {
+            override fun isBus() = true
+
+            override fun isTram() = false
+
+            override fun isRural() = false
+
             override fun isStop() = true
         },
         TRAM_NORMAL {
+            override fun isBus() = false
+
+            override fun isTram() = true
+
+            override fun isRural() = false
+
             override fun isStop() = true
         },
         TRAM_FAVORITE {
+            override fun isBus() = false
+
+            override fun isTram() = true
+
+            override fun isRural() = false
+
             override fun isStop() = true
         },
         RURAL_NORMAL {
+            override fun isBus() = false
+
+            override fun isTram() = false
+
+            override fun isRural() = true
+
             override fun isStop() = true
         },
         RURAL_FAVORITE {
+            override fun isBus() = false
+
+            override fun isTram() = false
+
+            override fun isRural() = true
+
             override fun isStop() = true
         },
         RURAL_TRACKING {
+            override fun isBus() = false
+
+            override fun isTram() = false
+
+            override fun isRural() = true
+
             override fun isStop() = false
         };
 
         abstract fun isStop(): Boolean
+        abstract fun isBus(): Boolean
+        abstract fun isTram(): Boolean
+        abstract fun isRural(): Boolean
     }
 
     override fun getSnippet() = ""

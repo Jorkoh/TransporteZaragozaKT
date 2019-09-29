@@ -27,14 +27,15 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.ArcShape;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
-import android.util.Log;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 
@@ -73,15 +74,30 @@ import java.util.concurrent.locks.ReentrantLock;
  * The default view for a ClusterManager. Markers are animated in and out of clusters.
  */
 public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRenderer<T> {
-    private static final boolean SHOULD_ANIMATE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     private final GoogleMap mMap;
-    private final IconGenerator mIconGenerator;
+    private final IconGenerator mIconGeneratorB;
+    private final IconGenerator mIconGeneratorT;
+    private final IconGenerator mIconGeneratorR;
+    private final IconGenerator mIconGeneratorBT;
+    private final IconGenerator mIconGeneratorBR;
+    private final IconGenerator mIconGeneratorTR;
+    private final IconGenerator mIconGeneratorBTR;
     private final ClusterManager<T> mClusterManager;
     private final float mDensity;
     private boolean mAnimate;
 
     private static final int[] BUCKETS = {10, 20, 50, 100, 200, 500, 1000};
-    private ShapeDrawable mColoredCircleBackground;
+    private static final int BUS_COLOR = Color.parseColor("#ff2c82c9");
+    private static final int TRAM_COLOR = Color.parseColor("#ff232828");
+    private static final int RURAL_COLOR = Color.parseColor("#ff409a44");
+    private static final int SEPARATOR_COLOR = Color.parseColor("#ffF5F5F5");
+    private ShapeDrawable mColoredCircleBackgroundB;
+    private ShapeDrawable mColoredCircleBackgroundT;
+    private ShapeDrawable mColoredCircleBackgroundR;
+    private ShapeDrawable mColoredCircleBackgroundBT;
+    private ShapeDrawable mColoredCircleBackgroundBR;
+    private ShapeDrawable mColoredCircleBackgroundTR;
+    private ShapeDrawable mColoredCircleBackgroundBTR;
 
     /**
      * Markers that are currently on the map.
@@ -92,7 +108,13 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     /**
      * Icons for each bucket.
      */
-    private SparseArray<BitmapDescriptor> mIcons = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsB = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsT = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsR = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsBT = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsBR = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsTR = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsBTR = new SparseArray<BitmapDescriptor>();
 
     /**
      * Markers for single ClusterItems.
@@ -131,11 +153,54 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         mMap = map;
         mAnimate = true;
         mDensity = context.getResources().getDisplayMetrics().density;
-        mIconGenerator = new IconGenerator(context);
-        mIconGenerator.setContentView(makeSquareTextView(context));
-        mIconGenerator.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
-        mIconGenerator.setBackground(makeClusterBackground());
         mClusterManager = clusterManager;
+
+        mIconGeneratorB = new IconGenerator(context);
+        mIconGeneratorB.setContentView(makeSquareTextView(context));
+        mIconGeneratorB.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorB.setBackground(makeClusterBackgroundB());
+
+        mIconGeneratorT = new IconGenerator(context);
+        mIconGeneratorT.setContentView(makeSquareTextView(context));
+        mIconGeneratorT.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorT.setBackground(makeClusterBackgroundT());
+
+        mIconGeneratorR = new IconGenerator(context);
+        mIconGeneratorR.setContentView(makeSquareTextView(context));
+        mIconGeneratorR.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorR.setBackground(makeClusterBackgroundR());
+
+        mIconGeneratorBT = new IconGenerator(context);
+        mIconGeneratorBT.setContentView(makeSquareTextView(context));
+        mIconGeneratorBT.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorBT.setBackground(makeClusterBackgroundBT());
+
+        mIconGeneratorBR = new IconGenerator(context);
+        mIconGeneratorBR.setContentView(makeSquareTextView(context));
+        mIconGeneratorBR.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorBR.setBackground(makeClusterBackgroundBR());
+
+        mIconGeneratorTR = new IconGenerator(context);
+        mIconGeneratorTR.setContentView(makeSquareTextView(context));
+        mIconGeneratorTR.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorTR.setBackground(makeClusterBackgroundTR());
+
+        mIconGeneratorBTR = new IconGenerator(context);
+        mIconGeneratorBTR.setContentView(makeSquareTextView(context));
+        mIconGeneratorBTR.setTextAppearance(R.style.amu_ClusterIcon_TextAppearance);
+        mIconGeneratorBTR.setBackground(makeClusterBackgroundBTR());
+
+        /**/
+        final TypedValue value = new TypedValue();
+        context.getTheme ().resolveAttribute (R.attr.colorAccent, value, true);
+        mColoredCircleBackgroundB.getPaint().setColor(value.data);
+        mColoredCircleBackgroundT.getPaint().setColor(value.data);
+        mColoredCircleBackgroundR.getPaint().setColor(value.data);
+        mColoredCircleBackgroundBT.getPaint().setColor(value.data);
+        mColoredCircleBackgroundBR.getPaint().setColor(value.data);
+        mColoredCircleBackgroundTR.getPaint().setColor(value.data);
+        mColoredCircleBackgroundBTR.getPaint().setColor(value.data);
+        /**/
     }
 
     @Override
@@ -181,13 +246,114 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         mClusterManager.getClusterMarkerCollection().setOnInfoWindowClickListener(null);
     }
 
-    private LayerDrawable makeClusterBackground() {
-        mColoredCircleBackground = new ShapeDrawable(new OvalShape());
+    //TODO SIMPLIFY THIS LOGIC
+    //TODO PASS COLORS PROPERLY?
+    private LayerDrawable makeClusterBackgroundB() {
+        mColoredCircleBackgroundB = new ShapeDrawable(new OvalShape());
         ShapeDrawable outline = new ShapeDrawable(new OvalShape());
-        outline.getPaint().setColor(0x80ffffff); // Transparent white.
-        LayerDrawable background = new LayerDrawable(new Drawable[]{outline, mColoredCircleBackground});
-        int strokeWidth = (int) (mDensity * 3);
-        background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        outline.getPaint().setColor(BUS_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline, separator, mColoredCircleBackgroundB});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(1, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(2, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        return background;
+    }
+
+    private LayerDrawable makeClusterBackgroundT() {
+        mColoredCircleBackgroundT = new ShapeDrawable(new OvalShape());
+        ShapeDrawable outline = new ShapeDrawable(new OvalShape());
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        outline.getPaint().setColor(TRAM_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline, separator, mColoredCircleBackgroundT});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(1, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(2, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+
+        return background;
+    }
+
+    private LayerDrawable makeClusterBackgroundR() {
+        mColoredCircleBackgroundR = new ShapeDrawable(new OvalShape());
+        ShapeDrawable outline = new ShapeDrawable(new OvalShape());
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        outline.getPaint().setColor(RURAL_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline, separator, mColoredCircleBackgroundR});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(1, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(2, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        return background;
+    }
+
+    private LayerDrawable makeClusterBackgroundBT() {
+        mColoredCircleBackgroundBT = new ShapeDrawable(new OvalShape());
+        ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(90, 180));
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        outline1.getPaint().setColor(BUS_COLOR);
+        ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(270, 180));
+        outline2.getPaint().setColor(TRAM_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundBT});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(3, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        return background;
+    }
+
+    private LayerDrawable makeClusterBackgroundBR() {
+        mColoredCircleBackgroundBR = new ShapeDrawable(new OvalShape());
+        ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(90, 180));
+        outline1.getPaint().setColor(BUS_COLOR);
+        ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(270, 180));
+        outline2.getPaint().setColor(RURAL_COLOR);
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundBR});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(3, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        return background;
+    }
+
+    private LayerDrawable makeClusterBackgroundTR() {
+        mColoredCircleBackgroundTR = new ShapeDrawable(new OvalShape());
+        ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(90, 180));
+        outline1.getPaint().setColor(TRAM_COLOR);
+        ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(270, 180));
+        outline2.getPaint().setColor(RURAL_COLOR);
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundTR});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(3, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        return background;
+    }
+
+    private LayerDrawable makeClusterBackgroundBTR() {
+        mColoredCircleBackgroundBTR = new ShapeDrawable(new OvalShape());
+        ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(30, 120));
+        outline1.getPaint().setColor(BUS_COLOR);
+        ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(150, 120));
+        outline2.getPaint().setColor(TRAM_COLOR);
+        ShapeDrawable outline3 = new ShapeDrawable(new ArcShape(270, 120));
+        outline2.getPaint().setColor(RURAL_COLOR);
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
+        LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, outline3, separator, mColoredCircleBackgroundBTR});
+        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        background.setLayerInset(3, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
+        int strokeWidth = (int) (mDensity * 6);
+        background.setLayerInset(4, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
         return background;
     }
 
@@ -196,18 +362,27 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         squareTextView.setLayoutParams(layoutParams);
         squareTextView.setId(R.id.amu_text);
-        int twelveDpi = (int) (12 * mDensity);
-        squareTextView.setPadding(twelveDpi, twelveDpi, twelveDpi, twelveDpi);
+        int padding = (int) (12 * mDensity);
+        squareTextView.setPadding(padding, padding, padding, padding);
         return squareTextView;
     }
 
     protected int getColor(int clusterSize) {
-        final float hueRange = 220;
-        final float sizeRange = 300;
+        //Make this the accent color?
+//        final float hueRange = 220;
+//        final float sizeRange = 300;
+//        final float size = Math.min(clusterSize, sizeRange);
+//        final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
+//        return Color.HSVToColor(new float[]{
+//                hue, 1f, .6f
+//        });
+        final float valueRange = 30f;
+        final float baseValue = 20f;
+        final float sizeRange = 50f;
         final float size = Math.min(clusterSize, sizeRange);
-        final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
+        final float value = (valueRange - ( (size / sizeRange ) * valueRange)) + baseValue;
         return Color.HSVToColor(new float[]{
-                hue, 1f, .6f
+                0f, 0f, value/100f
         });
     }
 
@@ -215,7 +390,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         if (bucket < BUCKETS[0]) {
             return String.valueOf(bucket);
         }
-        return String.valueOf(bucket) + "+";
+        return bucket + "+";
     }
 
     /**
@@ -392,7 +567,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
             // Find all of the existing clusters that are on-screen. These are candidates for
             // markers to animate from.
             List<Point> existingClustersOnScreen = null;
-            if (DefaultClusterRenderer.this.mClusters != null && SHOULD_ANIMATE && mAnimate) {
+            if (DefaultClusterRenderer.this.mClusters != null && mAnimate) {
                 existingClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : DefaultClusterRenderer.this.mClusters) {
                     if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {
@@ -408,7 +583,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
                     new ConcurrentHashMap<MarkerWithPosition, Boolean>());
             for (Cluster<T> c : clusters) {
                 boolean onScreen = visibleBounds.contains(c.getPosition());
-                if (zoomingIn && onScreen && SHOULD_ANIMATE && mAnimate) {
+                if (zoomingIn && onScreen && mAnimate) {
                     Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
                     Point closest = findClosestCluster(existingClustersOnScreen, point);
                     if (closest != null) {
@@ -432,7 +607,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
             // Find all of the new clusters that were added on-screen. These are candidates for
             // markers to animate from.
             List<Point> newClustersOnScreen = null;
-            if (SHOULD_ANIMATE && mAnimate) {
+            if (mAnimate) {
                 newClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : clusters) {
                     if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {
@@ -447,7 +622,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
                 boolean onScreen = visibleBounds.contains(marker.position);
                 // Don't animate when zooming out more than 3 zoom levels.
                 // TODO: drop animation based on speed of device & number of markers to animate.
-                if (!zoomingIn && zoomDelta > -3 && onScreen && SHOULD_ANIMATE && mAnimate) {
+                if (!zoomingIn && zoomDelta > -3 && onScreen && mAnimate) {
                     final Point point = mSphericalMercatorProjection.toPoint(marker.position);
                     final Point closest = findClosestCluster(newClustersOnScreen, point);
                     if (closest != null) {
@@ -755,15 +930,74 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
      */
     protected void onBeforeClusterRendered(Cluster<T> cluster, MarkerOptions markerOptions) {
         int bucket = getBucket(cluster);
-        BitmapDescriptor descriptor = mIcons.get(bucket);
-        if (descriptor == null) {
-            mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket)));
-            mIcons.put(bucket, descriptor);
+        boolean hasBus = false;
+        boolean hasTram = false;
+        boolean hasRural = false;
+
+        for (T item : cluster.getItems()) {
+            int typeOrdinal = item.getTypeOrdinal();
+            if (typeOrdinal < 2) {
+                hasBus = true;
+            } else if (typeOrdinal < 4) {
+                hasTram = true;
+            } else {
+                hasRural = true;
+            }
+            if(hasBus && hasTram && hasRural){
+                break;
+            }
         }
-        // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
+
+        SparseArray<BitmapDescriptor> icons;
+        IconGenerator iconGenerator;
+        ShapeDrawable circleBackground;
+        if(hasBus){
+            if(hasTram){
+                if(hasRural){
+                    icons = mIconsBTR;
+                    iconGenerator = mIconGeneratorBTR;
+                    circleBackground = mColoredCircleBackgroundBTR;
+                }else{
+                    icons = mIconsBT;
+                    iconGenerator = mIconGeneratorBT;
+                    circleBackground = mColoredCircleBackgroundBT;
+                }
+            }else if(hasRural){
+                icons = mIconsBR;
+                iconGenerator = mIconGeneratorBR;
+                circleBackground = mColoredCircleBackgroundBR;
+            }else{
+                icons = mIconsB;
+                iconGenerator = mIconGeneratorB;
+                circleBackground = mColoredCircleBackgroundB;
+            }
+        }else if(hasTram){
+            if(hasRural){
+                icons = mIconsTR;
+                iconGenerator = mIconGeneratorTR;
+                circleBackground = mColoredCircleBackgroundTR;
+            }else{
+                icons = mIconsT;
+                iconGenerator = mIconGeneratorT;
+                circleBackground = mColoredCircleBackgroundT;
+            }
+        }else if(hasRural){
+            icons = mIconsR;
+            iconGenerator = mIconGeneratorR;
+            circleBackground = mColoredCircleBackgroundR;
+        }else{
+            return;
+        }
+
+        BitmapDescriptor descriptor = icons.get(bucket);
+        if (descriptor == null) {
+//            circleBackground.getPaint().setColor(getColor(bucket));
+            descriptor = BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon(getClusterText(bucket)));
+            icons.put(bucket, descriptor);
+        }
         markerOptions.icon(descriptor);
     }
+
 
     /**
      * Called after the marker for a Cluster has been added to the map.

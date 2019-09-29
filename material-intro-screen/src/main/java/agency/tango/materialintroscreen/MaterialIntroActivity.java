@@ -490,7 +490,6 @@ public abstract class MaterialIntroActivity extends AppCompatActivity {
                 setViewsColor(position, offset);
             } else if (adapter.getCount() == 1 || isOnLastSlide(position, offset)) {
                 viewPager.setBackgroundColor(getBackgroundColor(position));
-//                pageIndicator.setPageIndicatorColor(getButtonsColor(position));
 
                 messageButton.setTextColor(getMessageButtonTextColor(position));
                 ColorStateList messageButtonColor = ColorStateList.valueOf(getMessageButtonColor(position));
@@ -508,7 +507,6 @@ public abstract class MaterialIntroActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(buttonsColor);
             }
-//            pageIndicator.setPageIndicatorColor(buttonsColor);
 
             tintMessageButton(position, offset);
             tintButtons(ColorStateList.valueOf(buttonsColor));

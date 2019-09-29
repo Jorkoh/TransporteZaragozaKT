@@ -13,9 +13,22 @@
         <item name="android:textColorHint">?colorOnPrimary</item>
     </style>
 
-    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/background_color_chip_state_list</item>
+    <style name="CustomChipChoiceBus" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/background_color_chip_bus</item>
         <item name="android:textColor">@color/text_color_chip_state_list</item>
+        <item name="rippleColor">@color/kinda_white</item>
+    </style>
+
+    <style name="CustomChipChoiceTram" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/background_color_chip_tram</item>
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+        <item name="rippleColor">@color/kinda_white</item>
+    </style>
+
+    <style name="CustomChipChoiceRural" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/background_color_chip_rural</item>
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+        <item name="rippleColor">@color/kinda_white</item>
     </style>
 
     <style name="CustomTabStyle" parent="Widget.MaterialComponents.TabLayout">
