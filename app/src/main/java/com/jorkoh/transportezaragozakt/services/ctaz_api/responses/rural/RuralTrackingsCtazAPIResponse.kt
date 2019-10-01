@@ -1,11 +1,12 @@
 package com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural
 
+import android.annotation.SuppressLint
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.services.common.responses.RuralTrackingsResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.*
+import java.text.SimpleDateFormat
 
 @JsonClass(generateAdapter = true)
 data class RuralTrackingsCtazAPIResponse(
@@ -13,6 +14,7 @@ data class RuralTrackingsCtazAPIResponse(
     val ruralTrackingsResponse: List<RuralTrackingResponse>
 ) : RuralTrackingsResponse{
 
+    @SuppressLint("SimpleDateFormat")
     override fun toRuralTrackings(): List<RuralTracking> {
         val ruralTrackings = mutableListOf<RuralTracking>()
         ruralTrackingsResponse
@@ -23,7 +25,7 @@ data class RuralTrackingsCtazAPIResponse(
                     ruralTrackingResponse.line,
                     ruralTrackingResponse.lineName.replace("-", "-\u200b"),
                     LatLng(ruralTrackingResponse.latitude, ruralTrackingResponse.longitude),
-                    Date()
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(ruralTrackingResponse.lastUpdated)
                 )
             }
         return ruralTrackings

@@ -91,6 +91,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     private static final int TRAM_COLOR = Color.parseColor("#ff232828");
     private static final int RURAL_COLOR = Color.parseColor("#ff409a44");
     private static final int SEPARATOR_COLOR = Color.parseColor("#ffF5F5F5");
+    private float[] hsvAccentColor = new float[3];
     private ShapeDrawable mColoredCircleBackgroundB;
     private ShapeDrawable mColoredCircleBackgroundT;
     private ShapeDrawable mColoredCircleBackgroundR;
@@ -192,14 +193,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
 
         /**/
         final TypedValue value = new TypedValue();
-        context.getTheme ().resolveAttribute (R.attr.colorAccent, value, true);
-        mColoredCircleBackgroundB.getPaint().setColor(value.data);
-        mColoredCircleBackgroundT.getPaint().setColor(value.data);
-        mColoredCircleBackgroundR.getPaint().setColor(value.data);
-        mColoredCircleBackgroundBT.getPaint().setColor(value.data);
-        mColoredCircleBackgroundBR.getPaint().setColor(value.data);
-        mColoredCircleBackgroundTR.getPaint().setColor(value.data);
-        mColoredCircleBackgroundBTR.getPaint().setColor(value.data);
+        context.getTheme().resolveAttribute(R.attr.colorAccent, value, true);
+        Color.colorToHSV(value.data, hsvAccentColor);
         /**/
     }
 
@@ -255,7 +250,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         separator.getPaint().setColor(SEPARATOR_COLOR);
         outline.getPaint().setColor(BUS_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline, separator, mColoredCircleBackgroundB});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(1, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(2, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -269,7 +264,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         separator.getPaint().setColor(SEPARATOR_COLOR);
         outline.getPaint().setColor(TRAM_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline, separator, mColoredCircleBackgroundT});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(1, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(2, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -284,7 +279,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         separator.getPaint().setColor(SEPARATOR_COLOR);
         outline.getPaint().setColor(RURAL_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline, separator, mColoredCircleBackgroundR});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(1, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(2, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -300,7 +295,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(270, 180));
         outline2.getPaint().setColor(TRAM_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundBT});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(3, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -316,7 +311,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         ShapeDrawable separator = new ShapeDrawable(new OvalShape());
         separator.getPaint().setColor(SEPARATOR_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundBR});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(3, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -332,7 +327,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         ShapeDrawable separator = new ShapeDrawable(new OvalShape());
         separator.getPaint().setColor(SEPARATOR_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundTR});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(3, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -350,7 +345,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         ShapeDrawable separator = new ShapeDrawable(new OvalShape());
         separator.getPaint().setColor(SEPARATOR_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, outline3, separator, mColoredCircleBackgroundBTR});
-        int strokeWidthSeparator = (int) ((mDensity * 6)-1);
+        int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(3, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
         int strokeWidth = (int) (mDensity * 6);
         background.setLayerInset(4, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
@@ -376,14 +371,18 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
 //        return Color.HSVToColor(new float[]{
 //                hue, 1f, .6f
 //        });
-        final float valueRange = 30f;
-        final float baseValue = 20f;
+
         final float sizeRange = 50f;
         final float size = Math.min(clusterSize, sizeRange);
-        final float value = (valueRange - ( (size / sizeRange ) * valueRange)) + baseValue;
-        return Color.HSVToColor(new float[]{
-                0f, 0f, value/100f
-        });
+
+
+        final float saturationRange = 50f;
+        final float saturation = Math.min(hsvAccentColor[1] + ((size / sizeRange) * saturationRange) / 100f, 1);
+
+        final float valueRange = 20f;
+        final float value = Math.max(hsvAccentColor[2] - ((size / sizeRange) * valueRange) / 100f, 0);
+
+        return Color.HSVToColor(new float[]{hsvAccentColor[0], saturation, value});
     }
 
     protected String getClusterText(int bucket) {
@@ -943,7 +942,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
             } else {
                 hasRural = true;
             }
-            if(hasBus && hasTram && hasRural){
+            if (hasBus && hasTram && hasRural) {
                 break;
             }
         }
@@ -951,47 +950,47 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         SparseArray<BitmapDescriptor> icons;
         IconGenerator iconGenerator;
         ShapeDrawable circleBackground;
-        if(hasBus){
-            if(hasTram){
-                if(hasRural){
+        if (hasBus) {
+            if (hasTram) {
+                if (hasRural) {
                     icons = mIconsBTR;
                     iconGenerator = mIconGeneratorBTR;
                     circleBackground = mColoredCircleBackgroundBTR;
-                }else{
+                } else {
                     icons = mIconsBT;
                     iconGenerator = mIconGeneratorBT;
                     circleBackground = mColoredCircleBackgroundBT;
                 }
-            }else if(hasRural){
+            } else if (hasRural) {
                 icons = mIconsBR;
                 iconGenerator = mIconGeneratorBR;
                 circleBackground = mColoredCircleBackgroundBR;
-            }else{
+            } else {
                 icons = mIconsB;
                 iconGenerator = mIconGeneratorB;
                 circleBackground = mColoredCircleBackgroundB;
             }
-        }else if(hasTram){
-            if(hasRural){
+        } else if (hasTram) {
+            if (hasRural) {
                 icons = mIconsTR;
                 iconGenerator = mIconGeneratorTR;
                 circleBackground = mColoredCircleBackgroundTR;
-            }else{
+            } else {
                 icons = mIconsT;
                 iconGenerator = mIconGeneratorT;
                 circleBackground = mColoredCircleBackgroundT;
             }
-        }else if(hasRural){
+        } else if (hasRural) {
             icons = mIconsR;
             iconGenerator = mIconGeneratorR;
             circleBackground = mColoredCircleBackgroundR;
-        }else{
+        } else {
             return;
         }
 
         BitmapDescriptor descriptor = icons.get(bucket);
         if (descriptor == null) {
-//            circleBackground.getPaint().setColor(getColor(bucket));
+            circleBackground.getPaint().setColor(getColor(bucket));
             descriptor = BitmapDescriptorFactory.fromBitmap(iconGenerator.makeIcon(getClusterText(bucket)));
             icons.put(bucket, descriptor);
         }

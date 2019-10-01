@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map_tracker_layout"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="64dp"
+        android:layout_gravity="start|bottom">
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:id="@+id/map_tracker_button"
+            android:src="@drawable/ic_track_black_24dp"
+            android:contentDescription="@string/map_type_description"
+            android:background="@drawable/mapbutton_background"/>
+
+</LinearLayout>

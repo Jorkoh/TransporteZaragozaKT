@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_filters.*
 import kotlinx.android.synthetic.main.map_filters.view.*
+import kotlinx.android.synthetic.main.map_trackers_control.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -21,12 +22,18 @@ class CustomSupportMapFragment : SupportMapFragment() {
 
     companion object {
         const val DISPLAY_FILTERS_KEY = "DISPLAY_FILTERS_KEY"
+        const val DISPLAY_TRACKERS_KEY = "DISPLAY_TRACKERS_KEY"
         const val BOTTOM_PADDING_DIMEN_KEY = "BOTTOM_PADDING_DIMEN_KEY"
 
-        fun newInstance(displayFilters: Boolean = true, bottomPaddingDimen: Int = 0): CustomSupportMapFragment {
+        fun newInstance(
+            displayFilters: Boolean = true,
+            displayTrackers: Boolean = true,
+            bottomPaddingDimen: Int = 0
+        ): CustomSupportMapFragment {
             val instance = CustomSupportMapFragment()
             instance.arguments = Bundle().apply {
                 putBoolean(DISPLAY_FILTERS_KEY, displayFilters)
+                putBoolean(DISPLAY_TRACKERS_KEY, displayTrackers)
                 putInt(BOTTOM_PADDING_DIMEN_KEY, bottomPaddingDimen)
             }
             return instance
@@ -34,6 +41,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     private var displayFilters: Boolean = true
+    private var displayTrackers: Boolean = true
     private var bottomPadding: Int = 0
 
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
@@ -41,6 +49,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
+        displayTrackers = arguments?.getBoolean(DISPLAY_TRACKERS_KEY) ?: true
         (arguments?.getInt(BOTTOM_PADDING_DIMEN_KEY) ?: 0).takeIf { it != 0 }?.let { bottomPaddingDimen ->
             bottomPadding = resources.getDimensionPixelOffset(bottomPaddingDimen)
         }
@@ -94,6 +103,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
         if (displayFilters) {
             setupFilters(layoutInflater, wrapper)
         }
+        if (displayTrackers) {
+            setupTrackerControl(layoutInflater, wrapper)
+        }
         setupExtraMapControls(layoutInflater, wrapper)
 
         return wrapper
@@ -126,8 +138,16 @@ class CustomSupportMapFragment : SupportMapFragment() {
             mapSettingsVM.setTrafficEnabled(mapSettingsVM.trafficEnabled.value != true)
         }
         wrapper.addView(mapExtraControls)
-        wrapper.map_types_map.updateLayoutParams<FrameLayout.LayoutParams> {
+        wrapper.map_types_layout.updateLayoutParams<FrameLayout.LayoutParams> {
             this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomPadding
+        }
+    }
+
+    private fun setupTrackerControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
+        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackers_control, wrapper, false)
+        wrapper.addView(mapTrackerControl)
+        wrapper.map_tracker_layout.updateLayoutParams<FrameLayout.LayoutParams> {
+            this@updateLayoutParams.bottomMargin += this@CustomSupportMapFragment.bottomPadding
         }
     }
 

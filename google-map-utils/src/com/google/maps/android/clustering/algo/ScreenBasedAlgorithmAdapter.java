@@ -52,6 +52,11 @@ public class ScreenBasedAlgorithmAdapter<T extends ClusterItem> implements Scree
     }
 
     @Override
+    public void removeItems(Collection<T> items) {
+        mAlgorithm.removeItems(items);
+    }
+
+    @Override
     public void removeItem(T item) {
         mAlgorithm.removeItem(item);
     }

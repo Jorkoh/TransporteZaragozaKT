@@ -10,7 +10,7 @@
         android:layout_marginTop="4dp"
         android:layout_gravity="top"
         style="@style/Widget.MaterialComponents.ChipGroup"
-        app:chipSpacingHorizontal="8dp">
+        app:chipSpacingHorizontal="24dp">
 
     <com.google.android.material.chip.Chip
             style="@style/CustomChipChoiceBus"

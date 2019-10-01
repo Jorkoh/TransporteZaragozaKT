@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.map
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.Cluster
@@ -13,7 +12,6 @@ import com.google.maps.android.projection.SphericalMercatorProjection
 import com.google.maps.android.quadtree.PointQuadTree
 import com.jorkoh.transportezaragozakt.destinations.map.CustomClusterItem.ClusterItemType.*
 import java.util.*
-import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.math.pow
 
 class CustomClusteringAlgorithm<T : ClusterItem>(
@@ -27,11 +25,10 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
         private val PROJECTION = SphericalMercatorProjection(1.0)
     }
 
-    override fun setMaxDistanceBetweenClusteredItems(maxDistance: Int){}
+    override fun setMaxDistanceBetweenClusteredItems(maxDistance: Int) {}
 
     override fun getMaxDistanceBetweenClusteredItems(): Int = DEFAULT_MAX_DISTANCE_AT_ZOOM
 
-    private val lock = ReentrantReadWriteLock()
     private val mItems = HashSet<QuadItem<T>>()
     private val mQuadTree = PointQuadTree<QuadItem<T>>(0.0, 1.0, 0.0, 1.0)
 
@@ -65,18 +62,13 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
         }
     }
 
-    fun removeItems(items: Collection<T>){
-        lock.writeLock().lock()
-        try {
-            for(item in items){
-                removeItem(item)
-            }
-        } finally {
-            lock.writeLock().unlock()
+    override fun removeItems(items: Collection<T>) {
+        for (item in items) {
+            removeItem(item)
         }
     }
 
-    private fun satisfiesMapFilters(candidate : QuadItem<T>) =
+    private fun satisfiesMapFilters(candidate: QuadItem<T>) =
         when ((candidate.mClusterItem as CustomClusterItem).type) {
             BUS_NORMAL, BUS_FAVORITE -> busFilterEnabled.value == true
             TRAM_NORMAL, TRAM_FAVORITE -> tramFilterEnabled.value == true
@@ -84,7 +76,6 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
         }
 
     override fun getClusters(zoom: Double): Set<Cluster<T>> {
-        Log.d("TESTING STUFF", "Getting clusters at zoom: $zoom")
         val discreteZoom = zoom.toInt()
 
         val zoomSpecificSpan = DEFAULT_MAX_DISTANCE_AT_ZOOM.toDouble() / 2.2.pow(discreteZoom.toDouble()) / 100.0
@@ -94,18 +85,14 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
         val distanceToCluster = HashMap<QuadItem<T>, Double>()
         val itemToCluster = HashMap<QuadItem<T>, StaticCluster<T>>()
 
-        //REMOVE THIS
-        var skipped = 0
         synchronized(mQuadTree) {
-            Log.d("TESTING STUFF", "Filtering ${mItems.size} items")
             val filteredTree = PointQuadTree<QuadItem<T>>(0.0, 1.0, 0.0, 1.0)
-            val filteredItems = mItems.filter{satisfiesMapFilters(it)}
+            val filteredItems = mItems.filter { satisfiesMapFilters(it) }
             filteredItems.forEach { filteredTree.add(it) }
-            Log.d("TESTING STUFF", "Filtered items down to ${filteredItems.size}")
+
             for (candidate in filteredItems) {
                 if (visitedCandidates.contains(candidate)) {
                     // Candidate is already part of another cluster.
-                    skipped += 1
                     continue
                 }
 
@@ -140,7 +127,6 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
                 visitedCandidates.addAll(clusterItems)
             }
         }
-        Log.d("TESTING STUFF", "Got clusters, skipped $skipped")
         return results
     }
 
@@ -199,7 +185,8 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
         override fun equals(other: Any?): Boolean {
             return if (other !is QuadItem<*>) {
                 false
-            } else other.mClusterItem.position === mClusterItem.position
+            } else other.mClusterItem.position.latitude == mClusterItem.position.latitude
+                    && other.mClusterItem.position.longitude == mClusterItem.position.longitude
 
         }
     }
