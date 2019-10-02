@@ -71,7 +71,9 @@ public class PreCachingAlgorithmDecorator<T extends ClusterItem> implements Algo
     }
 
     public void clearCache() {
+        mCacheLock.writeLock().lock();
         mCache.evictAll();
+        mCacheLock.writeLock().unlock();
     }
 
     @Override

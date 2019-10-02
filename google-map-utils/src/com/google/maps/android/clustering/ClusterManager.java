@@ -55,6 +55,7 @@ public class ClusterManager<T extends ClusterItem> implements
     private ScreenBasedAlgorithm<T> mAlgorithm;
     private final ReadWriteLock mAlgorithmLock = new ReentrantReadWriteLock();
     private ClusterRenderer<T> mRenderer;
+    private PreCachingAlgorithmDecorator<T> mDecorator;
 
     private GoogleMap mMap;
     private CameraPosition mPreviousCameraPosition;
@@ -78,8 +79,7 @@ public class ClusterManager<T extends ClusterItem> implements
         mRenderer = new DefaultClusterRenderer<>(context, map, this);
         mAlgorithm = new ScreenBasedAlgorithmAdapter<>(new PreCachingAlgorithmDecorator<>(
                 new NonHierarchicalDistanceBasedAlgorithm<T>()));
-
-        mClusterTask = new ClusterTask();
+        mClusterTask = new ClusterTask(false);
         mRenderer.onAdd();
     }
 
@@ -111,11 +111,8 @@ public class ClusterManager<T extends ClusterItem> implements
     }
 
     public void setAlgorithm(Algorithm<T> algorithm) {
-        if (algorithm instanceof ScreenBasedAlgorithm) {
-            setAlgorithm((ScreenBasedAlgorithm<T>) algorithm);
-        } else {
-            setAlgorithm(new ScreenBasedAlgorithmAdapter<>(algorithm));
-        }
+        mDecorator = new PreCachingAlgorithmDecorator<>(algorithm);
+        setAlgorithm(new ScreenBasedAlgorithmAdapter<>(mDecorator));
     }
 
     public void setAlgorithm(ScreenBasedAlgorithm<T> algorithm) {
@@ -203,7 +200,26 @@ public class ClusterManager<T extends ClusterItem> implements
         try {
             // Attempt to cancel the in-flight request.
             mClusterTask.cancel(true);
-            mClusterTask = new ClusterTask();
+            mClusterTask = new ClusterTask(false);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                mClusterTask.execute(mMap.getCameraPosition().zoom);
+            } else {
+                mClusterTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMap.getCameraPosition().zoom);
+            }
+        } finally {
+            mClusterTaskLock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Force a re-cluster. You may want to call this after adding new item(s).
+     */
+    public void clusterWithoutCache() {
+        mClusterTaskLock.writeLock().lock();
+        try {
+            // Attempt to cancel the in-flight request.
+            mClusterTask.cancel(true);
+            mClusterTask = new ClusterTask(true);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
                 mClusterTask.execute(mMap.getCameraPosition().zoom);
             } else {
@@ -250,10 +266,20 @@ public class ClusterManager<T extends ClusterItem> implements
      * Runs the clustering algorithm in a background thread, then re-paints when results come back.
      */
     private class ClusterTask extends AsyncTask<Float, Void, Set<? extends Cluster<T>>> {
+
+        private Boolean clearCache;
+
+        ClusterTask(Boolean clearCache){
+            this.clearCache = clearCache;
+        }
+
         @Override
         protected Set<? extends Cluster<T>> doInBackground(Float... zoom) {
             mAlgorithmLock.readLock().lock();
             try {
+                if(clearCache){
+                    mDecorator.clearCache();
+                }
                 return mAlgorithm.getClusters(zoom[0]);
             } finally {
                 mAlgorithmLock.readLock().unlock();

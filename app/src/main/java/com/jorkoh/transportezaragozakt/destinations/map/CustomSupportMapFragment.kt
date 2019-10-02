@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_filters.*
 import kotlinx.android.synthetic.main.map_filters.view.*
-import kotlinx.android.synthetic.main.map_trackers_control.view.*
+import kotlinx.android.synthetic.main.map_trackings_control.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -22,18 +22,18 @@ class CustomSupportMapFragment : SupportMapFragment() {
 
     companion object {
         const val DISPLAY_FILTERS_KEY = "DISPLAY_FILTERS_KEY"
-        const val DISPLAY_TRACKERS_KEY = "DISPLAY_TRACKERS_KEY"
+        const val DISPLAY_TRACKINGS_BUTTON_KEY = "DISPLAY_TRACKINGS_BUTTON_KEY"
         const val BOTTOM_PADDING_DIMEN_KEY = "BOTTOM_PADDING_DIMEN_KEY"
 
         fun newInstance(
             displayFilters: Boolean = true,
-            displayTrackers: Boolean = true,
+            displayTrackingsButton: Boolean = true,
             bottomPaddingDimen: Int = 0
         ): CustomSupportMapFragment {
             val instance = CustomSupportMapFragment()
             instance.arguments = Bundle().apply {
                 putBoolean(DISPLAY_FILTERS_KEY, displayFilters)
-                putBoolean(DISPLAY_TRACKERS_KEY, displayTrackers)
+                putBoolean(DISPLAY_TRACKINGS_BUTTON_KEY, displayTrackingsButton)
                 putInt(BOTTOM_PADDING_DIMEN_KEY, bottomPaddingDimen)
             }
             return instance
@@ -41,7 +41,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     private var displayFilters: Boolean = true
-    private var displayTrackers: Boolean = true
+    private var displayTrackingsButton: Boolean = true
     private var bottomPadding: Int = 0
 
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
@@ -49,7 +49,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
-        displayTrackers = arguments?.getBoolean(DISPLAY_TRACKERS_KEY) ?: true
+        displayTrackingsButton = arguments?.getBoolean(DISPLAY_TRACKINGS_BUTTON_KEY) ?: true
         (arguments?.getInt(BOTTOM_PADDING_DIMEN_KEY) ?: 0).takeIf { it != 0 }?.let { bottomPaddingDimen ->
             bottomPadding = resources.getDimensionPixelOffset(bottomPaddingDimen)
         }
@@ -103,7 +103,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
         if (displayFilters) {
             setupFilters(layoutInflater, wrapper)
         }
-        if (displayTrackers) {
+        if (displayTrackingsButton) {
             setupTrackerControl(layoutInflater, wrapper)
         }
         setupExtraMapControls(layoutInflater, wrapper)
@@ -144,9 +144,9 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     private fun setupTrackerControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
-        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackers_control, wrapper, false)
+        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackings_control, wrapper, false)
         wrapper.addView(mapTrackerControl)
-        wrapper.map_tracker_layout.updateLayoutParams<FrameLayout.LayoutParams> {
+        wrapper.map_trackings_layout.updateLayoutParams<FrameLayout.LayoutParams> {
             this@updateLayoutParams.bottomMargin += this@CustomSupportMapFragment.bottomPadding
         }
     }

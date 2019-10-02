@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,15 +21,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.clustering.ClusterManager
-import com.google.maps.android.clustering.algo.PreCachingAlgorithmDecorator
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
-import kotlinx.android.synthetic.main.map_trackers_control.*
+import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -62,12 +64,35 @@ class MapFragment : FragmentWithToolbar() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var clusterManager: ClusterManager<CustomClusterItem>
     private lateinit var clusteringAlgorithm: CustomClusteringAlgorithm<CustomClusterItem>
-    private lateinit var algorithmDecorator: PreCachingAlgorithmDecorator<CustomClusterItem>
     private lateinit var map: GoogleMap
 
     private val busStopsItems = mutableListOf<CustomClusterItem>()
     private val tramStopsItems = mutableListOf<CustomClusterItem>()
     private val ruralTrackingsItems = mutableListOf<CustomClusterItem>()
+
+    private val selectTracking: (RuralTracking) -> Unit = { tracking ->
+        trackingsDialog?.dismiss()
+        forcedCameraMovementInProgress = true
+        mapVM.selectedItemId.postValue(tracking.vehicleId)
+        val cameraPosition = CameraPosition.builder()
+            .target(tracking.location)
+            .zoom(DEFAULT_ZOOM)
+            .bearing(0f)
+            .build()
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), object : GoogleMap.CancelableCallback {
+            override fun onFinish() {
+                forcedCameraMovementInProgress = false
+            }
+
+            override fun onCancel() {
+                forcedCameraMovementInProgress = false
+            }
+
+        })
+    }
+    private var forcedCameraMovementInProgress = false
+    private var trackingsDialog: MaterialDialog? = null
+    private val trackingsAdapter = TrackingsAdapter(selectTracking)
 
     @SuppressLint("MissingPermission")
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
@@ -105,7 +130,7 @@ class MapFragment : FragmentWithToolbar() {
         if (mapFragment == null) {
             mapFragment = CustomSupportMapFragment.newInstance(
                 displayFilters = true,
-                displayTrackers = true,
+                displayTrackingsButton = true,
                 bottomPaddingDimen = R.dimen.map_destination_map_view_bottom_padding
             )
             childFragmentManager.beginTransaction()
@@ -126,6 +151,18 @@ class MapFragment : FragmentWithToolbar() {
                 }
             }
             enableLocationLayer(cameraNeedsCentering)
+            map_trackings_button.setOnClickListener {
+                if (ruralTrackingsItems.size > 0) {
+                    // Display a dialog to select the tracking
+                    trackingsDialog = MaterialDialog(requireContext()).show {
+                        title(R.string.rural_trackings_available)
+                        cancelOnTouchOutside(true)
+                        customListAdapter(trackingsAdapter)
+                    }
+                } else {
+                    (requireActivity() as MainActivity).makeSnackbar(getString(R.string.no_trackings_available))
+                }
+            }
         }
     }
 
@@ -176,14 +213,17 @@ class MapFragment : FragmentWithToolbar() {
             mapSettingsVM.ruralFilterEnabled
         )
 
-        algorithmDecorator = PreCachingAlgorithmDecorator(clusteringAlgorithm)
-        clusterManager.algorithm = algorithmDecorator
+        clusterManager.algorithm = clusteringAlgorithm
         clusterManager.setOnClusterItemClickListener { item ->
             mapVM.selectedItemId.postValue(item?.stop?.stopId ?: "")
             false
         }
         map.setOnInfoWindowCloseListener {
-            mapVM.selectedItemId.postValue("")
+            // Don't remove the selectedItemId when animating the camera to a selected rural tracking
+            // with an info window already opened
+            if (!forcedCameraMovementInProgress) {
+                mapVM.selectedItemId.postValue("")
+            }
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { item ->
             item.stop?.let { stop ->
@@ -225,17 +265,14 @@ class MapFragment : FragmentWithToolbar() {
 
         // Stop type filters
         mapSettingsVM.busFilterEnabled.observe(mapLifecycleOwner, Observer {
-            algorithmDecorator.clearCache()
-            clusterManager.cluster()
+            clusterManager.clusterWithoutCache()
         })
         mapSettingsVM.tramFilterEnabled.observe(mapLifecycleOwner, Observer {
-            algorithmDecorator.clearCache()
-            clusterManager.cluster()
+            clusterManager.clusterWithoutCache()
         })
         mapSettingsVM.ruralFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
-            algorithmDecorator.clearCache()
-            clusterManager.cluster()
-            map_tracker_button.visibility = if (enabled) View.VISIBLE else View.GONE
+            clusterManager.clusterWithoutCache()
+            map_trackings_button.visibility = if (enabled) View.VISIBLE else View.GONE
             ACTIVE_BOUNDS = if (enabled) RURAL_BOUNDS else ZARAGOZA_BOUNDS
             map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
             ACTIVE_MIN_ZOOM = if (enabled) MIN_ZOOM_RURAL else MIN_ZOOM
@@ -268,6 +305,7 @@ class MapFragment : FragmentWithToolbar() {
                         clusterManager.cluster()
                         ruralTrackingsItems.clear()
                         ruralTrackingsItems.addAll(items)
+                        trackingsAdapter.setNewTrackings(trackings.data)
                     }
                 }
                 else -> {

@@ -99,6 +99,7 @@ dependencies {
     implementation deps.material_dialogs.core
     implementation deps.material_dialogs.input
     implementation deps.material_dialogs.color
+    implementation deps.material_dialogs.bottom_sheets
     implementation project(':datetime')
 
     //Quick Permissions
