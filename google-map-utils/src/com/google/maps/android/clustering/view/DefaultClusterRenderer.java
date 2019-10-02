@@ -363,25 +363,18 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     }
 
     protected int getColor(int clusterSize) {
-        //Make this the accent color?
-//        final float hueRange = 220;
-//        final float sizeRange = 300;
-//        final float size = Math.min(clusterSize, sizeRange);
-//        final float hue = (sizeRange - size) * (sizeRange - size) / (sizeRange * sizeRange) * hueRange;
-//        return Color.HSVToColor(new float[]{
-//                hue, 1f, .6f
-//        });
-
-        final float sizeRange = 50f;
+        // Max value to be considered towards darkening the color
+        final float sizeRange = 200f;
+        // Range to add to the original color
+        final float saturationRange = 0.60f;
+        final float valueRange = 0.25f;
+        // Normalize values over the size range
         final float size = Math.min(clusterSize, sizeRange);
-
-
-        final float saturationRange = 50f;
-        final float saturation = Math.min(hsvAccentColor[1] + ((size / sizeRange) * saturationRange) / 100f, 1);
-
-        final float valueRange = 20f;
-        final float value = Math.max(hsvAccentColor[2] - ((size / sizeRange) * valueRange) / 100f, 0);
-
+        // Value between 0 and 1 with logarithmic growth
+        final float logSize = (float) Math.log10((size / sizeRange)*100);
+        //Make sure to don't go over or under color curve limits
+        final float saturation = Math.min(hsvAccentColor[1] + (logSize * saturationRange), 1);
+        final float value = Math.max(hsvAccentColor[2] - (logSize * valueRange), 0);
         return Color.HSVToColor(new float[]{hsvAccentColor[0], saturation, value});
     }
 
