@@ -54,7 +54,7 @@ class TrackingsAdapter(
 
     fun setNewTrackings(newTrackings: List<RuralTracking>) {
         val oldSize = trackings.size
-        trackings = newTrackings.sortedBy { it.lineId + it.lineName }
+        trackings = newTrackings.sortedBy { it.lineId + it.lineName + it.vehicleId}
         notifyItemRangeRemoved(0, oldSize)
     }
 }

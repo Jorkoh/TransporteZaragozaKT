@@ -64,6 +64,7 @@ class MapFragment : FragmentWithToolbar() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var clusterManager: ClusterManager<CustomClusterItem>
     private lateinit var clusteringAlgorithm: CustomClusteringAlgorithm<CustomClusterItem>
+    private lateinit var clusterRenderer: CustomClusterRenderer
     private lateinit var map: GoogleMap
 
     private val busStopsItems = mutableListOf<CustomClusterItem>()
@@ -72,8 +73,6 @@ class MapFragment : FragmentWithToolbar() {
 
     private val selectTracking: (RuralTracking) -> Unit = { tracking ->
         trackingsDialog?.dismiss()
-        forcedCameraMovementInProgress = true
-        mapVM.selectedItemId.postValue(tracking.vehicleId)
         val cameraPosition = CameraPosition.builder()
             .target(tracking.location)
             .zoom(DEFAULT_ZOOM)
@@ -81,16 +80,15 @@ class MapFragment : FragmentWithToolbar() {
             .build()
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), object : GoogleMap.CancelableCallback {
             override fun onFinish() {
-                forcedCameraMovementInProgress = false
+                mapVM.selectedItemId.postValue(tracking.vehicleId)
+                clusterRenderer.getMarker(CustomClusterItem(tracking))?.showInfoWindow()
             }
 
             override fun onCancel() {
-                forcedCameraMovementInProgress = false
             }
 
         })
     }
-    private var forcedCameraMovementInProgress = false
     private var trackingsDialog: MaterialDialog? = null
     private val trackingsAdapter = TrackingsAdapter(selectTracking)
 
@@ -203,7 +201,7 @@ class MapFragment : FragmentWithToolbar() {
         map.setOnCameraIdleListener(clusterManager)
         clusterManager.markerCollection.setOnInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
 
-        clusterManager.renderer = CustomClusterRenderer(
+        clusterRenderer = CustomClusterRenderer(
             requireContext(),
             map,
             clusterManager,
@@ -212,18 +210,15 @@ class MapFragment : FragmentWithToolbar() {
             mapSettingsVM.tramFilterEnabled,
             mapSettingsVM.ruralFilterEnabled
         )
+        clusterManager.renderer = clusterRenderer
 
         clusterManager.algorithm = clusteringAlgorithm
         clusterManager.setOnClusterItemClickListener { item ->
-            mapVM.selectedItemId.postValue(item?.stop?.stopId ?: "")
+            mapVM.selectedItemId.postValue(item?.stop?.stopId ?: item?.ruralTracking?.vehicleId ?: "")
             false
         }
         map.setOnInfoWindowCloseListener {
-            // Don't remove the selectedItemId when animating the camera to a selected rural tracking
-            // with an info window already opened
-            if (!forcedCameraMovementInProgress) {
                 mapVM.selectedItemId.postValue("")
-            }
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { item ->
             item.stop?.let { stop ->
@@ -296,21 +291,16 @@ class MapFragment : FragmentWithToolbar() {
             tramStopsItems.clear()
             tramStopsItems.addAll(items)
         })
+        // Trackings
         mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
-            when (trackings.status) {
-                Status.SUCCESS -> {
-                    trackings.data?.map { CustomClusterItem(it) }?.let { items ->
-                        clusterManager.removeItems(ruralTrackingsItems.minus(items))
-                        clusterManager.addItems(items.minus(ruralTrackingsItems))
-                        clusterManager.cluster()
-                        ruralTrackingsItems.clear()
-                        ruralTrackingsItems.addAll(items)
-                        trackingsAdapter.setNewTrackings(trackings.data)
-                    }
-                }
-                else -> {
-                    // Ignore other responses, already filtered on view model
-                }
+            if (trackings.status == Status.SUCCESS && trackings.data != null) {
+                val items = trackings.data.map { CustomClusterItem(it) }
+                clusterManager.removeItems(ruralTrackingsItems.minus(items))
+                clusterManager.addItems(items.minus(ruralTrackingsItems))
+                clusterManager.cluster()
+                ruralTrackingsItems.clear()
+                ruralTrackingsItems.addAll(items)
+                trackingsAdapter.setNewTrackings(trackings.data)
             }
         })
     }
