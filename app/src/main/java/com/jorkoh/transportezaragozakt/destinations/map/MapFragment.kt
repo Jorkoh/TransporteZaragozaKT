@@ -153,7 +153,7 @@ class MapFragment : FragmentWithToolbar() {
                 if (ruralTrackingsItems.size > 0) {
                     // Display a dialog to select the tracking
                     trackingsDialog = MaterialDialog(requireContext()).show {
-                        title(R.string.rural_trackings_available)
+                        title(R.string.rural_trackings)
                         cancelOnTouchOutside(true)
                         customListAdapter(trackingsAdapter)
                     }
@@ -260,13 +260,13 @@ class MapFragment : FragmentWithToolbar() {
 
         // Stop type filters
         mapSettingsVM.busFilterEnabled.observe(mapLifecycleOwner, Observer {
-            clusterManager.clusterWithoutCache()
+            clusterManager.clusterWithoutCacheOrAnimation()
         })
         mapSettingsVM.tramFilterEnabled.observe(mapLifecycleOwner, Observer {
-            clusterManager.clusterWithoutCache()
+            clusterManager.clusterWithoutCacheOrAnimation()
         })
         mapSettingsVM.ruralFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
-            clusterManager.clusterWithoutCache()
+            clusterManager.clusterWithoutCacheOrAnimation()
             map_trackings_button.visibility = if (enabled) View.VISIBLE else View.GONE
             ACTIVE_BOUNDS = if (enabled) RURAL_BOUNDS else ZARAGOZA_BOUNDS
             map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)

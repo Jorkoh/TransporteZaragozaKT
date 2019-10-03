@@ -32,7 +32,7 @@ public interface ClusterRenderer<T extends ClusterItem> {
      *
      * @param clusters the clusters to be displayed.
      */
-    void onClustersChanged(Set<? extends Cluster<T>> clusters);
+    void onClustersChanged(Set<? extends Cluster<T>> clusters, Boolean animateTask);
 
     void setOnClusterClickListener(ClusterManager.OnClusterClickListener<T> listener);
 

@@ -151,5 +151,5 @@
     <string name="rural_tracking">Rastreo de bus rural</string>
     <string name="vehicle_template">Vehículo %1$s</string>
     <string name="no_trackings_available">No hay rastreos rurales disponibles, ¡prueba en un rato!</string>
-    <string name="rural_trackings_available">Rastreos de bus rural disponibles</string>
+    <string name="rural_trackings">Rastreos de bus rural:</string>
 </resources>

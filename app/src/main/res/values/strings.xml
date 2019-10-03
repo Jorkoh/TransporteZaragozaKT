@@ -103,7 +103,7 @@
     <string name="map_type_normal_description" translatable="true">enable map view</string>
     <string name="vehicle_template" translatable="true">Vehicle %1$s</string>
     <string name="no_trackings_available" translatable="true">Couldn\'t find any rural trackings, try again later!</string>
-    <string name="rural_trackings_available" translatable="true">Rural bus trackings available</string>
+    <string name="rural_trackings" translatable="true">Rural bus trackings:</string>
 
     <!--Search-->
     <string name="search_view_hint" translatable="true">Name, destination or number…</string>

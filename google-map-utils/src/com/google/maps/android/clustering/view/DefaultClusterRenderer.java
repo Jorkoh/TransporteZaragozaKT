@@ -462,10 +462,10 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
             new Thread(renderTask).start();
         }
 
-        public void queue(Set<? extends Cluster<T>> clusters) {
+        public void queue(Set<? extends Cluster<T>> clusters, Boolean animateTask) {
             synchronized (this) {
                 // Overwrite any pending cluster tasks - we don't care about intermediate states.
-                mNextClusters = new RenderTask(clusters);
+                mNextClusters = new RenderTask(clusters, animateTask);
             }
             sendEmptyMessage(RUN_TASK);
         }
@@ -473,7 +473,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
 
 
     protected boolean shouldRenderAsClusterWithAnimation(Cluster<T> cluster) {
-        return shouldRenderAsCluster(cluster); // (afik) Apparently it's enough to just delegate to this lol and animations work
+        return shouldRenderAsCluster(cluster);
     }
 
     /**
@@ -507,9 +507,11 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         private Projection mProjection;
         private SphericalMercatorProjection mSphericalMercatorProjection;
         private float mMapZoom;
+        private Boolean animateTask;
 
-        private RenderTask(Set<? extends Cluster<T>> clusters) {
+        private RenderTask(Set<? extends Cluster<T>> clusters, Boolean animateTask) {
             this.clusters = clusters;
+            this.animateTask = animateTask;
         }
 
         /**
@@ -559,7 +561,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
             // Find all of the existing clusters that are on-screen. These are candidates for
             // markers to animate from.
             List<Point> existingClustersOnScreen = null;
-            if (DefaultClusterRenderer.this.mClusters != null && mAnimate) {
+            if (DefaultClusterRenderer.this.mClusters != null && mAnimate && animateTask) {
                 existingClustersOnScreen = new ArrayList<Point>();
                 for (Cluster<T> c : DefaultClusterRenderer.this.mClusters) {
                     if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {
@@ -575,7 +577,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
                     new ConcurrentHashMap<MarkerWithPosition, Boolean>());
             for (Cluster<T> c : clusters) {
                 boolean onScreen = visibleBounds.contains(c.getPosition());
-                if (zoomingIn && onScreen && mAnimate) {
+                if (zoomingIn && onScreen && mAnimate && animateTask) {
                     Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
                     Point closest = findClosestCluster(existingClustersOnScreen, point);
                     if (closest != null) {
@@ -614,7 +616,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
                 boolean onScreen = visibleBounds.contains(marker.position);
                 // Don't animate when zooming out more than 3 zoom levels.
                 // TODO: drop animation based on speed of device & number of markers to animate.
-                if (!zoomingIn && zoomDelta > -3 && onScreen && mAnimate) {
+                if (!zoomingIn && zoomDelta > -3 && onScreen && mAnimate && animateTask) {
                     final Point point = mSphericalMercatorProjection.toPoint(marker.position);
                     final Point closest = findClosestCluster(newClustersOnScreen, point);
                     if (closest != null) {
@@ -639,8 +641,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     }
 
     @Override
-    public void onClustersChanged(Set<? extends Cluster<T>> clusters) {
-        mViewModifier.queue(clusters);
+    public void onClustersChanged(Set<? extends Cluster<T>> clusters, Boolean animateTask) {
+        mViewModifier.queue(clusters, animateTask);
     }
 
     @Override

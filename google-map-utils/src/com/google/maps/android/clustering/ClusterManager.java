@@ -18,7 +18,6 @@ package com.google.maps.android.clustering;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Build;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -79,7 +78,7 @@ public class ClusterManager<T extends ClusterItem> implements
         mRenderer = new DefaultClusterRenderer<>(context, map, this);
         mAlgorithm = new ScreenBasedAlgorithmAdapter<>(new PreCachingAlgorithmDecorator<>(
                 new NonHierarchicalDistanceBasedAlgorithm<T>()));
-        mClusterTask = new ClusterTask(false);
+        mClusterTask = new ClusterTask(false, true);
         mRenderer.onAdd();
     }
 
@@ -200,12 +199,8 @@ public class ClusterManager<T extends ClusterItem> implements
         try {
             // Attempt to cancel the in-flight request.
             mClusterTask.cancel(true);
-            mClusterTask = new ClusterTask(false);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                mClusterTask.execute(mMap.getCameraPosition().zoom);
-            } else {
-                mClusterTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMap.getCameraPosition().zoom);
-            }
+            mClusterTask = new ClusterTask(false, true);
+            mClusterTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMap.getCameraPosition().zoom);
         } finally {
             mClusterTaskLock.writeLock().unlock();
         }
@@ -214,17 +209,13 @@ public class ClusterManager<T extends ClusterItem> implements
     /**
      * Force a re-cluster. You may want to call this after adding new item(s).
      */
-    public void clusterWithoutCache() {
+    public void clusterWithoutCacheOrAnimation() {
         mClusterTaskLock.writeLock().lock();
         try {
             // Attempt to cancel the in-flight request.
             mClusterTask.cancel(true);
-            mClusterTask = new ClusterTask(true);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                mClusterTask.execute(mMap.getCameraPosition().zoom);
-            } else {
-                mClusterTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMap.getCameraPosition().zoom);
-            }
+            mClusterTask = new ClusterTask(true, false);
+            mClusterTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMap.getCameraPosition().zoom);
         } finally {
             mClusterTaskLock.writeLock().unlock();
         }
@@ -268,16 +259,18 @@ public class ClusterManager<T extends ClusterItem> implements
     private class ClusterTask extends AsyncTask<Float, Void, Set<? extends Cluster<T>>> {
 
         private Boolean clearCache;
+        private Boolean animateTask;
 
-        ClusterTask(Boolean clearCache){
+        ClusterTask(Boolean clearCache, Boolean animateTask) {
             this.clearCache = clearCache;
+            this.animateTask = animateTask;
         }
 
         @Override
         protected Set<? extends Cluster<T>> doInBackground(Float... zoom) {
             mAlgorithmLock.readLock().lock();
             try {
-                if(clearCache){
+                if (clearCache) {
                     mDecorator.clearCache();
                 }
                 return mAlgorithm.getClusters(zoom[0]);
@@ -288,7 +281,7 @@ public class ClusterManager<T extends ClusterItem> implements
 
         @Override
         protected void onPostExecute(Set<? extends Cluster<T>> clusters) {
-            mRenderer.onClustersChanged(clusters);
+            mRenderer.onClustersChanged(clusters, animateTask);
         }
     }
 
