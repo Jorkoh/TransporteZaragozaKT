@@ -366,8 +366,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         // Max value to be considered towards darkening the color
         final float sizeRange = 200f;
         // Range to add to the original color
-        final float saturationRange = 0.60f;
-        final float valueRange = 0.25f;
+        final float saturationRange = 0.50f;
+        final float valueRange = 0.20f;
         // Normalize values over the size range
         final float size = Math.min(clusterSize, sizeRange);
         // Value between 0 and 1 with logarithmic growth
@@ -1166,11 +1166,20 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         private boolean mRemoveOnComplete;
         private MarkerManager mMarkerManager;
 
+        private double lngDelta;
+
         private AnimationTask(MarkerWithPosition markerWithPosition, LatLng from, LatLng to) {
             this.markerWithPosition = markerWithPosition;
             this.marker = markerWithPosition.marker;
             this.from = from;
             this.to = to;
+
+            lngDelta = to.longitude - from.longitude;
+
+            // Take the shortest path across the 180th meridian.
+            if (Math.abs(lngDelta) > 180) {
+                lngDelta -= Math.signum(lngDelta) * 360;
+            }
         }
 
         public void perform() {
@@ -1202,12 +1211,6 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
         public void onAnimationUpdate(ValueAnimator valueAnimator) {
             float fraction = valueAnimator.getAnimatedFraction();
             double lat = (to.latitude - from.latitude) * fraction + from.latitude;
-            double lngDelta = to.longitude - from.longitude;
-
-            // Take the shortest path across the 180th meridian.
-            if (Math.abs(lngDelta) > 180) {
-                lngDelta -= Math.signum(lngDelta) * 360;
-            }
             double lng = lngDelta * fraction + from.longitude;
             LatLng position = new LatLng(lat, lng);
             marker.setPosition(position);

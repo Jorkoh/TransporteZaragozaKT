@@ -31,6 +31,7 @@ import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.text.DateFormat
 
 
 class MapFragment : FragmentWithToolbar() {
@@ -51,7 +52,7 @@ class MapFragment : FragmentWithToolbar() {
             LatLng(41.601261, -0.980633), LatLng(41.766645, -0.792816)
         )
         val RURAL_BOUNDS = LatLngBounds(
-            LatLng(41.373278, -1.341434), LatLng(41.839120, -0.511400)
+            LatLng(41.373278, -1.341434), LatLng(41.954787, -0.520798)
         )
         var ACTIVE_BOUNDS: LatLngBounds = ZARAGOZA_BOUNDS
 
@@ -153,7 +154,7 @@ class MapFragment : FragmentWithToolbar() {
                 if (ruralTrackingsItems.size > 0) {
                     // Display a dialog to select the tracking
                     trackingsDialog = MaterialDialog(requireContext()).show {
-                        title(R.string.rural_trackings)
+                        title(text = getTrackingsTitle())
                         cancelOnTouchOutside(true)
                         customListAdapter(trackingsAdapter)
                     }
@@ -218,7 +219,7 @@ class MapFragment : FragmentWithToolbar() {
             false
         }
         map.setOnInfoWindowCloseListener {
-                mapVM.selectedItemId.postValue("")
+            mapVM.selectedItemId.postValue("")
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { item ->
             item.stop?.let { stop ->
@@ -271,7 +272,20 @@ class MapFragment : FragmentWithToolbar() {
             ACTIVE_BOUNDS = if (enabled) RURAL_BOUNDS else ZARAGOZA_BOUNDS
             map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
             ACTIVE_MIN_ZOOM = if (enabled) MIN_ZOOM_RURAL else MIN_ZOOM
-            map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+            if (!enabled && map.cameraPosition.zoom < ACTIVE_MIN_ZOOM) {
+                // If the map was zoomed out too far zoom in gently
+                map.animateCamera(CameraUpdateFactory.zoomTo(ACTIVE_MIN_ZOOM), object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+                    }
+
+                    override fun onCancel() {
+                        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+                    }
+                })
+            } else {
+                map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+            }
         })
 
         // Stops
@@ -301,8 +315,21 @@ class MapFragment : FragmentWithToolbar() {
                 ruralTrackingsItems.clear()
                 ruralTrackingsItems.addAll(items)
                 trackingsAdapter.setNewTrackings(trackings.data)
+                trackingsDialog?.title(text = getTrackingsTitle())
             }
         })
+    }
+
+    private fun getTrackingsTitle(): String {
+        val time = ruralTrackingsItems[0].ruralTracking?.updatedAt
+        return if (time != null) {
+            getString(
+                R.string.rural_trackings_template,
+                DateFormat.getTimeInstance(DateFormat.SHORT).format(ruralTrackingsItems[0].ruralTracking?.updatedAt)
+            )
+        } else {
+            getString(R.string.rural_trackings)
+        }
     }
 
     override fun onDestroyView() {

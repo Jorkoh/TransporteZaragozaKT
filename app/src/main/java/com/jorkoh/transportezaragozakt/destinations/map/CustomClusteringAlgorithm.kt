@@ -21,7 +21,7 @@ class CustomClusteringAlgorithm<T : ClusterItem>(
 ) : Algorithm<T> {
 
     companion object {
-        private const val DEFAULT_MAX_DISTANCE_AT_ZOOM = 120
+        private const val DEFAULT_MAX_DISTANCE_AT_ZOOM = 140
         private val PROJECTION = SphericalMercatorProjection(1.0)
     }
 

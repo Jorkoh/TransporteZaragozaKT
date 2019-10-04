@@ -148,8 +148,9 @@
     <string name="rural_chip">RURAL</string>
     <string name="rural_chip_description">filtro paradas bus rural</string>
     <string name="stop_type_rural">Parada de tipo rural</string>
-    <string name="rural_tracking">Rastreo de bus rural</string>
+    <string name="rural_tracking">Rastreos de bus rural</string>
     <string name="vehicle_template">Vehículo %1$s</string>
     <string name="no_trackings_available">No hay rastreos rurales disponibles, ¡prueba en un rato!</string>
-    <string name="rural_trackings">Rastreos de bus rural:</string>
+    <string name="rural_trackings_template">Rastreos de bus rural (%1$s)</string>
+    <string name="rural_trackings">Rastreos de bus rural</string>
 </resources>

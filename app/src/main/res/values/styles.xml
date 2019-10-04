@@ -17,18 +17,21 @@
         <item name="chipBackgroundColor">@color/background_color_chip_bus</item>
         <item name="android:textColor">@color/text_color_chip_state_list</item>
         <item name="rippleColor">@color/kinda_white</item>
+        <item name="chipSurfaceColor">@color/kinda_white</item>
     </style>
 
     <style name="CustomChipChoiceTram" parent="@style/Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/background_color_chip_tram</item>
         <item name="android:textColor">@color/text_color_chip_state_list</item>
         <item name="rippleColor">@color/kinda_white</item>
+        <item name="chipSurfaceColor">@color/kinda_white</item>
     </style>
 
     <style name="CustomChipChoiceRural" parent="@style/Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/background_color_chip_rural</item>
         <item name="android:textColor">@color/text_color_chip_state_list</item>
         <item name="rippleColor">@color/kinda_white</item>
+        <item name="chipSurfaceColor">@color/kinda_white</item>
     </style>
 
     <style name="CustomTabStyle" parent="Widget.MaterialComponents.TabLayout">
