@@ -108,6 +108,9 @@ data class LineLocation(
     @ColumnInfo(name = "lineId")
     var lineId: String,
 
+    @ColumnInfo(name = "parentLineId")
+    var parentLineId: String?,
+
     @ColumnInfo(name = "type")
     var type: LineType,
 

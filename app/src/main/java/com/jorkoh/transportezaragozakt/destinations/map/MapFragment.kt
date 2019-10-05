@@ -93,24 +93,21 @@ class MapFragment : FragmentWithToolbar() {
     private var trackingsDialog: MaterialDialog? = null
     private val trackingsAdapter = TrackingsAdapter(selectTracking)
 
-    @SuppressLint("MissingPermission")
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
-        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                location?.let {
-                    if (ACTIVE_BOUNDS.contains(location.toLatLng())) {
-                        //Smoothly pan the user towards their position, reset the zoom level and bearing
-                        val cameraPosition = CameraPosition.builder()
-                            .target(location.toLatLng())
-                            .zoom(DEFAULT_ZOOM)
-                            .bearing(0f)
-                            .build()
-                        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                    } else {
-                        (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
-                    }
-                    updateTrackingsDialogDistance()
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let {
+                if (ACTIVE_BOUNDS.contains(location.toLatLng())) {
+                    //Smoothly pan the user towards their position, reset the zoom level and bearing
+                    val cameraPosition = CameraPosition.builder()
+                        .target(location.toLatLng())
+                        .zoom(DEFAULT_ZOOM)
+                        .bearing(0f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                } else {
+                    (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
                 }
+                updateTrackingsDialogDistance()
             }
         }
         true
@@ -336,7 +333,7 @@ class MapFragment : FragmentWithToolbar() {
         }
     }
 
-    private fun updateTrackingsDialogDistance(){
+    private fun updateTrackingsDialogDistance() {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let { trackingsAdapter.setNewLocation(it) }
         }

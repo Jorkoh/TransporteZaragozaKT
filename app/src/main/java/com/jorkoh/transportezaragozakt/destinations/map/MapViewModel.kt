@@ -35,7 +35,7 @@ class MapViewModel(stopsRepository: StopsRepository, val trackingsRepository: Ru
                     ruralTrackings.postValue(value)
                 }
             }
-            handler.postDelayed(this, 40000)
+            handler.postDelayed(this, 30000)
         }
     }
 

@@ -57,7 +57,7 @@
     <string name="qr_scan_menu_item">Escanear código QR</string>
     <string name="qr_scan_prompt">Coloque el código QR de la parada en el centro de la pantalla</string>
     <string name="refresh_menu_item">Actualizar</string>
-    <string name="search_nearby_stops_empty">No hay paradas cerca!</string>
+    <string name="search_nearby_stops_empty">¡No hay paradas cerca!</string>
     <string name="added_favorite_snackbar">¡Parada añadida a favoritos!</string>
     <string name="removed_favorite_snackbar">Parada eliminada de favoritos.</string>
     <string name="added_reminder_snackbar">¡Notificación creada!</string>
