@@ -109,6 +109,7 @@ class MapFragment : FragmentWithToolbar() {
                     } else {
                         (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
                     }
+                    updateTrackingsDialogDistance()
                 }
             }
         }
@@ -158,6 +159,7 @@ class MapFragment : FragmentWithToolbar() {
                         cancelOnTouchOutside(true)
                         customListAdapter(trackingsAdapter)
                     }
+                    updateTrackingsDialogDistance()
                 } else {
                     (requireActivity() as MainActivity).makeSnackbar(getString(R.string.no_trackings_available))
                 }
@@ -314,8 +316,10 @@ class MapFragment : FragmentWithToolbar() {
                 clusterManager.cluster()
                 ruralTrackingsItems.clear()
                 ruralTrackingsItems.addAll(items)
+                // Update the trackings selector
                 trackingsAdapter.setNewTrackings(trackings.data)
                 trackingsDialog?.title(text = getTrackingsTitle())
+                updateTrackingsDialogDistance()
             }
         })
     }
@@ -329,6 +333,12 @@ class MapFragment : FragmentWithToolbar() {
             )
         } else {
             getString(R.string.rural_trackings)
+        }
+    }
+
+    private fun updateTrackingsDialogDistance(){
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let { trackingsAdapter.setNewLocation(it) }
         }
     }
 
