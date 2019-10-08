@@ -18,10 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+        <!-- TODO FIX THIS WIDTH STUFF-->
         <TextView
                 android:id="@+id/line_text"
                 android:textColor="@color/kinda_white"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
+                android:minWidth="100dp"
                 android:layout_height="82dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"

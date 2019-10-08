@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
-class CombinedLiveData<T, K, S>(
+class DoubleCombinedLiveData<T, K, S>(
     source1: LiveData<T>,
     source2: LiveData<K>,
     private val combine: (data1: T?, data2: K?) -> S

@@ -70,6 +70,7 @@ class MapFragment : FragmentWithToolbar() {
 
     private val busStopsItems = mutableListOf<CustomClusterItem>()
     private val tramStopsItems = mutableListOf<CustomClusterItem>()
+    private val ruralStopsItems = mutableListOf<CustomClusterItem>()
     private val ruralTrackingsItems = mutableListOf<CustomClusterItem>()
 
     private val selectTracking: (RuralTracking) -> Unit = { tracking ->
@@ -148,6 +149,7 @@ class MapFragment : FragmentWithToolbar() {
                 }
             }
             enableLocationLayer(cameraNeedsCentering)
+
             map_trackings_button.setOnClickListener {
                 if (ruralTrackingsItems.size > 0) {
                     // Display a dialog to select the tracking
@@ -303,6 +305,14 @@ class MapFragment : FragmentWithToolbar() {
             clusterManager.cluster()
             tramStopsItems.clear()
             tramStopsItems.addAll(items)
+        })
+        mapVM.ruralStopLocations.observe(mapLifecycleOwner, Observer { stops ->
+            val items = stops.map { CustomClusterItem(it) }
+            clusterManager.removeItems(ruralStopsItems.minus(items))
+            clusterManager.addItems(items.minus(ruralStopsItems))
+            clusterManager.cluster()
+            ruralStopsItems.clear()
+            ruralStopsItems.addAll(items)
         })
         // Trackings
         mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->

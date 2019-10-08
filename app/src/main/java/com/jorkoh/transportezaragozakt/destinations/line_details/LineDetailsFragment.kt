@@ -24,6 +24,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.isSpanish
 import com.jorkoh.transportezaragozakt.destinations.map.*
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
@@ -151,6 +152,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         map.uiSettings.isTiltGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = false
         map.uiSettings.isMapToolbarEnabled = false
+        //TODO This needs to change if it's a rural line
         map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
     }
 
@@ -193,7 +195,11 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 .color(
                     ContextCompat.getColor(
                         requireContext(),
-                        if (lineDetailsVM.lineType == LineType.BUS) R.color.bus_color else R.color.tram_color
+                        when(lineDetailsVM.lineType ){
+                            LineType.BUS -> R.color.bus_color
+                            LineType.TRAM -> R.color.tram_color
+                            LineType.RURAL -> R.color.rural_color
+                        }
                     )
                 )
             val bounds = LatLngBounds.builder()
@@ -215,9 +221,9 @@ class LineDetailsFragment : FragmentWithToolbar() {
         lineDetailsVM.line.observe(viewLifecycleOwner, Observer { line ->
             line?.let {
                 // Set the action bar title
-                fragment_toolbar.title = getString(R.string.line_template, line.name)
+                fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
                 // Load the bottom sheet with the stops by destination
-                line_details_viewpager.adapter = StopDestinationsPagerAdapter(
+                line_details_viewpager.adapter = StopsByDestinationPagerAdapter(
                     childFragmentManager,
                     requireNotNull(lineDetailsVM.line.value)
                 )

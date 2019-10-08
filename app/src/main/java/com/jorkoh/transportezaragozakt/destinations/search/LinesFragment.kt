@@ -36,7 +36,7 @@ class LinesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        searchVM.lines.observe(viewLifecycleOwner, Observer { lines ->
+        searchVM.mainLines.observe(viewLifecycleOwner, Observer { lines ->
             linesAdapter.setNewLines(lines)
             linesAdapter.filter.filter(searchVM.query.value)
         })

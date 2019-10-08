@@ -14,6 +14,7 @@ import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.isSpanish
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.line_row.*
@@ -43,7 +44,7 @@ class LineAdapter(
                 )
             )
             // Texts
-            line_text_line.text = line.name
+            line_text_line.text = if (context.isSpanish()) line.nameES else line.nameEN
             first_destination_line.text = line.destinations[0]
             if (line.destinations.count() > 1) {
                 second_destination_line.text = line.destinations[1]
@@ -85,7 +86,7 @@ class LineAdapter(
                 val filterPattern = constraint.toString().trim()
                 linesFull.filter {
                     // Filtering by name and destinations
-                    (it.name + it.destinations[0] + it.destinations.getOrElse(1) { "" }).contains(
+                    (it.nameES + it.nameEN + it.destinations[0] + it.destinations.getOrElse(1) { "" }).contains(
                         filterPattern,
                         ignoreCase = true
                     )
@@ -112,7 +113,8 @@ class LineAdapter(
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                     return displayedLines[oldItemPosition].type == filteredLines[newItemPosition].type
-                            && displayedLines[oldItemPosition].name == filteredLines[newItemPosition].name
+                            && displayedLines[oldItemPosition].nameES == filteredLines[newItemPosition].nameES
+                            && displayedLines[oldItemPosition].nameEN == filteredLines[newItemPosition].nameEN
                             && displayedLines[oldItemPosition].destinations == filteredLines[newItemPosition].destinations
                 }
             })

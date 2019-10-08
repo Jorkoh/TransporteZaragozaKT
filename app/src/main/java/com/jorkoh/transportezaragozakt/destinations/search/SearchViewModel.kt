@@ -25,7 +25,7 @@ class SearchViewModel(
         stopsRepository.loadNearbyStops(it.toLatLng(), 500.0)
     }
     val allStops: LiveData<List<Stop>> = stopsRepository.loadStops()
-    val lines: MutableLiveData<List<Line>> = stopsRepository.loadLines()
+    val mainLines: MutableLiveData<List<Line>> = stopsRepository.loadMainLines()
 
 
     fun setSearchTabPosition(position: Int) {

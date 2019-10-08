@@ -1,10 +1,11 @@
 {
-  "version": 1,
-  "recordedAt": "2019-05-15T20:03:41.519545",
+  "version": 4,
   "lines": [
     {
       "id": "21",
-      "name": "21",
+      "parentId": "",
+      "nameES": "21",
+      "nameEN": "21",
       "destinations": [
         "Oliver",
         "Plaza Mozart"
@@ -67,7 +68,9 @@
     },
     {
       "id": "22",
-      "name": "22",
+      "parentId": "",
+      "nameES": "22",
+      "nameEN": "22",
       "destinations": [
         "Bombarda",
         "Las Fuentes"
@@ -142,9 +145,11 @@
     },
     {
       "id": "23",
-      "name": "23",
+      "parentId": "",
+      "nameES": "23",
+      "nameEN": "23",
       "destinations": [
-        "Jos\u00e9 Atar\u00e9s",
+        "José Atarés",
         "Parque Venecia"
       ],
       "stopsFirstDestination": [
@@ -212,8 +217,79 @@
       ]
     },
     {
+      "id": "23_SHORT",
+      "parentId": "23",
+      "nameES": "23 CORTO",
+      "nameEN": "23 SHORT",
+      "destinations": [
+        "José Atarés",
+        "Parque Venecia"
+      ],
+      "stopsFirstDestination": [
+        "tuzsa-1206",
+        "tuzsa-1207",
+        "tuzsa-1163",
+        "tuzsa-866",
+        "tuzsa-425",
+        "tuzsa-609",
+        "tuzsa-610",
+        "tuzsa-757",
+        "tuzsa-756",
+        "tuzsa-759",
+        "tuzsa-644",
+        "tuzsa-275",
+        "tuzsa-478",
+        "tuzsa-230",
+        "tuzsa-256",
+        "tuzsa-253",
+        "tuzsa-251",
+        "tuzsa-250",
+        "tuzsa-690",
+        "tuzsa-697",
+        "tuzsa-743",
+        "tuzsa-674",
+        "tuzsa-675",
+        "tuzsa-678",
+        "tuzsa-3075",
+        "tuzsa-812",
+        "tuzsa-493",
+        "tuzsa-3060",
+        "tuzsa-1225"
+      ],
+      "stopsSecondDestination": [
+        "tuzsa-1225",
+        "tuzsa-3063",
+        "tuzsa-817",
+        "tuzsa-813",
+        "tuzsa-3035",
+        "tuzsa-679",
+        "tuzsa-676",
+        "tuzsa-3001",
+        "tuzsa-691",
+        "tuzsa-249",
+        "tuzsa-252",
+        "tuzsa-254",
+        "tuzsa-255",
+        "tuzsa-232",
+        "tuzsa-234",
+        "tuzsa-700",
+        "tuzsa-699",
+        "tuzsa-886",
+        "tuzsa-758",
+        "tuzsa-448",
+        "tuzsa-426",
+        "tuzsa-7",
+        "tuzsa-1042",
+        "tuzsa-1162",
+        "tuzsa-1205",
+        "tuzsa-1206"
+      ]
+    },
+    {
       "id": "24",
-      "name": "24",
+      "parentId": "",
+      "nameES": "24",
+      "nameEN": "24",
       "destinations": [
         "Valdefierro",
         "Las Fuentes"
@@ -296,7 +372,9 @@
     },
     {
       "id": "25",
-      "name": "25",
+      "parentId": "",
+      "nameES": "25",
+      "nameEN": "25",
       "destinations": [
         "Paseo Pamplona",
         "La Cartuja"
@@ -348,9 +426,11 @@
     },
     {
       "id": "28",
-      "name": "28",
+      "parentId": "",
+      "nameES": "28",
+      "nameEN": "28",
       "destinations": [
-        "Pe\u00f1aflor",
+        "Peñaflor",
         "Coso"
       ],
       "stopsFirstDestination": [
@@ -458,7 +538,9 @@
     },
     {
       "id": "29",
-      "name": "29",
+      "parentId": "",
+      "nameES": "29",
+      "nameEN": "29",
       "destinations": [
         "San Gregorio",
         "Camino las Torres"
@@ -519,7 +601,9 @@
     },
     {
       "id": "30",
-      "name": "30",
+      "parentId": "",
+      "nameES": "30",
+      "nameEN": "30",
       "destinations": [
         "Las Fuentes"
       ],
@@ -543,13 +627,17 @@
         "tuzsa-1074",
         "tuzsa-460"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "31",
-      "name": "31",
+      "parentId": "",
+      "nameES": "31",
+      "nameEN": "31",
       "destinations": [
-        "Aljafer\u00eda",
+        "Aljafería",
         "Puerto Venecia"
       ],
       "stopsFirstDestination": [
@@ -609,7 +697,9 @@
     },
     {
       "id": "32",
-      "name": "32",
+      "parentId": "",
+      "nameES": "32",
+      "nameEN": "32",
       "destinations": [
         "Bombarda",
         "Santa Isabel"
@@ -697,7 +787,9 @@
     },
     {
       "id": "33",
-      "name": "33",
+      "parentId": "",
+      "nameES": "33",
+      "nameEN": "33",
       "destinations": [
         "Delicias",
         "Pinares de Venecia"
@@ -763,10 +855,12 @@
     },
     {
       "id": "34",
-      "name": "34",
+      "parentId": "",
+      "nameES": "34",
+      "nameEN": "34",
       "destinations": [
         "Cementerio",
-        "Estaci\u00f3n Delicias"
+        "Estación Delicias"
       ],
       "stopsFirstDestination": [
         "tuzsa-3073",
@@ -834,9 +928,11 @@
     },
     {
       "id": "35",
-      "name": "35",
+      "parentId": "",
+      "nameES": "35",
+      "nameEN": "35",
       "destinations": [
-        "V\u00eda Hispanidad",
+        "Vía Hispanidad",
         "Parque Goya"
       ],
       "stopsFirstDestination": [
@@ -916,7 +1012,9 @@
     },
     {
       "id": "36",
-      "name": "36",
+      "parentId": "",
+      "nameES": "36",
+      "nameEN": "36",
       "destinations": [
         "Valdefierro",
         "Picarral"
@@ -988,7 +1086,9 @@
     },
     {
       "id": "38",
-      "name": "38",
+      "parentId": "",
+      "nameES": "38",
+      "nameEN": "38",
       "destinations": [
         "Escuela Pignatelli",
         "Cochera Avanza"
@@ -1057,7 +1157,9 @@
     },
     {
       "id": "39",
-      "name": "39",
+      "parentId": "",
+      "nameES": "39",
+      "nameEN": "39",
       "destinations": [
         "Vadorrey",
         "Pinares de Venecia"
@@ -1120,10 +1222,12 @@
     },
     {
       "id": "40",
-      "name": "40",
+      "parentId": "",
+      "nameES": "40",
+      "nameEN": "40",
       "destinations": [
-        "Plaza Arag\u00f3n",
-        "San Jos\u00e9"
+        "Plaza Aragón",
+        "San José"
       ],
       "stopsFirstDestination": [
         "tuzsa-1275",
@@ -1161,7 +1265,9 @@
     },
     {
       "id": "41",
-      "name": "41",
+      "parentId": "",
+      "nameES": "41",
+      "nameEN": "41",
       "destinations": [
         "Rosales del Canal",
         "Puerta del Carmen"
@@ -1221,7 +1327,9 @@
     },
     {
       "id": "42",
-      "name": "42",
+      "parentId": "",
+      "nameES": "42",
+      "nameEN": "42",
       "destinations": [
         "Actur - Rey Fernando",
         "La Paz"
@@ -1306,9 +1414,11 @@
     },
     {
       "id": "43",
-      "name": "43",
+      "parentId": "",
+      "nameES": "43",
+      "nameEN": "43",
       "destinations": [
-        "Mar\u00eda Zambrano",
+        "María Zambrano",
         "Juslibol"
       ],
       "stopsFirstDestination": [
@@ -1341,9 +1451,11 @@
     },
     {
       "id": "44",
-      "name": "44",
+      "parentId": "",
+      "nameES": "44",
+      "nameEN": "44",
       "destinations": [
-        "Campus R\u00edo Ebro",
+        "Campus Río Ebro",
         "Miraflores"
       ],
       "stopsFirstDestination": [
@@ -1406,8 +1518,77 @@
       ]
     },
     {
+      "id": "44_SHORT",
+      "parentId": "44",
+      "nameES": "44 CORTO",
+      "nameEN": "44 SHORT",
+      "destinations": [
+        "Campus Río Ebro",
+        "Miraflores"
+      ],
+      "stopsFirstDestination": [
+        "tuzsa-1260",
+        "tuzsa-1138",
+        "tuzsa-1131",
+        "tuzsa-461",
+        "tuzsa-3019",
+        "tuzsa-760",
+        "tuzsa-3020",
+        "tuzsa-763",
+        "tuzsa-274",
+        "tuzsa-581",
+        "tuzsa-3021",
+        "tuzsa-122",
+        "tuzsa-451",
+        "tuzsa-3514",
+        "tuzsa-38",
+        "tuzsa-41",
+        "tuzsa-39",
+        "tuzsa-216",
+        "tuzsa-215",
+        "tuzsa-212",
+        "tuzsa-611",
+        "tuzsa-3011",
+        "tuzsa-615",
+        "tuzsa-565",
+        "tuzsa-1075"
+      ],
+      "stopsSecondDestination": [
+        "tuzsa-1075",
+        "tuzsa-491",
+        "tuzsa-489",
+        "tuzsa-616",
+        "tuzsa-3056",
+        "tuzsa-612",
+        "tuzsa-218",
+        "tuzsa-213",
+        "tuzsa-214",
+        "tuzsa-40",
+        "tuzsa-539",
+        "tuzsa-879",
+        "tuzsa-538",
+        "tuzsa-63",
+        "tuzsa-61",
+        "tuzsa-1003",
+        "tuzsa-3542",
+        "tuzsa-3013",
+        "tuzsa-1208",
+        "tuzsa-704",
+        "tuzsa-431",
+        "tuzsa-430",
+        "tuzsa-429",
+        "tuzsa-3016",
+        "tuzsa-1135",
+        "tuzsa-1132",
+        "tuzsa-1259",
+        "tuzsa-1260"
+      ]
+    },
+    {
       "id": "50",
-      "name": "50",
+      "parentId": "",
+      "nameES": "50",
+      "nameEN": "50",
       "destinations": [
         "San Gregorio",
         "Vadorrey"
@@ -1477,10 +1658,12 @@
     },
     {
       "id": "51",
-      "name": "51",
+      "parentId": "",
+      "nameES": "51",
+      "nameEN": "51",
       "destinations": [
-        "Estaci\u00f3n Delicias",
-        "Pr\u00edncipe Felipe"
+        "Estación Delicias",
+        "Príncipe Felipe"
       ],
       "stopsFirstDestination": [
         "tuzsa-109",
@@ -1528,7 +1711,9 @@
     },
     {
       "id": "52",
-      "name": "52",
+      "parentId": "",
+      "nameES": "52",
+      "nameEN": "52",
       "destinations": [
         "Puerta del Carmen",
         "Miralbueno"
@@ -1584,7 +1769,9 @@
     },
     {
       "id": "53",
-      "name": "53",
+      "parentId": "",
+      "nameES": "53",
+      "nameEN": "53",
       "destinations": [
         "Miralbueno",
         "Plaza Emperador Carlos V"
@@ -1642,7 +1829,9 @@
     },
     {
       "id": "54",
-      "name": "54",
+      "parentId": "",
+      "nameES": "54",
+      "nameEN": "54",
       "destinations": [
         "Rosales del Canal"
       ],
@@ -1669,11 +1858,15 @@
         "tuzsa-1189",
         "tuzsa-1184"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "55",
-      "name": "55",
+      "parentId": "",
+      "nameES": "55",
+      "nameEN": "55",
       "destinations": [
         "Montecanal"
       ],
@@ -1699,11 +1892,15 @@
         "tuzsa-1182",
         "tuzsa-1025"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "56",
-      "name": "56",
+      "parentId": "",
+      "nameES": "56",
+      "nameEN": "56",
       "destinations": [
         "Valdespartera"
       ],
@@ -1725,11 +1922,15 @@
         "tuzsa-1196",
         "tuzsa-1175"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "57",
-      "name": "57",
+      "parentId": "",
+      "nameES": "57",
+      "nameEN": "57",
       "destinations": [
         "Casablanca"
       ],
@@ -1749,11 +1950,15 @@
         "tuzsa-909",
         "tuzsa-901"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "58",
-      "name": "58",
+      "parentId": "",
+      "nameES": "58",
+      "nameEN": "58",
       "destinations": [
         "Fuente Junquera"
       ],
@@ -1772,13 +1977,17 @@
         "tuzsa-1119",
         "tuzsa-1120"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "59",
-      "name": "59",
+      "parentId": "",
+      "nameES": "59",
+      "nameEN": "59",
       "destinations": [
-        "Tranv\u00eda - Arcosur"
+        "Tranvía - Arcosur"
       ],
       "stopsFirstDestination": [
         "tuzsa-1184",
@@ -1804,11 +2013,15 @@
         "tuzsa-121",
         "tuzsa-1184"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "60",
-      "name": "60",
+      "parentId": "",
+      "nameES": "60",
+      "nameEN": "60",
       "destinations": [
         "Puente de Santiago",
         "Santa Isabel"
@@ -1859,7 +2072,9 @@
     },
     {
       "id": "C1",
-      "name": "C1",
+      "parentId": "",
+      "nameES": "C1",
+      "nameEN": "C1",
       "destinations": [
         "Complejo Funerario",
         "Plaza Canteras"
@@ -1880,7 +2095,9 @@
     },
     {
       "id": "C4",
-      "name": "C4",
+      "parentId": "",
+      "nameES": "C4",
+      "nameEN": "C4",
       "destinations": [
         "Puerto Venecia",
         "Plaza Canteras"
@@ -1917,9 +2134,11 @@
     },
     {
       "id": "Ci1",
-      "name": "Ci1",
+      "parentId": "",
+      "nameES": "Ci1",
+      "nameEN": "Ci1",
       "destinations": [
-        "Estaci\u00f3n Delicias",
+        "Estación Delicias",
         "Camino las Torres"
       ],
       "stopsFirstDestination": [
@@ -1971,9 +2190,11 @@
     },
     {
       "id": "Ci2",
-      "name": "Ci2",
+      "parentId": "",
+      "nameES": "Ci2",
+      "nameEN": "Ci2",
       "destinations": [
-        "Estaci\u00f3n Delicias",
+        "Estación Delicias",
         "Camino las Torres"
       ],
       "stopsFirstDestination": [
@@ -2023,9 +2244,11 @@
     },
     {
       "id": "N1",
-      "name": "N1",
+      "parentId": "",
+      "nameES": "N1",
+      "nameEN": "N1",
       "destinations": [
-        "Santa Isabel - Plaza Arag\u00f3n"
+        "Santa Isabel - Plaza Aragón"
       ],
       "stopsFirstDestination": [
         "tuzsa-707",
@@ -2078,13 +2301,17 @@
         "tuzsa-710",
         "tuzsa-707"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "N2",
-      "name": "N2",
+      "parentId": "",
+      "nameES": "N2",
+      "nameEN": "N2",
       "destinations": [
-        "Parque Goya - Plaza Arag\u00f3n"
+        "Parque Goya - Plaza Aragón"
       ],
       "stopsFirstDestination": [
         "tuzsa-710",
@@ -2128,11 +2355,15 @@
         "tuzsa-720",
         "tuzsa-710"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "N3",
-      "name": "N3",
+      "parentId": "",
+      "nameES": "N3",
+      "nameEN": "N3",
       "destinations": [
         "Miralbueno - Paseo Pamplona"
       ],
@@ -2187,11 +2418,15 @@
         "tuzsa-3008",
         "tuzsa-681"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "N4",
-      "name": "N4",
+      "parentId": "",
+      "nameES": "N4",
+      "nameEN": "N4",
       "destinations": [
         "Rosales del Canal - Paseo Pamplona"
       ],
@@ -2249,13 +2484,17 @@
         "tuzsa-497",
         "tuzsa-669"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "N5",
-      "name": "N5",
+      "parentId": "",
+      "nameES": "N5",
+      "nameEN": "N5",
       "destinations": [
-        "La Paz - Plaza Arag\u00f3n"
+        "La Paz - Plaza Aragón"
       ],
       "stopsFirstDestination": [
         "tuzsa-707",
@@ -2306,11 +2545,15 @@
         "tuzsa-697",
         "tuzsa-707"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "N6",
-      "name": "N6",
+      "parentId": "",
+      "nameES": "N6",
+      "nameEN": "N6",
       "destinations": [
         "Cartuja - Paseo Pamplona"
       ],
@@ -2379,13 +2622,17 @@
         "tuzsa-632",
         "tuzsa-669"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
     },
     {
       "id": "N7",
-      "name": "N7",
+      "parentId": "",
+      "nameES": "N7",
+      "nameEN": "N7",
       "destinations": [
-        "Pe\u00f1aflor - Plaza Arag\u00f3n"
+        "Peñaflor - Plaza Aragón"
       ],
       "stopsFirstDestination": [
         "tuzsa-710",
@@ -2509,7 +2756,84 @@
         "tuzsa-720",
         "tuzsa-710"
       ],
-      "stopsSecondDestination": []
+      "stopsSecondDestination": [
+
+      ]
+    },
+    {
+      "id": "V1",
+      "parentId": "",
+      "nameES": "V1",
+      "nameEN": "V1",
+      "destinations": [
+        "Puerta del Carmen",
+        "Valdespartera"
+      ],
+      "stopsFirstDestination": [
+        "tuzsa-1057",
+        "tuzsa-1177",
+        "tuzsa-1095",
+        "tuzsa-8015",
+        "tuzsa-1069",
+        "tuzsa-1157",
+        "tuzsa-1070",
+        "tuzsa-135",
+        "tuzsa-239",
+        "tuzsa-264",
+        "tuzsa-471",
+        "tuzsa-277",
+        "tuzsa-1079",
+        "tuzsa-983"
+      ],
+      "stopsSecondDestination": [
+        "tuzsa-983",
+        "tuzsa-698",
+        "tuzsa-262",
+        "tuzsa-263",
+        "tuzsa-238",
+        "tuzsa-134",
+        "tuzsa-1066",
+        "tuzsa-1156",
+        "tuzsa-1067",
+        "tuzsa-8014",
+        "tuzsa-1176",
+        "tuzsa-1057"
+      ]
+    },
+    {
+      "id": "V4",
+      "parentId": "",
+      "nameES": "V4",
+      "nameEN": "V4",
+      "destinations": [
+        "Paseo Constitución",
+        "Valdespartera"
+      ],
+      "stopsFirstDestination": [
+        "tuzsa-8109",
+        "tuzsa-1026",
+        "tuzsa-8110",
+        "tuzsa-905",
+        "tuzsa-520",
+        "tuzsa-8111",
+        "tuzsa-735",
+        "tuzsa-8113",
+        "tuzsa-497",
+        "tuzsa-8115"
+      ],
+      "stopsSecondDestination": [
+        "tuzsa-8115",
+        "tuzsa-8114",
+        "tuzsa-8104",
+        "tuzsa-8105",
+        "tuzsa-716",
+        "tuzsa-518",
+        "tuzsa-906",
+        "tuzsa-844",
+        "tuzsa-8107",
+        "tuzsa-8108",
+        "tuzsa-8109"
+      ]
     }
   ]
 }

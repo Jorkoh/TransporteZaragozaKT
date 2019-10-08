@@ -140,7 +140,7 @@ val appModule = module {
     single<StopsRepository> { StopsRepositoryImplementation(get(), get(), get()) }
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
-    single <RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get()) }
+    single <RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get(), get()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
     single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
 

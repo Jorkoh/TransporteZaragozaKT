@@ -19,9 +19,11 @@ import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
+import androidx.core.os.ConfigurationCompat
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
+import java.util.*
 
 //Includes transparent and black, used for colorpickers
 val materialColors = intArrayOf(
@@ -175,3 +177,5 @@ fun List<String>.inflateLines(container: GridLayout, stopType: StopType, context
     }
     container.contentDescription = "${context.getString(R.string.lines)}: ${joinToString(separator = ", ")}"
 }
+
+fun Context.isSpanish() = ConfigurationCompat.getLocales(resources.configuration)[0].language == Locale("es").language

@@ -66,13 +66,13 @@ class StopDetailsFragment : FragmentWithToolbar() {
         }
     }
 
-    private val stopDestinationsAdapter: StopDestinationsAdapter = StopDestinationsAdapter(openLine)
+    private val stopDestinationsTimesAdapter: StopDestinationsTimesAdapter = StopDestinationsTimesAdapter(openLine)
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
         val newVisibility = when (stopDestinations.status) {
             Status.SUCCESS -> {
                 swiperefresh?.isRefreshing = false
-                stopDestinationsAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType, stopDetailsVM.stopId)
+                stopDestinationsTimesAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType, stopDetailsVM.stopId)
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
                 } else {
@@ -86,7 +86,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
             }
             Status.ERROR -> {
                 swiperefresh?.isRefreshing = false
-                stopDestinationsAdapter.setDestinations(listOf(), stopDetailsVM.stopType, stopDetailsVM.stopId)
+                stopDestinationsTimesAdapter.setDestinations(listOf(), stopDetailsVM.stopType, stopDetailsVM.stopId)
                 View.VISIBLE
 
             }
@@ -140,7 +140,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
             stop_details_recycler_view.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
-                adapter = stopDestinationsAdapter
+                adapter = stopDestinationsTimesAdapter
             }
 
             stop_details_no_data_text.setOnClickListener(noDataOnClickListener)
@@ -170,6 +170,10 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 StopType.TRAM -> {
                     type_image_stop_details.setImageResource(R.drawable.ic_tram_stop)
                     type_image_stop_details.contentDescription = getString(R.string.stop_type_tram)
+                }
+                StopType.RURAL -> {
+                    type_image_stop_details.setImageResource(R.drawable.ic_rural_stop)
+                    type_image_stop_details.contentDescription = getString(R.string.stop_type_rural)
                 }
             }
             fragment_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
@@ -284,7 +288,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                             when (stopDetailsVM.stopType) {
                                 StopType.BUS -> R.mipmap.ic_bus_launcher
                                 StopType.TRAM -> R.mipmap.ic_tram_launcher
-                                StopType.RURAL -> TODO()
+                                StopType.RURAL -> R.mipmap.ic_rural_launcher
                             }
                         )
                     )

@@ -1,10 +1,11 @@
 {
-  "version": 1,
-  "recordedAt": "2019-05-15T20:03:41.519545",
+  "version": 4,
   "lines": [
     {
       "id": "L1",
-      "name": "L1",
+      "parentId": "",
+      "nameES": "L1",
+      "nameEN": "L1",
       "destinations": [
         "Avenida Academia",
         "Mago de Oz"

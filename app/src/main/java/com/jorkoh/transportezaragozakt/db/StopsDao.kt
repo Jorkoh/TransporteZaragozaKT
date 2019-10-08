@@ -75,8 +75,8 @@ abstract class StopsDao {
     @Query("SELECT * FROM stops WHERE type = :stopType")
     abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
-    @Query("SELECT * FROM lines WHERE type = :lineType")
-    abstract fun getLinesByType(lineType: LineType): LiveData<List<Line>>
+    @Query("SELECT * FROM lines WHERE type = :lineType AND parentLineId IS NULL")
+    abstract fun getMainLinesByType(lineType: LineType): LiveData<List<Line>>
 
     @Query("SELECT * FROM lineLocations WHERE lineId = :lineId ORDER BY position ASC")
     abstract fun getLineLocations(lineId: String): LiveData<List<LineLocation>>
@@ -126,20 +126,31 @@ abstract class StopsDao {
     fun insertInitialData(context: Context) {
         val initialBusStops = getInitialBusStops(context)
         val initialTramStops = getInitialTramStops(context)
+        val initialRuralStops = getInitialRuralStops(context)
+
         val initialBusLines = getInitialBusLines(context)
         val initialTramLines = getInitialTramLines(context)
+        val initialRuralLines = getInitialRuralLines(context)
+
         val initialBusLineLocations = getInitialBusLineLocations(context)
         val initialTramLineLocations = getInitialTramLineLocations(context)
+        val initialRuralLineLocations = getInitialRuralLineLocations(context)
+
         val initialChangelog = getInitialChangelog(context)
 
         with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
             // Data, save versions
             putInt(context.getString(R.string.saved_bus_stops_version_number_key), initialBusStops.version)
             putInt(context.getString(R.string.saved_tram_stops_version_number_key), initialTramStops.version)
-            putInt(context.getString(R.string.saved_bus_lines_version_number_key), initialBusLines.version)
+            putInt(context.getString(R.string.saved_rural_stops_version_number_key), initialRuralStops.version)
+
+            putInt(context.getString(R.string.saved_bus_lines_version_number_key), initialRuralStops.version)
             putInt(context.getString(R.string.saved_tram_lines_version_number_key), initialTramLines.version)
+            putInt(context.getString(R.string.saved_rural_lines_version_number_key), initialRuralLines.version)
+
             putInt(context.getString(R.string.saved_bus_lines_locations_version_number_key), initialBusLineLocations.version)
             putInt(context.getString(R.string.saved_tram_lines_locations_version_number_key), initialTramLineLocations.version)
+            putInt(context.getString(R.string.saved_rural_lines_locations_version_number_key), initialRuralLineLocations.version)
             // Changelog, save version and multiple languages
             putInt(context.getString(R.string.saved_changelog_version_number_key), initialChangelog.version)
             putString(context.getString(R.string.saved_changelog_en_key), initialChangelog.textEN)
@@ -150,15 +161,16 @@ abstract class StopsDao {
             putBoolean(context.getString(R.string.traffic_key), false)
             putBoolean(context.getString(R.string.bus_filter_key), true)
             putBoolean(context.getString(R.string.tram_filter_key), true)
+            putBoolean(context.getString(R.string.rural_filter_key), false)
             putInt(context.getString(R.string.search_tab_position_key), 0)
             putBoolean(context.getString(R.string.is_first_launch_key), true)
 
             apply()
         }
         // Insert initial data
-        insertStops(initialBusStops.stops.plus(initialTramStops.stops))
-        insertLines(initialBusLines.lines.plus(initialTramLines.lines))
-        insertLinesLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations))
+        insertStops(initialBusStops.stops.plus(initialTramStops.stops).plus(initialRuralStops.stops))
+        insertLines(initialBusLines.lines.plus(initialTramLines.lines).plus(initialRuralLines.lines))
+        insertLinesLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations).plus(initialRuralLineLocations.lineLocations))
     }
 
     fun updateStops(stops: List<Stop>, type : StopType) {

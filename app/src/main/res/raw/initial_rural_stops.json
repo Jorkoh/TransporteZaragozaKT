@@ -1,0 +1,3517 @@
+{
+  "version": 4,
+  "stops": [
+    {
+      "id": "rural-1",
+      "number": "1",
+      "title": "Principio de Línea",
+      "location": [
+        -0.8884065428654693,
+        41.65004789974969
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-3",
+      "number": "3",
+      "title": "C.E. Grande Covián",
+      "location": [
+        -0.8593363331865855,
+        41.66448317198652
+      ],
+      "lines": [
+        "201",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-4",
+      "number": "4",
+      "title": "Avenida de Santa Isabel",
+      "location": [
+        -0.8388318143162591,
+        41.669521158353284
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-36",
+      "number": "36",
+      "title": "C.E. Grande Covián",
+      "location": [
+        -0.8593234412415222,
+        41.66454597659445
+      ],
+      "lines": [
+        "102",
+        "201"
+      ]
+    },
+    {
+      "id": "rural-41",
+      "number": "41",
+      "title": "Rotonda Mutua de Accidentes",
+      "location": [
+        -0.8700279140990694,
+        41.692917117712284
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-54",
+      "number": "54",
+      "title": "Rotonda Mutua de Accidentes",
+      "location": [
+        -0.8701617372883058,
+        41.693595080008045
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-57",
+      "number": "57",
+      "title": "Venta del Olivar (Comercial Cartié)",
+      "location": [
+        -0.9639130968749693,
+        41.68074498320453
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-58",
+      "number": "58",
+      "title": "Venta Cano",
+      "location": [
+        -0.9831232225369166,
+        41.691594467561
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-59",
+      "number": "59",
+      "title": "C.C. Alcampo (Utebo)",
+      "location": [
+        -0.9997990682774621,
+        41.70178870488098
+      ],
+      "lines": [
+        "603",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-60",
+      "number": "60",
+      "title": "Avenida de Logroño 74",
+      "location": [
+        -1.0297853024397792,
+        41.71966688666097
+      ],
+      "lines": [
+        "603",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-68",
+      "number": "68",
+      "title": "Empalme Torres de Berrellén / La Joyosa",
+      "location": [
+        -1.0675753238254726,
+        41.73584957671149
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-69",
+      "number": "69",
+      "title": "Avenida de Logroño",
+      "location": [
+        -1.026349699175677,
+        41.71787422668703
+      ],
+      "lines": [
+        "603",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-70",
+      "number": "70",
+      "title": "C.C. Alcampo (Utebo)",
+      "location": [
+        -1.0003348031427957,
+        41.70168095188163
+      ],
+      "lines": [
+        "603",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-71",
+      "number": "71",
+      "title": "Venta Cano",
+      "location": [
+        -0.9835396846834885,
+        41.691475690915475
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-72",
+      "number": "72",
+      "title": "Restaurante Casa Royo",
+      "location": [
+        -0.9642317165392058,
+        41.67997157145486
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-103",
+      "number": "103",
+      "title": "Puente de Santiago",
+      "location": [
+        -0.8808211241962974,
+        41.661891415772786
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-104",
+      "number": "104",
+      "title": "Parque del Tío Jorge",
+      "location": [
+        -0.8795271255446487,
+        41.66594744210106
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-105",
+      "number": "105",
+      "title": "Valle de Broto",
+      "location": [
+        -0.8728004336245166,
+        41.666453552186866
+      ],
+      "lines": [
+        "201",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-106",
+      "number": "106",
+      "title": "Avenida de Cataluña (Banco Santander)",
+      "location": [
+        -0.8633816487928767,
+        41.662775250664545
+      ],
+      "lines": [
+        "201",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-108",
+      "number": "108",
+      "title": "Esquina calle Río Martín",
+      "location": [
+        -0.8463544643373814,
+        41.66991911557701
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-109",
+      "number": "109",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.836603877738918,
+        41.66335943246116
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-110",
+      "number": "110",
+      "title": "Restaurante Casa y Tinelo",
+      "location": [
+        -0.8367003454731805,
+        41.65784473102081
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-111",
+      "number": "111",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8356489595216502,
+        41.65566787808399
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-112",
+      "number": "112",
+      "title": "Avenida de Movera 279",
+      "location": [
+        -0.832310349718085,
+        41.65393429111087
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-113",
+      "number": "113",
+      "title": "Esquina calle San Ramón",
+      "location": [
+        -0.8290007213070687,
+        41.652219078186576
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-114",
+      "number": "114",
+      "title": "Esquina camino Carrasco",
+      "location": [
+        -0.8261198953180459,
+        41.650705618107835
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-115",
+      "number": "115",
+      "title": "Plaza Mayor",
+      "location": [
+        -0.8222593730322204,
+        41.648970773112005
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-116",
+      "number": "116",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8192948129929,
+        41.64763108927465
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-117",
+      "number": "117",
+      "title": "Instituto Formación Profesional",
+      "location": [
+        -0.8165382959738857,
+        41.64636742719732
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-118",
+      "number": "118",
+      "title": "Centro de Transferencia Agroalimentaria",
+      "location": [
+        -0.8107764515030113,
+        41.64412327673001
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-126",
+      "number": "126",
+      "title": "Piscinas municipales",
+      "location": [
+        -0.8065324601675391,
+        41.64310110598611
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-133",
+      "number": "133",
+      "title": "Centro de Transferencia Agroalimentaria",
+      "location": [
+        -0.8106142993384104,
+        41.644142700857174
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-134",
+      "number": "134",
+      "title": "Instituto de Formación Profesional",
+      "location": [
+        -0.8161658760955781,
+        41.6462522671261
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-135",
+      "number": "135",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8194716470422935,
+        41.647742524865876
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-136",
+      "number": "136",
+      "title": "Plaza Mayor",
+      "location": [
+        -0.8220787901345608,
+        41.64891330921389
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-137",
+      "number": "137",
+      "title": "Esquina camino Carrasco",
+      "location": [
+        -0.8258647605825762,
+        41.6506152260718
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-138",
+      "number": "138",
+      "title": "Esquina calle San Ramón",
+      "location": [
+        -0.8286915825703884,
+        41.65209164554364
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-139",
+      "number": "139",
+      "title": "Avenida de Movera 279",
+      "location": [
+        -0.8321130928758232,
+        41.65387202491631
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-140",
+      "number": "140",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8354750598690391,
+        41.65564658685283
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-141",
+      "number": "141",
+      "title": "Restaurante Casa y Tinelo",
+      "location": [
+        -0.8366433667514827,
+        41.657839154180145
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-142",
+      "number": "142",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8366086333582589,
+        41.66345408939041
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-143",
+      "number": "143",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8371449854635301,
+        41.66465295107153
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-144",
+      "number": "144",
+      "title": "Rotonda Z40",
+      "location": [
+        -0.8368432699281059,
+        41.66745285303356
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-145",
+      "number": "145",
+      "title": "Esquina calle Río Martín",
+      "location": [
+        -0.846363436017076,
+        41.66999583835799
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-148",
+      "number": "148",
+      "title": "Calle de Valle de Broto",
+      "location": [
+        -0.872934891535484,
+        41.66656862364921
+      ],
+      "lines": [
+        "102",
+        "201"
+      ]
+    },
+    {
+      "id": "rural-149",
+      "number": "149",
+      "title": "Puente de Santiago",
+      "location": [
+        -0.8810695346153142,
+        41.66202209064777
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-197",
+      "number": "197",
+      "title": "Residencia de mayores",
+      "location": [
+        -0.8086323045501204,
+        41.64183076842355
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-198",
+      "number": "198",
+      "title": "Piscinas municipales",
+      "location": [
+        -0.8065085287939057,
+        41.642992571765305
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-200",
+      "number": "200",
+      "title": "Pikolín",
+      "location": [
+        -0.9506115923220865,
+        41.67337539261747
+      ],
+      "lines": [
+        "603",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-201",
+      "number": "201",
+      "title": "Valeo Térmico",
+      "location": [
+        -0.9708708715364163,
+        41.68574965174359
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-202",
+      "number": "202",
+      "title": "Rotonda Salgar",
+      "location": [
+        -0.9781882109895371,
+        41.68931460323265
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-203",
+      "number": "203",
+      "title": "Polígono El Águila",
+      "location": [
+        -1.0146129295209547,
+        41.71043967966006
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-207",
+      "number": "207",
+      "title": "Plaza de Santiago Castillo",
+      "location": [
+        -1.0270784252082081,
+        41.71904399354205
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-214",
+      "number": "214",
+      "title": "Urbanización La Alameda",
+      "location": [
+        -1.034488413939605,
+        41.7231429376771
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-215",
+      "number": "215",
+      "title": "Plaza de Joaquín Costa",
+      "location": [
+        -1.0283378438611308,
+        41.72106506610509
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-216",
+      "number": "216",
+      "title": "Calle de Santiago Ramón y Cajal",
+      "location": [
+        -1.0262960314449352,
+        41.72009790633814
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-217",
+      "number": "217",
+      "title": "Polígono El Águila",
+      "location": [
+        -1.0136420211703518,
+        41.709432173109896
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-218",
+      "number": "218",
+      "title": "Rotonda Salgar",
+      "location": [
+        -0.9788282083404575,
+        41.68861886102436
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-219",
+      "number": "219",
+      "title": "Valeo Térmico",
+      "location": [
+        -0.9714598880172716,
+        41.685075565878996
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-220",
+      "number": "220",
+      "title": "Pikolín",
+      "location": [
+        -0.9510713070516158,
+        41.67271711725372
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-222",
+      "number": "222",
+      "title": "Centro Cívico Delicias",
+      "location": [
+        -0.9067575777325433,
+        41.65547689195377
+      ],
+      "lines": [
+        "602",
+        "604",
+        "603",
+        "601",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-224",
+      "number": "224",
+      "title": "Avenida de Navarra 71",
+      "location": [
+        -0.9073441057001568,
+        41.655406524021004
+      ],
+      "lines": [
+        "602",
+        "604",
+        "605",
+        "601",
+        "603"
+      ]
+    },
+    {
+      "id": "rural-270",
+      "number": "270",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8370589883945976,
+        41.664043398258784
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-298",
+      "number": "298",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8081092245021055,
+        41.643532003705936
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-299",
+      "number": "299",
+      "title": "Avenida de Movera",
+      "location": [
+        -0.8077396301538449,
+        41.64351143773157
+      ],
+      "lines": [
+        "201"
+      ]
+    },
+    {
+      "id": "rural-301",
+      "number": "301",
+      "title": "Avenida de Navarra 12",
+      "location": [
+        -0.9019782159438485,
+        41.65485386670561
+      ],
+      "lines": [
+        "602",
+        "604",
+        "603",
+        "501",
+        "601"
+      ]
+    },
+    {
+      "id": "rural-302",
+      "number": "302",
+      "title": "Estación Delicias (Vestíbulo de llegadas AVE)",
+      "location": [
+        -0.9138221947466463,
+        41.65922596628215
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-303",
+      "number": "303",
+      "title": "Los Enlaces",
+      "location": [
+        -0.9194970119843165,
+        41.65194802424793
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-304",
+      "number": "304",
+      "title": "C.C. Alcampo Los Enlaces",
+      "location": [
+        -0.9356814966041869,
+        41.64458440154617
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-305",
+      "number": "305",
+      "title": "C.C. Plaza Imperial",
+      "location": [
+        -0.9866992477570826,
+        41.63393423054034
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-306",
+      "number": "306",
+      "title": "Alquiler de vehículos Hispania",
+      "location": [
+        -0.9900985573136387,
+        41.63584461054102
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-307",
+      "number": "307",
+      "title": "Imaginarium",
+      "location": [
+        -0.9899825917785732,
+        41.64258849249318
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-308",
+      "number": "308",
+      "title": "CISAE",
+      "location": [
+        -0.9844576215950991,
+        41.64191534484452
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-309",
+      "number": "309",
+      "title": "Lapuente Logística",
+      "location": [
+        -0.9818242690672211,
+        41.64363889111954
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-310",
+      "number": "310",
+      "title": "Grupo Usieto",
+      "location": [
+        -0.9792060128509635,
+        41.645389660873526
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-311",
+      "number": "311",
+      "title": "Edificio TIC XXI",
+      "location": [
+        -0.9726292009864248,
+        41.64612496820523
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-312",
+      "number": "312",
+      "title": "Hotel Rey Fernando (esquina calle Osca)",
+      "location": [
+        -0.9822905594144379,
+        41.65118105317998
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-313",
+      "number": "313",
+      "title": "Barclays (esquina calle Atiliana)",
+      "location": [
+        -0.9906777331664564,
+        41.65446686789449
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-314",
+      "number": "314",
+      "title": "Caladero (esquina calle Bari)",
+      "location": [
+        -0.9988294971652553,
+        41.65330765655047
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-315",
+      "number": "315",
+      "title": "Real Aeroclub de Zaragoza",
+      "location": [
+        -1.0064967599855328,
+        41.664316394615575
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-316",
+      "number": "316",
+      "title": "Aeropuerto de Zaragoza",
+      "location": [
+        -1.0070214102015134,
+        41.663195179799935
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-317",
+      "number": "317",
+      "title": "Caladero (esquina calle Bari)",
+      "location": [
+        -0.9990799103262537,
+        41.65319043104266
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-318",
+      "number": "318",
+      "title": "Barclays (esquina calle Atiliana)",
+      "location": [
+        -0.9907402057864552,
+        41.6543733921911
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-319",
+      "number": "319",
+      "title": "Hotel Rey Fernando (esquina calle Osca)",
+      "location": [
+        -0.9824820161886159,
+        41.651125873980696
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-320",
+      "number": "320",
+      "title": "Edificio TIC XXI",
+      "location": [
+        -0.9727165242547973,
+        41.64621207159461
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-321",
+      "number": "321",
+      "title": "Turiaso",
+      "location": [
+        -0.9789282228312831,
+        41.645456825438636
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-322",
+      "number": "322",
+      "title": "Lapuente Logística",
+      "location": [
+        -0.9818952161068015,
+        41.64376622931581
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-323",
+      "number": "323",
+      "title": "CISAE",
+      "location": [
+        -0.9842956328870709,
+        41.64198905784
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-324",
+      "number": "324",
+      "title": "Imaginarium",
+      "location": [
+        -0.9901084955610672,
+        41.64269427106399
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-325",
+      "number": "325",
+      "title": "Alquiler de vehículos Hispania",
+      "location": [
+        -0.9905080439326134,
+        41.63572568319155
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-326",
+      "number": "326",
+      "title": "C.C. Plaza Imperial",
+      "location": [
+        -0.9869248624458076,
+        41.63395619791715
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-327",
+      "number": "327",
+      "title": "C.C. Alcampo Los Enlaces",
+      "location": [
+        -0.9356283970170822,
+        41.644367290866334
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-328",
+      "number": "328",
+      "title": "Los Enlaces",
+      "location": [
+        -0.9193147082653722,
+        41.65194472119989
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-329",
+      "number": "329",
+      "title": "Estación Delicias (Vestíbulo de salidas AVE)",
+      "location": [
+        -0.9085639957710984,
+        41.65828830246174
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-330",
+      "number": "330",
+      "title": "Avenida de Navarra 3",
+      "location": [
+        -0.9016740797206355,
+        41.65466367646251
+      ],
+      "lines": [
+        "604",
+        "601",
+        "501",
+        "602",
+        "603"
+      ]
+    },
+    {
+      "id": "rural-337",
+      "number": "337",
+      "title": "Esquina calle Atiliana",
+      "location": [
+        -0.9947666711423622,
+        41.65170568287888
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-338",
+      "number": "338",
+      "title": "Esquina calle Atiliana",
+      "location": [
+        -0.9949808978762993,
+        41.65157432469261
+      ],
+      "lines": [
+        "501"
+      ]
+    },
+    {
+      "id": "rural-701",
+      "number": "701",
+      "title": "Museo Pablo Serrano (Terminal)",
+      "location": [
+        -0.8905094520898211,
+        41.651293419637774
+      ],
+      "lines": [
+        "602",
+        "604"
+      ]
+    },
+    {
+      "id": "rural-704",
+      "number": "704",
+      "title": "C.C. Augusta",
+      "location": [
+        -0.9192761839565416,
+        41.658807050356366
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-705",
+      "number": "705",
+      "title": "Francisco Rallo Lahoz (junto Vía Hispanidad)",
+      "location": [
+        -0.9215374242115985,
+        41.65551101158318
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-706",
+      "number": "706",
+      "title": "Esq. C\\ Sergio López",
+      "location": [
+        -0.9294914444398322,
+        41.65846472769942
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-707",
+      "number": "707",
+      "title": "Rotonda de Ibón de Plan",
+      "location": [
+        -0.9373096454233552,
+        41.65890255581582
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-708",
+      "number": "708",
+      "title": "Ruinas",
+      "location": [
+        -0.9610968437976365,
+        41.66258296064205
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-709",
+      "number": "709",
+      "title": "Colegio Juan de Lanuza",
+      "location": [
+        -0.9695227050257653,
+        41.66376798960666
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-710",
+      "number": "710",
+      "title": "Carmelitas Descalzas",
+      "location": [
+        -0.9759132695002667,
+        41.6636420341287
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-711",
+      "number": "711",
+      "title": "Centro de Exámenes Tráfico",
+      "location": [
+        -0.9812325656333185,
+        41.66352400660729
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-712",
+      "number": "712",
+      "title": "Camino de la Olmera",
+      "location": [
+        -0.992597780876521,
+        41.66383571275001
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-713",
+      "number": "713",
+      "title": "Viveros Montecarlo",
+      "location": [
+        -0.9994338576549562,
+        41.66460337699486
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-714",
+      "number": "714",
+      "title": "Torre del Francés",
+      "location": [
+        -1.0120552055390828,
+        41.66838453903369
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-715",
+      "number": "715",
+      "title": "Camino de Cantarranas",
+      "location": [
+        -1.0153412205022592,
+        41.66981937420012
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-716",
+      "number": "716",
+      "title": "Camino de San Lamberto",
+      "location": [
+        -1.0181346216687839,
+        41.670957405870794
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-717",
+      "number": "717",
+      "title": "Bar El Cañón",
+      "location": [
+        -1.0230596502773301,
+        41.672289688259575
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-718",
+      "number": "718",
+      "title": "Urbanización Conde Fuentes",
+      "location": [
+        -1.0263674954292288,
+        41.6734452848791
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-719",
+      "number": "719",
+      "title": "Rotonda Herradura",
+      "location": [
+        -1.0322663270919068,
+        41.6754738983299
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-720",
+      "number": "720",
+      "title": "Pabellón Polideportivo Municipal",
+      "location": [
+        -1.0281693453270764,
+        41.681311927858424
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-721",
+      "number": "721",
+      "title": "Plaza de España",
+      "location": [
+        -1.0271769304448692,
+        41.68310970268367
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-722",
+      "number": "722",
+      "title": "Torre del Pinar",
+      "location": [
+        -1.0193171644939198,
+        41.692516924306034
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-723",
+      "number": "723",
+      "title": "Campo de Fútbol",
+      "location": [
+        -1.0325816229429203,
+        41.685805304436016
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-724",
+      "number": "724",
+      "title": "Plaza de Clavería",
+      "location": [
+        -1.0397948822760972,
+        41.68853153673482
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-725",
+      "number": "725",
+      "title": "Barrio del cuenco / Camino de San Miguel",
+      "location": [
+        -1.0458361564595444,
+        41.69109769105629
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-726",
+      "number": "726",
+      "title": "Puente de San Miguel / Valdenuez",
+      "location": [
+        -1.0510401856165217,
+        41.692393000980786
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-727",
+      "number": "727",
+      "title": "Urbanización La Frondosa",
+      "location": [
+        -1.061373493083769,
+        41.69279747501322
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-728",
+      "number": "728",
+      "title": "Camino Jordán / Los Alberjeros",
+      "location": [
+        -1.0673246894739514,
+        41.69531604191522
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-729",
+      "number": "729",
+      "title": "Bar Rinconín",
+      "location": [
+        -1.071679088353319,
+        41.69597907930626
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-730",
+      "number": "730",
+      "title": "Cruce Torre Morales",
+      "location": [
+        -1.0749508528781804,
+        41.696412242716335
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-731",
+      "number": "731",
+      "title": "Torre Almenareta / Los Abajeros",
+      "location": [
+        -1.0823913127108542,
+        41.69917563689055
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-732",
+      "number": "732",
+      "title": "Plaza de Torre Medina",
+      "location": [
+        -1.0904077796637734,
+        41.703398098612105
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-733",
+      "number": "733",
+      "title": "Residencial Viena",
+      "location": [
+        -1.0292227680926478,
+        41.68541447415379
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-734",
+      "number": "734",
+      "title": "Frente a Residencial Viena",
+      "location": [
+        -1.0292900523274666,
+        41.68537509930988
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-751",
+      "number": "751",
+      "title": "Torre Almenareta / Los Abajeros",
+      "location": [
+        -1.082493811814758,
+        41.699163838377174
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-752",
+      "number": "752",
+      "title": "Urbanización Paraíso / Cruce Torremorales",
+      "location": [
+        -1.0760776480615675,
+        41.696530195732784
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-753",
+      "number": "753",
+      "title": "Bar Rinconín",
+      "location": [
+        -1.0717391523221107,
+        41.69593955830358
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-754",
+      "number": "754",
+      "title": "Camino Jordán / Los Alberjeros",
+      "location": [
+        -1.0673728795501856,
+        41.69527182010161
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-755",
+      "number": "755",
+      "title": "Urbanización La Frondosa",
+      "location": [
+        -1.0617144025310643,
+        41.69278521614155
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-756",
+      "number": "756",
+      "title": "Puente de San Miguel / Valdenuez",
+      "location": [
+        -1.0517003542634822,
+        41.692615856375944
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-757",
+      "number": "757",
+      "title": "Barrio del cuenco / Camino de Clavería",
+      "location": [
+        -1.0446033054299102,
+        41.69135590938959
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-758",
+      "number": "758",
+      "title": "Plaza de Clavería",
+      "location": [
+        -1.0400552203101057,
+        41.68863955514671
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-759",
+      "number": "759",
+      "title": "Campo de Fútbol",
+      "location": [
+        -1.0325928594450686,
+        41.68575596096122
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-761",
+      "number": "761",
+      "title": "Plaza de España",
+      "location": [
+        -1.0263332633463815,
+        41.683212292518604
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-762",
+      "number": "762",
+      "title": "Pabellón Polideportivo Municipal",
+      "location": [
+        -1.0277090974166068,
+        41.681394090524016
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-763",
+      "number": "763",
+      "title": "Rotonda Herradura",
+      "location": [
+        -1.031608291543826,
+        41.67507083775224
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-764",
+      "number": "764",
+      "title": "Urbanización Conde Fuentes",
+      "location": [
+        -1.026804855665577,
+        41.67361491731437
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-765",
+      "number": "765",
+      "title": "Bar El Cañón",
+      "location": [
+        -1.023537553724364,
+        41.67237437861288
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-766",
+      "number": "766",
+      "title": "Camino de San Lamberto",
+      "location": [
+        -1.0181492096803324,
+        41.67091262485824
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-767",
+      "number": "767",
+      "title": "Camino de Cantarranas",
+      "location": [
+        -1.0153921321603954,
+        41.66978873111264
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-768",
+      "number": "768",
+      "title": "Torre del Francés",
+      "location": [
+        -1.011079050388711,
+        41.66790380074201
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-769",
+      "number": "769",
+      "title": "Viveros Montecarlo",
+      "location": [
+        -0.9998045175561325,
+        41.664618839637214
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-770",
+      "number": "770",
+      "title": "Camino de la Olmera",
+      "location": [
+        -0.9926293911125483,
+        41.66380023915946
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-771",
+      "number": "771",
+      "title": "Centro de Exámenes Tráfico",
+      "location": [
+        -0.9808682023856659,
+        41.66349958824209
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-772",
+      "number": "772",
+      "title": "Carmelitas Descalzas",
+      "location": [
+        -0.9757661261198907,
+        41.663607917949065
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-773",
+      "number": "773",
+      "title": "Camino de Vistabella / Colegio Juan de Lanuza",
+      "location": [
+        -0.9703418514487954,
+        41.66371032705207
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-774",
+      "number": "774",
+      "title": "Ruinas",
+      "location": [
+        -0.9611053789167728,
+        41.66255609269225
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-775",
+      "number": "775",
+      "title": "Centro de Salud",
+      "location": [
+        -0.9382030272923865,
+        41.66076943318992
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-776",
+      "number": "776",
+      "title": "Esq. C/ Enrique Val",
+      "location": [
+        -0.9311094786148685,
+        41.658552343211014
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-777",
+      "number": "777",
+      "title": "C.C. Augusta",
+      "location": [
+        -0.9190429382373635,
+        41.65861368773192
+      ],
+      "lines": [
+        "604"
+      ]
+    },
+    {
+      "id": "rural-802",
+      "number": "802",
+      "title": "Parque del Tío Jorge",
+      "location": [
+        -0.8805065185943821,
+        41.66397510306054
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-806",
+      "number": "806",
+      "title": "Esq. C/ Juslibol",
+      "location": [
+        -0.8712599096500636,
+        41.67066702753675
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-807",
+      "number": "807",
+      "title": "Esq. Cno. Los Molinos",
+      "location": [
+        -0.8681638558948241,
+        41.676725030062904
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-808",
+      "number": "808",
+      "title": "Frente gasolinera",
+      "location": [
+        -0.8606453098269051,
+        41.670582401266344
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-809",
+      "number": "809",
+      "title": "INALSA",
+      "location": [
+        -0.857223202496292,
+        41.67441845121563
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-810",
+      "number": "810",
+      "title": "Mercazaragoza",
+      "location": [
+        -0.8519851770375559,
+        41.68426823022409
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-811",
+      "number": "811",
+      "title": "Monasteri Cogullada",
+      "location": [
+        -0.850381099568063,
+        41.68707071576301
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-812",
+      "number": "812",
+      "title": "Camino Cogullada Monasterio",
+      "location": [
+        -0.8463778751952478,
+        41.68920684280788
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-813",
+      "number": "813",
+      "title": "Desguace",
+      "location": [
+        -0.8445114181292942,
+        41.69082448367903
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-814",
+      "number": "814",
+      "title": "Torre Orruño",
+      "location": [
+        -0.841502408512696,
+        41.69911244014088
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-815",
+      "number": "815",
+      "title": "Campo de Fútbol",
+      "location": [
+        -0.8350716625224957,
+        41.70930821301927
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-816",
+      "number": "816",
+      "title": "Calle del Río",
+      "location": [
+        -0.8334973895377491,
+        41.713453043062984
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-818",
+      "number": "818",
+      "title": "Frente AGM",
+      "location": [
+        -0.8693106645172933,
+        41.69583088523416
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-819",
+      "number": "819",
+      "title": "Frente a Brigada de Caballería Castillejos II",
+      "location": [
+        -0.8611401152149051,
+        41.71108453246517
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-820",
+      "number": "820",
+      "title": "San Juan 79",
+      "location": [
+        -0.8379050721570193,
+        41.71571109022455
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-822",
+      "number": "822",
+      "title": "Dr. Palomar",
+      "location": [
+        -0.8433229241682025,
+        41.716191186956216
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-823",
+      "number": "823",
+      "title": "Rotonda Z-40",
+      "location": [
+        -0.849599707560944,
+        41.71405276503268
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-824",
+      "number": "824",
+      "title": "Ciudad Transporte - Final",
+      "location": [
+        -0.8515120892446566,
+        41.71452538266671
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-825",
+      "number": "825",
+      "title": "Ambulatorio Parque Goya II",
+      "location": [
+        -0.8766457490401179,
+        41.690090024065526
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-826",
+      "number": "826",
+      "title": "Rotonda Acceso Ciudad Tranporte IDA",
+      "location": [
+        -0.8522637459594244,
+        41.71439084359254
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-827",
+      "number": "827",
+      "title": "Frente a Autocares Alosa",
+      "location": [
+        -0.850820224176416,
+        41.717898818505
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-828",
+      "number": "828",
+      "title": "Centro de negocios",
+      "location": [
+        -0.8500033026853042,
+        41.72132853693949
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-829",
+      "number": "829",
+      "title": "Transportes AZKAR",
+      "location": [
+        -0.852012765257972,
+        41.72559913614942
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-830",
+      "number": "830",
+      "title": "Instalaciones militares",
+      "location": [
+        -0.8532089918625502,
+        41.73022375080712
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-831",
+      "number": "831",
+      "title": "ASPACE",
+      "location": [
+        -0.8561270904171514,
+        41.73473633239502
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-832",
+      "number": "832",
+      "title": "Calle Diciembre",
+      "location": [
+        -0.8696693326453779,
+        41.76299810804143
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-833",
+      "number": "833",
+      "title": "Entre calle Enero y calle Febrero",
+      "location": [
+        -0.8734611473265637,
+        41.76694104370298
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-834",
+      "number": "834",
+      "title": "Entre calle Marzo y calle Abril",
+      "location": [
+        -0.8772756633695421,
+        41.76822300445348
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-835",
+      "number": "835",
+      "title": "Entre calle Mayo y calle Junio",
+      "location": [
+        -0.8816165532220831,
+        41.76969468153319
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-836",
+      "number": "836",
+      "title": "Entre calle Julio y calle Agosto",
+      "location": [
+        -0.8858303576830873,
+        41.77111873240586
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-837",
+      "number": "837",
+      "title": "Entre calle Septiembre y calle Octubre",
+      "location": [
+        -0.8909216169043491,
+        41.77251822883032
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-838",
+      "number": "838",
+      "title": "Panrico / Bimbo",
+      "location": [
+        -0.8496515900763612,
+        41.72284401997254
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-839",
+      "number": "839",
+      "title": "Camino del Cascajo",
+      "location": [
+        -0.8448287843942907,
+        41.71398589557995
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-840",
+      "number": "840",
+      "title": "Camino del Cascajo",
+      "location": [
+        -0.8447828386161145,
+        41.713958013887684
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-851",
+      "number": "851",
+      "title": "Rotonda Z40",
+      "location": [
+        -0.8501479218344746,
+        41.71325696517838
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-852",
+      "number": "852",
+      "title": "Doctor Palomar 33",
+      "location": [
+        -0.8432966804225233,
+        41.71614566215136
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-853",
+      "number": "853",
+      "title": "Pza. España",
+      "location": [
+        -0.8413280116175896,
+        41.717486717315204
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-854",
+      "number": "854",
+      "title": "Final y Principio Línea (San Juan 70)",
+      "location": [
+        -0.8379867588827608,
+        41.71571262880922
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-855",
+      "number": "855",
+      "title": "Brigada de Caballería Castillejos II",
+      "location": [
+        -0.8606616183911331,
+        41.712138366778575
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-856",
+      "number": "856",
+      "title": "Academia General Militar",
+      "location": [
+        -0.8691329040316543,
+        41.698232291361805
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-858",
+      "number": "858",
+      "title": "Calle del Río Num  29",
+      "location": [
+        -0.8335741481067032,
+        41.713332906131384
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-859",
+      "number": "859",
+      "title": "Campo de Fútbol",
+      "location": [
+        -0.835111025382407,
+        41.70933147126386
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-860",
+      "number": "860",
+      "title": "Torre Orruño",
+      "location": [
+        -0.841475223636658,
+        41.69922450856325
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-861",
+      "number": "861",
+      "title": "Chatarras Díez",
+      "location": [
+        -0.844809809793652,
+        41.69051035952185
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-862",
+      "number": "862",
+      "title": "Monasterio Cogullada",
+      "location": [
+        -0.8472900021728074,
+        41.68882766986737
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-864",
+      "number": "864",
+      "title": "Mercazaragoza",
+      "location": [
+        -0.8513472235580242,
+        41.6857468502309
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-865",
+      "number": "865",
+      "title": "INALSA",
+      "location": [
+        -0.8569740179164109,
+        41.674940675232115
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-866",
+      "number": "866",
+      "title": "Bar Pirineos",
+      "location": [
+        -0.8604738222870923,
+        41.67071880519443
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-867",
+      "number": "867",
+      "title": "Cno. Molinos",
+      "location": [
+        -0.868277658974879,
+        41.67678568484902
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-868",
+      "number": "868",
+      "title": "Esq. C/Juslibol",
+      "location": [
+        -0.8714165135389393,
+        41.67010702944572
+      ],
+      "lines": [
+        "102"
+      ]
+    },
+    {
+      "id": "rural-870",
+      "number": "870",
+      "title": "Av. Cataluña ",
+      "location": [
+        -0.8640932054918062,
+        41.66259935485812
+      ],
+      "lines": [
+        "102",
+        "201"
+      ]
+    },
+    {
+      "id": "rural-872",
+      "number": "872",
+      "title": "C.P. Cortes de Aragón",
+      "location": [
+        -0.8805348122881901,
+        41.66536712020746
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-874",
+      "number": "874",
+      "title": "Entre calle Julio y calle Agosto",
+      "location": [
+        -0.8892168216334831,
+        41.766794906376475
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-875",
+      "number": "875",
+      "title": "Entre calle Mayo y calle Junio",
+      "location": [
+        -0.8841709623537714,
+        41.765053932754455
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-876",
+      "number": "876",
+      "title": "Entre calle Marzo y calle Abril",
+      "location": [
+        -0.8800100409207168,
+        41.763567664224844
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-877",
+      "number": "877",
+      "title": "Entre calle Enero y calle Febrero",
+      "location": [
+        -0.875903927746491,
+        41.76209585917248
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-878",
+      "number": "878",
+      "title": "Calle Diciembre",
+      "location": [
+        -0.8721950332331374,
+        41.76077078006902
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-879",
+      "number": "879",
+      "title": "ASPACE",
+      "location": [
+        -0.8561638888683926,
+        41.73471450387559
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-880",
+      "number": "880",
+      "title": "Instalaciones militares",
+      "location": [
+        -0.8532648942785214,
+        41.730220293147305
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-881",
+      "number": "881",
+      "title": "Transportes AZKAR",
+      "location": [
+        -0.8520657795831769,
+        41.72557761233785
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-882",
+      "number": "882",
+      "title": "Centro de negocios",
+      "location": [
+        -0.8507523802762924,
+        41.7200411485158
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-883",
+      "number": "883",
+      "title": "Autocares Alosa",
+      "location": [
+        -0.8512255560344858,
+        41.71808653380886
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-884",
+      "number": "884",
+      "title": "Rotonda Acceso Polígono",
+      "location": [
+        -0.8522995246072407,
+        41.71464819404055
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-886",
+      "number": "886",
+      "title": "Entre calle Septiembre y calle Octubre",
+      "location": [
+        -0.8937560562781197,
+        41.7683283138531
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-891",
+      "number": "891",
+      "title": "Aragofar",
+      "location": [
+        -0.8499076116778345,
+        41.72358733558144
+      ],
+      "lines": [
+        "101"
+      ]
+    },
+    {
+      "id": "rural-900",
+      "number": "900",
+      "title": "Terminal",
+      "location": [
+        -0.8886471942699999,
+        41.650286493191786
+      ],
+      "lines": [
+        "603",
+        "605"
+      ]
+    },
+    {
+      "id": "rural-901",
+      "number": "901",
+      "title": "Urbanización Torrebarajas",
+      "location": [
+        -0.9523314182042597,
+        41.672883609682955
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-902",
+      "number": "902",
+      "title": "Colegio Teresiano del Pilar",
+      "location": [
+        -0.9568627133977381,
+        41.6743693395561
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-903",
+      "number": "903",
+      "title": "Camino de Pinseque 216",
+      "location": [
+        -0.9679283446678866,
+        41.67661457949964
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-904",
+      "number": "904",
+      "title": "Plaza Mayor (Venta del Olivar)",
+      "location": [
+        -0.9679780321587484,
+        41.679218333773925
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-905",
+      "number": "905",
+      "title": "Plaza del Ayuntamiento",
+      "location": [
+        -1.0753917575580125,
+        41.739898613893125
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-906",
+      "number": "906",
+      "title": "Terminal de Línea",
+      "location": [
+        -0.8936401439649277,
+        41.65489944059124
+      ],
+      "lines": [
+        "601"
+      ]
+    },
+    {
+      "id": "rural-907",
+      "number": "907",
+      "title": "AKI",
+      "location": [
+        -0.9184025693489689,
+        41.65858406818879
+      ],
+      "lines": [
+        "603",
+        "602",
+        "601"
+      ]
+    },
+    {
+      "id": "rural-908",
+      "number": "908",
+      "title": "Concesionario de automóviles Ford",
+      "location": [
+        -0.9286671934964897,
+        41.66240821022127
+      ],
+      "lines": [
+        "603",
+        "601"
+      ]
+    },
+    {
+      "id": "rural-909",
+      "number": "909",
+      "title": "Torres de San Lamberto (Parque)",
+      "location": [
+        -0.9311102984385461,
+        41.66410494277514
+      ],
+      "lines": [
+        "601"
+      ]
+    },
+    {
+      "id": "rural-910",
+      "number": "910",
+      "title": "Plaza del Portillo",
+      "location": [
+        -0.892167780276551,
+        41.655471350360685
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-911",
+      "number": "911",
+      "title": "Torres de San Lamberto",
+      "location": [
+        -0.9340474761361423,
+        41.66482421471593
+      ],
+      "lines": [
+        "603",
+        "602"
+      ]
+    },
+    {
+      "id": "rural-912",
+      "number": "912",
+      "title": "Makro",
+      "location": [
+        -0.943928931477527,
+        41.66991902443942
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-913",
+      "number": "913",
+      "title": "Polígono Europa (Gasolinera)",
+      "location": [
+        -0.9578046503259581,
+        41.676696259170946
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-915",
+      "number": "915",
+      "title": "Restaurante Venta Cano",
+      "location": [
+        -0.9879885716194525,
+        41.6945393804918
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-916",
+      "number": "916",
+      "title": "Talleres Leciñena",
+      "location": [
+        -1.0062834964334777,
+        41.70518875963427
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-917",
+      "number": "917",
+      "title": "Avenida de Logroño 14",
+      "location": [
+        -1.0266237171299541,
+        41.71807248568674
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-918",
+      "number": "918",
+      "title": "Avenida de San JOSÉ 61",
+      "location": [
+        -0.972994061883466,
+        41.698486277129625
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-919",
+      "number": "919",
+      "title": "Centro de la Tercera Edad",
+      "location": [
+        -0.9695552063554405,
+        41.70185256616364
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-920",
+      "number": "920",
+      "title": "Plaza de España",
+      "location": [
+        -0.9677344998754922,
+        41.70300020055775
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-921",
+      "number": "921",
+      "title": "Calle de la Sagrada 85",
+      "location": [
+        -0.9701610211970906,
+        41.704929975462285
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-922",
+      "number": "922",
+      "title": "Frente a parque Rober",
+      "location": [
+        -0.9733150992910318,
+        41.702828555369166
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-923",
+      "number": "923",
+      "title": "Esquina con camino de Alfocea",
+      "location": [
+        -0.9653530810262354,
+        41.70170612894091
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-924",
+      "number": "924",
+      "title": "Paseo de la Sagrada 52",
+      "location": [
+        -0.9622866052505288,
+        41.69999456232008
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-925",
+      "number": "925",
+      "title": "Residencial Parque de la Estación",
+      "location": [
+        -0.9925392308166994,
+        41.70753873269359
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-926",
+      "number": "926",
+      "title": "Iglesia",
+      "location": [
+        -0.9878043063099096,
+        41.704686451051174
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-927",
+      "number": "927",
+      "title": "Residencial Santa Teresa",
+      "location": [
+        -0.9822359204342076,
+        41.70183275177495
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-928",
+      "number": "928",
+      "title": "Paseo de Berbegal 4",
+      "location": [
+        -0.996268374073323,
+        41.71223319815513
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-929",
+      "number": "929",
+      "title": "Avenida de Navarra (esquina Pérez Galdós)",
+      "location": [
+        -0.9992453696799526,
+        41.70869603458468
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-930",
+      "number": "930",
+      "title": "Avenida de Navarra (esquina Coruña)",
+      "location": [
+        -1.002259422263505,
+        41.70730748022052
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-931",
+      "number": "931",
+      "title": "Avenida de Buenos Aires",
+      "location": [
+        -1.0012412708960132,
+        41.70516423127382
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-932",
+      "number": "932",
+      "title": "Calle de Tenerife",
+      "location": [
+        -0.9987100008731312,
+        41.70342692090794
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-933",
+      "number": "933",
+      "title": "Junto a cuartel militar",
+      "location": [
+        -0.9652118889009275,
+        41.70213593661229
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-934",
+      "number": "934",
+      "title": "Camino de Alfocea 245",
+      "location": [
+        -0.9534673450685007,
+        41.71693208344313
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-935",
+      "number": "935",
+      "title": "Esquina con camino del Mojón",
+      "location": [
+        -0.9532251201612677,
+        41.720705957852985
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-936",
+      "number": "936",
+      "title": "Calle de la Salitrería 1",
+      "location": [
+        -0.9533125166957557,
+        41.724138959772915
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-937",
+      "number": "937",
+      "title": "Frente a Salgar",
+      "location": [
+        -0.9776495551383239,
+        41.69137669828935
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-938",
+      "number": "938",
+      "title": "Salgar",
+      "location": [
+        -0.9775788499957374,
+        41.69124035582737
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-939",
+      "number": "939",
+      "title": "Leche Sali",
+      "location": [
+        -1.0230950789383622,
+        41.71615203930362
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-940",
+      "number": "940",
+      "title": "Frente Leche Sali",
+      "location": [
+        -1.0231662902185885,
+        41.71604068419612
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-951",
+      "number": "951",
+      "title": "Plaza Mayor (Venta del Olivar)",
+      "location": [
+        -0.9679883267454941,
+        41.679250038638216
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-952",
+      "number": "952",
+      "title": "Camino de Pinseque 213",
+      "location": [
+        -0.9682786317555944,
+        41.676683822786494
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-953",
+      "number": "953",
+      "title": "Colegio Teresiano del Pilar",
+      "location": [
+        -0.9567691401296029,
+        41.674304629100995
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-954",
+      "number": "954",
+      "title": "Urbanización Torrebarajas",
+      "location": [
+        -0.9527647532461259,
+        41.67297689821922
+      ],
+      "lines": [
+        "605"
+      ]
+    },
+    {
+      "id": "rural-955",
+      "number": "955",
+      "title": "Concesionario de automóviles Ford",
+      "location": [
+        -0.9283546114305973,
+        41.66189370535071
+      ],
+      "lines": [
+        "601",
+        "602",
+        "603"
+      ]
+    },
+    {
+      "id": "rural-956",
+      "number": "956",
+      "title": "I.E.S Santiago Hernández",
+      "location": [
+        -0.9156863968569364,
+        41.65771070599228
+      ],
+      "lines": [
+        "601",
+        "602",
+        "603"
+      ]
+    },
+    {
+      "id": "rural-958",
+      "number": "958",
+      "title": "Talleres Leciñena",
+      "location": [
+        -1.004204653756523,
+        41.70391875532885
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-959",
+      "number": "959",
+      "title": "Restaurante Venta Cano",
+      "location": [
+        -0.9883172128649829,
+        41.69440103480897
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-961",
+      "number": "961",
+      "title": "Polígono Europa (Gasolinera)",
+      "location": [
+        -0.9582051539207049,
+        41.67649172947915
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-962",
+      "number": "962",
+      "title": "Makro",
+      "location": [
+        -0.9447749147393651,
+        41.669983705307594
+      ],
+      "lines": [
+        "603"
+      ]
+    },
+    {
+      "id": "rural-963",
+      "number": "963",
+      "title": "Porcelanosa",
+      "location": [
+        -0.9340588777207451,
+        41.66459925792104
+      ],
+      "lines": [
+        "602",
+        "603"
+      ]
+    },
+    {
+      "id": "rural-964",
+      "number": "964",
+      "title": "Paseo de María Agustín 37",
+      "location": [
+        -0.8907096054339441,
+        41.65130159989753
+      ],
+      "lines": [
+        "602",
+        "603"
+      ]
+    },
+    {
+      "id": "rural-965",
+      "number": "965",
+      "title": "Esquina con camino del Mojón",
+      "location": [
+        -0.9532419950183225,
+        41.720553149639045
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-966",
+      "number": "966",
+      "title": "Camino de Alfocea 245",
+      "location": [
+        -0.9533911049212261,
+        41.71753865772661
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-968",
+      "number": "968",
+      "title": "Avenida de Navarra (esquina San Andrés)",
+      "location": [
+        -1.002219796287001,
+        41.70727526807224
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-969",
+      "number": "969",
+      "title": "Avenida de Navarra (esquina Almozara)",
+      "location": [
+        -0.9990891904868614,
+        41.70875185504202
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-971",
+      "number": "971",
+      "title": "Materiales Tomás Vallés (sin señal)",
+      "location": [
+        -0.9820035974234766,
+        41.70172959774582
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-972",
+      "number": "972",
+      "title": "Iglesia",
+      "location": [
+        -0.9878095749488925,
+        41.70463700779904
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-973",
+      "number": "973",
+      "title": "Residencial Parque de la Estación",
+      "location": [
+        -0.9926498255637476,
+        41.70757669215503
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-976",
+      "number": "976",
+      "title": "Parque Rober",
+      "location": [
+        -0.9727311304009265,
+        41.702863278572465
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-977",
+      "number": "977",
+      "title": "Casilla de Monzalbarba",
+      "location": [
+        -0.9706586626319109,
+        41.7047900754609
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-978",
+      "number": "978",
+      "title": "Plaza de España",
+      "location": [
+        -0.9677007924140438,
+        41.70304013298403
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-979",
+      "number": "979",
+      "title": "Centro de la Tercera Edad",
+      "location": [
+        -0.9696242371128304,
+        41.70183577394198
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-980",
+      "number": "980",
+      "title": "Avenida de San JOSÉ 58",
+      "location": [
+        -0.9732345190396864,
+        41.69833741183824
+      ],
+      "lines": [
+        "602"
+      ]
+    },
+    {
+      "id": "rural-982",
+      "number": "982",
+      "title": "Basílica del Pilar",
+      "location": [
+        -0.8779582132172364,
+        41.65701558797098
+      ],
+      "lines": [
+        "201",
+        "102",
+        "101"
+      ]
+    },
+    {
+      "id": "rural-996",
+      "number": "996",
+      "title": "Iglesia de San Juan de los Panetes",
+      "location": [
+        -0.8810690940030199,
+        41.657752937025734
+      ],
+      "lines": [
+        "101",
+        "102",
+        "201"
+      ]
+    },
+    {
+      "id": "rural-997",
+      "number": "997",
+      "title": "Paseo Echegaray",
+      "location": [
+        -0.8745530495136912,
+        41.65547554705819
+      ],
+      "lines": [
+        "101",
+        "201",
+        "102"
+      ]
+    },
+    {
+      "id": "rural-998",
+      "number": "998",
+      "title": "Av. Pirineos - Ant. Aragón",
+      "location": [
+        -0.880788680500947,
+        41.66211147480406
+      ],
+      "lines": [
+        "101",
+        "102"
+      ]
+    }
+  ]
+}

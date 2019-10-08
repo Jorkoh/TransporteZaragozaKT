@@ -23,7 +23,7 @@ interface OfficialAPIService {
 }
 
 fun String.fixLine() =
-    when (this) {
+    when (val trimmedLine = this.trim()) {
         "CI1" -> "Ci1"
         "CI2" -> "Ci2"
         "N01" -> "N1"
@@ -33,5 +33,7 @@ fun String.fixLine() =
         "N05" -> "N5"
         "N06" -> "N6"
         "N07" -> "N7"
-        else -> this
+        "ES1" -> "V1"
+        "ES4" -> "V4"
+        else -> trimmedLine
     }

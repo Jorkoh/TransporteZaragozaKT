@@ -11,9 +11,9 @@ import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.inflateLines
 import kotlinx.android.synthetic.main.stop_row.view.*
 
-class StopDestinationsAdapter(
+class StopsByDestinationAdapter(
     private val selectStop: (String) -> Unit
-) : RecyclerView.Adapter<StopDestinationsAdapter.StopViewHolder>() {
+) : RecyclerView.Adapter<StopsByDestinationAdapter.StopViewHolder>() {
 
     class StopViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(
@@ -30,6 +30,10 @@ class StopDestinationsAdapter(
                     StopType.TRAM -> {
                         type_image_stop.setImageResource(R.drawable.ic_tram_stop)
                         type_image_stop.contentDescription = context.getString(R.string.stop_type_tram)
+                    }
+                    StopType.RURAL -> {
+                        type_image_stop.setImageResource(R.drawable.ic_rural_stop)
+                        type_image_stop.contentDescription = context.getString(R.string.stop_type_rural)
                     }
                 }
                 // Texts

@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit
 
 //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
 fun enqueuePeriodicUpdateDataWorker(workName: String) {
+    //TESTING STUFF TODO
+    return
     val updateDataPeriodicRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
         .setConstraints(
             Constraints.Builder()

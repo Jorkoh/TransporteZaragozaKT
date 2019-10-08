@@ -15,7 +15,7 @@ import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
-import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
+import com.jorkoh.transportezaragozakt.repositories.util.DoubleCombinedLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -60,7 +60,7 @@ class AlarmService : LifecycleService() {
             val stopId = requireNotNull(extras.getString(STOP_ID_KEY_ALARM))
             val stopType = StopType.valueOf(requireNotNull(extras.getString(STOP_TYPE_KEY_ALARM)))
             val reminderId = extras.getInt(REMINDER_ID_KEY_ALARM)
-            CombinedLiveData(
+            DoubleCombinedLiveData(
                 stopsRepository.loadStopDestinations(stopType, stopId),
                 remindersRepository.loadReminderAlias(reminderId)
             ) { x, y -> Pair(x, y) }.observe(this, Observer { info ->
@@ -148,7 +148,7 @@ class AlarmService : LifecycleService() {
         val destinationRowLayout = when (stopType) {
             StopType.BUS -> R.layout.notification_destination_row_bus
             StopType.TRAM -> R.layout.notification_destination_row_tram
-            StopType.RURAL -> TODO()
+            StopType.RURAL -> R.layout.notification_destination_row_rural
         }
 
         stopDestinations.data?.forEachIndexed { index, stopDestination ->

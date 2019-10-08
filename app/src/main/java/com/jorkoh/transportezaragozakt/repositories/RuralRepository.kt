@@ -2,25 +2,32 @@ package com.jorkoh.transportezaragozakt.repositories
 
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
-import com.jorkoh.transportezaragozakt.db.AppDatabase
-import com.jorkoh.transportezaragozakt.db.RuralTracking
-import com.jorkoh.transportezaragozakt.db.TrackingsDao
+import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResource
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
+import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralStopCtazAPIResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralTrackingsCtazAPIResponse
 import java.util.*
 
 interface RuralRepository {
     fun loadTrackings(): LiveData<Resource<List<RuralTracking>>>
+    fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
+    fun loadStop(busStopId: String): LiveData<Stop>
+    fun loadStops(): LiveData<List<Stop>>
+    fun loadMainLines(): LiveData<List<Line>>
+    fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
+    fun loadLine(lineId: String): LiveData<Line>
+    fun loadStops(stopIds: List<String>): LiveData<List<Stop>>
 }
 
 class RuralRepositoryImplementation(
     private val appExecutors: AppExecutors,
     private val ctazAPIService: CtazAPIService,
     private val trackingsDao: TrackingsDao,
+    private val stopsDao: StopsDao,
     private val db: AppDatabase
 ) : RuralRepository {
 
@@ -53,6 +60,57 @@ class RuralRepositoryImplementation(
 
             override fun createCall(): LiveData<ApiResponse<RuralTrackingsCtazAPIResponse>> = ctazAPIService.getRuralTrackings()
         }.asLiveData()
+    }
+
+    override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
+        return object :
+            NetworkBoundResource<List<StopDestination>, RuralStopCtazAPIResponse>(
+                appExecutors
+            ) {
+            override fun processResponse(response: ApiSuccessResponse<RuralStopCtazAPIResponse>): List<StopDestination> {
+                return response.body.toStopDestinations(busStopId)
+            }
+
+            override fun saveCallResult(result: List<StopDestination>) {
+                db.runInTransaction {
+                    stopsDao.deleteStopDestinations(busStopId)
+                    stopsDao.insertStopDestinations(result)
+                }
+            }
+
+            override fun shouldFetch(data: List<StopDestination>?): Boolean {
+                return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
+            }
+
+            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(busStopId)
+
+            override fun createCall() = ctazAPIService.getRuralStopCtazAPI(busStopId)
+
+        }.asLiveData()
+    }
+
+    override fun loadStop(busStopId: String): LiveData<Stop> {
+        return stopsDao.getStop(busStopId)
+    }
+
+    override fun loadStops(): LiveData<List<Stop>> {
+        return stopsDao.getStopsByType(StopType.RURAL)
+    }
+
+    override fun loadStops(stopIds: List<String>): LiveData<List<Stop>> {
+        return stopsDao.getStops(stopIds)
+    }
+
+    override fun loadMainLines(): LiveData<List<Line>> {
+        return stopsDao.getMainLinesByType(LineType.RURAL)
+    }
+
+    override fun loadLineLocations(lineId: String): LiveData<List<LineLocation>> {
+        return stopsDao.getLineLocations(lineId)
+    }
+
+    override fun loadLine(lineId: String): LiveData<Line> {
+        return stopsDao.getLine(lineId)
     }
 }
 

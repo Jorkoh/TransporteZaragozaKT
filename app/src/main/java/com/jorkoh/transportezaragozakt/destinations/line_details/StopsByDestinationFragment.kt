@@ -12,13 +12,13 @@ import kotlinx.android.synthetic.main.line_stop_destinations.*
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class StopDestinationsFragment : Fragment() {
+class StopsByDestinationFragment : Fragment() {
 
     companion object {
         const val STOP_IDS_KEY = "STOP_IDS_KEY"
 
-        fun newInstance(stopIds: List<String>): StopDestinationsFragment {
-            val instance = StopDestinationsFragment()
+        fun newInstance(stopIds: List<String>): StopsByDestinationFragment {
+            val instance = StopsByDestinationFragment()
             instance.arguments = Bundle().apply {
                 putStringArrayList(STOP_IDS_KEY, ArrayList(stopIds))
             }
@@ -36,7 +36,7 @@ class StopDestinationsFragment : Fragment() {
         lineDetailsVM.selectedStopId.postValue(stopId)
     }
 
-    private val stopsAdapter = StopDestinationsAdapter(selectStop)
+    private val stopsAdapter = StopsByDestinationAdapter(selectStop)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

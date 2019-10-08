@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.db.Line
 
 
-class StopDestinationsPagerAdapter(private val fragmentManager: FragmentManager, private val line: Line) :
+class StopsByDestinationPagerAdapter(private val fragmentManager: FragmentManager, private val line: Line) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> StopDestinationsFragment.newInstance(line.stopIdsFirstDestination)
-            else -> StopDestinationsFragment.newInstance(line.stopIdsSecondDestination)
+            0 -> StopsByDestinationFragment.newInstance(line.stopIdsFirstDestination)
+            else -> StopsByDestinationFragment.newInstance(line.stopIdsSecondDestination)
         }
 
     override fun getCount(): Int = if (line.stopIdsSecondDestination.isNotEmpty()) 2 else 1

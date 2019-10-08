@@ -83,11 +83,17 @@ data class Line(
     @ColumnInfo(name = "lineId")
     var lineId: String,
 
+    @ColumnInfo(name = "parentLineId")
+    var parentLineId: String?,
+
     @ColumnInfo(name = "type")
     var type: LineType,
 
-    @ColumnInfo(name = "name")
-    var name: String,
+    @ColumnInfo(name = "nameES")
+    var nameES: String,
+
+    @ColumnInfo(name = "nameEN")
+    var nameEN: String,
 
     // If the destination is unique this list will be of length one and stopIdsSecondDestination will be empty
     @ColumnInfo(name = "destinations")
@@ -107,9 +113,6 @@ data class Line(
 data class LineLocation(
     @ColumnInfo(name = "lineId")
     var lineId: String,
-
-    @ColumnInfo(name = "parentLineId")
-    var parentLineId: String?,
 
     @ColumnInfo(name = "type")
     var type: LineType,
@@ -158,12 +161,6 @@ data class FavoriteStop(
 
 @Entity(
     tableName = "reminders",
-    foreignKeys = [ForeignKey(
-        entity = Stop::class,
-        parentColumns = ["stopId"],
-        childColumns = ["stopId"],
-        onDelete = ForeignKey.CASCADE
-    )],
     indices = [Index("stopId")]
 )
 data class Reminder(

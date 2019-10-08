@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.*
-import com.jorkoh.transportezaragozakt.repositories.util.CombinedLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import com.jorkoh.transportezaragozakt.repositories.util.TripleCombinedLiveData
 import java.util.*
 
 interface StopsRepository {
@@ -17,8 +17,8 @@ interface StopsRepository {
     fun loadStops(stopType: StopType): LiveData<List<Stop>>
     fun loadStops(): MediatorLiveData<List<Stop>>
     fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): LiveData<List<StopWithDistance>>
-    fun loadLines(lineType: LineType): LiveData<List<Line>>
-    fun loadLines(): MutableLiveData<List<Line>>
+    fun loadMainLines(lineType: LineType): LiveData<List<Line>>
+    fun loadMainLines(): MutableLiveData<List<Line>>
     fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>
     fun loadLine(lineType: LineType, lineId: String): LiveData<Line>
     fun loadStops(stopType: StopType, stopIds: List<String>): LiveData<List<Stop>>
@@ -31,10 +31,10 @@ class StopsRepositoryImplementation(
 ) : StopsRepository {
 
     override fun loadStop(stopType: StopType, stopId: String): LiveData<Stop> {
-        return when (stopType){
+        return when (stopType) {
             StopType.BUS -> busRepository.loadStop(stopId)
             StopType.TRAM -> tramRepository.loadStop(stopId)
-            StopType.RURAL -> TODO()
+            StopType.RURAL -> ruralRepository.loadStop(stopId)
         }
     }
 
@@ -42,7 +42,7 @@ class StopsRepositoryImplementation(
         return when (stopType) {
             StopType.BUS -> busRepository.loadStopDestinations(stopId)
             StopType.TRAM -> tramRepository.loadStopDestinations(stopId)
-            StopType.RURAL -> TODO()
+            StopType.RURAL -> ruralRepository.loadStopDestinations(stopId)
         }
     }
 
@@ -50,7 +50,7 @@ class StopsRepositoryImplementation(
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops()
             StopType.TRAM -> tramRepository.loadStops()
-            StopType.RURAL -> TODO()
+            StopType.RURAL -> ruralRepository.loadStops()
         }
     }
 
@@ -58,15 +58,15 @@ class StopsRepositoryImplementation(
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops(stopIds)
             StopType.TRAM -> tramRepository.loadStops(stopIds)
-            StopType.RURAL -> TODO()
+            StopType.RURAL -> ruralRepository.loadStops(stopIds)
         }
     }
 
-    override fun loadLines(lineType: LineType): LiveData<List<Line>> {
+    override fun loadMainLines(lineType: LineType): LiveData<List<Line>> {
         return when (lineType) {
-            LineType.BUS -> busRepository.loadLines()
-            LineType.TRAM -> tramRepository.loadLines()
-            LineType.RURAL -> TODO()
+            LineType.BUS -> busRepository.loadMainLines()
+            LineType.TRAM -> tramRepository.loadMainLines()
+            LineType.RURAL -> ruralRepository.loadMainLines()
         }
     }
 
@@ -74,29 +74,31 @@ class StopsRepositoryImplementation(
         return when (lineType) {
             LineType.BUS -> busRepository.loadLineLocations(lineId)
             LineType.TRAM -> tramRepository.loadLineLocations(lineId)
-            LineType.RURAL -> TODO()
+            LineType.RURAL -> ruralRepository.loadLineLocations(lineId)
         }
     }
 
     override fun loadStops(): MediatorLiveData<List<Stop>> {
-        return CombinedLiveData(
+        return TripleCombinedLiveData(
             loadStops(StopType.BUS),
-            loadStops(StopType.TRAM)
-        ) { bus, tram -> tram.orEmpty() + bus.orEmpty() }
+            loadStops(StopType.TRAM),
+            loadStops(StopType.RURAL)
+        ) { bus, tram, rural -> tram.orEmpty() + bus.orEmpty() + rural.orEmpty() }
     }
 
-    override fun loadLines(): MutableLiveData<List<Line>> {
-        return CombinedLiveData(
-            loadLines(LineType.BUS),
-            loadLines(LineType.TRAM)
-        ) { bus, tram -> tram.orEmpty() + bus.orEmpty() }
+    override fun loadMainLines(): MutableLiveData<List<Line>> {
+        return TripleCombinedLiveData(
+            loadMainLines(LineType.BUS),
+            loadMainLines(LineType.TRAM),
+            loadMainLines(LineType.RURAL)
+        ) { bus, tram, rural -> tram.orEmpty() + bus.orEmpty() + rural.orEmpty()}
     }
 
     override fun loadLine(lineType: LineType, lineId: String): LiveData<Line> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadLine(lineId)
             LineType.TRAM -> tramRepository.loadLine(lineId)
-            LineType.RURAL -> TODO()
+            LineType.RURAL -> ruralRepository.loadLine(lineId)
         }
     }
 

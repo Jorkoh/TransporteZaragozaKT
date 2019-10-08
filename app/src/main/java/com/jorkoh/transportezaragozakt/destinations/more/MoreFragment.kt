@@ -3,14 +3,13 @@ package com.jorkoh.transportezaragozakt.destinations.more
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.core.os.ConfigurationCompat
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.PreferenceFragmentCompatWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.isSpanish
 import com.jorkoh.transportezaragozakt.destinations.toPx
-import java.util.*
 
 
 class MoreFragment : PreferenceFragmentCompatWithToolbar() {
@@ -86,8 +85,7 @@ class MoreFragment : PreferenceFragmentCompatWithToolbar() {
         super.onStart()
 
         // Changelog
-        val isSpanish = ConfigurationCompat.getLocales(resources.configuration)[0].language == Locale("es").language
-        val savedChangelogKey = getString(if (isSpanish) R.string.saved_changelog_es_key else R.string.saved_changelog_en_key)
+        val savedChangelogKey = getString(if (requireContext().isSpanish()) R.string.saved_changelog_es_key else R.string.saved_changelog_en_key)
         val changelog = android.preference.PreferenceManager.getDefaultSharedPreferences(context).getString(savedChangelogKey, "")
         findPreference<Preference>(getString(R.string.changelog_key))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {

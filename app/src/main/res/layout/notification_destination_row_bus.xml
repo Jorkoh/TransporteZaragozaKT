@@ -5,7 +5,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-            android:background="#2c82c9"
+            android:background="@color/bus_color"
             android:id="@+id/notification_line_text"
             android:textColor="#ECECEC"
             android:layout_width="50dp"

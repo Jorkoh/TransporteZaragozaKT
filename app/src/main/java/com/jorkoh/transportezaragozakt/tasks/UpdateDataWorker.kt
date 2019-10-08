@@ -205,8 +205,10 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
                 val lineEntity = Line(
                     getString("id"),
+                    getString("parentId"),
                     LineType.BUS,
-                    getString("name"),
+                    getString("nameES"),
+                    getString("nameEN"),
                     destinations,
                     stopsFirstDestination,
                     stopsSecondDestination
@@ -250,8 +252,10 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
                 val lineEntity = Line(
                     getString("id"),
+                    getString("parentId"),
                     LineType.TRAM,
-                    getString("name"),
+                    getString("nameES"),
+                    getString("nameEN"),
                     destinations,
                     stopsFirstDestination,
                     stopsSecondDestination

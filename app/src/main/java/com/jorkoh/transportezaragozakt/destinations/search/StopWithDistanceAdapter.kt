@@ -45,6 +45,10 @@ class StopWithDistanceAdapter(
                     type_image_stop.setImageResource(R.drawable.ic_tram_stop)
                     type_image_stop.contentDescription = context.getString(R.string.stop_type_tram)
                 }
+                StopType.RURAL -> {
+                    type_image_stop.setImageResource(R.drawable.ic_rural_stop)
+                    type_image_stop.contentDescription = context.getString(R.string.stop_type_rural)
+                }
             }
             // Texts
             title_text_stop.text = stopWithDistance.stop.stopTitle

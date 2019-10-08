@@ -17,6 +17,7 @@ class MapViewModel(stopsRepository: StopsRepository, val trackingsRepository: Ru
 
     val busStopLocations = stopsRepository.loadStops(StopType.BUS)
     val tramStopLocations = stopsRepository.loadStops(StopType.TRAM)
+    val ruralStopLocations = stopsRepository.loadStops(StopType.RURAL)
 
     val ruralTrackings = MediatorLiveData<Resource<List<RuralTracking>>>()
     private lateinit var tempRuralTrackings: LiveData<Resource<List<RuralTracking>>>

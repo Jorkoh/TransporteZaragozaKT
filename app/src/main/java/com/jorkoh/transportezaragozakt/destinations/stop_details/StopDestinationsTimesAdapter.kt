@@ -16,9 +16,9 @@ import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFrag
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.destination_row.*
 
-class StopDestinationsAdapter(
+class StopDestinationsTimesAdapter(
     private val openLine: (LineDetailsFragmentArgs) -> Unit
-) : RecyclerView.Adapter<StopDestinationsAdapter.StopDestinationsViewHolder>() {
+) : RecyclerView.Adapter<StopDestinationsTimesAdapter.StopDestinationsViewHolder>() {
 
     class StopDestinationsViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 

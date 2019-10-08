@@ -50,6 +50,27 @@ fun getInitialTramStops(context: Context): InitialStopsMessage {
     return InitialStopsMessage(tramStopEntities, tramStopsJson.version)
 }
 
+fun getInitialRuralStops(context: Context): InitialStopsMessage {
+    val buffer = context.resources.openRawResource(R.raw.initial_rural_stops).source().buffer()
+    val ruralStopsJson = parse(StopsJson.serializer(), buffer.readUtf8())
+
+    val ruralStopEntities = mutableListOf<Stop>()
+    for (stop in ruralStopsJson.stops) {
+        ruralStopEntities.add(
+            Stop(
+                StopType.RURAL,
+                stop.id,
+                stop.number,
+                stop.title,
+                LatLng(stop.location[1], stop.location[0]),
+                stop.lines,
+                false
+            )
+        )
+    }
+    return InitialStopsMessage(ruralStopEntities, ruralStopsJson.version)
+}
+
 fun getInitialBusLines(context: Context): InitialLinesMessage {
     val buffer = context.resources.openRawResource(R.raw.initial_bus_lines).source().buffer()
     val busLinesJson = parse(LinesJson.serializer(), buffer.readUtf8())
@@ -59,8 +80,10 @@ fun getInitialBusLines(context: Context): InitialLinesMessage {
         busLinesEntities.add(
             Line(
                 line.id,
+                if(line.parentId.isEmpty()) null else line.parentId,
                 LineType.BUS,
-                line.name,
+                line.nameES,
+                line.nameEN,
                 line.destinations,
                 line.stopsFirstDestination,
                 line.stopsSecondDestination
@@ -79,8 +102,10 @@ fun getInitialTramLines(context: Context): InitialLinesMessage {
         tramLinesEntities.add(
             Line(
                 line.id,
+                if(line.parentId.isEmpty()) null else line.parentId,
                 LineType.TRAM,
-                line.name,
+                line.nameES,
+                line.nameEN,
                 line.destinations,
                 line.stopsFirstDestination,
                 line.stopsSecondDestination
@@ -90,8 +115,30 @@ fun getInitialTramLines(context: Context): InitialLinesMessage {
     return InitialLinesMessage(tramLinesEntities, tramLinesJson.version)
 }
 
+fun getInitialRuralLines(context: Context): InitialLinesMessage {
+    val buffer = context.resources.openRawResource(R.raw.initial_rural_lines).source().buffer()
+    val ruralLinesJson = parse(LinesJson.serializer(), buffer.readUtf8())
+
+    val ruralLinesEntities = mutableListOf<Line>()
+    for (line in ruralLinesJson.lines) {
+        ruralLinesEntities.add(
+            Line(
+                line.id,
+                if(line.parentId.isEmpty()) null else line.parentId,
+                LineType.RURAL,
+                line.nameES,
+                line.nameEN,
+                line.destinations,
+                line.stopsFirstDestination,
+                line.stopsSecondDestination
+            )
+        )
+    }
+    return InitialLinesMessage(ruralLinesEntities, ruralLinesJson.version)
+}
+
 fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
-    val buffer = context.resources.openRawResource(R.raw.initial_bus_lines_coordinates).source().buffer()
+    val buffer = context.resources.openRawResource(R.raw.initial_bus_lines_locations).source().buffer()
     val busLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
 
     val busLinesLocationsEntities = mutableListOf<LineLocation>()
@@ -111,7 +158,7 @@ fun getInitialBusLineLocations(context: Context): InitialLineLocationsMessage {
 }
 
 fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
-    val buffer = context.resources.openRawResource(R.raw.initial_tram_lines_coordinates).source().buffer()
+    val buffer = context.resources.openRawResource(R.raw.initial_tram_lines_locations).source().buffer()
     val tramLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
 
     val tramLinesLocationsEntities = mutableListOf<LineLocation>()
@@ -130,6 +177,26 @@ fun getInitialTramLineLocations(context: Context): InitialLineLocationsMessage {
     return InitialLineLocationsMessage(tramLinesLocationsEntities, tramLinesLocationsJson.version)
 }
 
+fun getInitialRuralLineLocations(context: Context): InitialLineLocationsMessage {
+    val buffer = context.resources.openRawResource(R.raw.initial_rural_lines_locations).source().buffer()
+    val ruralLinesLocationsJson = parse(LinesLocationsJson.serializer(), buffer.readUtf8())
+
+    val ruralLinesLocationsEntities = mutableListOf<LineLocation>()
+    for (line in ruralLinesLocationsJson.lines) {
+        for ((i, location) in line.coordinates.withIndex()) {
+            ruralLinesLocationsEntities.add(
+                LineLocation(
+                    line.id,
+                    LineType.RURAL,
+                    i + 1,
+                    LatLng(location[1], location[0])
+                )
+            )
+        }
+    }
+    return InitialLineLocationsMessage(ruralLinesLocationsEntities, ruralLinesLocationsJson.version)
+}
+
 fun getInitialChangelog(context: Context): InitialChangelog {
     val buffer = context.resources.openRawResource(R.raw.initial_changelog).source().buffer()
     val changelogJson = parse(ChangelogJson.serializer(), buffer.readUtf8())
@@ -146,13 +213,13 @@ data class InitialLineLocationsMessage(val lineLocations: List<LineLocation>, va
 data class InitialChangelog(val textEN: String, val textES: String, val version: Int)
 
 @Serializable
-data class StopsJson(val version: Int, val recordedAt: String, val stops: List<StopJson>)
+data class StopsJson(val version: Int, val stops: List<StopJson>)
 
 @Serializable
-data class LinesJson(val version: Int, val recordedAt: String, val lines: List<LineJson>)
+data class LinesJson(val version: Int, val lines: List<LineJson>)
 
 @Serializable
-data class LinesLocationsJson(val version: Int, val recordedAt: String, val lines: List<LineLocationsJson>)
+data class LinesLocationsJson(val version: Int, val lines: List<LineLocationsJson>)
 
 @Serializable
 data class ChangelogJson(val version: Int, val textEN: String, val textES: String)
@@ -163,7 +230,9 @@ data class StopJson(val id: String, val number: String, val title: String, val l
 @Serializable
 data class LineJson(
     val id: String,
-    val name: String,
+    val parentId: String,
+    val nameES: String,
+    val nameEN: String,
     val destinations: List<String>,
     val stopsFirstDestination: List<String>,
     val stopsSecondDestination: List<String>
