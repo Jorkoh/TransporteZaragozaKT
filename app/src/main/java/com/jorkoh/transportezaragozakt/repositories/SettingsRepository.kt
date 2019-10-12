@@ -14,6 +14,8 @@ interface SettingsRepository {
     fun setMapType(mapType: Int)
     fun loadTrafficEnabled(): LiveData<Boolean>
     fun setTrafficEnabled(enabled: Boolean)
+    fun loadMapAnimationsEnabled(): LiveData<Boolean>
+    fun setMapAnimationsEnabled(enabled: Boolean)
     fun loadBusFilterEnabled(): LiveData<Boolean>
     fun setBusFilterEnabled(enabled: Boolean)
     fun loadTramFilterEnabled(): LiveData<Boolean>
@@ -76,6 +78,24 @@ class SettingsRepositoryImplementation(
         with(sharedPreferences.edit()) {
             putBoolean(
                 context.getString(com.jorkoh.transportezaragozakt.R.string.traffic_key),
+                enabled
+            )
+            apply()
+        }
+    }
+
+    override fun loadMapAnimationsEnabled(): LiveData<Boolean> {
+        return sharedPreferences.booleanLiveData(
+            context.getString(com.jorkoh.transportezaragozakt.R.string.map_animations_key),
+            true
+        )
+    }
+
+
+    override fun setMapAnimationsEnabled(enabled: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean(
+                context.getString(com.jorkoh.transportezaragozakt.R.string.map_animations_key),
                 enabled
             )
             apply()

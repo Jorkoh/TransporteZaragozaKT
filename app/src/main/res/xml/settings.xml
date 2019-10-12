@@ -4,18 +4,25 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="@string/style_category_title"
+            android:title="@string/settings_category_title"
             app:iconSpaceReserved="false">
-
-        <SwitchPreference
-                app:key="@string/is_dark_map_key"
-                app:title="@string/dark_map_title"
-                app:iconSpaceReserved="false"/>
 
         <Preference
                 app:key="@string/themes_key"
                 app:title="@string/themes_title"
                 app:summary="@string/themes_summary"
+                app:iconSpaceReserved="false"/>
+
+        <SwitchPreference
+                app:key="@string/map_animations_key"
+                app:title="@string/map_animations_title"
+                app:summary="@string/map_animations_summary"
+                app:iconSpaceReserved="false"/>
+
+        <SwitchPreference
+                app:key="@string/is_dark_map_key"
+                app:title="@string/dark_map_title"
+                app:summary="@string/dark_map_summary"
                 app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 
@@ -30,13 +37,18 @@
                 app:iconSpaceReserved="false"/>
 
         <Preference
+                app:key="@string/bus_twitter_key"
+                app:title="@string/bus_twitter_title"
+                app:iconSpaceReserved="false"/>
+
+        <Preference
                 app:key="@string/tram_twitter_key"
                 app:title="@string/tram_twitter_title"
                 app:iconSpaceReserved="false"/>
 
         <Preference
-                app:key="@string/bus_twitter_key"
-                app:title="@string/bus_twitter_title"
+                app:key="@string/rural_twitter_key"
+                app:title="@string/rural_twitter_title"
                 app:iconSpaceReserved="false"/>
 
         <Preference

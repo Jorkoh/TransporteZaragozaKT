@@ -260,6 +260,9 @@ class MapFragment : FragmentWithToolbar() {
         mapSettingsVM.isDarkMap.observe(mapLifecycleOwner, Observer { isDarkMap ->
             map.setMapStyle(MapStyleOptions.loadRawResourceStyle(context, if (isDarkMap) R.raw.map_style_dark else R.raw.map_style))
         })
+        mapSettingsVM.mapAnimationsEnabled.observe(mapLifecycleOwner, Observer { mapAnimationsEnabled ->
+            clusterManager.setAnimation(mapAnimationsEnabled)
+        })
 
         // Stop type filters
         mapSettingsVM.busFilterEnabled.observe(mapLifecycleOwner, Observer {

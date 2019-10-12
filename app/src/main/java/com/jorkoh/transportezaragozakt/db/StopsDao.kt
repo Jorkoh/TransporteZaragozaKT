@@ -159,6 +159,7 @@ abstract class StopsDao {
             putBoolean(context.getString(R.string.is_dark_map_key), false)
             putInt(context.getString(R.string.map_type_key), 1)
             putBoolean(context.getString(R.string.traffic_key), false)
+            putBoolean(context.getString(R.string.map_animations_key), true)
             putBoolean(context.getString(R.string.bus_filter_key), true)
             putBoolean(context.getString(R.string.tram_filter_key), true)
             putBoolean(context.getString(R.string.rural_filter_key), false)

@@ -57,7 +57,7 @@ class AppNavigationTest {
         // Check that it's selected on the bottom navigation bar
         onView(withId(R.id.more_destination)).check(ViewAssertions.matches(isSelected()))
         // Check that it opened, PreferenceMatchers doesn't seem to work with AndroidX preferences...
-        onView(withId(R.id.recycler_view)).check(ViewAssertions.matches(hasDescendant(withText(R.string.style_category_title))))
+        onView(withId(R.id.recycler_view)).check(ViewAssertions.matches(hasDescendant(withText(R.string.settings_category_title))))
         // Check that the toolbar title is correct
         onView(withId(R.id.fragment_toolbar)).check(ViewAssertions.matches(hasDescendant(withText(R.string.more_destination_title))))
     }

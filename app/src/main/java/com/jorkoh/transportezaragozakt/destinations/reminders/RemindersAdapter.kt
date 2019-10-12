@@ -53,6 +53,10 @@ class RemindersAdapter(
                     type_image_reminder.setImageResource(R.drawable.ic_tram_stop)
                     type_image_reminder.contentDescription = context.getString(R.string.stop_type_tram)
                 }
+                StopType.RURAL -> {
+                    type_image_reminder.setImageResource(R.drawable.ic_rural_stop)
+                    type_image_reminder.contentDescription = context.getString(R.string.stop_type_rural)
+                }
             }
             // Days checkboxes
             reminder_monday.isChecked = reminder.daysOfWeek.days[0]

@@ -139,6 +139,7 @@
     <string name="is_dark_map_key" translatable="false">IS_DARK_MAP_KEY</string>
     <string name="map_type_key" translatable="false">MAP_TYPE_KEY</string>
     <string name="traffic_key" translatable="false">TRAFFIC_KEY</string>
+    <string name="map_animations_key" translatable="false">MAP_ANIMATIONS_KEY</string>
     <string name="bus_filter_key" translatable="false">BUS_FILTER_KEY</string>
     <string name="tram_filter_key" translatable="false">TRAM_FILTER_KEY</string>
     <string name="rural_filter_key" translatable="false">RURAL_FILTER_KEY</string>
@@ -149,6 +150,7 @@
     <string name="themes_key" translatable="false">THEMES_KEY</string>
     <string name="tram_twitter_key" translatable="false">TRAM_TWITTER_KEY</string>
     <string name="bus_twitter_key" translatable="false">BUS_TWITTER_KEY</string>
+    <string name="rural_twitter_key" translatable="false">RURAL_TWITTER_KEY</string>
     <string name="recharge_card_key" translatable="false">RECHARGE_CARD_KEY</string>
     <string name="play_intro_key" translatable="false">PLAY_INTRO_KEY</string>
     <string name="changelog_key" translatable="false">CHANGELOG_KEY</string>
@@ -157,15 +159,19 @@
     <string name="open_source_key" translatable="false">OPEN_SOURCE_KEY</string>
 
     <!--More-->
-    <string name="style_category_title" translatable="true">Style</string>
+    <string name="settings_category_title" translatable="true">Settings</string>
+    <string name="map_animations_title" translatable="true">Map animations</string>
+    <string name="map_animations_summary" translatable="true">Disable map animations if your phone slows down when zooming</string>
     <string name="dark_map_title" translatable="true">Dark map</string>
+    <string name="dark_map_summary" translatable="true">A darker map to match your favorite theme</string>
     <string name="themes_title" translatable="true">Themes</string>
     <string name="themes_summary" translatable="true">Style the app with your favorite colors with one of this themes</string>
     <string name="useful_links_title" translatable="true">Useful stuff</string>
     <string name="recharge_card_title" translatable="true">Recharge card</string>
     <string name="recharge_card_summary" translatable="true">Recharge your monthly or yearly bus card online</string>
+    <string name="bus_twitter_title" translatable="true">Urban bus twitter</string>
     <string name="tram_twitter_title" translatable="true">Tram twitter</string>
-    <string name="bus_twitter_title" translatable="true">Bus twitter</string>
+    <string name="rural_twitter_title" translatable="true">Rural bus twitter</string>
     <string name="play_intro_title" translatable="true">App introduction</string>
     <string name="play_intro_summary" translatable="true">Like it was your first time</string>
     <string name="about_category_title" translatable="true">About</string>

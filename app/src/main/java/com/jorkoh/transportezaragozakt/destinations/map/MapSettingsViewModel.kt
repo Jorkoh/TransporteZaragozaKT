@@ -10,6 +10,7 @@ class MapSettingsViewModel(private val settingsRepository: SettingsRepository) :
     val isDarkMap: LiveData<Boolean> = settingsRepository.loadIsDarkMap()
     val mapType: LiveData<Int> = settingsRepository.loadMapType()
     val trafficEnabled: LiveData<Boolean> = settingsRepository.loadTrafficEnabled()
+    val mapAnimationsEnabled: LiveData<Boolean> = settingsRepository.loadMapAnimationsEnabled()
     val busFilterEnabled: LiveData<Boolean> = settingsRepository.loadBusFilterEnabled()
     val tramFilterEnabled: LiveData<Boolean> = settingsRepository.loadTramFilterEnabled()
     val ruralFilterEnabled: LiveData<Boolean> = settingsRepository.loadRuralFilterEnabled()

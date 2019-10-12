@@ -66,14 +66,15 @@
     <string name="location_outside_zaragoza_bounds">Función no disponible fuera de Zaragoza.</string>
     <string name="changelog_title">Registro de cambios</string>
     <string name="privacy_policy_title">Política de privacidad</string>
-    <string name="style_category_title">Estilo</string>
+    <string name="settings_category_title">Ajustes</string>
     <string name="dark_map_title">Mapa nocturno</string>
     <string name="themes_title">Temas</string>
     <string name="themes_summary">Personaliza la aplicación con tus colores favoritos seleccionando un tema</string>
     <string name="useful_links_title">Cosas útiles</string>
     <string name="recharge_card_summary">Recarga online tu tarjeta de bus mensual o anual</string>
     <string name="tram_twitter_title">Twitter del tranvía</string>
-    <string name="bus_twitter_title">Twitter del bus</string>
+    <string name="bus_twitter_title">Twitter del bus urbano</string>
+    <string name="rural_twitter_title">Twitter del bus rural</string>
     <string name="recharge_card_title">Recargar tarjeta</string>
     <string name="about_category_title">Acerca de</string>
     <string name="notification_channel_description_updates">Actualizaciones de paradas y líneas.</string>
@@ -153,4 +154,7 @@
     <string name="no_trackings_available">No hay rastreos rurales disponibles, ¡prueba en un rato!</string>
     <string name="rural_trackings_template">Rastreos de bus rural (%1$s)</string>
     <string name="rural_trackings">Rastreos de bus rural</string>
+    <string name="map_animations_title">Animaciones de mapa</string>
+    <string name="dark_map_summary">Un mapa oscuro a juego con tu tema favorito</string>
+    <string name="map_animations_summary">Deshabilita las animaciones del mapa si tu teléfono se ralentiza al hacer zoom</string>
 </resources>

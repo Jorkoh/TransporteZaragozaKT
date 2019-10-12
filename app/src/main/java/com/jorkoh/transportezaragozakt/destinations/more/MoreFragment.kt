@@ -56,6 +56,19 @@ class MoreFragment : PreferenceFragmentCompatWithToolbar() {
                 true
             }
 
+        // Rural Twitter
+        findPreference<Preference>(getString(R.string.rural_twitter_key))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                findNavController().navigate(
+                    MoreFragmentDirections.actionMoreToWebView(
+                        url = "https://twitter.com/ctazgz",
+                        title = getString(R.string.rural_twitter_title),
+                        isTwitterTimeline = true
+                    )
+                )
+                true
+            }
+
         // Feedback
         findPreference<Preference>(getString(R.string.feedback_key))?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             composeFeedbackEmail()
