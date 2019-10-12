@@ -44,6 +44,8 @@ class CustomSupportMapFragment : SupportMapFragment() {
     private var displayTrackingsButton: Boolean = true
     private var bottomPadding: Int = 0
 
+    private var mapViewWrapper: FrameLayout? = null
+
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,21 +96,20 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 
     override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val wrapper = FrameLayout(layoutInflater.context)
+        mapViewWrapper = FrameLayout(layoutInflater.context).apply {
+            val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
+            mapView?.setPadding(0, 0, 0, bottomPadding)
+            addView(mapView)
 
-        val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
-        mapView?.setPadding(0, 0, 0, bottomPadding)
-        wrapper.addView(mapView)
-
-        if (displayFilters) {
-            setupFilters(layoutInflater, wrapper)
+            if (displayFilters) {
+                setupFilters(layoutInflater, this)
+            }
+            if (displayTrackingsButton) {
+                setupTrackerControl(layoutInflater, this)
+            }
+            setupExtraMapControls(layoutInflater, this)
         }
-        if (displayTrackingsButton) {
-            setupTrackerControl(layoutInflater, wrapper)
-        }
-        setupExtraMapControls(layoutInflater, wrapper)
-
-        return wrapper
+        return mapViewWrapper
     }
 
     private fun setupFilters(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
@@ -151,4 +152,10 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Avoid leaks
+        mapViewWrapper?.removeAllViews()
+        mapViewWrapper = null
+    }
 }
