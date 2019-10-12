@@ -54,7 +54,7 @@ class MapFragment : FragmentWithToolbar() {
         val RURAL_BOUNDS = LatLngBounds(
             LatLng(41.373278, -1.341434), LatLng(41.954787, -0.520798)
         )
-        var ACTIVE_BOUNDS: LatLngBounds = ZARAGOZA_BOUNDS
+        var ACTIVE_BOUNDS: LatLngBounds = RURAL_BOUNDS
 
         val ZARAGOZA_CENTER = LatLng(41.656362, -0.878920)
     }
@@ -143,6 +143,7 @@ class MapFragment : FragmentWithToolbar() {
             if (mapNeedsSetup) {
                 setupMap(cameraNeedsCentering)
             }
+
             with(mapFragment.viewLifecycleOwner) {
                 if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
                     setupObservers(this)

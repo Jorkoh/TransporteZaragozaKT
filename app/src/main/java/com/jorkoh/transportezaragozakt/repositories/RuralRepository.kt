@@ -8,6 +8,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
+import com.jorkoh.transportezaragozakt.services.ctaz_api.officialAPIToCtazAPIId
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralStopCtazAPIResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralTrackingsCtazAPIResponse
 import java.util.*
@@ -62,18 +63,18 @@ class RuralRepositoryImplementation(
         }.asLiveData()
     }
 
-    override fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>> {
+    override fun loadStopDestinations(ruralStopId: String): LiveData<Resource<List<StopDestination>>> {
         return object :
             NetworkBoundResource<List<StopDestination>, RuralStopCtazAPIResponse>(
                 appExecutors
             ) {
             override fun processResponse(response: ApiSuccessResponse<RuralStopCtazAPIResponse>): List<StopDestination> {
-                return response.body.toStopDestinations(busStopId)
+                return response.body.toStopDestinations(ruralStopId)
             }
 
             override fun saveCallResult(result: List<StopDestination>) {
                 db.runInTransaction {
-                    stopsDao.deleteStopDestinations(busStopId)
+                    stopsDao.deleteStopDestinations(ruralStopId)
                     stopsDao.insertStopDestinations(result)
                 }
             }
@@ -82,9 +83,9 @@ class RuralRepositoryImplementation(
                 return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
             }
 
-            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(busStopId)
+            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(ruralStopId.officialAPIToCtazAPIId())
 
-            override fun createCall() = ctazAPIService.getRuralStopCtazAPI(busStopId)
+            override fun createCall() = ctazAPIService.getRuralStopCtazAPI(ruralStopId)
 
         }.asLiveData()
     }

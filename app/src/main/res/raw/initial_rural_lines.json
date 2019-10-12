@@ -6,7 +6,9 @@
       "parentId": "",
       "nameES": "101",
       "nameEN": "101",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-982",
         "rural-997",
@@ -56,7 +58,9 @@
       "parentId": "",
       "nameES": "102",
       "nameEN": "102",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-982",
         "rural-997",
@@ -106,7 +110,9 @@
       "parentId": "102",
       "nameES": "102-2",
       "nameEN": "102-2",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-982",
         "rural-997",
@@ -156,7 +162,9 @@
       "parentId": "102",
       "nameES": "102-3",
       "nameEN": "102-3",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-982",
         "rural-997",
@@ -187,7 +195,9 @@
       "parentId": "",
       "nameES": "201",
       "nameEN": "201",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-982",
         "rural-997",
@@ -240,7 +250,9 @@
       "parentId": "",
       "nameES": "501",
       "nameEN": "501",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-1",
         "rural-301",
@@ -283,7 +295,9 @@
       "parentId": "",
       "nameES": "601",
       "nameEN": "601",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-906",
         "rural-301",
@@ -303,7 +317,9 @@
       "parentId": "",
       "nameES": "602",
       "nameEN": "602",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -338,7 +354,9 @@
       "parentId": "602",
       "nameES": "602-2",
       "nameEN": "602-2",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -371,7 +389,9 @@
       "parentId": "602",
       "nameES": "602-3",
       "nameEN": "602-3",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -402,7 +422,9 @@
       "parentId": "602",
       "nameES": "602-4",
       "nameEN": "602-4",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -439,7 +461,9 @@
       "parentId": "602",
       "nameES": "602-5",
       "nameEN": "602-5",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -478,7 +502,9 @@
       "parentId": "602",
       "nameES": "602-6",
       "nameEN": "602-6",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -519,7 +545,9 @@
       "parentId": "602",
       "nameES": "602-7",
       "nameEN": "602-7",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -560,7 +588,9 @@
       "parentId": "",
       "nameES": "603",
       "nameEN": "603",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-900",
         "rural-910",
@@ -614,7 +644,9 @@
       "parentId": "",
       "nameES": "604",
       "nameEN": "604",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -670,11 +702,13 @@
       "stopsSecondDestination": []
     },
     {
-      "id": "604",
-      "parentId": "604-2",
-      "nameES": "604",
-      "nameEN": "604",
-      "destinations": ["TODO"],
+      "id": "604-2",
+      "parentId": "604",
+      "nameES": "604-2",
+      "nameEN": "604-2",
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -739,11 +773,13 @@
       "stopsSecondDestination": []
     },
     {
-      "id": "601",
-      "parentId": "604-3",
-      "nameES": "601",
-      "nameEN": "601",
-      "destinations": ["TODO"],
+      "id": "604-3",
+      "parentId": "604",
+      "nameES": "604-3",
+      "nameEN": "604-3",
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -811,11 +847,13 @@
       "stopsSecondDestination": []
     },
     {
-      "id": "601",
-      "parentId": "604-4",
-      "nameES": "601",
-      "nameEN": "601",
-      "destinations": ["TODO"],
+      "id": "604-4",
+      "parentId": "604",
+      "nameES": "604-4",
+      "nameEN": "604-4",
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -865,11 +903,13 @@
       "stopsSecondDestination": []
     },
     {
-      "id": "604",
-      "parentId": "604-5",
-      "nameES": "604",
-      "nameEN": "604",
-      "destinations": ["TODO"],
+      "id": "604-5",
+      "parentId": "604",
+      "nameES": "604-5",
+      "nameEN": "604-5",
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-701",
         "rural-301",
@@ -921,7 +961,9 @@
       "parentId": "",
       "nameES": "605",
       "nameEN": "605",
-      "destinations": ["TODO"],
+      "destinations": [
+        "TODO"
+      ],
       "stopsFirstDestination": [
         "rural-900",
         "rural-222",

@@ -29,6 +29,8 @@ import com.jorkoh.transportezaragozakt.destinations.map.*
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MIN_ZOOM
+import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MIN_ZOOM_RURAL
+import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.RURAL_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
 import com.jorkoh.transportezaragozakt.destinations.officialLineIdToBusWebLineId
@@ -49,26 +51,27 @@ class LineDetailsFragment : FragmentWithToolbar() {
     private lateinit var map: GoogleMap
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
 
+    var ACTIVE_MIN_ZOOM = MIN_ZOOM
+    var ACTIVE_BOUNDS: LatLngBounds = RURAL_BOUNDS
+
     private val markers = mutableListOf<Marker>()
 
     private val markerIcons: MarkerIcons by inject()
 
     @SuppressLint("MissingPermission")
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
-        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                location?.let {
-                    if (ZARAGOZA_BOUNDS.contains(location.toLatLng())) {
-                        //Smoothly pan the user towards their position, reset the zoom level and bearing
-                        val cameraPosition = CameraPosition.builder()
-                            .target(location.toLatLng())
-                            .zoom(DEFAULT_ZOOM)
-                            .bearing(0f)
-                            .build()
-                        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                    } else {
-                        (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
-                    }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let {
+                if (ACTIVE_BOUNDS.contains(location.toLatLng())) {
+                    //Smoothly pan the user towards their position, reset the zoom level and bearing
+                    val cameraPosition = CameraPosition.builder()
+                        .target(location.toLatLng())
+                        .zoom(DEFAULT_ZOOM)
+                        .bearing(0f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                } else {
+                    (requireActivity() as MainActivity).makeSnackbar(getString(R.string.location_outside_zaragoza_bounds))
                 }
             }
         }
@@ -109,13 +112,25 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 .add(R.id.map_fragment_container_line, mapFragment, getString(R.string.line_destination_map_fragment_tag))
                 .commit()
         }
-        mapFragment.getMapAsync { map ->
-            this.map = map
-            setupMap(!ZARAGOZA_BOUNDS.contains(map.cameraPosition.target), mapFragment.viewLifecycleOwner)
+        mapFragment.getMapAsync { newMap ->
+            val mapNeedsSetup = !::map.isInitialized
+            val cameraNeedsCentering = !ACTIVE_BOUNDS.contains(newMap.cameraPosition.target)
+            this.map = newMap
+
+            if (mapNeedsSetup) {
+                setupMap(cameraNeedsCentering)
+            }
+
+            with(mapFragment.viewLifecycleOwner) {
+                if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
+                    setupObservers(this)
+                }
+            }
+            enableLocationLayer(cameraNeedsCentering)
         }
     }
 
-    private fun setupMap(centerCamera: Boolean, mapLifecycleOwner: LifecycleOwner) {
+    private fun setupMap(centerCamera: Boolean) {
         if (centerCamera) {
             map.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
@@ -124,36 +139,17 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 )
             )
         }
-
-        map.clear()
-
-        styleMap()
         configureMap()
-        setupObservers(mapLifecycleOwner)
-
-        // Enable "My Location" layer
-        runWithPermissions(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            options = QuickPermissionsOptions(
-                handleRationale = true,
-                rationaleMessage = getString(R.string.location_rationale),
-                handlePermanentlyDenied = false
-            )
-        ) {
-            @SuppressLint("MissingPermission")
-            map.isMyLocationEnabled = true
-            map.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener)
-        }
+        styleMap()
     }
 
     private fun styleMap() {
         map.setMaxZoomPreference(MAX_ZOOM)
-        map.setMinZoomPreference(MIN_ZOOM)
+        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+        map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
         map.uiSettings.isTiltGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = false
         map.uiSettings.isMapToolbarEnabled = false
-        //TODO This needs to change if it's a rural line
-        map.setLatLngBoundsForCameraTarget(ZARAGOZA_BOUNDS)
     }
 
     private fun configureMap() {
@@ -176,6 +172,21 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
     }
 
+    private fun enableLocationLayer(cameraNeedsCentering: Boolean) {
+        runWithPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            options = QuickPermissionsOptions(
+                handleRationale = true,
+                rationaleMessage = getString(R.string.location_rationale),
+                handlePermanentlyDenied = false
+            )
+        ) {
+            @SuppressLint("MissingPermission")
+            map.isMyLocationEnabled = true
+            map.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener)
+        }
+    }
+
     private fun setupObservers(mapLifecycleOwner: LifecycleOwner) {
         // Map style
         mapSettingsVM.mapType.observe(mapLifecycleOwner, Observer { mapType ->
@@ -195,7 +206,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 .color(
                     ContextCompat.getColor(
                         requireContext(),
-                        when(lineDetailsVM.lineType ){
+                        when (lineDetailsVM.lineType) {
                             LineType.BUS -> R.color.bus_color
                             LineType.TRAM -> R.color.tram_color
                             LineType.RURAL -> R.color.rural_color
@@ -208,8 +219,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 bounds.include(it.location)
             }
             map.addPolyline(line)
-            // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and
-            // the camera hasn't already moved
+            // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and the camera hasn't already moved
             if (lineDetailsVM.selectedStopId.value.isNullOrEmpty()
                 && SphericalUtil.computeDistanceBetween(map.cameraPosition.target, ZARAGOZA_CENTER) < 1
             ) {
@@ -222,6 +232,11 @@ class LineDetailsFragment : FragmentWithToolbar() {
             line?.let {
                 // Set the action bar title
                 fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
+                // Map bounds and min  depend on line type
+                ACTIVE_BOUNDS = if (line.type == LineType.RURAL) RURAL_BOUNDS else ZARAGOZA_BOUNDS
+                map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
+                ACTIVE_MIN_ZOOM = if (line.type == LineType.RURAL) MIN_ZOOM_RURAL else MIN_ZOOM
+                map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
                 // Load the bottom sheet with the stops by destination
                 line_details_viewpager.adapter = StopsByDestinationPagerAdapter(
                     childFragmentManager,

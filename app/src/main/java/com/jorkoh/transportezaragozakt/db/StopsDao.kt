@@ -62,7 +62,7 @@ abstract class StopsDao {
     @Query("SELECT favoriteStops.stopId, stops.type, stops.number, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.stopId = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
     abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
 
-    @Query ("SELECT COUNT(*) FROM favoriteStops")
+    @Query("SELECT COUNT(*) FROM favoriteStops")
     abstract fun getFavoriteCount(): LiveData<Int>
 
     @Query("SELECT stopId, position FROM favoriteStops ORDER BY favoriteStops.position ASC")
@@ -170,10 +170,14 @@ abstract class StopsDao {
         // Insert initial data
         insertStops(initialBusStops.stops.plus(initialTramStops.stops).plus(initialRuralStops.stops))
         insertLines(initialBusLines.lines.plus(initialTramLines.lines).plus(initialRuralLines.lines))
-        insertLinesLocations(initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations).plus(initialRuralLineLocations.lineLocations))
+        insertLinesLocations(
+            initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations).plus(
+                initialRuralLineLocations.lineLocations
+            )
+        )
     }
 
-    fun updateStops(stops: List<Stop>, type : StopType) {
+    fun updateStops(stops: List<Stop>, type: StopType) {
         stops.forEach { stop ->
             if (stopIsFavoriteImmediate(stop.stopId)) {
                 stop.isFavorite = true
@@ -183,12 +187,12 @@ abstract class StopsDao {
         insertStops(stops)
     }
 
-    fun updateLines(lines: List<Line>, type : LineType) {
+    fun updateLines(lines: List<Line>, type: LineType) {
         clearLines(type)
         insertLines(lines)
     }
 
-    fun updateLinesLocations(linesLocations: List<LineLocation>, type : LineType) {
+    fun updateLinesLocations(linesLocations: List<LineLocation>, type: LineType) {
         clearLinesLocations(type)
         insertLinesLocations(linesLocations)
     }
