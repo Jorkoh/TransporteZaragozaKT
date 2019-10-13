@@ -18,6 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.maps.android.SphericalUtil
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
@@ -126,7 +127,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     setupObservers(this)
                 }
             }
-            enableLocationLayer(cameraNeedsCentering)
+            enableLocationLayer()
         }
     }
 
@@ -172,7 +173,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
     }
 
-    private fun enableLocationLayer(cameraNeedsCentering: Boolean) {
+    private fun enableLocationLayer() {
         runWithPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,
             options = QuickPermissionsOptions(
@@ -229,7 +230,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
         // Line itself
         lineDetailsVM.line.observe(viewLifecycleOwner, Observer { line ->
-            line?.let {
+            if(line != null) {
                 // Set the action bar title
                 fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
                 // Map bounds and min  depend on line type
@@ -243,6 +244,12 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     requireNotNull(lineDetailsVM.line.value)
                 )
                 line_details_tab_layout.setupWithViewPager(line_details_viewpager)
+            }else{
+                (requireActivity() as MainActivity).makeSnackbar(getString(R.string.line_not_found))
+                FirebaseAnalytics.getInstance(requireContext()).logEvent("LINE_NOT_FOUND", Bundle().apply {
+                    putString("LINE_ID", lineDetailsVM.lineId)
+                })
+                findNavController().popBackStack()
             }
         })
 

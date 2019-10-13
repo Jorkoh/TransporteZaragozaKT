@@ -32,8 +32,10 @@ class LineDetailsViewModel(
 
         stops = Transformations.switchMap(stopsRepository.loadLine(lineType, lineId)) { line ->
             _line.value = line
-            // Load the stops forming the line
-            stopsRepository.loadStops(line.type.toStopType(), line.stopIdsFirstDestination + line.stopIdsSecondDestination)
+            line?.let {
+                // Load the stops forming the line
+                stopsRepository.loadStops(line.type.toStopType(), line.stopIdsFirstDestination + line.stopIdsSecondDestination)
+            }
         }
     }
 }
