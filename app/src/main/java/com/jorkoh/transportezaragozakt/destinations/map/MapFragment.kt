@@ -152,6 +152,8 @@ class MapFragment : FragmentWithToolbar() {
             enableLocationLayer(cameraNeedsCentering)
 
             map_trackings_button.setOnClickListener {
+                // Avoid problems if the user quickly taps the button
+                trackingsDialog?.dismiss()
                 if (ruralTrackingsItems.size > 0) {
                     // Display a dialog to select the tracking
                     trackingsDialog = MaterialDialog(requireContext()).show {

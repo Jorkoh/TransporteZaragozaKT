@@ -7,7 +7,7 @@ import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWit
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
 import com.jorkoh.transportezaragozakt.services.bus_web.officialAPIToBusWebId
-import com.jorkoh.transportezaragozakt.services.bus_web.responses.BusStopBusWebResponse
+import com.jorkoh.transportezaragozakt.services.bus_web.responses.bus.BusStopBusWebResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
 import com.jorkoh.transportezaragozakt.services.ctaz_api.officialAPIToCtazAPIId

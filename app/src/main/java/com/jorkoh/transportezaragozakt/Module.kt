@@ -18,6 +18,7 @@ import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
 import com.jorkoh.transportezaragozakt.services.common.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
+import com.jorkoh.transportezaragozakt.services.ctaz_api.moshi_adapters.CtazAPITimeAdapter
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.moshi_adapters.LatLngAdapter
 import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
@@ -93,7 +94,7 @@ val appModule = module {
                 MoshiConverterFactory.create(
                     Moshi.Builder()
                         .add(LatLngAdapter())
-                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                        .add(CtazAPITimeAdapter())
                         .build()
                 )
             )

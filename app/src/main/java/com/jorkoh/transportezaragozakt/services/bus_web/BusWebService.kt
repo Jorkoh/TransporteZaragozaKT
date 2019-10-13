@@ -1,7 +1,7 @@
 package com.jorkoh.transportezaragozakt.services.bus_web
 
 import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.services.bus_web.responses.BusStopBusWebResponse
+import com.jorkoh.transportezaragozakt.services.bus_web.responses.bus.BusStopBusWebResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Query

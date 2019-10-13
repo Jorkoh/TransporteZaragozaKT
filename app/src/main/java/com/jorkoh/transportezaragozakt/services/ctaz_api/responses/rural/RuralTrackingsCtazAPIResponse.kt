@@ -6,7 +6,7 @@ import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.services.common.responses.RuralTrackingsResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.text.SimpleDateFormat
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class RuralTrackingsCtazAPIResponse(
@@ -25,7 +25,7 @@ data class RuralTrackingsCtazAPIResponse(
                     ruralTrackingResponse.line,
                     ruralTrackingResponse.lineName.replace("-", "-\u200b"),
                     LatLng(ruralTrackingResponse.latitude, ruralTrackingResponse.longitude),
-                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(ruralTrackingResponse.lastUpdated)
+                    ruralTrackingResponse.lastUpdated
                 )
             }
         return ruralTrackings
@@ -50,5 +50,5 @@ data class RuralTrackingResponse(
     val longitude: Double,
 
     @Json(name = "momento")
-    val lastUpdated: String
+    val lastUpdated: Date
 )

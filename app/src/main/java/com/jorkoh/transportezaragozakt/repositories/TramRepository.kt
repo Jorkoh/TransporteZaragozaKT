@@ -12,7 +12,7 @@ import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
 import com.jorkoh.transportezaragozakt.services.official_api.responses.tram.TramStopOfficialAPIResponse
 import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
 import com.jorkoh.transportezaragozakt.services.tram_api.officialAPIToTramAPIId
-import com.jorkoh.transportezaragozakt.services.tram_api.responses.TramStopTramAPIResponse
+import com.jorkoh.transportezaragozakt.services.tram_api.responses.tram.TramStopTramAPIResponse
 
 
 interface TramRepository {

@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.tram_api.responses
+package com.jorkoh.transportezaragozakt.services.tram_api.responses.tram
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.common.responses.TramStopResponse

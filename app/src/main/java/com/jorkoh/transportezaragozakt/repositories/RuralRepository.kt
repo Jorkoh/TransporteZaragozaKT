@@ -83,9 +83,9 @@ class RuralRepositoryImplementation(
                 return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
             }
 
-            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(ruralStopId.officialAPIToCtazAPIId())
+            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(ruralStopId)
 
-            override fun createCall() = ctazAPIService.getRuralStopCtazAPI(ruralStopId)
+            override fun createCall() = ctazAPIService.getRuralStopCtazAPI(ruralStopId.officialAPIToCtazAPIId())
 
         }.asLiveData()
     }

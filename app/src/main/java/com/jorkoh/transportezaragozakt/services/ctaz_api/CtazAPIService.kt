@@ -9,6 +9,7 @@ import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.tram.TramStop
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
+import java.util.*
 
 interface CtazAPIService {
     companion object {
@@ -47,3 +48,18 @@ fun String.fixLine() =
         "N07" -> "N7"
         else -> trimmedLine
     }
+
+// Basically CTAZ uses the same "remaining_time" field for actual real time updated remaining times and estimated
+// arrival times in 24 hour format, this method transforms both into the format used by the other services
+fun Date.toRemainingMinutes(isRemaining: Boolean): String {
+    // Can't use java.time because API 21, won't add Joda Time dependency just for this so it will stay ugly for now
+    val minutes = if (isRemaining) {
+        val difference = Calendar.getInstance()
+        difference.time = this
+        (difference.get(Calendar.MINUTE) + difference.get(Calendar.HOUR) * 60 + if (difference.get(Calendar.SECOND) >= 30) 1 else 0)
+    } else {
+        val now = Date()
+        (minutes - now.minutes) + (hours - now.hours) * 60 + (if ((seconds - now.seconds) * 60 >= 30) 1 else 0)
+    }
+    return "$minutes minutos."
+}

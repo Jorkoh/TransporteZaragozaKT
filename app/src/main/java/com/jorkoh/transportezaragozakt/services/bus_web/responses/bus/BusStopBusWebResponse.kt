@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.services.bus_web.responses
+package com.jorkoh.transportezaragozakt.services.bus_web.responses.bus
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.bus_web.fixLine

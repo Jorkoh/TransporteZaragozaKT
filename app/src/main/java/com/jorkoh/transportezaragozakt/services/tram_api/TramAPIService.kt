@@ -2,7 +2,7 @@ package com.jorkoh.transportezaragozakt.services.tram_api
 
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
-import com.jorkoh.transportezaragozakt.services.tram_api.responses.TramStopTramAPIResponse
+import com.jorkoh.transportezaragozakt.services.tram_api.responses.tram.TramStopTramAPIResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
