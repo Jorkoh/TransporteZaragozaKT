@@ -22,6 +22,7 @@ interface BusRepository {
     fun loadMainLines(): LiveData<List<Line>>
     fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
     fun loadLine(lineId: String): LiveData<Line>
+    fun loadAlternativeLineIds(lineId: String): LiveData<List<String>>
     fun loadStops(stopIds: List<String>): LiveData<List<Stop>>
 }
 
@@ -99,5 +100,9 @@ class BusRepositoryImplementation(
 
     override fun loadLine(lineId: String): LiveData<Line> {
         return stopsDao.getLine(lineId)
+    }
+
+    override fun loadAlternativeLineIds(lineId: String): LiveData<List<String>> {
+        return stopsDao.getAlternativeLineIds(lineId)
     }
 }

@@ -15,12 +15,13 @@ import java.util.*
 
 interface RuralRepository {
     fun loadTrackings(): LiveData<Resource<List<RuralTracking>>>
-    fun loadStopDestinations(busStopId: String): LiveData<Resource<List<StopDestination>>>
+    fun loadStopDestinations(ruralStopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStop(busStopId: String): LiveData<Stop>
     fun loadStops(): LiveData<List<Stop>>
     fun loadMainLines(): LiveData<List<Line>>
     fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
     fun loadLine(lineId: String): LiveData<Line>
+    fun loadAlternativeLineIds(lineId: String): LiveData<List<String>>
     fun loadStops(stopIds: List<String>): LiveData<List<Stop>>
 }
 
@@ -112,6 +113,10 @@ class RuralRepositoryImplementation(
 
     override fun loadLine(lineId: String): LiveData<Line> {
         return stopsDao.getLine(lineId)
+    }
+
+    override fun loadAlternativeLineIds(lineId: String): LiveData<List<String>> {
+        return stopsDao.getAlternativeLineIds(lineId)
     }
 }
 

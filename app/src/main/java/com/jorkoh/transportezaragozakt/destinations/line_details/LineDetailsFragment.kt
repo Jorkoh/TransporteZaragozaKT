@@ -50,7 +50,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var map: GoogleMap
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
+    private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
 
     var ACTIVE_MIN_ZOOM = MIN_ZOOM
     var ACTIVE_BOUNDS: LatLngBounds = RURAL_BOUNDS
@@ -230,7 +230,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
         // Line itself
         lineDetailsVM.line.observe(viewLifecycleOwner, Observer { line ->
-            if(line != null) {
+            if (line != null) {
                 // Set the action bar title
                 fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
                 // Map bounds and min  depend on line type
@@ -244,7 +244,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     requireNotNull(lineDetailsVM.line.value)
                 )
                 line_details_tab_layout.setupWithViewPager(line_details_viewpager)
-            }else{
+            } else {
                 (requireActivity() as MainActivity).makeSnackbar(getString(R.string.line_not_found))
                 FirebaseAnalytics.getInstance(requireContext()).logEvent("LINE_NOT_FOUND", Bundle().apply {
                     putString("LINE_ID", lineDetailsVM.lineId)
@@ -271,7 +271,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                                 240,
                                 null
                             )
-                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
                     }
                 })
@@ -339,5 +339,8 @@ class LineDetailsFragment : FragmentWithToolbar() {
             @SuppressLint("MissingPermission")
             map.isMyLocationEnabled = false
         }
+
+        // Avoid leaks
+        bottomSheetBehavior = null
     }
 }

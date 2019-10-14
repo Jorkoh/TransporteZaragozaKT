@@ -21,6 +21,7 @@ interface StopsRepository {
     fun loadMainLines(): MutableLiveData<List<Line>>
     fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>
     fun loadLine(lineType: LineType, lineId: String): LiveData<Line>
+    fun loadAlternativeLineIds(lineType: LineType, lineId: String): LiveData<List<String>>
     fun loadStops(stopType: StopType, stopIds: List<String>): LiveData<List<Stop>>
 }
 
@@ -99,6 +100,14 @@ class StopsRepositoryImplementation(
             LineType.BUS -> busRepository.loadLine(lineId)
             LineType.TRAM -> tramRepository.loadLine(lineId)
             LineType.RURAL -> ruralRepository.loadLine(lineId)
+        }
+    }
+
+    override fun loadAlternativeLineIds(lineType: LineType, lineId: String): LiveData<List<String>> {
+        return when (lineType) {
+            LineType.BUS -> busRepository.loadAlternativeLineIds(lineId)
+            LineType.TRAM -> tramRepository.loadAlternativeLineIds(lineId)
+            LineType.RURAL -> ruralRepository.loadAlternativeLineIds(lineId)
         }
     }
 
