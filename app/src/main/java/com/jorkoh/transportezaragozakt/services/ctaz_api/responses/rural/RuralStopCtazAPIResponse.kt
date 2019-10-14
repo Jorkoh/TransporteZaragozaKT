@@ -2,6 +2,7 @@ package com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural
 
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.services.common.responses.RuralStopResponse
+import com.jorkoh.transportezaragozakt.services.ctaz_api.fixLine
 import com.jorkoh.transportezaragozakt.services.ctaz_api.toRemainingMinutes
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -21,11 +22,11 @@ data class RuralStopCtazAPIResponse(
     override fun toStopDestinations(ruralStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
         //TODO What happens when they share line but have different routes?
-        arrivalTimes.groupBy { it.line }.forEach { destinationTimes ->
+        arrivalTimes.groupBy { it.line + it.lineRoute }.forEach { destinationTimes ->
             val sortedDestinationTimes = destinationTimes.value.sortedBy { it.arrivalOrRemainingTime.time }
             stopDestinations += StopDestination(
-                sortedDestinationTimes[0].line,
-                "TODO",
+                sortedDestinationTimes[0].line.fixLine(),
+                sortedDestinationTimes[0].lineRoute,
                 ruralStopId,
                 listOf(
                     sortedDestinationTimes[0].arrivalOrRemainingTime.toRemainingMinutes(

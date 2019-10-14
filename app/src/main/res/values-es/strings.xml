@@ -158,4 +158,5 @@
     <string name="dark_map_summary">Un mapa oscuro a juego con tu tema favorito</string>
     <string name="map_animations_summary">Deshabilita las animaciones del mapa si tu teléfono se ralentiza al hacer zoom</string>
     <string name="line_not_found">Línea no reconocida, ¡Estoy trabajando en ello!</string>
+    <string name="rural_line_schedule_title">Horario línea rural %1$s</string>
 </resources>

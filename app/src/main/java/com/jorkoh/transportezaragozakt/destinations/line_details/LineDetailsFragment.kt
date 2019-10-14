@@ -2,7 +2,9 @@ package com.jorkoh.transportezaragozakt.destinations.line_details
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +60,19 @@ class LineDetailsFragment : FragmentWithToolbar() {
     private val markers = mutableListOf<Marker>()
 
     private val markerIcons: MarkerIcons by inject()
+
+    //TODO Contact CTAZ to figure out a realistic way to keep this updated
+    val ruralLinesAndScheduleURLs: Map<String, String> = mapOf(
+        Pair("101", "http://www.consorciozaragoza.es/sites/default/files/101_201803_0.pdf"),
+        Pair("102", "http://www.consorciozaragoza.es/sites/default/files/102_201803_0.pdf"),
+        Pair("201", "http://www.consorciozaragoza.es/sites/default/files/201_201807_0.pdf"),
+        Pair("501", "http://www.consorciozaragoza.es/sites/default/files/501_201902.pdf"),
+        Pair("601", "http://www.consorciozaragoza.es/sites/default/files/601_201801.pdf"),
+        Pair("602", "http://www.consorciozaragoza.es/sites/default/files/602_20170113_0.pdf"),
+        Pair("603", "http://www.consorciozaragoza.es/sites/default/files/603_201803_0.pdf"),
+        Pair("604", "http://www.consorciozaragoza.es/sites/default/files/604_201803_0.pdf"),
+        Pair("605", "http://www.consorciozaragoza.es/sites/default/files/605_201803.pdf")
+    )
 
     @SuppressLint("MissingPermission")
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
@@ -299,31 +314,45 @@ class LineDetailsFragment : FragmentWithToolbar() {
             menu.clear()
             inflateMenu(R.menu.line_details_destination_menu)
             setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.item_schedule -> {
-                        if (lineDetailsVM.lineType == LineType.TRAM) {
-                            findNavController().navigate(
-                                LineDetailsFragmentDirections.actionLineDetailsToWebView(
-                                    url = getString(R.string.tram_line_schedule_url),
-                                    title = getString(R.string.tram_line_schedule_title),
-                                    javascript = getString(R.string.tram_line_schedule_javascript)
-                                )
-                            )
-                        } else {
-                            findNavController().navigate(
-                                LineDetailsFragmentDirections.actionLineDetailsToWebView(
-                                    url = getString(R.string.bus_line_schedule_url).replace(
-                                        "%",
-                                        lineDetailsVM.lineId.officialLineIdToBusWebLineId()
-                                    ),
-                                    title = getString(R.string.bus_line_schedule_title, lineDetailsVM.lineId),
-                                    javascript = getString(R.string.bus_line_schedule_javascript)
-                                )
-                            )
-                        }
-                        true
+                if (item.itemId == R.id.item_schedule) {
+                    openSchedule()
+                    true
+                } else {
+                    super.onOptionsItemSelected(item)
+                }
+            }
+        }
+    }
+
+    private fun openSchedule() {
+        when (lineDetailsVM.lineType) {
+            LineType.BUS -> {
+                findNavController().navigate(
+                    LineDetailsFragmentDirections.actionLineDetailsToWebView(
+                        url = getString(R.string.bus_line_schedule_url, lineDetailsVM.lineId.officialLineIdToBusWebLineId()),
+                        title = getString(R.string.bus_line_schedule_title, lineDetailsVM.lineId),
+                        javascript = getString(R.string.bus_line_schedule_javascript)
+                    )
+                )
+            }
+            LineType.TRAM -> {
+                findNavController().navigate(
+                    LineDetailsFragmentDirections.actionLineDetailsToWebView(
+                        url = getString(R.string.tram_line_schedule_url),
+                        title = getString(R.string.tram_line_schedule_title),
+                        javascript = getString(R.string.tram_line_schedule_javascript)
+                    )
+                )
+            }
+            LineType.RURAL -> {
+                if (ruralLinesAndScheduleURLs.containsKey(lineDetailsVM.lineId)) {
+                    val scheduleIntent = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(
+                            Uri.parse(ruralLinesAndScheduleURLs[lineDetailsVM.lineId]),
+                            "application/pdf"
+                        )
                     }
-                    else -> super.onOptionsItemSelected(item)
+                    startActivity(Intent.createChooser(scheduleIntent, getString(R.string.rural_line_schedule_title, lineDetailsVM.lineId)))
                 }
             }
         }

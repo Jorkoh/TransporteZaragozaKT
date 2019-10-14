@@ -55,6 +55,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
+        //TODO ADD CHECK FOR RURAL LINES NOT YET ADDED
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
                 StopDetailsFragmentDirections.actionStopDetailsToLineDetails(

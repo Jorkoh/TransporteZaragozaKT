@@ -46,6 +46,7 @@ fun String.fixLine() =
         "N05" -> "N5"
         "N06" -> "N6"
         "N07" -> "N7"
+        "201B" -> "201"
         else -> trimmedLine
     }
 
