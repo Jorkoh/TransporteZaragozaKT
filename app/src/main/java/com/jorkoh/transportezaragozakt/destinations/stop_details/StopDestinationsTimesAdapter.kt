@@ -13,6 +13,7 @@ import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.toLineType
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.toPx
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.destination_row.*
 
@@ -43,6 +44,11 @@ class StopDestinationsTimesAdapter(
                     }
                 )
             )
+            line_text.minWidth = when (stopType) {
+                StopType.BUS -> 100.toPx()
+                StopType.TRAM -> 100.toPx()
+                StopType.RURAL -> 135.toPx()
+            }
             // Texts
             destination_text.text = destination.destination
             first_time_text.text = fixTimes(destination.times[0])

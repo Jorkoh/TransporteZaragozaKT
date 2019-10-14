@@ -16,6 +16,7 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.isSpanish
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.toPx
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.line_row.*
 
@@ -43,6 +44,11 @@ class LineAdapter(
                     }
                 )
             )
+            line_text_line.minWidth = when (line.type) {
+                LineType.BUS -> 60.toPx()
+                LineType.TRAM -> 60.toPx()
+                LineType.RURAL -> 81.toPx()
+            }
             // Texts
             line_text_line.text = if (context.isSpanish()) line.nameES else line.nameEN
             first_destination_line.text = line.destinations[0]
