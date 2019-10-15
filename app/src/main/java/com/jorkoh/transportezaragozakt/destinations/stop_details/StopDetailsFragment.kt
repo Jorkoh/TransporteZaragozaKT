@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.MainActivity
@@ -144,6 +145,14 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 adapter = stopDestinationsTimesAdapter
             }
 
+            stop_details_appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                if (verticalOffset == 0) {
+                    requireActivity().stop_details_fab.show()
+                } else if (appBarLayout.totalScrollRange + verticalOffset == 0) {
+                    requireActivity().stop_details_fab.hide()
+                }
+            })
+
             stop_details_no_data_text.setOnClickListener(noDataOnClickListener)
             stop_details_no_data_help.setOnClickListener(noDataOnClickListener)
             swiperefresh.setOnRefreshListener {
@@ -152,6 +161,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
             setupToolbar(this)
         }
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

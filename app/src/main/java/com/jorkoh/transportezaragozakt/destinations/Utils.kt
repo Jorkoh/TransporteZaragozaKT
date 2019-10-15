@@ -179,3 +179,17 @@ fun List<String>.inflateLines(container: GridLayout, stopType: StopType, context
 }
 
 fun Context.isSpanish() = ConfigurationCompat.getLocales(resources.configuration)[0].language == Locale("es").language
+
+fun String.fixTimes(context: Context): String =
+    when (this) {
+        "Sin estimacin." -> context.getString(R.string.no_estimate)
+        "En la parada." -> context.getString(R.string.at_the_stop)
+        else -> {
+            val minutes = (this.split(" ")[0].toIntOrNull() ?: -1)
+            when {
+                minutes < 0 -> context.getString(R.string.no_estimate)
+                minutes == 1 -> minutes.toString() + " ${context.getString(R.string.minute)}"
+                else -> minutes.toString() + " ${context.getString(R.string.minutes)}"
+            }
+        }
+    }

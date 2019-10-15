@@ -13,6 +13,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
+import com.jorkoh.transportezaragozakt.destinations.fixTimes
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.DoubleCombinedLiveData
@@ -156,7 +157,7 @@ class AlarmService : LifecycleService() {
             destinationRemoteView.setTextViewText(R.id.notification_line_text, stopDestination.line)
             destinationRemoteView.setTextViewText(
                 R.id.notification_time_text,
-                "${stopDestination.times[0]} - ${stopDestination.times[1]}"
+                "${stopDestination.times[0].fixTimes(applicationContext)} - ${stopDestination.times[1].fixTimes(applicationContext)}"
             )
             destinationRemoteView.setTextViewText(R.id.notification_destination_text, stopDestination.destination)
 

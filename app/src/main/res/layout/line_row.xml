@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <!-- TODO FIX THIS WIDTH STUFF-->
         <TextView
                 android:id="@+id/line_text_line"
                 android:textColor="@color/kinda_white"
