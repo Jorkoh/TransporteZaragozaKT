@@ -200,7 +200,8 @@
     <string name="parse_bus_lines_locations_collection" translatable="false">v2_bus_lines_locations</string>
     <string name="parse_tram_lines_locations_collection" translatable="false">v2_tram_lines_locations</string>
     <string name="parse_rural_lines_locations_collection" translatable="false">v2_rural_lines_locations</string>
-    <string name="parse_changelog_collection" translatable="false">changelog</string>
+    <string name="parse_changelog_collection" translatable="false">v2_changelog</string>
+    <string name="parse_versions_collection" translatable="false">v2_versions</string>
     <string name="update_data_work_name" translatable="false">UPDATE_DATA_WORK_NAME</string>
 
     <!--Notifications-->

@@ -9,21 +9,23 @@ import com.jorkoh.transportezaragozakt.R
 import java.util.concurrent.TimeUnit
 
 //https://stackoverflow.com/questions/53043183/how-to-register-a-periodic-work-request-with-workmanger-system-wide-once-i-e-a
-fun enqueuePeriodicUpdateDataWorker(workName: String) {
-    //TESTING STUFF TODO
-    return
-    val updateDataPeriodicRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(1, TimeUnit.DAYS)
+fun enqueuePeriodicUpdateDataWorker(context: Context) {
+    val updateDataPeriodicRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(12, TimeUnit.HOURS)
         .setConstraints(
             Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
-        )
+        ).setInitialDelay(30, TimeUnit.SECONDS)
         .build()
 
-    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, updateDataPeriodicRequest)
+    WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+        context.getString(R.string.update_data_work_name),
+        ExistingPeriodicWorkPolicy.KEEP,
+        updateDataPeriodicRequest
+    )
 }
 
-fun enqueuePeriodicSetupRemindersWorker(workName: String) {
+fun enqueuePeriodicSetupRemindersWorker(context: Context) {
     val setupRemindersPeriodicRequest = PeriodicWorkRequestBuilder<SetupRemindersWorker>(1, TimeUnit.DAYS)
         .setConstraints(
             Constraints.Builder()
@@ -31,10 +33,14 @@ fun enqueuePeriodicSetupRemindersWorker(workName: String) {
         )
         .build()
 
-    WorkManager.getInstance().enqueueUniquePeriodicWork(workName, ExistingPeriodicWorkPolicy.KEEP, setupRemindersPeriodicRequest)
+    WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+        context.getString(R.string.setup_reminders_work_name),
+        ExistingPeriodicWorkPolicy.KEEP,
+        setupRemindersPeriodicRequest
+    )
 }
 
-fun enqueueOneTimeSetupRemindersWorker() {
+fun enqueueOneTimeSetupRemindersWorker(context: Context) {
     val setupRemindersOneTimeRequest = OneTimeWorkRequestBuilder<SetupRemindersWorker>()
         .setConstraints(
             Constraints.Builder()
@@ -42,7 +48,7 @@ fun enqueueOneTimeSetupRemindersWorker() {
         )
         .build()
 
-    WorkManager.getInstance().enqueue(setupRemindersOneTimeRequest)
+    WorkManager.getInstance(context).enqueue(setupRemindersOneTimeRequest)
 }
 
 fun setupNotificationChannels(context: Context) {

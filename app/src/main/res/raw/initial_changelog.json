@@ -1,5 +1,4 @@
 {
-  "version": 2,
-  "textEN": "(30/06/18) Version 2: fixed a bunch of stop locations with more recent data.\n\n(15/06/18) Version 1: initial version of stops and lines.",
-  "textES": "(30/06/18) Versión 2: corregidas múltiples paradas con información más reciente.\n\n(15/06/18) Versión 1: versión inicial de paradas y líneas."
+  "textEN": "(10/10/19) Version 4: added rural lines and stops, corrected multiple stops.\n\n(06/10/19) Version 3: added reinforcement lines and stops for Fiestas del Pilar ¡Have a good one!\n\n(30/06/19) Version 2: fixed a bunch of stop locations with more recent data.\n\n(15/06/19) Version 1: initial version of stops and lines.",
+  "textES": "(10/10/19) Versión 4: añadidas paradas y líneas rurales, corregidas múltiples paradas.\n\n(06/10/19) Versión 3: añadidas líneas y paradas de refuerzo para las Fiestas del Pilar ¡Felices fiestas!\n\n(30/06/19) Versión 2: corregidas múltiples paradas con información más reciente.\n\n(15/06/19) Versión 1: versión inicial de paradas y líneas."
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- stop_lottie details fab speed dial item's ids -->
+    <!-- stop details fab speed dial item's ids -->
     <item type="id" name="stop_details_fab_favorite"/>
     <item type="id" name="stop_details_fab_reminder"/>
     <item type="id" name="stop_details_fab_shortcut"/>

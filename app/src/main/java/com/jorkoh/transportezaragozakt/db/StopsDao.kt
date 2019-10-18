@@ -127,35 +127,50 @@ abstract class StopsDao {
     abstract fun insertStopDestinations(stopDestinations: List<StopDestination>)
 
     fun insertInitialData(context: Context) {
-        val initialBusStops = getInitialBusStops(context)
-        val initialTramStops = getInitialTramStops(context)
-        val initialRuralStops = getInitialRuralStops(context)
-
-        val initialBusLines = getInitialBusLines(context)
-        val initialTramLines = getInitialTramLines(context)
-        val initialRuralLines = getInitialRuralLines(context)
-
-        val initialBusLineLocations = getInitialBusLineLocations(context)
-        val initialTramLineLocations = getInitialTramLineLocations(context)
-        val initialRuralLineLocations = getInitialRuralLineLocations(context)
-
         val initialChangelog = getInitialChangelog(context)
-
         with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
-            // Data, save versions
-            putInt(context.getString(R.string.saved_bus_stops_version_number_key), initialBusStops.version)
-            putInt(context.getString(R.string.saved_tram_stops_version_number_key), initialTramStops.version)
-            putInt(context.getString(R.string.saved_rural_stops_version_number_key), initialRuralStops.version)
-
-            putInt(context.getString(R.string.saved_bus_lines_version_number_key), initialRuralStops.version)
-            putInt(context.getString(R.string.saved_tram_lines_version_number_key), initialTramLines.version)
-            putInt(context.getString(R.string.saved_rural_lines_version_number_key), initialRuralLines.version)
-
-            putInt(context.getString(R.string.saved_bus_lines_locations_version_number_key), initialBusLineLocations.version)
-            putInt(context.getString(R.string.saved_tram_lines_locations_version_number_key), initialTramLineLocations.version)
-            putInt(context.getString(R.string.saved_rural_lines_locations_version_number_key), initialRuralLineLocations.version)
-            // Changelog, save version and multiple languages
-            putInt(context.getString(R.string.saved_changelog_version_number_key), initialChangelog.version)
+            // Versions of data
+            putInt(
+                context.getString(R.string.saved_bus_stops_version_number_key),
+                context.resources.getInteger(R.integer.bus_stops_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_tram_stops_version_number_key),
+                context.resources.getInteger(R.integer.tram_stops_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_rural_stops_version_number_key),
+                context.resources.getInteger(R.integer.rural_stops_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_bus_lines_version_number_key),
+                context.resources.getInteger(R.integer.bus_lines_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_tram_lines_version_number_key),
+                context.resources.getInteger(R.integer.tram_lines_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_rural_lines_version_number_key),
+                context.resources.getInteger(R.integer.rural_lines_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_bus_lines_locations_version_number_key),
+                context.resources.getInteger(R.integer.bus_lines_locations_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_tram_lines_locations_version_number_key),
+                context.resources.getInteger(R.integer.tram_lines_locations_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_rural_lines_locations_version_number_key),
+                context.resources.getInteger(R.integer.rural_lines_locations_default_version)
+            )
+            putInt(
+                context.getString(R.string.saved_changelog_version_number_key),
+                context.resources.getInteger(R.integer.changelog_default_version)
+            )
+            // Changelog
             putString(context.getString(R.string.saved_changelog_en_key), initialChangelog.textEN)
             putString(context.getString(R.string.saved_changelog_es_key), initialChangelog.textES)
             // Default settings
@@ -171,14 +186,23 @@ abstract class StopsDao {
 
             apply()
         }
+
         // Insert initial data
-        insertStops(initialBusStops.stops.plus(initialTramStops.stops).plus(initialRuralStops.stops))
-        insertLines(initialBusLines.lines.plus(initialTramLines.lines).plus(initialRuralLines.lines))
-        insertLinesLocations(
-            initialBusLineLocations.lineLocations.plus(initialTramLineLocations.lineLocations).plus(
-                initialRuralLineLocations.lineLocations
-            )
-        )
+        val initialBusStops = getInitialStops(context, R.raw.initial_bus_stops, StopType.BUS)
+        val initialTramStops = getInitialStops(context, R.raw.initial_tram_stops, StopType.TRAM)
+        val initialRuralStops = getInitialStops(context, R.raw.initial_rural_stops, StopType.RURAL)
+
+        val initialBusLines = getInitialLines(context, R.raw.initial_bus_lines, LineType.BUS)
+        val initialTramLines = getInitialLines(context, R.raw.initial_tram_lines, LineType.TRAM)
+        val initialRuralLines = getInitialLines(context, R.raw.initial_rural_lines, LineType.RURAL)
+
+        val initialBusLineLocations = getInitialLineLocations(context, R.raw.initial_bus_lines_locations, LineType.BUS)
+        val initialTramLineLocations = getInitialLineLocations(context, R.raw.initial_tram_lines_locations, LineType.TRAM)
+        val initialRuralLineLocations = getInitialLineLocations(context, R.raw.initial_rural_lines_locations, LineType.RURAL)
+
+        insertStops(initialBusStops.plus(initialTramStops).plus(initialRuralStops))
+        insertLines(initialBusLines.plus(initialTramLines).plus(initialRuralLines))
+        insertLinesLocations(initialBusLineLocations.plus(initialTramLineLocations).plus(initialRuralLineLocations))
     }
 
     fun updateStops(stops: List<Stop>, type: StopType) {

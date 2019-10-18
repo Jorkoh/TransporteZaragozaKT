@@ -86,7 +86,7 @@
                 android:id="@+id/stop_details_no_data_animation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:lottie_rawRes="@raw/stop_lottie"
+                app:lottie_rawRes="@raw/lottie_stop"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"
                 app:lottie_scale="0.3"

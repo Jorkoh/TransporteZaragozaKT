@@ -79,14 +79,14 @@ buildscript {
             'junit'                : "junit:junit:4.12",
             'mockito'              : "org.mockito:mockito-core:2.8.9",
             'kotlinx_serialization': "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0",
-            'workmanager'          : "android.arch.work:work-runtime-ktx:1.0.1",
+            'workmanager'          : "androidx.work:work-runtime-ktx:2.3.0-alpha01",
             'koin'                 : [
                     'core': "org.koin:koin-androidx-viewmodel:2.0.1",
                     'test': "org.koin:koin-test:2.0.1"
             ],
             'okio'                 : "com.squareup.okio:okio:2.3.0",
             'parse'                : "com.github.parse-community.Parse-SDK-Android:parse:1.19.0",
-            'lottie'               : "com.airbnb.android:lottie:3.0.0",
+            'lottie'               : "com.airbnb.android:lottie:3.1.0",
             'nullaway'             : "com.uber.nullaway:nullaway:0.6.6",
             'firebase'             : "com.google.firebase:firebase-core:17.0.0",
             'crashlytics'          : "com.crashlytics.sdk.android:crashlytics:2.10.1",

@@ -18,10 +18,8 @@ data class RuralStopCtazAPIResponse(
     val arrivalTimes: List<ArrivalTime>
 ) : RuralStopResponse {
 
-    //TODO
     override fun toStopDestinations(ruralStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
-        //TODO What happens when they share line but have different routes?
         arrivalTimes.groupBy { it.line + it.lineRoute }.forEach { destinationTimes ->
             val sortedDestinationTimes = destinationTimes.value.sortedBy { it.arrivalOrRemainingTime.time }
             stopDestinations += StopDestination(

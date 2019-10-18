@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity() {
             // Every time the app is started from scratch count up the engagement events towards displaying the rate-me flow
             rate.count()
             // WorkManager tasks are queued both on app launch and device boot to cover first install
-            enqueuePeriodicUpdateDataWorker(getString(R.string.update_data_work_name))
-            enqueuePeriodicSetupRemindersWorker(getString(R.string.setup_reminders_work_name))
+            enqueuePeriodicUpdateDataWorker(this)
+            enqueuePeriodicSetupRemindersWorker(this)
             setupNotificationChannels(this)
             setupBottomNavigationBar(true)
         }
