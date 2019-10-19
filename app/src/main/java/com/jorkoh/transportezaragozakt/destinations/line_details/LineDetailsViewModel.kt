@@ -1,15 +1,14 @@
 package com.jorkoh.transportezaragozakt.destinations.line_details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import android.os.Handler
+import androidx.lifecycle.*
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.repositories.RuralRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
+import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import com.jorkoh.transportezaragozakt.repositories.util.Status
 
-class LineDetailsViewModel(
-    private val stopsRepository: StopsRepository
-) :
+class LineDetailsViewModel(private val stopsRepository: StopsRepository, val trackingsRepository: RuralRepository) :
     ViewModel() {
 
     lateinit var lineId: String
@@ -22,7 +21,26 @@ class LineDetailsViewModel(
     lateinit var stops: LiveData<List<Stop>>
     lateinit var lineLocations: LiveData<List<LineLocation>>
 
-    val selectedStopId = MutableLiveData<String>()
+    val selectedItemId = MutableLiveData<String>()
+
+    val ruralTrackings = MediatorLiveData<Resource<List<RuralTracking>>>()
+    private lateinit var tempRuralTrackings: LiveData<Resource<List<RuralTracking>>>
+
+    private val handler = Handler()
+    private val refreshTrackers = object : Runnable {
+        override fun run() {
+            if (::tempRuralTrackings.isInitialized) {
+                ruralTrackings.removeSource(tempRuralTrackings)
+            }
+            tempRuralTrackings = trackingsRepository.loadTrackingsFromLine(lineId)
+            ruralTrackings.addSource(tempRuralTrackings) { value ->
+                if (value.status == Status.SUCCESS && value.data != ruralTrackings.value) {
+                    ruralTrackings.postValue(value)
+                }
+            }
+            handler.postDelayed(this, 30000)
+        }
+    }
 
     fun init(lineId: String, lineType: LineType) {
         this.lineId = lineId
@@ -36,6 +54,10 @@ class LineDetailsViewModel(
                 // Load the stops forming the line
                 stopsRepository.loadStops(line.type.toStopType(), line.stopIdsFirstDestination + line.stopIdsSecondDestination)
             }
+        }
+
+        if(lineType == LineType.RURAL){
+            handler.post(refreshTrackers)
         }
     }
 }

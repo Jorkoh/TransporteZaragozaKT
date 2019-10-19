@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,9 +27,9 @@ import com.google.maps.android.SphericalUtil
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.LineType
+import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.isSpanish
+import com.jorkoh.transportezaragozakt.destinations.*
 import com.jorkoh.transportezaragozakt.destinations.map.*
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
@@ -36,30 +38,40 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MI
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.RURAL_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
-import com.jorkoh.transportezaragozakt.destinations.officialLineIdToBusWebLineId
-import com.jorkoh.transportezaragozakt.destinations.toLatLng
+import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
 import kotlinx.android.synthetic.main.line_details_destination.view.*
+import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.text.DateFormat
 
 class LineDetailsFragment : FragmentWithToolbar() {
 
     private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this })
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
+    private var activeMinZoom = MIN_ZOOM
+    private var activeBounds: LatLngBounds = RURAL_BOUNDS
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var map: GoogleMap
     private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
 
-    var ACTIVE_MIN_ZOOM = MIN_ZOOM
-    var ACTIVE_BOUNDS: LatLngBounds = RURAL_BOUNDS
-
-    private val markers = mutableListOf<Marker>()
+    private val stopMarkers = mutableListOf<Marker>()
+    private val trackingMarkers = mutableListOf<Marker>()
 
     private val markerIcons: MarkerIcons by inject()
+
+    private val selectTracking: (RuralTracking) -> Unit = { tracking ->
+        trackingsDialog?.dismiss()
+        lineDetailsVM.selectedItemId.postValue(tracking.vehicleId)
+    }
+
+    private var trackingsDialog: MaterialDialog? = null
+    private val trackingsAdapter = TrackingsAdapter(selectTracking)
 
     //TODO Contact CTAZ to figure out a realistic way to keep this updated
     val ruralLinesAndScheduleURLs: Map<String, String> = mapOf(
@@ -78,7 +90,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
-                if (ACTIVE_BOUNDS.contains(location.toLatLng())) {
+                if (activeBounds.contains(location.toLatLng())) {
                     //Smoothly pan the user towards their position, reset the zoom level and bearing
                     val cameraPosition = CameraPosition.builder()
                         .target(location.toLatLng())
@@ -112,7 +124,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         lineDetailsVM.init(args.lineId, LineType.valueOf(args.lineType))
         // If the user navigated from a specific stop select it on the map
         if (!args.stopId.isNullOrEmpty()) {
-            lineDetailsVM.selectedStopId.postValue(args.stopId)
+            lineDetailsVM.selectedItemId.postValue(args.stopId)
             // Since this should only happen the first time let's clear the argument
             requireArguments().putString("stopId", null)
         }
@@ -122,6 +134,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         if (mapFragment == null) {
             mapFragment = CustomSupportMapFragment.newInstance(
                 displayFilters = false,
+                displayTrackingsButton = true,
                 bottomPaddingDimen = R.dimen.line_details_destination_map_view_bottom_padding
             )
             childFragmentManager.beginTransaction()
@@ -130,7 +143,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
         mapFragment.getMapAsync { newMap ->
             val mapNeedsSetup = !::map.isInitialized
-            val cameraNeedsCentering = !ACTIVE_BOUNDS.contains(newMap.cameraPosition.target)
+            val cameraNeedsCentering = !activeBounds.contains(newMap.cameraPosition.target)
             this.map = newMap
 
             if (mapNeedsSetup) {
@@ -143,6 +156,23 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 }
             }
             enableLocationLayer()
+
+            if (lineDetailsVM.lineType == LineType.RURAL) {
+                map_trackings_button.visibility = View.VISIBLE
+                map_trackings_button.setOnClickListener(DebounceClickListener {
+                    if (trackingMarkers.size > 0) {
+                        // Display a dialog to select the tracking
+                        trackingsDialog = MaterialDialog(requireContext()).show {
+                            title(text = getTrackingsTitle())
+                            cancelOnTouchOutside(true)
+                            customListAdapter(trackingsAdapter)
+                        }
+                        updateTrackingsDialogDistance()
+                    } else {
+                        (requireActivity() as MainActivity).makeSnackbar(getString(R.string.no_trackings_available))
+                    }
+                })
+            }
         }
     }
 
@@ -161,8 +191,8 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private fun styleMap() {
         map.setMaxZoomPreference(MAX_ZOOM)
-        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
-        map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
+        map.setMinZoomPreference(activeMinZoom)
+        map.setLatLngBoundsForCameraTarget(activeBounds)
         map.uiSettings.isTiltGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = false
         map.uiSettings.isMapToolbarEnabled = false
@@ -180,11 +210,14 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
         map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
         map.setOnMarkerClickListener { marker ->
-            lineDetailsVM.selectedStopId.postValue((marker.tag as CustomClusterItem).stop?.stopId)
+            lineDetailsVM.selectedItemId.postValue(with(marker.tag as CustomClusterItem) {
+                stop?.stopId ?: ruralTracking?.vehicleId ?: ""
+            })
             false
         }
+
         map.setOnInfoWindowCloseListener {
-            lineDetailsVM.selectedStopId.postValue("")
+            lineDetailsVM.selectedItemId.postValue("")
         }
     }
 
@@ -236,7 +269,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
             }
             map.addPolyline(line)
             // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and the camera hasn't already moved
-            if (lineDetailsVM.selectedStopId.value.isNullOrEmpty()
+            if (lineDetailsVM.selectedItemId.value.isNullOrEmpty()
                 && SphericalUtil.computeDistanceBetween(map.cameraPosition.target, ZARAGOZA_CENTER) < 1
             ) {
                 map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
@@ -249,10 +282,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 // Set the action bar title
                 fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
                 // Map bounds and min  depend on line type
-                ACTIVE_BOUNDS = if (line.type == LineType.RURAL) RURAL_BOUNDS else ZARAGOZA_BOUNDS
-                map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
-                ACTIVE_MIN_ZOOM = if (line.type == LineType.RURAL) MIN_ZOOM_RURAL else MIN_ZOOM
-                map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+                activeBounds = if (line.type == LineType.RURAL) RURAL_BOUNDS else ZARAGOZA_BOUNDS
+                map.setLatLngBoundsForCameraTarget(activeBounds)
+                activeMinZoom = if (line.type == LineType.RURAL) MIN_ZOOM_RURAL else MIN_ZOOM
+                map.setMinZoomPreference(activeMinZoom)
                 // Load the bottom sheet with the stops by destination
                 line_details_viewpager.adapter = StopsByDestinationPagerAdapter(
                     childFragmentManager,
@@ -275,10 +308,12 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 renewMarkers(stops)
 
                 // Setup the observer for the selected stop, this can't be done until markers are ready
-                lineDetailsVM.selectedStopId.observe(viewLifecycleOwner, Observer { stopId ->
-                    if (!stopId.isNullOrEmpty()) {
-                        markers.find { marker ->
-                            (marker.tag as CustomClusterItem).stop?.stopId == stopId
+                lineDetailsVM.selectedItemId.observe(viewLifecycleOwner, Observer { selectedItemId ->
+                    if (!selectedItemId.isNullOrEmpty()) {
+                        stopMarkers.find { marker ->
+                            with(marker.tag as CustomClusterItem) {
+                                stop?.stopId ?: ruralTracking?.vehicleId == selectedItemId
+                            }
                         }?.let { selectedMarker ->
                             selectedMarker.showInfoWindow()
                             map.animateCamera(
@@ -292,11 +327,22 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 })
             }
         })
+
+        // Trackings
+        lineDetailsVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
+            if (trackings.status == Status.SUCCESS && trackings.data != null) {
+                renewTrackings(trackings.data)
+                // Update the trackings selector
+                trackingsAdapter.setNewTrackings(trackings.data)
+                trackingsDialog?.title(text = getTrackingsTitle())
+                updateTrackingsDialogDistance()
+            }
+        })
     }
 
     private fun renewMarkers(stops: List<Stop>) {
-        markers.forEach { it.remove() }
-        markers.clear()
+        stopMarkers.forEach { it.remove() }
+        stopMarkers.clear()
         stops.forEach { stop ->
             val item = CustomClusterItem(stop)
             val markerOptions = MarkerOptions().apply {
@@ -305,7 +351,22 @@ class LineDetailsFragment : FragmentWithToolbar() {
             }
             val marker = map.addMarker(markerOptions)
             marker.tag = item
-            markers.add(marker)
+            stopMarkers.add(marker)
+        }
+    }
+
+    private fun renewTrackings(trackings: List<RuralTracking>) {
+        trackingMarkers.forEach { it.remove() }
+        trackingMarkers.clear()
+        trackings.forEach { tracking ->
+            val item = CustomClusterItem(tracking)
+            val markerOptions = MarkerOptions().apply {
+                position(tracking.location)
+                icon(item.type.getMarkerIcon(markerIcons))
+            }
+            val marker = map.addMarker(markerOptions)
+            marker.tag = item
+            trackingMarkers.add(marker)
         }
     }
 
@@ -355,6 +416,21 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     startActivity(Intent.createChooser(scheduleIntent, getString(R.string.rural_line_schedule_title, lineDetailsVM.lineId)))
                 }
             }
+        }
+    }
+
+    private fun getTrackingsTitle(): String {
+        val time = (trackingMarkers.getOrNull(0)?.tag as CustomClusterItem?)?.ruralTracking?.updatedAt
+        return if (time != null) {
+            getString(R.string.rural_trackings_template, DateFormat.getTimeInstance(DateFormat.SHORT).format(time))
+        } else {
+            getString(R.string.rural_trackings)
+        }
+    }
+
+    private fun updateTrackingsDialogDistance() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let { trackingsAdapter.setNewLocation(it) }
         }
     }
 

@@ -154,7 +154,7 @@ val appModule = module {
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }
     viewModel { StopDetailsViewModel(get(), get(), get()) }
-    viewModel { LineDetailsViewModel(get()) }
+    viewModel { LineDetailsViewModel(get(), get()) }
     viewModel { MainActivityViewModel(get(), get(), get()) }
     viewModel { IntroActivityViewModel(get()) }
 }

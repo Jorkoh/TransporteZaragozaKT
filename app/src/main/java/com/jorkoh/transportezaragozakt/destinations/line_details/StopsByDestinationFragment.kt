@@ -33,7 +33,7 @@ class StopsByDestinationFragment : Fragment() {
     private lateinit var stopIds: List<String>
 
     private val selectStop: (String) -> Unit = { stopId ->
-        lineDetailsVM.selectedStopId.postValue(stopId)
+        lineDetailsVM.selectedItemId.postValue(stopId)
     }
 
     private val stopsAdapter = StopsByDestinationAdapter(selectStop)

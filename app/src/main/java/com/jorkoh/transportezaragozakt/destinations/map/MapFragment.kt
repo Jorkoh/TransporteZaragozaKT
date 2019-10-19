@@ -24,6 +24,7 @@ import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.RuralTracking
+import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
 import com.jorkoh.transportezaragozakt.repositories.util.Status
@@ -44,7 +45,6 @@ class MapFragment : FragmentWithToolbar() {
         const val MAX_ZOOM = 17.5f
         const val MIN_ZOOM = 12f
         const val MIN_ZOOM_RURAL = 10f
-        var ACTIVE_MIN_ZOOM = MIN_ZOOM
         const val DEFAULT_ZOOM = 16f
         const val MAX_CLUSTERING_ZOOM = 15.5f
 
@@ -54,10 +54,12 @@ class MapFragment : FragmentWithToolbar() {
         val RURAL_BOUNDS = LatLngBounds(
             LatLng(41.373278, -1.341434), LatLng(41.954787, -0.520798)
         )
-        var ACTIVE_BOUNDS: LatLngBounds = RURAL_BOUNDS
 
         val ZARAGOZA_CENTER = LatLng(41.656362, -0.878920)
     }
+
+    private var activeMinZoom = MIN_ZOOM
+    private var activeBounds: LatLngBounds = RURAL_BOUNDS
 
     private val mapVM: MapViewModel by sharedViewModel(from = { this })
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
@@ -97,7 +99,7 @@ class MapFragment : FragmentWithToolbar() {
     private val onMyLocationButtonClickListener = GoogleMap.OnMyLocationButtonClickListener {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
-                if (ACTIVE_BOUNDS.contains(location.toLatLng())) {
+                if (activeBounds.contains(location.toLatLng())) {
                     //Smoothly pan the user towards their position, reset the zoom level and bearing
                     val cameraPosition = CameraPosition.builder()
                         .target(location.toLatLng())
@@ -137,7 +139,7 @@ class MapFragment : FragmentWithToolbar() {
         }
         mapFragment.getMapAsync { newMap ->
             val mapNeedsSetup = !::map.isInitialized
-            val cameraNeedsCentering = !ACTIVE_BOUNDS.contains(newMap.cameraPosition.target)
+            val cameraNeedsCentering = !activeBounds.contains(newMap.cameraPosition.target)
             this.map = newMap
 
             if (mapNeedsSetup) {
@@ -151,9 +153,7 @@ class MapFragment : FragmentWithToolbar() {
             }
             enableLocationLayer(cameraNeedsCentering)
 
-            map_trackings_button.setOnClickListener {
-                // Avoid problems if the user quickly taps the button
-                trackingsDialog?.dismiss()
+            map_trackings_button.setOnClickListener(DebounceClickListener {
                 if (ruralTrackingsItems.size > 0) {
                     // Display a dialog to select the tracking
                     trackingsDialog = MaterialDialog(requireContext()).show {
@@ -165,7 +165,7 @@ class MapFragment : FragmentWithToolbar() {
                 } else {
                     (requireActivity() as MainActivity).makeSnackbar(getString(R.string.no_trackings_available))
                 }
-            }
+            })
         }
     }
 
@@ -184,8 +184,8 @@ class MapFragment : FragmentWithToolbar() {
 
     private fun styleMap() {
         map.setMaxZoomPreference(MAX_ZOOM)
-        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
-        map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
+        map.setMinZoomPreference(activeMinZoom)
+        map.setLatLngBoundsForCameraTarget(activeBounds)
         map.uiSettings.isTiltGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = false
         map.uiSettings.isMapToolbarEnabled = false
@@ -276,22 +276,22 @@ class MapFragment : FragmentWithToolbar() {
         mapSettingsVM.ruralFilterEnabled.observe(mapLifecycleOwner, Observer { enabled ->
             clusterManager.clusterWithoutCacheOrAnimation()
             map_trackings_button.visibility = if (enabled) View.VISIBLE else View.GONE
-            ACTIVE_BOUNDS = if (enabled) RURAL_BOUNDS else ZARAGOZA_BOUNDS
-            map.setLatLngBoundsForCameraTarget(ACTIVE_BOUNDS)
-            ACTIVE_MIN_ZOOM = if (enabled) MIN_ZOOM_RURAL else MIN_ZOOM
-            if (!enabled && map.cameraPosition.zoom < ACTIVE_MIN_ZOOM) {
+            activeBounds = if (enabled) RURAL_BOUNDS else ZARAGOZA_BOUNDS
+            map.setLatLngBoundsForCameraTarget(activeBounds)
+            activeMinZoom = if (enabled) MIN_ZOOM_RURAL else MIN_ZOOM
+            if (!enabled && map.cameraPosition.zoom < activeMinZoom) {
                 // If the map was zoomed out too far zoom in gently
-                map.animateCamera(CameraUpdateFactory.zoomTo(ACTIVE_MIN_ZOOM), object : GoogleMap.CancelableCallback {
+                map.animateCamera(CameraUpdateFactory.zoomTo(activeMinZoom), object : GoogleMap.CancelableCallback {
                     override fun onFinish() {
-                        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+                        map.setMinZoomPreference(activeMinZoom)
                     }
 
                     override fun onCancel() {
-                        map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+                        map.setMinZoomPreference(activeMinZoom)
                     }
                 })
             } else {
-                map.setMinZoomPreference(ACTIVE_MIN_ZOOM)
+                map.setMinZoomPreference(activeMinZoom)
             }
         })
 
@@ -320,6 +320,7 @@ class MapFragment : FragmentWithToolbar() {
             ruralStopsItems.clear()
             ruralStopsItems.addAll(items)
         })
+
         // Trackings
         mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
             if (trackings.status == Status.SUCCESS && trackings.data != null) {
@@ -338,12 +339,9 @@ class MapFragment : FragmentWithToolbar() {
     }
 
     private fun getTrackingsTitle(): String {
-        val time = ruralTrackingsItems[0].ruralTracking?.updatedAt
+        val time = ruralTrackingsItems.getOrNull(0)?.ruralTracking?.updatedAt
         return if (time != null) {
-            getString(
-                R.string.rural_trackings_template,
-                DateFormat.getTimeInstance(DateFormat.SHORT).format(ruralTrackingsItems[0].ruralTracking?.updatedAt)
-            )
+            getString(R.string.rural_trackings_template, DateFormat.getTimeInstance(DateFormat.SHORT).format(time))
         } else {
             getString(R.string.rural_trackings)
         }
