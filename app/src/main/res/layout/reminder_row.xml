@@ -192,7 +192,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@android:color/transparent"
-                android:drawableBottom="@drawable/ic_edit_black_24dp"
+                android:drawableBottom="@drawable/ic_edit_on_surface_24dp"
                 android:contentDescription="@string/edit"
                 android:paddingStart="8dp"
                 android:paddingTop="12dp"

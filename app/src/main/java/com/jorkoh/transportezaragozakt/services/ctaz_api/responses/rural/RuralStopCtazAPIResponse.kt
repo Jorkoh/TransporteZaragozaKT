@@ -34,6 +34,10 @@ data class RuralStopCtazAPIResponse(
                         sortedDestinationTimes.getOrNull(1)?.vehicleId ?: 0 != "0"
                     ) ?: ""
                 ),
+                listOf(
+                    if (sortedDestinationTimes[0].vehicleId != "0") "Y" else "N",
+                    if (sortedDestinationTimes.getOrNull(1)?.vehicleId ?: 0 != "0") "Y" else "N"
+                ),
                 Date()
             )
         }

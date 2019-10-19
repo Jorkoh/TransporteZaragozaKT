@@ -73,6 +73,9 @@ data class StopDestination(
     @ColumnInfo(name = "times")
     var times: List<String>,
 
+    @ColumnInfo(name = "areTrackedTimes")
+    var areTrackedTimes: List<String>,
+
     @ColumnInfo(name = "updatedAt")
     var updatedAt: Date
 )

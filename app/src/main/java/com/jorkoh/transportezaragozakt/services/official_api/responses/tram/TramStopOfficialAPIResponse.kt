@@ -47,6 +47,7 @@ data class TramStopOfficialAPIResponse(
                     (destinationTimes.value[0].minutos),
                     (destinationTimes.value.getOrNull(1)?.minutos ?: "")
                 ),
+                listOf("Y", "Y"),
                 Date()
             )
         }

@@ -67,8 +67,13 @@ class StopDetailsFragment : FragmentWithToolbar() {
             )
         }
     }
+    private val openNotTrackedWarning: () -> Unit = {
+        MaterialDialog(requireContext()).show {
+            message(R.string.time_not_tracked_explanation)
+        }
+    }
 
-    private val stopDestinationsTimesAdapter: StopDestinationsTimesAdapter = StopDestinationsTimesAdapter(openLine)
+    private val stopDestinationsTimesAdapter: StopDestinationsTimesAdapter = StopDestinationsTimesAdapter(openLine, openNotTrackedWarning)
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
         val newVisibility = when (stopDestinations.status) {

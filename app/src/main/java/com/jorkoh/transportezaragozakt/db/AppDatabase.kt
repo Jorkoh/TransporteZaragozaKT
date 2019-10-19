@@ -3,6 +3,8 @@ package com.jorkoh.transportezaragozakt.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [
@@ -15,7 +17,7 @@ import androidx.room.TypeConverters
         RuralTracking::class
     ],
     exportSchema = false,
-    version = 1
+    version = 2
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -26,4 +28,10 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun stopsDao(): StopsDao
     abstract fun trackingsDao(): TrackingsDao
     abstract fun remindersDao(): RemindersDao
+}
+
+val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("")
+    }
 }

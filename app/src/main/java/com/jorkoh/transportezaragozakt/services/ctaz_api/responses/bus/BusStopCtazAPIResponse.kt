@@ -27,6 +27,7 @@ data class BusStopCtazAPIResponse(
                         (destinationTimes.value[0].arrival_time),
                         (destinationTimes.value.getOrNull(1)?.arrival_time ?: "")
                     ),
+                    listOf("Y", "Y"),
                     Date()
                 )
             }

@@ -14,7 +14,7 @@ class BusStopBusWebResponse : BusStopResponse {
     @Selector("[xmlns] tbody:nth-of-type(1) tbody tr:not(:first-child)")
     var destinations: List<Destination>? = null
 
-    override fun toStopDestinations(busStopId : String): List<StopDestination> {
+    override fun toStopDestinations(busStopId: String): List<StopDestination> {
         val stopDestinations = mutableListOf<StopDestination>()
         destinations?.groupBy { it.line + it.name }?.forEach { destinationTimes ->
             stopDestinations += StopDestination(
@@ -25,6 +25,7 @@ class BusStopBusWebResponse : BusStopResponse {
                     (destinationTimes.value[0].minutes),
                     (destinationTimes.value.getOrNull(1)?.minutes ?: "")
                 ),
+                listOf("Y", "Y"),
                 Date()
             )
         }

@@ -42,6 +42,7 @@ data class BusStopOfficialAPIResponse(
                     destination.primero,
                     destination.segundo
                 ),
+                listOf("Y", "Y"),
                 Date()
             )
         }

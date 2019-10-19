@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
+import com.jorkoh.transportezaragozakt.db.MIGRATION_1_2
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapSettingsViewModel
@@ -114,6 +115,7 @@ val appModule = module {
                     }
                 }
             })
+            .addMigrations(MIGRATION_1_2)
             .build()
     }
     single { get<AppDatabase>().stopsDao() }

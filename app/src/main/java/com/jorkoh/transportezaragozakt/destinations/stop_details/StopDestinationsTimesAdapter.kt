@@ -19,7 +19,8 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.destination_row.*
 
 class StopDestinationsTimesAdapter(
-    private val openLine: (LineDetailsFragmentArgs) -> Unit
+    private val openLine: (LineDetailsFragmentArgs) -> Unit,
+    private val openNotTrackedWarning: () -> Unit
 ) : RecyclerView.Adapter<StopDestinationsTimesAdapter.StopDestinationsViewHolder>() {
 
     class StopDestinationsViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -31,7 +32,8 @@ class StopDestinationsTimesAdapter(
             destination: StopDestination,
             stopType: StopType,
             stopId: String,
-            openLine: (LineDetailsFragmentArgs) -> Unit
+            openLine: (LineDetailsFragmentArgs) -> Unit,
+            openNotTrackedWarning: () -> Unit
         ) {
             // Line number and color
             line_text.text = destination.line
@@ -54,10 +56,19 @@ class StopDestinationsTimesAdapter(
             destination_text.text = destination.destination
             first_time_text.text = destination.times[0].fixTimes(context)
             second_time_text.text = destination.times[1].fixTimes(context)
+            // Warning icons
+            first_time_warning.visibility = if (destination.areTrackedTimes[0] == "Y") View.GONE else View.VISIBLE
+            second_time_warning.visibility = if (destination.areTrackedTimes[1] == "Y") View.GONE else View.VISIBLE
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
                 openLine(LineDetailsFragmentArgs(stopType.toLineType().name, destination.line, stopId))
             })
+            first_time_warning.setOnClickListener{
+                openNotTrackedWarning()
+            }
+            second_time_warning.setOnClickListener{
+                openNotTrackedWarning()
+            }
         }
     }
 
@@ -72,7 +83,7 @@ class StopDestinationsTimesAdapter(
     }
 
     override fun onBindViewHolder(holder: StopDestinationsViewHolder, position: Int) {
-        holder.bind(stopDestinations[position], stopType, stopId, openLine)
+        holder.bind(stopDestinations[position], stopType, stopId, openLine, openNotTrackedWarning)
     }
 
     override fun getItemCount(): Int = stopDestinations.size

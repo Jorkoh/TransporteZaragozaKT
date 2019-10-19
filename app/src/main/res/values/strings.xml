@@ -44,6 +44,7 @@
     <!--Stop details-->
     <string name="no_data_available" translatable="true">No data available</string>
     <string name="no_data_available_suggestions" translatable="true">Please check your internet connection and try again.\n\nArrival times are obtained from every available source: the city council public API, the Avanza tram and bus websites and the CTAZ service. If the problem persists the entire system is probably undergoing maintenance and the information is impossible to obtain.\n\nSome stops don\'t receive time updates, specially outside of their schedule.</string>
+    <string name="time_not_tracked_explanation" translatable="true">Careful! This time can be highly inaccurate.\n\nCTAZ provides this arrival time based on scheduling tables and not on real time vehicle tracking.\n\nTry locating your next bus with the tracking feature on the line view to confirm the estimate.</string>
     <string name="no_estimate" translatable="true">No estimate</string>
     <string name="minutes" translatable="true">minutes</string>
     <string name="minute" translatable="true">minute</string>
@@ -61,6 +62,7 @@
     <string name="pinned_shortcut_snackbar" translatable="true">Created shortcut!</string>
     <string name="stop" translatable="true">Stop</string>
     <string name="number_template" translatable="true">Number %1$s</string>
+    <string name="estimated_time_warning" translatable="true">Estimated time warning</string>
 
     <!--Line details-->
     <string name="line_template" translatable="true">Line %1$s</string>

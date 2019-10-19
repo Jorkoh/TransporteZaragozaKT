@@ -23,6 +23,7 @@ data class TramStopCtazAPIResponse(
                     (destinationTimes.value[0].arrival_time.toString()),
                     (destinationTimes.value.getOrNull(1)?.arrival_time?.toString() ?: "")
                 ),
+                listOf("Y", "Y"),
                 Date()
             )
         }
