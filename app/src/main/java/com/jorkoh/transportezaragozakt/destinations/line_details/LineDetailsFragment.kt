@@ -210,9 +210,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
         map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
         map.setOnMarkerClickListener { marker ->
-            lineDetailsVM.selectedItemId.postValue(with(marker.tag as CustomClusterItem) {
-                stop?.stopId ?: ruralTracking?.vehicleId ?: ""
-            })
+            lineDetailsVM.selectedItemId.postValue((marker.tag as CustomClusterItem).itemId)
             false
         }
 
@@ -310,17 +308,11 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 // Setup the observer for the selected stop, this can't be done until markers are ready
                 lineDetailsVM.selectedItemId.observe(viewLifecycleOwner, Observer { selectedItemId ->
                     if (!selectedItemId.isNullOrEmpty()) {
-                        stopMarkers.find { marker ->
-                            with(marker.tag as CustomClusterItem) {
-                                stop?.stopId ?: ruralTracking?.vehicleId == selectedItemId
-                            }
+                        stopMarkers.plus(trackingMarkers).find { marker ->
+                            (marker.tag as CustomClusterItem).itemId == selectedItemId
                         }?.let { selectedMarker ->
                             selectedMarker.showInfoWindow()
-                            map.animateCamera(
-                                CameraUpdateFactory.newLatLng((selectedMarker.tag as CustomClusterItem).stop?.location),
-                                240,
-                                null
-                            )
+                            map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as CustomClusterItem).position), 240, null)
                             bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
                         }
                     }

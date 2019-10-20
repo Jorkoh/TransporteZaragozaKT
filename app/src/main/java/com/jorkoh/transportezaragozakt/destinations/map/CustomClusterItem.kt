@@ -9,6 +9,7 @@ import com.jorkoh.transportezaragozakt.db.StopType
 data class CustomClusterItem(
     private val _position: LatLng,
     val type: ClusterItemType,
+    val itemId: String,
     val stop: Stop? = null,
     val ruralTracking: RuralTracking? = null
 ) : ClusterItem {
@@ -99,12 +100,14 @@ data class CustomClusterItem(
             StopType.TRAM -> if (stop.isFavorite) ClusterItemType.TRAM_FAVORITE else ClusterItemType.TRAM_NORMAL
             StopType.RURAL -> if (stop.isFavorite) ClusterItemType.RURAL_FAVORITE else ClusterItemType.RURAL_NORMAL
         },
+        stop.stopId,
         stop = stop
     )
 
     constructor(ruralTracking: RuralTracking) : this(
         ruralTracking.location,
         ClusterItemType.RURAL_TRACKING,
+        ruralTracking.vehicleId,
         ruralTracking = ruralTracking
     )
 }

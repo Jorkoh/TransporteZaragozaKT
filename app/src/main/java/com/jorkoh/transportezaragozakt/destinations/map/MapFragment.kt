@@ -219,7 +219,7 @@ class MapFragment : FragmentWithToolbar() {
 
         clusterManager.algorithm = clusteringAlgorithm
         clusterManager.setOnClusterItemClickListener { item ->
-            mapVM.selectedItemId.postValue(item?.stop?.stopId ?: item?.ruralTracking?.vehicleId ?: "")
+            mapVM.selectedItemId.postValue(item.itemId)
             false
         }
         map.setOnInfoWindowCloseListener {

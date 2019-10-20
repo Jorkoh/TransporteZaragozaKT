@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/search_destination"
-            app:startDestination="@id/search"
-            tools:ignore="UnusedNavigation">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/search_destination"
+        app:startDestination="@id/search"
+        tools:ignore="UnusedNavigation">
 
     <fragment
             android:id="@+id/search"
@@ -13,16 +13,15 @@
             tools:layout="@layout/search_destination">
         <action
                 android:id="@+id/action_search_to_stopDetails"
-                app:destination="@id/stopDetails"
-                />
+                app:destination="@id/stopDetails" />
         <action
                 android:id="@+id/action_search_to_lineDetails"
-                app:destination="@id/lineDetails"/>
+                app:destination="@id/lineDetails" />
         <!-- DEEP LINKS ARE BUGGED IN GOOGLE'S IMPLEMENTATION, WRONG BEHAVIOUR IF DEEP LINKING TO INITIAL GRAPH-->
         <!-- LINKING TO DEEPER DESTINATIONS DOESN'T WORK PROPERLY EITHER WITH MULTIPLE NAVIGATION GRAPHS-->
         <deepLink
                 android:id="@+id/deepLinkStop"
-                app:uri="launchTZ://viewStop/{stopType}/{stopId}/"/>
+                app:uri="launchTZ://viewStop/{stopType}/{stopId}/" />
     </fragment>
 
     <fragment
@@ -31,20 +30,20 @@
             tools:layout="@layout/line_details_destination">
         <argument
                 android:name="lineType"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="lineId"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="stopId"
                 app:argType="string"
-                app:nullable="true"/>
+                app:nullable="true" />
         <action
                 android:id="@+id/action_lineDetails_to_stopDetails"
-                app:destination="@id/stopDetails"/>
+                app:destination="@id/stopDetails" />
         <action
                 android:id="@id/action_lineDetails_to_webView"
-                app:destination="@id/webView"/>
+                app:destination="@id/webView" />
     </fragment>
 
     <fragment
@@ -53,15 +52,15 @@
             tools:layout="@layout/stop_details_destination">
         <argument
                 android:name="stopType"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="stopId"
-                app:argType="string"/>
+                app:argType="string" />
         <action
                 android:id="@+id/action_stopDetails_to_lineDetails"
                 app:destination="@id/lineDetails"
                 app:popUpTo="@id/lineDetails"
-                app:popUpToInclusive="true"/>
+                app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -69,18 +68,18 @@
             android:name="com.jorkoh.transportezaragozakt.destinations.web_view.WebViewFragment">
         <argument
                 android:name="url"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="title"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="javascript"
+                android:defaultValue="null"
                 app:argType="string"
-                app:nullable="true"
-                android:defaultValue="null"/>
+                app:nullable="true" />
         <argument
                 android:name="isTwitterTimeline"
-                app:argType="boolean"
-                android:defaultValue="false"/>
+                android:defaultValue="false"
+                app:argType="boolean" />
     </fragment>
 </navigation>

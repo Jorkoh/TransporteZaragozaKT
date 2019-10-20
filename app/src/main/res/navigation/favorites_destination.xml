@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/favorites_destination"
-            app:startDestination="@id/favorites">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/favorites_destination"
+        app:startDestination="@id/favorites">
 
     <fragment
             android:id="@+id/favorites"
@@ -12,24 +12,23 @@
             tools:layout="@layout/favorites_destination">
         <action
                 android:id="@+id/action_favorites_to_stopDetails"
-                app:destination="@id/stopDetails"/>
+                app:destination="@id/stopDetails" />
     </fragment>
     <fragment
             android:id="@+id/stopDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
-            tools:layout="@layout/stop_details_destination"
-            >
+            tools:layout="@layout/stop_details_destination">
         <argument
                 android:name="stopType"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="stopId"
-                app:argType="string"/>
+                app:argType="string" />
         <action
                 android:id="@+id/action_stopDetails_to_lineDetails"
                 app:destination="@id/lineDetails"
-                app:popUpTo="@id/lineDetails"
-                app:popUpToInclusive="true"/>
+                app:popUpTo="@+id/lineDetails"
+                app:popUpToInclusive="true" />
     </fragment>
     <fragment
             android:id="@+id/lineDetails"
@@ -37,38 +36,38 @@
             tools:layout="@layout/line_details_destination">
         <argument
                 android:name="lineType"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="lineId"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="stopId"
                 app:argType="string"
-                app:nullable="true"/>
+                app:nullable="true" />
         <action
-                android:id="@id/action_lineDetails_to_stopDetails"
-                app:destination="@id/stopDetails"/>
+                android:id="@+id/action_lineDetails_to_stopDetails"
+                app:destination="@id/stopDetails" />
         <action
                 android:id="@+id/action_lineDetails_to_webView"
-                app:destination="@id/webView"/>
+                app:destination="@id/webView" />
     </fragment>
     <fragment
             android:id="@+id/webView"
             android:name="com.jorkoh.transportezaragozakt.destinations.web_view.WebViewFragment">
         <argument
                 android:name="url"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="title"
-                app:argType="string"/>
+                app:argType="string" />
         <argument
                 android:name="javascript"
+                android:defaultValue="null"
                 app:argType="string"
-                app:nullable="true"
-                android:defaultValue="null"/>
+                app:nullable="true" />
         <argument
                 android:name="isTwitterTimeline"
-                app:argType="boolean"
-                android:defaultValue="false"/>
+                android:defaultValue="false"
+                app:argType="boolean" />
     </fragment>
 </navigation>
