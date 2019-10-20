@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.os.Build
+import android.text.format.DateFormat.getTimeFormat
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
@@ -141,9 +142,11 @@ class AlarmService : LifecycleService() {
     ): NotificationRemoteViews {
         val remoteView = RemoteViews(packageName, R.layout.notification_custom).apply {
             setTextViewText(R.id.notification_stop_title, reminderAlias)
+            setTextViewText(R.id.notification_time_of_publication, getTimeFormat(applicationContext).format(Date()))
         }
         val bigRemoteView = RemoteViews(packageName, R.layout.notification_custom).apply {
             setTextViewText(R.id.notification_stop_title, reminderAlias)
+            setTextViewText(R.id.notification_time_of_publication, getTimeFormat(applicationContext).format(Date()))
         }
 
         val destinationRowLayout = when (stopType) {

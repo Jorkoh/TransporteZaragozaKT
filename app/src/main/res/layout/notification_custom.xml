@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/reminder_destinations_container"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:showDividers="middle"
-              android:divider="@drawable/empty_divider"
-              android:padding="8dp">
+        android:id="@+id/reminder_destinations_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/empty_divider"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:showDividers="middle">
 
-    <TextView
-            style="@android:style/Widget.Material.TextView"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:gravity="center"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/notification_stop_title"/>
+            android:orientation="horizontal">
+
+        <TextView
+                android:id="@+id/notification_stop_title"
+                style="@android:style/Widget.Material.TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        <TextView
+                android:id="@+id/notification_time_of_publication"
+                style="@android:style/Widget.Material.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="6dp"
+                android:gravity="top"
+                android:textColor="#000000"
+                android:textSize="12sp"/>
+    </LinearLayout>
 </LinearLayout>
