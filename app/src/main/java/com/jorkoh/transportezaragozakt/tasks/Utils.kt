@@ -15,7 +15,7 @@ fun enqueuePeriodicUpdateDataWorker(context: Context) {
             Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
-        ).setInitialDelay(30, TimeUnit.SECONDS)
+        ).setInitialDelay(5, TimeUnit.SECONDS)
         .build()
 
     WorkManager.getInstance(context).enqueueUniquePeriodicWork(

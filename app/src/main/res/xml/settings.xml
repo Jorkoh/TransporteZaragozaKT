@@ -17,12 +17,14 @@
                 app:key="@string/map_animations_key"
                 app:title="@string/map_animations_title"
                 app:summary="@string/map_animations_summary"
+                android:defaultValue="true"
                 app:iconSpaceReserved="false"/>
 
         <SwitchPreference
                 app:key="@string/is_dark_map_key"
                 app:title="@string/dark_map_title"
                 app:summary="@string/dark_map_summary"
+                android:defaultValue="false"
                 app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 

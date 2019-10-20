@@ -204,7 +204,7 @@
     <string name="parse_rural_lines_locations_collection" translatable="false">v2_rural_lines_locations</string>
     <string name="parse_changelog_collection" translatable="false">v2_changelog</string>
     <string name="parse_versions_collection" translatable="false">v2_versions</string>
-    <string name="update_data_work_name" translatable="false">UPDATE_DATA_WORK_NAME</string>
+    <string name="update_data_work_name" translatable="false">V2_UPDATE_DATA_WORK_NAME</string>
 
     <!--Notifications-->
     <string name="notification_channel_id_reminders" translatable="false">com.jorkoh.transportezaragozakt.NOTIFICATION_CHANNEL_ID_REMINDERS</string>

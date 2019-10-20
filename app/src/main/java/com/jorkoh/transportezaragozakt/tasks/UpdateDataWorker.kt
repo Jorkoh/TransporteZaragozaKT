@@ -35,15 +35,12 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_versions_collection)).apply {
             limit = 1
-        }.getFirstInBackground { document, e ->
-            if (e != null) return@getFirstInBackground
+        }.getFirstInBackground { document, exception ->
+            if (exception != null) return@getFirstInBackground
 
             // Bus stops
             newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_stops_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_bus_stops_version_number_key),
-                applicationContext.resources.getInteger(R.integer.bus_stops_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_stops_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_stops_collection)).apply {
                     whereEqualTo("version", newVersion)
@@ -58,10 +55,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Tram stops
             newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_stops_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_tram_stops_version_number_key),
-                applicationContext.resources.getInteger(R.integer.tram_stops_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_stops_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_stops_collection)).apply {
                     whereEqualTo("version", newVersion)
@@ -76,10 +70,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Rural stops
             newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_stops_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_rural_stops_version_number_key),
-                applicationContext.resources.getInteger(R.integer.rural_stops_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_stops_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_stops_collection)).apply {
                     whereEqualTo("version", newVersion)
@@ -94,10 +85,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Bus lines
             newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_bus_lines_version_number_key),
-                applicationContext.resources.getInteger(R.integer.bus_lines_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_collection)).apply {
                     whereEqualTo("version", newVersion)
@@ -112,10 +100,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Tram lines
             newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_tram_lines_version_number_key),
-                applicationContext.resources.getInteger(R.integer.tram_lines_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_collection)).apply {
                     whereEqualTo("version", newVersion)
@@ -130,10 +115,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Rural lines
             newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_rural_lines_version_number_key),
-                applicationContext.resources.getInteger(R.integer.rural_lines_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_collection)).apply {
                     whereEqualTo("version", newVersion)
@@ -148,10 +130,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Bus lines locations
             newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key),
-                applicationContext.resources.getInteger(R.integer.bus_lines_locations_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
                     .apply {
@@ -170,10 +149,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Tram lines locations
             newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
-                applicationContext.resources.getInteger(R.integer.tram_lines_locations_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
                     .apply {
@@ -193,10 +169,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Rural lines locations
             newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
-            oldVersion = sharedPreferences.getInt(
-                applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key),
-                applicationContext.resources.getInteger(R.integer.rural_lines_locations_default_version)
-            )
+            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key), 0)
             if (newVersion != oldVersion) {
                 ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
                     .apply {
@@ -216,10 +189,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
 
             // Changelog
             (document.getInt(applicationContext.getString(R.string.parse_changelog_collection))).let { newVersion ->
-                val oldVersion = sharedPreferences.getInt(
-                    applicationContext.getString(R.string.saved_changelog_version_number_key),
-                    applicationContext.resources.getInteger(R.integer.changelog_default_version)
-                )
+                val oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_changelog_version_number_key), 0)
                 if (newVersion != oldVersion) {
                     updateChangelog(newVersion)
                     showUpdateNotification()
@@ -344,11 +314,6 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
                     putString(
                         applicationContext.getString(R.string.saved_changelog_es_key),
                         changelogDocument.getString("textES")
-                    )
-
-                    putInt(
-                        applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
-                        changelogDocument.getInt("version")
                     )
                     apply()
                 }
