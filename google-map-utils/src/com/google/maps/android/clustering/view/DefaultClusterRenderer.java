@@ -109,13 +109,13 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     /**
      * Icons for each bucket.
      */
-    private SparseArray<BitmapDescriptor> mIconsB = new SparseArray<BitmapDescriptor>();
-    private SparseArray<BitmapDescriptor> mIconsT = new SparseArray<BitmapDescriptor>();
-    private SparseArray<BitmapDescriptor> mIconsR = new SparseArray<BitmapDescriptor>();
-    private SparseArray<BitmapDescriptor> mIconsBT = new SparseArray<BitmapDescriptor>();
-    private SparseArray<BitmapDescriptor> mIconsBR = new SparseArray<BitmapDescriptor>();
-    private SparseArray<BitmapDescriptor> mIconsTR = new SparseArray<BitmapDescriptor>();
-    private SparseArray<BitmapDescriptor> mIconsBTR = new SparseArray<BitmapDescriptor>();
+    private SparseArray<BitmapDescriptor> mIconsB = new SparseArray<>();
+    private SparseArray<BitmapDescriptor> mIconsT = new SparseArray<>();
+    private SparseArray<BitmapDescriptor> mIconsR = new SparseArray<>();
+    private SparseArray<BitmapDescriptor> mIconsBT = new SparseArray<>();
+    private SparseArray<BitmapDescriptor> mIconsBR = new SparseArray<>();
+    private SparseArray<BitmapDescriptor> mIconsTR = new SparseArray<>();
+    private SparseArray<BitmapDescriptor> mIconsBTR = new SparseArray<>();
 
     /**
      * Markers for single ClusterItems.
@@ -135,8 +135,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     /**
      * Lookup between markers and the associated cluster.
      */
-    private Map<Marker, Cluster<T>> mMarkerToCluster = new HashMap<Marker, Cluster<T>>();
-    private Map<Cluster<T>, Marker> mClusterToMarker = new HashMap<Cluster<T>, Marker>();
+    private Map<Marker, Cluster<T>> mMarkerToCluster = new HashMap<>();
+    private Map<Cluster<T>, Marker> mClusterToMarker = new HashMap<>();
 
     /**
      * The target zoom level for the current set of clusters.
@@ -289,11 +289,11 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
     private LayerDrawable makeClusterBackgroundBT() {
         mColoredCircleBackgroundBT = new ShapeDrawable(new OvalShape());
         ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(90, 180));
-        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
-        separator.getPaint().setColor(SEPARATOR_COLOR);
         outline1.getPaint().setColor(BUS_COLOR);
         ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(270, 180));
         outline2.getPaint().setColor(TRAM_COLOR);
+        ShapeDrawable separator = new ShapeDrawable(new OvalShape());
+        separator.getPaint().setColor(SEPARATOR_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, separator, mColoredCircleBackgroundBT});
         int strokeWidthSeparator = (int) ((mDensity * 6) - 1);
         background.setLayerInset(2, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator, strokeWidthSeparator);
@@ -336,12 +336,12 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements ClusterRen
 
     private LayerDrawable makeClusterBackgroundBTR() {
         mColoredCircleBackgroundBTR = new ShapeDrawable(new OvalShape());
-        ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(30, 120));
+        ShapeDrawable outline1 = new ShapeDrawable(new ArcShape(150, 120));
         outline1.getPaint().setColor(BUS_COLOR);
-        ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(150, 120));
+        ShapeDrawable outline2 = new ShapeDrawable(new ArcShape(30, 120));
         outline2.getPaint().setColor(TRAM_COLOR);
         ShapeDrawable outline3 = new ShapeDrawable(new ArcShape(270, 120));
-        outline2.getPaint().setColor(RURAL_COLOR);
+        outline3.getPaint().setColor(RURAL_COLOR);
         ShapeDrawable separator = new ShapeDrawable(new OvalShape());
         separator.getPaint().setColor(SEPARATOR_COLOR);
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline1, outline2, outline3, separator, mColoredCircleBackgroundBTR});
