@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.synthetic.main.search_destination_all_stops.*
 import kotlinx.android.synthetic.main.search_destination_all_stops.view.*
@@ -21,6 +22,7 @@ class AllStopsFragment : Fragment() {
 
     private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            activity?.currentFocus?.hideKeyboard()
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchToStopDetails(
                     info.stopType,

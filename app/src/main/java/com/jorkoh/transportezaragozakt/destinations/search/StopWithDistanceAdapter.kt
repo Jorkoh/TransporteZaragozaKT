@@ -72,12 +72,7 @@ class StopWithDistanceAdapter(
             )
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
-                openStop(
-                    StopDetailsFragmentArgs(
-                        stopWithDistance.stop.type.name,
-                        stopWithDistance.stop.stopId
-                    )
-                )
+                openStop(StopDetailsFragmentArgs(stopWithDistance.stop.type.name, stopWithDistance.stop.stopId))
             })
         }
     }
