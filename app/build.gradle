@@ -14,8 +14,8 @@ android {
         targetSdkVersion buildConfig.targetSdk
 
         applicationId "com.jorkoh.transportezaragozakt"
-        versionCode 19
-        versionName "1.1.1-dev"
+        versionCode 20
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

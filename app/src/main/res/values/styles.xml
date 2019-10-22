@@ -49,6 +49,10 @@
         <item name="android:numbersInnerTextColor" tools:targetApi="m">?colorOnPrimary</item>
     </style>
 
+    <style name="BaseTheme.CustomBottomNavigationViewText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="BaseTheme.PreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay">
         <item name="android:layout">@layout/more_destination</item>
     </style>
