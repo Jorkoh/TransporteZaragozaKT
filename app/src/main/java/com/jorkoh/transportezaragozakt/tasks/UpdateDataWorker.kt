@@ -24,6 +24,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams),
     KoinComponent {
 
+    private val db: AppDatabase by inject()
     private val stopsDao: StopsDao by inject()
     private val executors: AppExecutors by inject()
     private val sharedPreferences: SharedPreferences by inject()
@@ -232,7 +233,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             stopEntities.add(stopEntity)
         }
         executors.diskIO().execute {
-            stopsDao.updateStops(stopEntities, stopType)
+            db.runInTransaction {
+                stopsDao.updateStops(stopEntities, stopType)
+            }
         }
     }
 
@@ -271,7 +274,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             }
         }
         executors.diskIO().execute {
-            stopsDao.updateLines(linesEntities, lineType)
+            db.runInTransaction {
+                stopsDao.updateLines(linesEntities, lineType)
+            }
         }
     }
 
@@ -295,7 +300,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             }
         }
         executors.diskIO().execute {
-            stopsDao.updateLinesLocations(linesLocationsEntities, lineType)
+            db.runInTransaction {
+                stopsDao.updateLinesLocations(linesLocationsEntities, lineType)
+            }
         }
     }
 

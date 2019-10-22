@@ -200,13 +200,14 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private fun configureMap() {
         map.setOnInfoWindowClickListener { marker ->
-            val stop = requireNotNull((marker.tag as CustomClusterItem).stop)
-            findNavController().navigate(
-                LineDetailsFragmentDirections.actionLineDetailsToStopDetails(
-                    stop.type.name,
-                    stop.stopId
+            (marker.tag as CustomClusterItem).stop?.let { stop ->
+                findNavController().navigate(
+                    LineDetailsFragmentDirections.actionLineDetailsToStopDetails(
+                        stop.type.name,
+                        stop.stopId
+                    )
                 )
-            )
+            }
         }
         map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
         map.setOnMarkerClickListener { marker ->
