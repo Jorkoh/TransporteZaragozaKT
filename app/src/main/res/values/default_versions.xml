@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="bus_stops_default_version">4</integer>
-    <integer name="tram_stops_default_version">4</integer>
-    <integer name="rural_stops_default_version">4</integer>
-    <integer name="bus_lines_default_version">4</integer>
-    <integer name="tram_lines_default_version">4</integer>
-    <integer name="rural_lines_default_version">4</integer>
-    <integer name="bus_lines_locations_default_version">4</integer>
-    <integer name="tram_lines_locations_default_version">4</integer>
-    <integer name="rural_lines_locations_default_version">4</integer>
-    <integer name="changelog_default_version">4</integer>
+    <integer name="bus_stops_default_version">3</integer>
+    <integer name="tram_stops_default_version">3</integer>
+    <integer name="rural_stops_default_version">3</integer>
+    <integer name="bus_lines_default_version">3</integer>
+    <integer name="tram_lines_default_version">3</integer>
+    <integer name="rural_lines_default_version">3</integer>
+    <integer name="bus_lines_locations_default_version">3</integer>
+    <integer name="tram_lines_locations_default_version">3</integer>
+    <integer name="rural_lines_locations_default_version">3</integer>
+    <integer name="changelog_default_version">3</integer>
 </resources>

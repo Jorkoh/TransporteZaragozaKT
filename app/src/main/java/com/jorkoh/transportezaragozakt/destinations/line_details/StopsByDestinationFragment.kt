@@ -48,6 +48,7 @@ class StopsByDestinationFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = stopsAdapter
+            itemAnimator = null
         }
 
         return rootView
