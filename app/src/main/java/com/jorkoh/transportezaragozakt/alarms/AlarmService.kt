@@ -54,11 +54,10 @@ class AlarmService : LifecycleService() {
         }
     }
 
-
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         currentInstances.push(Unit)
 
-        requireNotNull(intent.extras).let { extras ->
+        intent?.extras?.let { extras ->
             val stopId = requireNotNull(extras.getString(STOP_ID_KEY_ALARM))
             val stopType = StopType.valueOf(requireNotNull(extras.getString(STOP_TYPE_KEY_ALARM)))
             val reminderId = extras.getInt(REMINDER_ID_KEY_ALARM)

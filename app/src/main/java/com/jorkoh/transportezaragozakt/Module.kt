@@ -119,6 +119,7 @@ val appModule = module {
             .build()
     }
     single { get<AppDatabase>().stopsDao() }
+    single { get<AppDatabase>().favoritesDao() }
     single { get<AppDatabase>().remindersDao() }
     single { get<AppDatabase>().trackingsDao() }
 
@@ -144,7 +145,7 @@ val appModule = module {
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
     single <RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get(), get()) }
-    single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get(), get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get()) }
     single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
 
     // ViewModels

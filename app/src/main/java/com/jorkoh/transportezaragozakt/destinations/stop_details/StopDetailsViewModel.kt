@@ -1,8 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.stop_details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -10,6 +8,7 @@ import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import kotlinx.coroutines.launch
 import java.util.*
 
 class StopDetailsViewModel(
@@ -32,12 +31,16 @@ class StopDetailsViewModel(
         this.stopId = stopId
         this.stopType = stopType
 
-        stopIsFavorited = favoritesRepository.isFavoriteStop(stopId)
+        stopIsFavorited = favoritesRepository.isFavoriteStop(stopId).asLiveData()
         stop = stopsRepository.loadStop(stopType, stopId)
     }
 
     fun toggleStopFavorite() {
-        favoritesRepository.toggleStopFavorite(stopId)
+        stop.value?.let { stop ->
+            viewModelScope.launch {
+                favoritesRepository.toggleStopFavorite(stop)
+            }
+        }
     }
 
     fun refreshStopDestinations() {

@@ -5,6 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.jorkoh.transportezaragozakt.db.daos.FavoritesDao
+import com.jorkoh.transportezaragozakt.db.daos.RemindersDao
+import com.jorkoh.transportezaragozakt.db.daos.StopsDao
+import com.jorkoh.transportezaragozakt.db.daos.TrackingsDao
 
 @Database(
     entities = [
@@ -27,6 +31,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun stopsDao(): StopsDao
     abstract fun trackingsDao(): TrackingsDao
+    abstract fun favoritesDao(): FavoritesDao
     abstract fun remindersDao(): RemindersDao
 }
 

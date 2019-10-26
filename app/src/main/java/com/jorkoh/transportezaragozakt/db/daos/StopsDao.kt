@@ -1,131 +1,69 @@
-package com.jorkoh.transportezaragozakt.db
+package com.jorkoh.transportezaragozakt.db.daos
 
 import android.content.Context
 import android.preference.PreferenceManager
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.db.*
 
 @Dao
-abstract class StopsDao {
-    //Favorite stuff
-    @Query("SELECT isFavorite FROM stops WHERE stopId = :stopId")
-    abstract fun stopIsFavorite(stopId: String): LiveData<Boolean>
-
-    fun toggleFavorite(stopId: String) {
-        if (stopIsFavoriteImmediate(stopId)) {
-            deleteFavorite(stopId)
-            updateIsFavorite(stopId, false)
-        } else {
-            insertFavoriteStop(FavoriteStop(stopId, getStopTitleImmediate(stopId), "", getLastPositionImmediate()))
-            updateIsFavorite(stopId, true)
-        }
-    }
-
-    fun moveFavorite(from: Int, to: Int) {
-        val initialPositions = getFavoritePositions()
-        val finalPositions = initialPositions.toMutableList()
-
-        val movedFavorite = finalPositions[from]
-        finalPositions.removeAt(from)
-        finalPositions.add(to, movedFavorite)
-
-        initialPositions.forEachIndexed { index, oldPosition ->
-            if (oldPosition != finalPositions[index]) {
-                val newPosition = finalPositions.indexOf(oldPosition) + 1
-                updatePosition(oldPosition.stopId, newPosition)
-            }
-        }
-    }
-
-    @Query("UPDATE favoriteStops SET position = :newPosition WHERE stopId = :stopId")
-    abstract fun updatePosition(stopId: String, newPosition: Int)
-
-    @Query("SELECT isFavorite FROM stops WHERE stopId = :stopId")
-    abstract fun stopIsFavoriteImmediate(stopId: String): Boolean
-
-    @Query("DELETE FROM favoriteStops WHERE stopId = :stopId")
-    abstract fun deleteFavorite(stopId: String)
-
-    @Query("DELETE FROM favoriteStops")
-    abstract fun deleteAllFavorites()
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertFavoriteStop(favoriteStop: FavoriteStop)
-
-    @Query("UPDATE stops SET isFavorite = :isFavorite WHERE stopId = :stopId")
-    abstract fun updateIsFavorite(stopId: String, isFavorite: Boolean)
-
-    @Query("SELECT favoriteStops.stopId, stops.type, stops.number, stops.stopTitle, favoriteStops.alias, favoriteStops.colorHex, stops.lines FROM stops INNER JOIN favoriteStops ON stops.stopId = favoriteStops.stopId ORDER BY favoriteStops.position ASC")
-    abstract fun getFavoriteStops(): LiveData<List<FavoriteStopExtended>>
-
-    @Query("SELECT COUNT(*) FROM favoriteStops")
-    abstract fun getFavoriteCount(): LiveData<Int>
-
-    @Query("SELECT stopId, position FROM favoriteStops ORDER BY favoriteStops.position ASC")
-    abstract fun getFavoritePositions(): List<FavoritePositions>
-
-    @Query("UPDATE favoriteStops SET alias = :alias, colorHex = :colorHex WHERE stopId = :stopId")
-    abstract fun updateFavorite(stopId: String, colorHex: String, alias: String)
-
-    //Other stuff
+interface StopsDao {
     @Query("SELECT * FROM stops WHERE type = :stopType")
-    abstract fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
+    fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
 
     @Query("SELECT * FROM lines WHERE type = :lineType AND parentLineId IS NULL")
-    abstract fun getMainLinesByType(lineType: LineType): LiveData<List<Line>>
+    fun getMainLinesByType(lineType: LineType): LiveData<List<Line>>
 
     @Query("SELECT * FROM lineLocations WHERE lineId = :lineId ORDER BY position ASC")
-    abstract fun getLineLocations(lineId: String): LiveData<List<LineLocation>>
+    fun getLineLocations(lineId: String): LiveData<List<LineLocation>>
 
     @Query("SELECT * FROM lines WHERE lineId = :lineId")
-    abstract fun getLine(lineId: String): LiveData<Line>
+    fun getLine(lineId: String): LiveData<Line>
 
     @Query("SELECT lineId FROM lines WHERE parentLineId = :lineId")
-    abstract fun getAlternativeLineIds(lineId: String): LiveData<List<String>>
+    fun getAlternativeLineIds(lineId: String): LiveData<List<String>>
 
     @Query("SELECT * FROM stops WHERE stopId = :stopId")
-    abstract fun getStop(stopId: String): LiveData<Stop>
+    fun getStop(stopId: String): LiveData<Stop>
 
     @Query("SELECT * FROM stops WHERE stopId IN (:stopIds)")
-    abstract fun getStops(stopIds: List<String>): LiveData<List<Stop>>
+    fun getStops(stopIds: List<String>): LiveData<List<Stop>>
 
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
-    abstract fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
+    fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
 
     @Query("SELECT stopTitle FROM stops WHERE stopId = :stopId")
-    abstract fun getStopTitleImmediate(stopId: String): String
-
-    @Query("SELECT IFNULL(position, 0)+1 'position' FROM favoriteStops ORDER BY position LIMIT 1")
-    abstract fun getLastPositionImmediate(): Int
+    fun getStopTitleImmediate(stopId: String): String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertStops(stop: List<Stop>)
+    fun insertStops(stop: List<Stop>)
+
+    @Query("SELECT isFavorite FROM stops WHERE stopId = :stopId")
+    fun stopIsFavoriteImmediate(stopId: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertLines(line: List<Line>)
+    fun insertLines(line: List<Line>)
 
     @Query("DELETE FROM lines where type = :lineType")
-    abstract fun clearLines(lineType: LineType)
+    fun clearLines(lineType: LineType)
 
     @Query("DELETE FROM lineLocations where type = :lineType")
-    abstract fun clearLinesLocations(lineType: LineType)
+    fun clearLinesLocations(lineType: LineType)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertLinesLocations(line: List<LineLocation>)
+    fun insertLinesLocations(line: List<LineLocation>)
 
     @Query("DELETE FROM stops where type = :stopType")
-    abstract fun clearStops(stopType: StopType)
+    fun clearStops(stopType: StopType)
 
     @Query("DELETE FROM stopDestinations WHERE stopId = :stopId")
-    abstract fun deleteStopDestinations(stopId: String)
+    fun deleteStopDestinations(stopId: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertStopDestinations(stopDestinations: List<StopDestination>)
+    fun insertStopDestinations(stopDestinations: List<StopDestination>)
 
+    @Transaction
     fun insertInitialData(context: Context) {
         val initialChangelog = getInitialChangelog(context)
         with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
@@ -205,6 +143,7 @@ abstract class StopsDao {
         insertLinesLocations(initialBusLineLocations.plus(initialTramLineLocations).plus(initialRuralLineLocations))
     }
 
+    @Transaction
     fun updateStops(stops: List<Stop>, type: StopType) {
         stops.forEach { stop ->
             if (stopIsFavoriteImmediate(stop.stopId)) {
@@ -215,11 +154,13 @@ abstract class StopsDao {
         insertStops(stops)
     }
 
+    @Transaction
     fun updateLines(lines: List<Line>, type: LineType) {
         clearLines(type)
         insertLines(lines)
     }
 
+    @Transaction
     fun updateLinesLocations(linesLocations: List<LineLocation>, type: LineType) {
         clearLinesLocations(type)
         insertLinesLocations(linesLocations)

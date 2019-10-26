@@ -1,9 +1,6 @@
 package com.jorkoh.transportezaragozakt
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.navigation.NavController
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
@@ -26,7 +23,8 @@ class MainActivityViewModel(
     lateinit var reminderCountChange: LiveData<Int>
 
     fun init() {
-        favoriteCountChange = Transformations.map(favoritesRepository.loadFavoriteCount()) { newFavoriteCount ->
+        //TODO can this be improved with flows? should be able to move the logic away from MainActivity and just send events to show snackbars
+        favoriteCountChange = Transformations.map(favoritesRepository.getFavoriteCount().asLiveData()) { newFavoriteCount ->
             if (favoriteCount < 0) {
                 favoriteCount = newFavoriteCount
                 0

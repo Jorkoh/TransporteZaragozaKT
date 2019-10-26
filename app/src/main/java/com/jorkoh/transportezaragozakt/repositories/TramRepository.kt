@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.repositories
 import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.db.daos.StopsDao
 import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWithBackup
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse

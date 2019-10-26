@@ -2,27 +2,38 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
+import kotlinx.coroutines.launch
 
 
-class FavoritesViewModel(private val favoritesRepository: FavoritesRepository): ViewModel() {
+class FavoritesViewModel(private val favoritesRepository: FavoritesRepository) : ViewModel() {
 
-    val favoriteStops: LiveData<List<FavoriteStopExtended>> = favoritesRepository.loadFavoriteStops()
+    val favoriteStops: LiveData<List<FavoriteStopExtended>> = favoritesRepository.getFavoriteStops().asLiveData()
 
-    fun updateFavorite(stopId : String, alias : String, colorHex: String){
-        favoritesRepository.updateFavorite(stopId, alias, colorHex)
+    fun updateFavorite(stopId: String, alias: String, colorHex: String) {
+        viewModelScope.launch {
+            favoritesRepository.updateFavorite(stopId, alias, colorHex)
+        }
     }
 
-    fun restoreFavorite(stopId: String){
-        favoritesRepository.restoreFavorite(stopId)
+    fun restoreFavorite(favorite: FavoriteStopExtended) {
+        viewModelScope.launch {
+            favoritesRepository.restoreFavorite(favorite)
+        }
     }
 
-    fun moveFavorite(from : Int, to : Int){
-        favoritesRepository.moveFavorite(from, to)
+    fun moveFavorite(from: Int, to: Int) {
+        viewModelScope.launch {
+            favoritesRepository.moveFavorite(from, to)
+        }
     }
 
-    fun deleteFavorite(stopId : String){
-        favoritesRepository.toggleStopFavorite(stopId)
+    fun deleteFavorite(stopId: String) {
+        viewModelScope.launch {
+            favoritesRepository.removeFavorite(stopId)
+        }
     }
 }

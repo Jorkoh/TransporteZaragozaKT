@@ -1,9 +1,13 @@
-package com.jorkoh.transportezaragozakt.db
+package com.jorkoh.transportezaragozakt.db.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.jorkoh.transportezaragozakt.db.DaysOfWeek
+import com.jorkoh.transportezaragozakt.db.Reminder
+import com.jorkoh.transportezaragozakt.db.ReminderExtended
+import com.jorkoh.transportezaragozakt.db.ReminderPositions
 
 @Dao
 abstract class RemindersDao{

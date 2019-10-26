@@ -53,6 +53,7 @@ dependencies {
 
     //Androidx
     implementation deps.material
+    implementation deps.coroutines
     implementation deps.androidx.appCompat
     implementation deps.androidx.constraintLayout
     implementation deps.androidx.recyclerView
@@ -60,16 +61,16 @@ dependencies {
     implementation deps.androidx.preference
     implementation deps.androidx.core
     implementation deps.androidx.legacy
+    implementation deps.androidx.lifecycle.viewModel
+    implementation deps.androidx.lifecycle.liveData
     implementation deps.androidx.lifecycle.extensions
-    implementation deps.androidx.lifecycle.viewmodel
 
     implementation deps.kotlinx_serialization
 
     //Room
     implementation deps.androidx.room.runtime
-    annotationProcessor deps.androidx.room.compiler
     kapt deps.androidx.room.compiler
-    implementation deps.androidx.room.coroutines
+    implementation deps.androidx.room.ktx
 
     //Navigation
     implementation deps.androidx.navigation.runtime

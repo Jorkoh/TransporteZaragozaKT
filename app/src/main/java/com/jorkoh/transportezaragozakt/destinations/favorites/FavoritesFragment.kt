@@ -85,7 +85,7 @@ class FavoritesFragment : FragmentWithToolbar() {
             title(R.string.restore_favorite_title)
             message(R.string.restore_favorite_message)
             positiveButton(R.string.restore) {
-                favoritesVM.restoreFavorite(favorite.stopId)
+                favoritesVM.restoreFavorite(favorite)
             }
             negativeButton(R.string.cancel)
         }
@@ -112,25 +112,23 @@ class FavoritesFragment : FragmentWithToolbar() {
 
     private val favoriteStopsAdapter = FavoriteAdapter(openStop, editAlias, editColor, restore, reorder, delete)
 
-    private val favoriteStopsObserver = Observer<List<FavoriteStopExtended>> { favorites ->
-        updateEmptyViewVisibility(favorites.isEmpty())
-        favoriteStopsAdapter.setNewFavoriteStops(favorites)
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        favoritesVM.favoriteStops.observe(viewLifecycleOwner, favoriteStopsObserver)
+        favoritesVM.favoriteStops.observe(viewLifecycleOwner, Observer { favorites ->
+            updateEmptyViewVisibility(favorites.isEmpty())
+            favoriteStopsAdapter.setNewFavoriteStops(favorites)
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.favorites_destination, container, false)
-        rootView.favorites_recycler_view.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = favoriteStopsAdapter
+        return inflater.inflate(R.layout.favorites_destination, container, false).apply {
+            favorites_recycler_view.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = favoriteStopsAdapter
+            }
+            itemTouchHelper.attachToRecyclerView(favorites_recycler_view)
         }
-        itemTouchHelper.attachToRecyclerView(rootView.favorites_recycler_view)
-        return rootView
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {
@@ -139,8 +137,8 @@ class FavoritesFragment : FragmentWithToolbar() {
         } else {
             View.GONE
         }
-        view?.no_favorites_animation?.visibility = newVisibility
-        view?.no_favorites_text?.visibility = newVisibility
+        no_favorites_animation?.visibility = newVisibility
+        no_favorites_text?.visibility = newVisibility
     }
 
     override fun onDestroyView() {

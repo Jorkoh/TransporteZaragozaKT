@@ -1,73 +1,74 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
-import com.jorkoh.transportezaragozakt.db.AppDatabase
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
-import com.jorkoh.transportezaragozakt.db.StopsDao
+import com.jorkoh.transportezaragozakt.db.daos.FavoritesDao
+import com.jorkoh.transportezaragozakt.db.Stop
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 interface FavoritesRepository {
-    fun loadFavoriteStops(): LiveData<List<FavoriteStopExtended>>
-    fun isFavoriteStop(stopId: String): LiveData<Boolean>
-    fun toggleStopFavorite(stopId: String)
+    fun getFavoriteStops(): Flow<List<FavoriteStopExtended>>
+    fun getFavoriteCount(): Flow<Int>
+    fun isFavoriteStop(stopId: String): Flow<Boolean>
+    suspend fun removeFavorite(stopId: String)
+    suspend fun toggleStopFavorite(stop: Stop)
     fun updateFavorite(stopId: String, alias: String, colorHex: String)
-    fun restoreFavorite(stopId: String)
-    fun moveFavorite(from: Int, to: Int)
-    fun loadFavoriteCount(): LiveData<Int>
-    fun deleteAllFavoriteStops()
+    suspend fun restoreFavorite(favorite: FavoriteStopExtended)
+    suspend fun moveFavorite(from: Int, to: Int)
+    suspend fun deleteAllFavoriteStops()
 }
 
 class FavoritesRepositoryImplementation(
-    private val stopsDao: StopsDao,
-    private val db: AppDatabase,
+    private val favoritesDao: FavoritesDao,
     private val appExecutors: AppExecutors
 ) : FavoritesRepository {
-    override fun loadFavoriteStops(): LiveData<List<FavoriteStopExtended>> {
-        return stopsDao.getFavoriteStops()
+    override fun getFavoriteStops(): Flow<List<FavoriteStopExtended>> {
+        return favoritesDao.getFavoriteStops()
     }
 
-    override fun isFavoriteStop(stopId: String): LiveData<Boolean> {
-        return stopsDao.stopIsFavorite(stopId)
+    override fun isFavoriteStop(stopId: String): Flow<Boolean> {
+        return favoritesDao.stopIsFavorite(stopId)
     }
 
-    override fun toggleStopFavorite(stopId: String) {
-        appExecutors.diskIO().execute {
-            db.runInTransaction {
-                stopsDao.toggleFavorite(stopId)
-            }
+    override suspend fun removeFavorite(stopId: String) {
+        withContext(Dispatchers.IO) {
+            favoritesDao.removeFavorite(stopId)
+        }
+    }
+
+    override suspend fun toggleStopFavorite(stop: Stop) {
+        withContext(Dispatchers.IO) {
+            favoritesDao.toggleFavorite(stop)
         }
     }
 
     override fun updateFavorite(stopId: String, alias: String, colorHex: String) {
         appExecutors.diskIO().execute {
-            stopsDao.updateFavorite(stopId, colorHex, alias)
+            favoritesDao.updateFavorite(stopId, colorHex, alias)
         }
     }
 
-    override fun restoreFavorite(stopId: String) {
-        appExecutors.diskIO().execute {
-            stopsDao.updateFavorite(stopId, "", stopsDao.getStopTitleImmediate(stopId))
+    override suspend fun restoreFavorite(favorite: FavoriteStopExtended) {
+        withContext(Dispatchers.IO) {
+            favoritesDao.updateFavorite(favorite.stopId, "", favorite.stopTitle)
         }
     }
 
-    override fun moveFavorite(from: Int, to: Int) {
-        appExecutors.diskIO().execute {
-            db.runInTransaction {
-                stopsDao.moveFavorite(from, to)
-            }
+    override suspend fun moveFavorite(from: Int, to: Int) {
+        withContext(Dispatchers.IO) {
+            favoritesDao.moveFavorite(from, to)
         }
     }
 
-    override fun loadFavoriteCount() : LiveData<Int>{
-        return stopsDao.getFavoriteCount()
+    override fun getFavoriteCount(): Flow<Int> {
+        return favoritesDao.getFavoriteCount()
     }
 
-    // For testing purposes
-    override fun deleteAllFavoriteStops() {
-        appExecutors.diskIO().execute {
-            db.runInTransaction {
-                stopsDao.deleteAllFavorites()
-            }
+    override suspend fun deleteAllFavoriteStops() {
+        withContext(Dispatchers.IO) {
+            favoritesDao.deleteAllFavorites()
         }
     }
 }

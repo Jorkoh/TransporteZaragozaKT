@@ -6,6 +6,8 @@ import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.alarms.createAlarms
 import com.jorkoh.transportezaragozakt.alarms.deleteAlarms
 import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.db.daos.RemindersDao
+import com.jorkoh.transportezaragozakt.db.daos.StopsDao
 
 interface RemindersRepository {
     fun loadRemindersExtended(): LiveData<List<ReminderExtended>>

@@ -1,10 +1,11 @@
-package com.jorkoh.transportezaragozakt.db
+package com.jorkoh.transportezaragozakt.db.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.jorkoh.transportezaragozakt.db.RuralTracking
 
 @Dao
 abstract class TrackingsDao {

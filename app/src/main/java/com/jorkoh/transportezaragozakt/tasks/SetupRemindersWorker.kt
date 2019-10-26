@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.jorkoh.transportezaragozakt.alarms.createAlarms
-import com.jorkoh.transportezaragozakt.db.RemindersDao
+import com.jorkoh.transportezaragozakt.db.daos.RemindersDao
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
