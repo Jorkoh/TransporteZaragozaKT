@@ -7,8 +7,8 @@ import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
 
 class MainActivityViewModel(
-    private val favoritesRepository: FavoritesRepository,
-    private val remindersRepository: RemindersRepository,
+    favoritesRepository: FavoritesRepository,
+    remindersRepository: RemindersRepository,
     private val settingsRepository: SettingsRepository
 ) :
     ViewModel() {
@@ -19,10 +19,10 @@ class MainActivityViewModel(
     private var favoriteCount: Int = -1
     private var reminderCount: Int = -1
 
-    lateinit var favoriteCountChange: LiveData<Int>
-    lateinit var reminderCountChange: LiveData<Int>
+    val favoriteCountChange: LiveData<Int>
+    val reminderCountChange: LiveData<Int>
 
-    fun init() {
+    init {
         //TODO can this be improved with flows? should be able to move the logic away from MainActivity and just send events to show snackbars
         favoriteCountChange = Transformations.map(favoritesRepository.getFavoriteCount().asLiveData()) { newFavoriteCount ->
             if (favoriteCount < 0) {
@@ -45,7 +45,6 @@ class MainActivityViewModel(
                 diff
             }
         }
-
     }
 
     fun isFirstLaunch() = settingsRepository.isFirstLaunch()

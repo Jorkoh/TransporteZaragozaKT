@@ -12,28 +12,19 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class StopDetailsViewModel(
+    val stopId: String,
+    val stopType: StopType,
     private val stopsRepository: StopsRepository,
     private val favoritesRepository: FavoritesRepository,
     private val remindersRepository: RemindersRepository
 ) :
     ViewModel() {
 
-    lateinit var stopId: String
-    lateinit var stopType: StopType
-
     private lateinit var tempStopDestinations: LiveData<Resource<List<StopDestination>>>
     val stopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()
 
-    lateinit var stopIsFavorited: LiveData<Boolean>
-    lateinit var stop: LiveData<Stop>
-
-    fun init(stopId: String, stopType: StopType) {
-        this.stopId = stopId
-        this.stopType = stopType
-
-        stopIsFavorited = favoritesRepository.isFavoriteStop(stopId).asLiveData()
-        stop = stopsRepository.loadStop(stopType, stopId)
-    }
+    val stopIsFavorited: LiveData<Boolean> = favoritesRepository.isFavoriteStop(stopId).asLiveData()
+    val stop: LiveData<Stop> = stopsRepository.loadStop(stopType, stopId)
 
     fun toggleStopFavorite() {
         stop.value?.let { stop ->

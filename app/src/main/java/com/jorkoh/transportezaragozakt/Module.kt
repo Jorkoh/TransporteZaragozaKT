@@ -6,7 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
+import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.MIGRATION_1_2
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsViewModel
 import com.jorkoh.transportezaragozakt.destinations.map.MapSettingsViewModel
@@ -144,8 +146,8 @@ val appModule = module {
     single<StopsRepository> { StopsRepositoryImplementation(get(), get(), get()) }
     single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
     single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
-    single <RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get(), get()) }
-    single<FavoritesRepository> { FavoritesRepositoryImplementation(get(), get()) }
+    single<RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get(), get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImplementation(get()) }
     single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
 
     // ViewModels
@@ -154,8 +156,8 @@ val appModule = module {
     viewModel { MapSettingsViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }
-    viewModel { StopDetailsViewModel(get(), get(), get()) }
-    viewModel { LineDetailsViewModel(get(), get()) }
+    viewModel { (stopId : String, stopType : StopType) -> StopDetailsViewModel(stopId, stopType, get(), get(), get()) }
+    viewModel { (lineId : String, lineType : LineType) -> LineDetailsViewModel(lineId, lineType, get(), get()) }
     viewModel { MainActivityViewModel(get(), get(), get()) }
     viewModel { IntroActivityViewModel(get()) }
 }

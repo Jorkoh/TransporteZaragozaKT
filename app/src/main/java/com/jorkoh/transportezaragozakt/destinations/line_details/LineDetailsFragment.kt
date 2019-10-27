@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -46,11 +47,19 @@ import kotlinx.android.synthetic.main.line_details_destination.view.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.parameter.parametersOf
 import java.text.DateFormat
 
 class LineDetailsFragment : FragmentWithToolbar() {
 
-    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this })
+    private val args: LineDetailsFragmentArgs by navArgs()
+
+    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this }) {
+        parametersOf(
+            args.lineId,
+            LineType.valueOf(args.lineType)
+        )
+    }
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private var activeMinZoom = MIN_ZOOM
@@ -120,8 +129,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
         super.onActivityCreated(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        val args = LineDetailsFragmentArgs.fromBundle(requireArguments())
-        lineDetailsVM.init(args.lineId, LineType.valueOf(args.lineType))
         // If the user navigated from a specific stop select it on the map
         if (!args.stopId.isNullOrEmpty()) {
             lineDetailsVM.selectedItemId.postValue(args.stopId)

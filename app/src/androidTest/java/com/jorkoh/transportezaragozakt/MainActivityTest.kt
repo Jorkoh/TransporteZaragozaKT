@@ -12,6 +12,7 @@ import androidx.test.filters.LargeTest
 import com.jorkoh.transportezaragozakt.destinations.search.StopAdapter
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Test
@@ -28,7 +29,9 @@ class MainActivityTest : KoinTest {
 
     @Before
     fun init() {
-        favoritesRepository.deleteAllFavoriteStops()
+        runBlocking {
+            favoritesRepository.deleteAllFavoriteStops()
+        }
         remindersRepository.deleteAllReminders()
     }
 
@@ -46,7 +49,12 @@ class MainActivityTest : KoinTest {
         // Change tab to all stops
         onView(allOf(withText(R.string.search_all_stops), isDescendantOfA(withId(R.id.search_tab_layout)))).perform(ViewActions.click())
         // Open the first one
-        onView(withId(R.id.search_recycler_view_all_stops)).perform(RecyclerViewActions.actionOnItemAtPosition<StopAdapter.StopViewHolder>(0, ViewActions.click()))
+        onView(withId(R.id.search_recycler_view_all_stops)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<StopAdapter.StopViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
         // Favorite it
         onView(withId(R.id.stop_details_fab)).perform(ViewActions.click())
         onView(withId(R.id.stop_details_fab_favorite)).perform(ViewActions.click())
@@ -74,7 +82,12 @@ class MainActivityTest : KoinTest {
         // Change tab to all stops
         onView(allOf(withText(R.string.search_all_stops), isDescendantOfA(withId(R.id.search_tab_layout)))).perform(ViewActions.click())
         // Open the first one
-        onView(withId(R.id.search_recycler_view_all_stops)).perform(RecyclerViewActions.actionOnItemAtPosition<StopAdapter.StopViewHolder>(0, ViewActions.click()))
+        onView(withId(R.id.search_recycler_view_all_stops)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<StopAdapter.StopViewHolder>(
+                0,
+                ViewActions.click()
+            )
+        )
         // Create a reminder
         onView(withId(R.id.stop_details_fab)).perform(ViewActions.click())
         onView(withId(R.id.stop_details_fab_reminder)).perform(ViewActions.click())

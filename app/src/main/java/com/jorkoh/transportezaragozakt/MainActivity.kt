@@ -89,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Setup snackbar feedback observers. Whenever the user adds/removes favorites/reminders from any screen they get a snackbar
-        mainActivityVM.init()
         mainActivityVM.favoriteCountChange.observe(this, Observer { changeAmount ->
             when {
                 changeAmount == 0 -> return@Observer

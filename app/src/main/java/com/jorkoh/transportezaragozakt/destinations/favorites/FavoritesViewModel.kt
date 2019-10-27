@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class FavoritesViewModel(private val favoritesRepository: FavoritesRepository) : ViewModel() {
 
-    val favoriteStops: LiveData<List<FavoriteStopExtended>> = favoritesRepository.getFavoriteStops().asLiveData()
+    val favoriteStops = favoritesRepository.getFavoriteStops().asLiveData()
 
     fun updateFavorite(stopId: String, alias: String, colorHex: String) {
         viewModelScope.launch {

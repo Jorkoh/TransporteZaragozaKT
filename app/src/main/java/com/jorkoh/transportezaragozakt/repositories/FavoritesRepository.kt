@@ -1,9 +1,8 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
-import com.jorkoh.transportezaragozakt.db.daos.FavoritesDao
 import com.jorkoh.transportezaragozakt.db.Stop
+import com.jorkoh.transportezaragozakt.db.daos.FavoritesDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -14,15 +13,14 @@ interface FavoritesRepository {
     fun isFavoriteStop(stopId: String): Flow<Boolean>
     suspend fun removeFavorite(stopId: String)
     suspend fun toggleStopFavorite(stop: Stop)
-    fun updateFavorite(stopId: String, alias: String, colorHex: String)
+    suspend fun updateFavorite(stopId: String, alias: String, colorHex: String)
     suspend fun restoreFavorite(favorite: FavoriteStopExtended)
     suspend fun moveFavorite(from: Int, to: Int)
     suspend fun deleteAllFavoriteStops()
 }
 
 class FavoritesRepositoryImplementation(
-    private val favoritesDao: FavoritesDao,
-    private val appExecutors: AppExecutors
+    private val favoritesDao: FavoritesDao
 ) : FavoritesRepository {
     override fun getFavoriteStops(): Flow<List<FavoriteStopExtended>> {
         return favoritesDao.getFavoriteStops()
@@ -44,8 +42,8 @@ class FavoritesRepositoryImplementation(
         }
     }
 
-    override fun updateFavorite(stopId: String, alias: String, colorHex: String) {
-        appExecutors.diskIO().execute {
+    override suspend fun updateFavorite(stopId: String, alias: String, colorHex: String) {
+        withContext(Dispatchers.IO) {
             favoritesDao.updateFavorite(stopId, colorHex, alias)
         }
     }

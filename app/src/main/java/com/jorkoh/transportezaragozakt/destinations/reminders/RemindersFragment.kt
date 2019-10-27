@@ -120,16 +120,14 @@ class RemindersFragment : FragmentWithToolbar() {
 
     private val remindersAdapter: RemindersAdapter = RemindersAdapter(edit, editAlias, editColor, restore, reorder, delete)
 
-    private val remindersObserver = Observer<List<ReminderExtended>> { reminders ->
-        reminders?.let {
-            updateEmptyViewVisibility(reminders.isEmpty(), view)
-            remindersAdapter.setNewReminders(reminders)
-        }
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        remindersVM.reminders.observe(viewLifecycleOwner, remindersObserver)
+        remindersVM.reminders.observe(viewLifecycleOwner, Observer { reminders ->
+            reminders?.let {
+                updateEmptyViewVisibility(reminders.isEmpty(), view)
+                remindersAdapter.setNewReminders(reminders)
+            }
+        })
     }
 
     override fun onCreateView(
@@ -145,11 +143,6 @@ class RemindersFragment : FragmentWithToolbar() {
         itemTouchHelper.attachToRecyclerView(rootView.reminders_recycler_view)
 
         return rootView
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        remindersVM.init()
     }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean, rootView: View?) {

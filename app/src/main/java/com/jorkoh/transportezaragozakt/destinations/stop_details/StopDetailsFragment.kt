@@ -41,6 +41,7 @@ import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class StopDetailsFragment : FragmentWithToolbar() {
@@ -48,9 +49,9 @@ class StopDetailsFragment : FragmentWithToolbar() {
         const val FAVORITE_ITEM_FAB_POSITION = 0
     }
 
-    private val stopDetailsVM: StopDetailsViewModel by viewModel()
-
     private val args: StopDetailsFragmentArgs by navArgs()
+
+    private val stopDetailsVM: StopDetailsViewModel by viewModel { parametersOf(args.stopId, StopType.valueOf(args.stopType)) }
 
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -171,7 +172,6 @@ class StopDetailsFragment : FragmentWithToolbar() {
         super.onActivityCreated(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
 
-        stopDetailsVM.init(args.stopId, StopType.valueOf(args.stopType))
         stopDetailsVM.stopDestinations.observe(viewLifecycleOwner, stopDestinationsObserver)
         stopDetailsVM.refreshStopDestinations()
         stopDetailsVM.stopIsFavorited.observe(viewLifecycleOwner, stopFavoriteStatusObserver)
@@ -294,7 +294,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
     private fun createShortcut(label: String) {
         if (SDK_INT >= O) {
             val shortcutManager = requireContext().getSystemService(ShortcutManager::class.java)
-            if (shortcutManager.isRequestPinShortcutSupported) {
+            if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
                 val shortcut = ShortcutInfo.Builder(requireContext(), stopDetailsVM.stopId)
                     .setShortLabel(label)
                     .setIcon(
