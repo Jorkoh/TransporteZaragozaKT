@@ -19,6 +19,7 @@ import com.jorkoh.transportezaragozakt.destinations.search.SearchViewModel
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsViewModel
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
+import com.jorkoh.transportezaragozakt.services.common.util.ApiResponseCallAdapterFactory
 import com.jorkoh.transportezaragozakt.services.common.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
 import com.jorkoh.transportezaragozakt.services.ctaz_api.moshi_adapters.CtazAPITimeAdapter
@@ -48,6 +49,7 @@ val appModule = module {
     // Services (OkHttp and some converters/factories are shared)
     single { OkHttpClient() }
     single { LiveDataCallAdapterFactory() }
+    single { ApiResponseCallAdapterFactory() }
     single<OfficialAPIService> {
         Retrofit.Builder()
             .baseUrl(OfficialAPIService.BASE_URL)
@@ -102,6 +104,7 @@ val appModule = module {
                 )
             )
             .addCallAdapterFactory(get<LiveDataCallAdapterFactory>())
+            .addCallAdapterFactory(get<ApiResponseCallAdapterFactory>())
             .build()
             .create(CtazAPIService::class.java)
     }

@@ -6,6 +6,7 @@ import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.db.daos.StopsDao
 import com.jorkoh.transportezaragozakt.db.daos.TrackingsDao
 import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResource
+import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceOld
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
@@ -13,11 +14,14 @@ import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
 import com.jorkoh.transportezaragozakt.services.ctaz_api.officialAPIToCtazAPIId
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralStopCtazAPIResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralTrackingsCtazAPIResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import java.util.*
 
 interface RuralRepository {
-    fun loadTrackings(): LiveData<Resource<List<RuralTracking>>>
-    fun loadTrackingsFromLine(lineId: String): LiveData<Resource<List<RuralTracking>>>
+    fun loadTrackings(): Flow<Resource<List<RuralTracking>>>
     fun loadStopDestinations(ruralStopId: String): LiveData<Resource<List<StopDestination>>>
     fun loadStop(busStopId: String): LiveData<Stop>
     fun loadStops(): LiveData<List<Stop>>
@@ -41,19 +45,16 @@ class RuralRepositoryImplementation(
         const val FRESH_TIMEOUT = 10
     }
 
-    override fun loadTrackings(): LiveData<Resource<List<RuralTracking>>> {
-        return object :
-            NetworkBoundResource<List<RuralTracking>, RuralTrackingsCtazAPIResponse>(
-                appExecutors
-            ) {
+    @ExperimentalCoroutinesApi
+    override fun loadTrackings(): Flow<Resource<List<RuralTracking>>> {
+        return object : NetworkBoundResource<List<RuralTracking>, RuralTrackingsCtazAPIResponse>() {
             override fun processResponse(response: ApiSuccessResponse<RuralTrackingsCtazAPIResponse>): List<RuralTracking> {
                 return response.body.toRuralTrackings()
             }
 
-            override fun saveCallResult(result: List<RuralTracking>) {
-                db.runInTransaction {
-                    trackingsDao.deleteTrackings()
-                    trackingsDao.insertTrackings(result)
+            override suspend fun saveCallResult(result: List<RuralTracking>) {
+                withContext(Dispatchers.IO) {
+                    trackingsDao.replaceTrackings(result)
                 }
             }
 
@@ -61,43 +62,15 @@ class RuralRepositoryImplementation(
                 return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
             }
 
-            override fun loadFromDb(): LiveData<List<RuralTracking>> = trackingsDao.getTrackings()
+            override suspend fun loadFromDb(): List<RuralTracking> = trackingsDao.getTrackings()
 
-            override fun createCall(): LiveData<ApiResponse<RuralTrackingsCtazAPIResponse>> = ctazAPIService.getRuralTrackings()
-        }.asLiveData()
-    }
-
-    override fun loadTrackingsFromLine(lineId: String): LiveData<Resource<List<RuralTracking>>> {
-        return object :
-            NetworkBoundResource<List<RuralTracking>, RuralTrackingsCtazAPIResponse>(
-                appExecutors
-            ) {
-            override fun processResponse(response: ApiSuccessResponse<RuralTrackingsCtazAPIResponse>): List<RuralTracking> {
-                return response.body.toRuralTrackings().filter { it.lineId == lineId }
-            }
-
-            override fun saveCallResult(result: List<RuralTracking>) {
-                db.runInTransaction {
-                    trackingsDao.deleteTrackings()
-                    trackingsDao.insertTrackings(result)
-                }
-            }
-
-            override fun shouldFetch(data: List<RuralTracking>?): Boolean {
-                return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
-            }
-
-            override fun loadFromDb(): LiveData<List<RuralTracking>> = trackingsDao.getTrackings()
-
-            override fun createCall(): LiveData<ApiResponse<RuralTrackingsCtazAPIResponse>> = ctazAPIService.getRuralTrackings()
-        }.asLiveData()
+            override suspend fun fetchData(): ApiResponse<RuralTrackingsCtazAPIResponse> = ctazAPIService.getRuralTrackings()
+        }.asFlow()
     }
 
     override fun loadStopDestinations(ruralStopId: String): LiveData<Resource<List<StopDestination>>> {
         return object :
-            NetworkBoundResource<List<StopDestination>, RuralStopCtazAPIResponse>(
-                appExecutors
-            ) {
+            NetworkBoundResourceOld<List<StopDestination>, RuralStopCtazAPIResponse>(appExecutors) {
             override fun processResponse(response: ApiSuccessResponse<RuralStopCtazAPIResponse>): List<StopDestination> {
                 return response.body.toStopDestinations(ruralStopId)
             }
@@ -116,7 +89,6 @@ class RuralRepositoryImplementation(
             override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(ruralStopId)
 
             override fun createCall() = ctazAPIService.getRuralStopCtazAPI(ruralStopId.officialAPIToCtazAPIId())
-
         }.asLiveData()
     }
 

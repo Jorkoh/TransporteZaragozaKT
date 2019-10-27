@@ -39,7 +39,6 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MI
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.RURAL_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
-import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
@@ -329,11 +328,11 @@ class LineDetailsFragment : FragmentWithToolbar() {
         })
 
         // Trackings
-        lineDetailsVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
-            if (trackings.status == Status.SUCCESS && trackings.data != null) {
-                renewTrackings(trackings.data)
+        lineDetailsVM.ruralTrackings?.observe(mapLifecycleOwner, Observer { trackings ->
+            trackings?.let {
+                renewTrackings(trackings)
                 // Update the trackings selector
-                trackingsAdapter.setNewTrackings(trackings.data)
+                trackingsAdapter.setNewTrackings(trackings)
                 trackingsDialog?.title(text = getTrackingsTitle())
                 updateTrackingsDialogDistance()
             }

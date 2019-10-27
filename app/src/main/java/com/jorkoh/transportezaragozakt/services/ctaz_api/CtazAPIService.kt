@@ -30,7 +30,7 @@ interface CtazAPIService {
 
     @Headers("Accept: application/json")
     @GET("sae")
-    fun getRuralTrackings(): LiveData<ApiResponse<RuralTrackingsCtazAPIResponse>>
+    suspend fun getRuralTrackings(): ApiResponse<RuralTrackingsCtazAPIResponse>
 }
 
 fun String.officialAPIToCtazAPIId() = this.split("-")[1]

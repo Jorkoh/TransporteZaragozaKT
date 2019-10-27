@@ -27,13 +27,11 @@ import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.toLatLng
-import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.DateFormat
-
 
 class MapFragment : FragmentWithToolbar() {
 
@@ -323,15 +321,15 @@ class MapFragment : FragmentWithToolbar() {
 
         // Trackings
         mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
-            if (trackings.status == Status.SUCCESS && trackings.data != null) {
-                val items = trackings.data.map { CustomClusterItem(it) }
+            trackings?.let {
+                val items = trackings.map { CustomClusterItem(it) }
                 clusterManager.removeItems(ruralTrackingsItems.minus(items))
                 clusterManager.addItems(items.minus(ruralTrackingsItems))
                 clusterManager.cluster()
                 ruralTrackingsItems.clear()
                 ruralTrackingsItems.addAll(items)
                 // Update the trackings selector
-                trackingsAdapter.setNewTrackings(trackings.data)
+                trackingsAdapter.setNewTrackings(trackings)
                 trackingsDialog?.title(text = getTrackingsTitle())
                 updateTrackingsDialogDistance()
             }

@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.line_details
 
-import android.os.Handler
 import androidx.lifecycle.*
 import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.LineType
@@ -8,14 +7,15 @@ import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.db.toStopType
 import com.jorkoh.transportezaragozakt.repositories.RuralRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
-import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 
 class LineDetailsViewModel(
     val lineId: String,
     val lineType: LineType,
-    private val stopsRepository: StopsRepository,
-    val trackingsRepository: RuralRepository
+    stopsRepository: StopsRepository,
+    trackingsRepository: RuralRepository
 ) :
     ViewModel() {
 
@@ -34,28 +34,21 @@ class LineDetailsViewModel(
 
     val selectedItemId = MutableLiveData<String>()
 
-    val ruralTrackings = MediatorLiveData<Resource<List<RuralTracking>>>()
-    private lateinit var tempRuralTrackings: LiveData<Resource<List<RuralTracking>>>
-
-    private val handler = Handler()
-    private val refreshTrackers = object : Runnable {
-        override fun run() {
-            if (::tempRuralTrackings.isInitialized) {
-                ruralTrackings.removeSource(tempRuralTrackings)
-            }
-            tempRuralTrackings = trackingsRepository.loadTrackingsFromLine(lineId)
-            ruralTrackings.addSource(tempRuralTrackings) { value ->
-                if (value.status == Status.SUCCESS && value.data != ruralTrackings.value) {
-                    ruralTrackings.postValue(value)
+    val ruralTrackings: LiveData<List<RuralTracking>>? =
+        if (lineType == LineType.RURAL) {
+            liveData {
+                while (true) {
+                    trackingsRepository.loadTrackings().collect { trackings ->
+                        if (trackings.status == Status.SUCCESS) {
+                            trackings.data?.filter { it.lineId == lineId }?.let { lineTrackings ->
+                                emit(lineTrackings)
+                            }
+                        }
+                    }
+                    delay(30000)
                 }
             }
-            handler.postDelayed(this, 30000)
+        } else {
+            null
         }
-    }
-
-    init {
-        if (lineType == LineType.RURAL) {
-            handler.post(refreshTrackers)
-        }
-    }
 }

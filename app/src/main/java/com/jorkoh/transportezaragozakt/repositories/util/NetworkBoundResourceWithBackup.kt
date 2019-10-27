@@ -5,7 +5,6 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.jorkoh.transportezaragozakt.AppExecutors
-import com.jorkoh.transportezaragozakt.services.common.util.ApiEmptyResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiErrorResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
@@ -61,14 +60,6 @@ abstract class NetworkBoundResourceWithBackup<ResultType, PrimaryRequestType, Se
                         }
                     }
                 }
-                is ApiEmptyResponse -> {
-                    appExecutors.mainThread().execute {
-                        // reload from disk whatever we had
-                        result.addSource(loadFromDb()) { newData ->
-                            setValue(Resource.success(newData))
-                        }
-                    }
-                }
                 is ApiErrorResponse -> {
                     onPrimaryFetchFailed()
                     fetchFromSecondaryNetwork(dbSource)
@@ -100,14 +91,6 @@ abstract class NetworkBoundResourceWithBackup<ResultType, PrimaryRequestType, Se
                         }
                     }
                 }
-                is ApiEmptyResponse -> {
-                    appExecutors.mainThread().execute {
-                        // reload from disk whatever we had
-                        result.addSource(loadFromDb()) { newData ->
-                            setValue(Resource.success(newData))
-                        }
-                    }
-                }
                 is ApiErrorResponse -> {
                     onSecondaryFetchFailed()
                     fetchFromTertiaryNetwork(dbSource)
@@ -136,14 +119,6 @@ abstract class NetworkBoundResourceWithBackup<ResultType, PrimaryRequestType, Se
                             result.addSource(loadFromDb()) { newData ->
                                 setValue(Resource.success(newData))
                             }
-                        }
-                    }
-                }
-                is ApiEmptyResponse -> {
-                    appExecutors.mainThread().execute {
-                        // reload from disk whatever we had
-                        result.addSource(loadFromDb()) { newData ->
-                            setValue(Resource.success(newData))
                         }
                     }
                 }

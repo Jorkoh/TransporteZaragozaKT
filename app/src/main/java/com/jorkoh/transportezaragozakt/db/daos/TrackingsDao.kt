@@ -1,21 +1,23 @@
 package com.jorkoh.transportezaragozakt.db.daos
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.jorkoh.transportezaragozakt.db.RuralTracking
 
 @Dao
-abstract class TrackingsDao {
+interface TrackingsDao {
 
     @Query("SELECT * FROM ruralTrackings")
-    abstract fun getTrackings(): LiveData<List<RuralTracking>>
+    suspend fun getTrackings(): List<RuralTracking>
 
     @Query("DELETE FROM ruralTrackings")
-    abstract fun deleteTrackings()
+    suspend fun deleteTrackings()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertTrackings(ruralTrackings: List<RuralTracking>)
+    suspend fun insertTrackings(ruralTrackings: List<RuralTracking>)
+
+    @Transaction
+    suspend fun replaceTrackings(ruralTrackings: List<RuralTracking>){
+        deleteTrackings()
+        insertTrackings(ruralTrackings)
+    }
 }
