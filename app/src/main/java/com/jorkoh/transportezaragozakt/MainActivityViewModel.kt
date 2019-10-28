@@ -1,10 +1,13 @@
 package com.jorkoh.transportezaragozakt
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
+import kotlinx.coroutines.flow.transform
 
 class MainActivityViewModel(
     favoritesRepository: FavoritesRepository,
@@ -19,32 +22,23 @@ class MainActivityViewModel(
     private var favoriteCount: Int = -1
     private var reminderCount: Int = -1
 
-    val favoriteCountChange: LiveData<Int>
-    val reminderCountChange: LiveData<Int>
-
-    init {
-        //TODO can this be improved with flows? should be able to move the logic away from MainActivity and just send events to show snackbars
-        favoriteCountChange = Transformations.map(favoritesRepository.getFavoriteCount().asLiveData()) { newFavoriteCount ->
-            if (favoriteCount < 0) {
-                favoriteCount = newFavoriteCount
-                0
-            } else {
-                val diff = newFavoriteCount - favoriteCount
-                favoriteCount = newFavoriteCount
-                diff
+    val favoriteCountChangeSign = favoritesRepository.getFavoriteCount().transform { newFavoriteCount ->
+        if (favoriteCount >= 0) {
+            val diff = newFavoriteCount - favoriteCount
+            if (diff != 0) {
+                emit(diff > 0)
             }
         }
-
-        reminderCountChange = Transformations.map(remindersRepository.loadReminderCount()) { newReminderCount ->
-            if (reminderCount < 0) {
-                reminderCount = newReminderCount
-                0
-            } else {
-                val diff = newReminderCount - reminderCount
-                reminderCount = newReminderCount
-                diff
+        favoriteCount = newFavoriteCount
+    }
+    val reminderCountChangeSign = remindersRepository.getReminderCount().transform { newReminderCount ->
+        if (reminderCount >= 0) {
+            val diff = newReminderCount - reminderCount
+            if (diff != 0) {
+                emit(diff > 0)
             }
         }
+        reminderCount = newReminderCount
     }
 
     fun isFirstLaunch() = settingsRepository.isFirstLaunch()

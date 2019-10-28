@@ -1,7 +1,5 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.db.daos.StopsDao
 import com.jorkoh.transportezaragozakt.repositories.util.NetworkBoundResourceWithBackup
@@ -14,26 +12,25 @@ import com.jorkoh.transportezaragozakt.services.official_api.responses.tram.Tram
 import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
 import com.jorkoh.transportezaragozakt.services.tram_api.officialAPIToTramAPIId
 import com.jorkoh.transportezaragozakt.services.tram_api.responses.tram.TramStopTramAPIResponse
+import kotlinx.coroutines.flow.Flow
 
 
 interface TramRepository {
-    fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>>
-    fun loadStop(tramStopId: String): LiveData<Stop>
-    fun loadStops(): LiveData<List<Stop>>
-    fun loadMainLines(): LiveData<List<Line>>
-    fun loadLineLocations(lineId: String): LiveData<List<LineLocation>>
-    fun loadLine(lineId: String): LiveData<Line>
-    fun loadAlternativeLineIds(lineId: String): LiveData<List<String>>
-    fun loadStops(stopIds: List<String>): LiveData<List<Stop>>
+    fun loadStop(tramStopId: String): Flow<Stop>
+    fun loadStopDestinations(tramStopId: String): Flow<Resource<List<StopDestination>>>
+    fun loadStops(): Flow<List<Stop>>
+    fun loadStops(stopIds: List<String>): Flow<List<Stop>>
+    fun loadMainLines(): Flow<List<Line>>
+    fun loadLineLocations(lineId: String): Flow<List<LineLocation>>
+    fun loadLine(lineId: String): Flow<Line>
+    fun loadAlternativeLineIds(lineId: String): Flow<List<String>>
 }
 
 class TramRepositoryImplementation(
-    private val appExecutors: AppExecutors,
     private val officialApiService: OfficialAPIService,
     private val tramAPIService: TramAPIService,
     private val ctazAPIService: CtazAPIService,
-    private val stopsDao: StopsDao,
-    private val db: AppDatabase
+    private val stopsDao: StopsDao
 ) : TramRepository {
 
     companion object {
@@ -41,11 +38,9 @@ class TramRepositoryImplementation(
         const val FRESH_TIMEOUT = 10
     }
 
-    override fun loadStopDestinations(tramStopId: String): LiveData<Resource<List<StopDestination>>> {
+    override fun loadStopDestinations(tramStopId: String): Flow<Resource<List<StopDestination>>> {
         return object :
-            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse, TramStopCtazAPIResponse>(
-                appExecutors
-            ) {
+            NetworkBoundResourceWithBackup<List<StopDestination>, TramStopOfficialAPIResponse, TramStopTramAPIResponse, TramStopCtazAPIResponse>() {
             override fun processPrimaryResponse(response: ApiSuccessResponse<TramStopOfficialAPIResponse>): List<StopDestination> {
                 return response.body.toStopDestinations(tramStopId)
             }
@@ -58,52 +53,49 @@ class TramRepositoryImplementation(
                 return response.body.toStopDestinations(tramStopId)
             }
 
-            override fun saveCallResult(result: List<StopDestination>) {
-                db.runInTransaction {
-                    stopsDao.deleteStopDestinations(tramStopId)
-                    stopsDao.insertStopDestinations(result)
-                }
+            override suspend fun saveCallResult(result: List<StopDestination>) {
+                stopsDao.replaceStopDestinations(tramStopId, result)
             }
 
             override fun shouldFetch(data: List<StopDestination>?): Boolean {
                 return (data == null || data.isEmpty() || !data.isFresh(FRESH_TIMEOUT))
             }
 
-            override fun loadFromDb(): LiveData<List<StopDestination>> = stopsDao.getStopDestinations(tramStopId)
+            override suspend fun loadFromDb() = stopsDao.getStopDestinations(tramStopId)
 
-            override fun createPrimaryCall() = officialApiService.getTramStopOfficialAPI(tramStopId)
+            override suspend fun fetchPrimarySource() = officialApiService.getTramStopOfficialAPI(tramStopId)
 
-            override fun createSecondaryCall() = tramAPIService.getTramStopTramAPI(tramStopId.officialAPIToTramAPIId())
+            override suspend fun fetchSecondarySource() = tramAPIService.getTramStopTramAPI(tramStopId.officialAPIToTramAPIId())
 
-            override fun createTertiaryCall() = ctazAPIService.getTramStopCtazAPI(tramStopId)
-        }.asLiveData()
+            override suspend fun fetchTertiarySource() = ctazAPIService.getTramStopCtazAPI(tramStopId)
+        }.asFlow()
     }
 
-    override fun loadStop(tramStopId: String): LiveData<Stop> {
+    override fun loadStop(tramStopId: String): Flow<Stop> {
         return stopsDao.getStop(tramStopId)
     }
 
-    override fun loadStops(): LiveData<List<Stop>> {
+    override fun loadStops(): Flow<List<Stop>> {
         return stopsDao.getStopsByType(StopType.TRAM)
     }
 
-    override fun loadStops(stopIds: List<String>): LiveData<List<Stop>> {
+    override fun loadStops(stopIds: List<String>): Flow<List<Stop>> {
         return stopsDao.getStops(stopIds)
     }
 
-    override fun loadMainLines(): LiveData<List<Line>> {
+    override fun loadMainLines(): Flow<List<Line>> {
         return stopsDao.getMainLinesByType(LineType.TRAM)
     }
 
-    override fun loadLineLocations(lineId: String): LiveData<List<LineLocation>> {
+    override fun loadLineLocations(lineId: String): Flow<List<LineLocation>> {
         return stopsDao.getLineLocations(lineId)
     }
 
-    override fun loadLine(lineId: String): LiveData<Line> {
+    override fun loadLine(lineId: String): Flow<Line> {
         return stopsDao.getLine(lineId)
     }
 
-    override fun loadAlternativeLineIds(lineId: String): LiveData<List<String>> {
+    override fun loadAlternativeLineIds(lineId: String): Flow<List<String>> {
         return stopsDao.getAlternativeLineIds(lineId)
     }
 }

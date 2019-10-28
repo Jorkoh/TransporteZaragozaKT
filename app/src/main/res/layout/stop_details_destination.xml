@@ -130,7 +130,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/stop_details_no_data_help"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stop_details_no_data_animation"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginStart="32dp"
                 android:textAppearance="@android:style/TextAppearance.Material.Headline"
                 android:gravity="center_horizontal"
@@ -148,7 +148,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/stop_details_no_data_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/stop_details_no_data_text"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginEnd="32dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

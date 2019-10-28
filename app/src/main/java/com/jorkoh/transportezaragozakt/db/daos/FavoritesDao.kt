@@ -19,10 +19,10 @@ interface FavoritesDao {
     suspend fun deleteAllFavorites()
 
     @Query("UPDATE favoriteStops SET position = :newPosition WHERE stopId = :stopId")
-    fun updatePosition(stopId: String, newPosition: Int)
+    suspend fun updatePosition(stopId: String, newPosition: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavoriteStop(favoriteStop: FavoriteStop)
+    suspend fun insertFavoriteStop(favoriteStop: FavoriteStop)
 
     @Query("UPDATE stops SET isFavorite = :isFavorite WHERE stopId = :stopId")
     fun updateIsFavorite(stopId: String, isFavorite: Boolean)
@@ -34,10 +34,10 @@ interface FavoritesDao {
     fun getFavoriteCount(): Flow<Int>
 
     @Query("SELECT stopId, position FROM favoriteStops ORDER BY favoriteStops.position ASC")
-    fun getFavoritePositions(): List<FavoritePositions>
+    suspend fun getFavoritePositions(): List<FavoritePositions>
 
     @Query("UPDATE favoriteStops SET alias = :alias, colorHex = :colorHex WHERE stopId = :stopId")
-    fun updateFavorite(stopId: String, colorHex: String, alias: String)
+    suspend fun updateFavorite(stopId: String, colorHex: String, alias: String)
 
     @Query("SELECT IFNULL(position, 0)+1 FROM favoriteStops ORDER BY position LIMIT 1")
     fun getLastPosition(): Int

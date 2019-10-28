@@ -16,6 +16,7 @@ import androidx.core.animation.doOnStart
 import androidx.core.view.updateLayoutParams
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -28,6 +29,8 @@ import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
 import com.pixplicity.generate.Rate
 import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -89,20 +92,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Setup snackbar feedback observers. Whenever the user adds/removes favorites/reminders from any screen they get a snackbar
-        mainActivityVM.favoriteCountChange.observe(this, Observer { changeAmount ->
-            when {
-                changeAmount == 0 -> return@Observer
-                changeAmount > 0 -> makeSnackbar(getString(R.string.added_favorite_snackbar))
-                changeAmount < 0 -> makeSnackbar(getString(R.string.removed_favorite_snackbar))
+        lifecycleScope.launch {
+            mainActivityVM.favoriteCountChangeSign.collect { changeSign ->
+                when (changeSign) {
+                    true -> makeSnackbar(getString(R.string.added_favorite_snackbar))
+                    false -> makeSnackbar(getString(R.string.removed_favorite_snackbar))
+                }
             }
-        })
-        mainActivityVM.reminderCountChange.observe(this, Observer { changeAmount ->
-            when {
-                changeAmount == 0 -> return@Observer
-                changeAmount > 0 -> makeSnackbar(getString(R.string.added_reminder_snackbar))
-                changeAmount < 0 -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
+            mainActivityVM.reminderCountChangeSign.collect { changeSign ->
+                when (changeSign) {
+                    true -> makeSnackbar(getString(R.string.added_reminder_snackbar))
+                    false -> makeSnackbar(getString(R.string.removed_reminder_snackbar))
+                }
             }
-        })
+        }
         mainActivityVM.currentNavController.observe(this, Observer { navController ->
             navController.removeOnDestinationChangedListener(onDestinationChangedListener)
             navController.addOnDestinationChangedListener(onDestinationChangedListener)

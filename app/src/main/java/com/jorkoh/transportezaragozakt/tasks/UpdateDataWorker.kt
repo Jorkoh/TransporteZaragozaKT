@@ -7,194 +7,212 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import androidx.work.Worker
+import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.android.gms.maps.model.LatLng
-import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.db.daos.StopsDao
 import com.jorkoh.transportezaragozakt.destinations.createChangelogDeepLink
 import com.parse.ParseObject
 import com.parse.ParseQuery
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 
-class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams),
-    KoinComponent {
+class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : CoroutineWorker(appContext, workerParams), KoinComponent {
 
-    private val db: AppDatabase by inject()
     private val stopsDao: StopsDao by inject()
-    private val executors: AppExecutors by inject()
     private val sharedPreferences: SharedPreferences by inject()
 
     var newVersion = 0
     var oldVersion = 0
 
     // May fire multiple times? https://issuetracker.google.com/issues/119886476
-    override fun doWork(): Result {
-        ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_versions_collection)).apply {
-            limit = 1
-        }.getFirstInBackground { document, exception ->
-            if (exception != null) return@getFirstInBackground
+    override suspend fun doWork(): Result {
+        coroutineScope {
+            ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_versions_collection)).apply {
+                limit = 1
+            }.getFirstInBackground { document, exception ->
+                if (exception != null) return@getFirstInBackground
 
-            // Bus stops
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_stops_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_stops_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_stops_collection)).apply {
-                    whereEqualTo("version", newVersion)
-                    limit = 1
-                }.getFirstInBackground { busStopDocument, e ->
-                    if (e == null) {
-                        updateStops(busStopDocument, StopType.BUS)
-                        updateVersion(applicationContext.getString(R.string.saved_bus_stops_version_number_key), newVersion)
-                    }
-                }
-            }
-
-            // Tram stops
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_stops_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_stops_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_stops_collection)).apply {
-                    whereEqualTo("version", newVersion)
-                    limit = 1
-                }.getFirstInBackground { tramStopDocument, e ->
-                    if (e == null) {
-                        updateStops(tramStopDocument, StopType.TRAM)
-                        updateVersion(applicationContext.getString(R.string.saved_tram_stops_version_number_key), newVersion)
-                    }
-                }
-            }
-
-            // Rural stops
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_stops_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_stops_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_stops_collection)).apply {
-                    whereEqualTo("version", newVersion)
-                    limit = 1
-                }.getFirstInBackground { ruralStopDocument, e ->
-                    if (e == null) {
-                        updateStops(ruralStopDocument, StopType.RURAL)
-                        updateVersion(applicationContext.getString(R.string.saved_rural_stops_version_number_key), newVersion)
-                    }
-                }
-            }
-
-            // Bus lines
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_collection)).apply {
-                    whereEqualTo("version", newVersion)
-                    limit = 1
-                }.getFirstInBackground { busLinesDocument, e ->
-                    if (e == null) {
-                        updateLines(busLinesDocument, LineType.BUS)
-                        updateVersion(applicationContext.getString(R.string.saved_bus_lines_version_number_key), newVersion)
-                    }
-                }
-            }
-
-            // Tram lines
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_collection)).apply {
-                    whereEqualTo("version", newVersion)
-                    limit = 1
-                }.getFirstInBackground { tramLinesDocument, e ->
-                    if (e == null) {
-                        updateLines(tramLinesDocument, LineType.TRAM)
-                        updateVersion(applicationContext.getString(R.string.saved_tram_lines_version_number_key), newVersion)
-                    }
-                }
-            }
-
-            // Rural lines
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_collection)).apply {
-                    whereEqualTo("version", newVersion)
-                    limit = 1
-                }.getFirstInBackground { ruralLinesDocument, e ->
-                    if (e == null) {
-                        updateLines(ruralLinesDocument, LineType.RURAL)
-                        updateVersion(applicationContext.getString(R.string.saved_rural_lines_version_number_key), newVersion)
-                    }
-                }
-            }
-
-            // Bus lines locations
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
-                    .apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { busLinesLocationsDocument, e ->
-                        if (e == null) {
-                            updateLinesLocations(busLinesLocationsDocument, LineType.BUS)
-                            updateVersion(
-                                applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key),
-                                newVersion
-                            )
-                        }
-                    }
-            }
-
-            // Tram lines locations
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
-                    .apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { tramLinesLocationsDocument, e ->
-                        if (e == null) {
-                            updateLinesLocations(tramLinesLocationsDocument, LineType.TRAM)
-                            updateVersion(
-                                applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
-                                newVersion
-                            )
-
-                        }
-                    }
-            }
-
-            // Rural lines locations
-            newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
-            oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key), 0)
-            if (newVersion != oldVersion) {
-                ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
-                    .apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { ruralLinesLocationsDocument, e ->
-                        if (e == null) {
-                            updateLinesLocations(ruralLinesLocationsDocument, LineType.RURAL)
-                            updateVersion(
-                                applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key),
-                                newVersion
-                            )
-
-                        }
-                    }
-            }
-
-            // Changelog
-            (document.getInt(applicationContext.getString(R.string.parse_changelog_collection))).let { newVersion ->
-                val oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_changelog_version_number_key), 0)
+                // Bus stops
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_stops_collection))
+                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_stops_version_number_key), 0)
                 if (newVersion != oldVersion) {
-                    updateChangelog(newVersion)
-                    showUpdateNotification()
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_stops_collection)).apply {
+                        whereEqualTo("version", newVersion)
+                        limit = 1
+                    }.getFirstInBackground { busStopDocument, e ->
+                        if (e == null) {
+                            launch {
+                                updateStops(busStopDocument, StopType.BUS)
+                                updateVersion(applicationContext.getString(R.string.saved_bus_stops_version_number_key), newVersion)
+                            }
+                        }
+                    }
+                }
+
+                // Tram stops
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_stops_collection))
+                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_stops_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_stops_collection)).apply {
+                        whereEqualTo("version", newVersion)
+                        limit = 1
+                    }.getFirstInBackground { tramStopDocument, e ->
+                        if (e == null) {
+                            launch {
+                                updateStops(tramStopDocument, StopType.TRAM)
+                                updateVersion(applicationContext.getString(R.string.saved_tram_stops_version_number_key), newVersion)
+                            }
+                        }
+                    }
+                }
+
+                // Rural stops
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_stops_collection))
+                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_stops_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_stops_collection)).apply {
+                        whereEqualTo("version", newVersion)
+                        limit = 1
+                    }.getFirstInBackground { ruralStopDocument, e ->
+                        if (e == null) {
+                            launch {
+                                updateStops(ruralStopDocument, StopType.RURAL)
+                                updateVersion(applicationContext.getString(R.string.saved_rural_stops_version_number_key), newVersion)
+                            }
+                        }
+                    }
+                }
+
+                // Bus lines
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_collection))
+                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_collection)).apply {
+                        whereEqualTo("version", newVersion)
+                        limit = 1
+                    }.getFirstInBackground { busLinesDocument, e ->
+                        if (e == null) {
+                            launch {
+                                updateLines(busLinesDocument, LineType.BUS)
+                                updateVersion(applicationContext.getString(R.string.saved_bus_lines_version_number_key), newVersion)
+                            }
+                        }
+                    }
+                }
+
+                // Tram lines
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_collection))
+                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_collection)).apply {
+                        whereEqualTo("version", newVersion)
+                        limit = 1
+                    }.getFirstInBackground { tramLinesDocument, e ->
+                        if (e == null) {
+                            launch {
+                                updateLines(tramLinesDocument, LineType.TRAM)
+                                updateVersion(applicationContext.getString(R.string.saved_tram_lines_version_number_key), newVersion)
+                            }
+                        }
+                    }
+                }
+
+                // Rural lines
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_collection))
+                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_collection)).apply {
+                        whereEqualTo("version", newVersion)
+                        limit = 1
+                    }.getFirstInBackground { ruralLinesDocument, e ->
+                        if (e == null) {
+                            launch {
+                                updateLines(ruralLinesDocument, LineType.RURAL)
+                                updateVersion(applicationContext.getString(R.string.saved_rural_lines_version_number_key), newVersion)
+                            }
+                        }
+                    }
+                }
+
+                // Bus lines locations
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
+                oldVersion =
+                    sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
+                        .apply {
+                            whereEqualTo("version", newVersion)
+                            limit = 1
+                        }.getFirstInBackground { busLinesLocationsDocument, e ->
+                            if (e == null) {
+                                launch {
+                                    updateLinesLocations(busLinesLocationsDocument, LineType.BUS)
+                                    updateVersion(
+                                        applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key),
+                                        newVersion
+                                    )
+                                }
+                            }
+                        }
+                }
+
+                // Tram lines locations
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
+                oldVersion =
+                    sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
+                        .apply {
+                            whereEqualTo("version", newVersion)
+                            limit = 1
+                        }.getFirstInBackground { tramLinesLocationsDocument, e ->
+                            if (e == null) {
+                                launch {
+                                    updateLinesLocations(tramLinesLocationsDocument, LineType.TRAM)
+                                    updateVersion(
+                                        applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
+                                        newVersion
+                                    )
+                                }
+                            }
+                        }
+                }
+
+                // Rural lines locations
+                newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
+                oldVersion =
+                    sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key), 0)
+                if (newVersion != oldVersion) {
+                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
+                        .apply {
+                            whereEqualTo("version", newVersion)
+                            limit = 1
+                        }.getFirstInBackground { ruralLinesLocationsDocument, e ->
+                            if (e == null) {
+                                launch {
+                                    updateLinesLocations(ruralLinesLocationsDocument, LineType.RURAL)
+                                    updateVersion(
+                                        applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key),
+                                        newVersion
+                                    )
+                                }
+                            }
+                        }
+                }
+
+                // Changelog
+                (document.getInt(applicationContext.getString(R.string.parse_changelog_collection))).let { newVersion ->
+                    val oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_changelog_version_number_key), 0)
+                    if (newVersion != oldVersion) {
+                        updateChangelog(newVersion)
+                        showUpdateNotification()
+                    }
                 }
             }
         }
@@ -208,7 +226,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
         }
     }
 
-    private fun updateStops(stopsDocument: ParseObject, stopType: StopType) {
+    private suspend fun updateStops(stopsDocument: ParseObject, stopType: StopType) {
         val stopEntities = mutableListOf<Stop>()
         val stopsJson = checkNotNull(stopsDocument.getJSONArray("stops"))
         for (i in 0 until stopsJson.length()) {
@@ -233,14 +251,10 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
             )
             stopEntities.add(stopEntity)
         }
-        executors.diskIO().execute {
-            db.runInTransaction {
-                stopsDao.updateStops(stopEntities, stopType)
-            }
-        }
+        stopsDao.updateStops(stopEntities, stopType)
     }
 
-    private fun updateLines(linesDocument: ParseObject, lineType: LineType) {
+    private suspend fun updateLines(linesDocument: ParseObject, lineType: LineType) {
         val linesEntities = mutableListOf<Line>()
         val linesJson = checkNotNull(linesDocument.getJSONArray("lines"))
         for (i in 0 until linesJson.length()) {
@@ -274,14 +288,10 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
                 linesEntities.add(lineEntity)
             }
         }
-        executors.diskIO().execute {
-            db.runInTransaction {
-                stopsDao.updateLines(linesEntities, lineType)
-            }
-        }
+        stopsDao.updateLines(linesEntities, lineType)
     }
 
-    private fun updateLinesLocations(linesLocationsDocument: ParseObject, lineType: LineType) {
+    private suspend fun updateLinesLocations(linesLocationsDocument: ParseObject, lineType: LineType) {
         val linesLocationsEntities = mutableListOf<LineLocation>()
         val linesLocationsJson = checkNotNull(linesLocationsDocument.getJSONArray("lines"))
         for (i in 0 until linesLocationsJson.length()) {
@@ -300,11 +310,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) :
                 }
             }
         }
-        executors.diskIO().execute {
-            db.runInTransaction {
-                stopsDao.updateLinesLocations(linesLocationsEntities, lineType)
-            }
-        }
+        stopsDao.updateLinesLocations(linesLocationsEntities, lineType)
     }
 
     private fun updateChangelog(newVersion: Int) {

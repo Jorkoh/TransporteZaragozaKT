@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class FavoritesViewModel(private val favoritesRepository: FavoritesRepository) : ViewModel() {
 
-    val favoriteStops = favoritesRepository.getFavoriteStops().asLiveData()
+    val favoriteStops = favoritesRepository.getFavoriteStopsExtended().asLiveData()
 
     fun updateFavorite(stopId: String, alias: String, colorHex: String) {
         viewModelScope.launch {

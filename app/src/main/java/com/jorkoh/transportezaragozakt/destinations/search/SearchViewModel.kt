@@ -1,10 +1,7 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
 import android.location.Location
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopWithDistance
@@ -21,12 +18,11 @@ class SearchViewModel(
     val position: MutableLiveData<Location> = MutableLiveData()
     val searchTabPosition = settingsRepository.loadSearchTabPosition()
 
-    val nearbyStops: LiveData<List<StopWithDistance>> = Transformations.switchMap(position){
-        stopsRepository.loadNearbyStops(it.toLatLng(), 500.0)
+    val nearbyStops: LiveData<List<StopWithDistance>> = Transformations.switchMap(position) {
+        stopsRepository.loadNearbyStops(it.toLatLng(), 500.0).asLiveData()
     }
-    val allStops: LiveData<List<Stop>> = stopsRepository.loadStops()
-    val mainLines: MutableLiveData<List<Line>> = stopsRepository.loadMainLines()
-
+    val allStops: LiveData<List<Stop>> = stopsRepository.loadStops().asLiveData()
+    val mainLines: LiveData<List<Line>> = stopsRepository.loadMainLines().asLiveData()
 
     fun setSearchTabPosition(position: Int) {
         settingsRepository.setSearchTabPosition(position)

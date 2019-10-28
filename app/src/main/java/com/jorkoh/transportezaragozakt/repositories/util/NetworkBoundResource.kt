@@ -3,11 +3,9 @@ package com.jorkoh.transportezaragozakt.repositories.util
 import com.jorkoh.transportezaragozakt.services.common.util.ApiErrorResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiSuccessResponse
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-@ExperimentalCoroutinesApi
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private val result: Flow<Resource<ResultType>>
@@ -17,7 +15,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             emit(Resource.loading(null))
             val dbData = loadFromDb()
             if (shouldFetch(dbData)) {
-                when (val response = fetchData()) {
+                when (val response = fetchSource()) {
                     is ApiSuccessResponse -> {
                         saveCallResult(processResponse(response))
                         emit(Resource.success(loadFromDb()))
@@ -42,6 +40,6 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     protected abstract suspend fun loadFromDb(): ResultType
 
-    protected abstract suspend fun fetchData(): ApiResponse<RequestType>
+    protected abstract suspend fun fetchSource(): ApiResponse<RequestType>
 }
 

@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.services.tram_api
 
-import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.tram_api.responses.tram.TramStopTramAPIResponse
 import retrofit2.http.GET
@@ -12,7 +11,7 @@ interface TramAPIService {
     }
 
     @GET("get-part-hours?realtime=1")
-    fun getTramStopTramAPI(@Query("currentStop") id: String): LiveData<ApiResponse<TramStopTramAPIResponse>>
+    suspend fun getTramStopTramAPI(@Query("currentStop") id: String): ApiResponse<TramStopTramAPIResponse>
 }
 
 fun String.officialAPIToTramAPIId() = officialToTramIds[this] ?: ""

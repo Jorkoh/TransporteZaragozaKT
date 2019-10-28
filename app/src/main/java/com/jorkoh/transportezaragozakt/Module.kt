@@ -20,7 +20,6 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsView
 import com.jorkoh.transportezaragozakt.repositories.*
 import com.jorkoh.transportezaragozakt.services.bus_web.BusWebService
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponseCallAdapterFactory
-import com.jorkoh.transportezaragozakt.services.common.util.LiveDataCallAdapterFactory
 import com.jorkoh.transportezaragozakt.services.ctaz_api.CtazAPIService
 import com.jorkoh.transportezaragozakt.services.ctaz_api.moshi_adapters.CtazAPITimeAdapter
 import com.jorkoh.transportezaragozakt.services.official_api.OfficialAPIService
@@ -29,6 +28,8 @@ import com.jorkoh.transportezaragozakt.services.tram_api.TramAPIService
 import com.pixplicity.generate.Rate
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -48,7 +49,6 @@ val appModule = module {
 
     // Services (OkHttp and some converters/factories are shared)
     single { OkHttpClient() }
-    single { LiveDataCallAdapterFactory() }
     single { ApiResponseCallAdapterFactory() }
     single<OfficialAPIService> {
         Retrofit.Builder()
@@ -62,7 +62,7 @@ val appModule = module {
                         .build()
                 )
             )
-            .addCallAdapterFactory(get<LiveDataCallAdapterFactory>())
+            .addCallAdapterFactory(get<ApiResponseCallAdapterFactory>())
             .build()
             .create(OfficialAPIService::class.java)
     }
@@ -71,7 +71,7 @@ val appModule = module {
             .baseUrl(BusWebService.BASE_URL)
             .client(get<OkHttpClient>())
             .addConverterFactory(JspoonConverterFactory.create())
-            .addCallAdapterFactory(get<LiveDataCallAdapterFactory>())
+            .addCallAdapterFactory(get<ApiResponseCallAdapterFactory>())
             .build()
             .create(BusWebService::class.java)
     }
@@ -87,7 +87,7 @@ val appModule = module {
                         .build()
                 )
             )
-            .addCallAdapterFactory(get<LiveDataCallAdapterFactory>())
+            .addCallAdapterFactory(get<ApiResponseCallAdapterFactory>())
             .build()
             .create(TramAPIService::class.java)
     }
@@ -103,7 +103,6 @@ val appModule = module {
                         .build()
                 )
             )
-            .addCallAdapterFactory(get<LiveDataCallAdapterFactory>())
             .addCallAdapterFactory(get<ApiResponseCallAdapterFactory>())
             .build()
             .create(CtazAPIService::class.java)
@@ -115,7 +114,7 @@ val appModule = module {
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    get<AppExecutors>().diskIO().execute {
+                    GlobalScope.launch {
                         get<AppDatabase>().stopsDao().insertInitialData(androidContext())
                     }
                 }
@@ -147,11 +146,11 @@ val appModule = module {
     // Repositories
     single<SettingsRepository> { SettingsRepositoryImplementation(get(), androidContext()) }
     single<StopsRepository> { StopsRepositoryImplementation(get(), get(), get()) }
-    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
-    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get(), get(), get()) }
-    single<RuralRepository> { RuralRepositoryImplementation(get(), get(), get(), get(), get()) }
+    single<BusRepository> { BusRepositoryImplementation(get(), get(), get(), get()) }
+    single<TramRepository> { TramRepositoryImplementation(get(), get(), get(), get()) }
+    single<RuralRepository> { RuralRepositoryImplementation(get(), get(), get()) }
     single<FavoritesRepository> { FavoritesRepositoryImplementation(get()) }
-    single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), get(), get(), androidContext()) }
+    single<RemindersRepository> { RemindersRepositoryImplementation(get(), get(), androidContext()) }
 
     // ViewModels
     viewModel { FavoritesViewModel(get()) }
@@ -159,8 +158,8 @@ val appModule = module {
     viewModel { MapSettingsViewModel(get()) }
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }
-    viewModel { (stopId : String, stopType : StopType) -> StopDetailsViewModel(stopId, stopType, get(), get(), get()) }
-    viewModel { (lineId : String, lineType : LineType) -> LineDetailsViewModel(lineId, lineType, get(), get()) }
+    viewModel { (stopId: String, stopType: StopType) -> StopDetailsViewModel(stopId, stopType, get(), get(), get()) }
+    viewModel { (lineId: String, lineType: LineType) -> LineDetailsViewModel(lineId, lineType, get(), get()) }
     viewModel { MainActivityViewModel(get(), get(), get()) }
     viewModel { IntroActivityViewModel(get()) }
 }

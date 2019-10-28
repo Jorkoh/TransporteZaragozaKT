@@ -64,6 +64,11 @@ class LineDetailsFragment : FragmentWithToolbar() {
     private var activeMinZoom = MIN_ZOOM
     private var activeBounds: LatLngBounds = RURAL_BOUNDS
 
+    //TODO YIKES
+    private var renewingStopMarkers = false
+    private var renewingTrackerMarkers = false
+    private var selectingNewMarker = false
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var map: GoogleMap
     private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
@@ -222,7 +227,9 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
 
         map.setOnInfoWindowCloseListener {
-            lineDetailsVM.selectedItemId.postValue("")
+            if (!renewingStopMarkers && !renewingTrackerMarkers && !selectingNewMarker) {
+                lineDetailsVM.selectedItemId.postValue("")
+            }
         }
     }
 
@@ -311,19 +318,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
             stops?.let {
                 // Get rid of the old markers and set up new markers
                 renewMarkers(stops)
-
-                // Setup the observer for the selected stop, this can't be done until markers are ready
-                lineDetailsVM.selectedItemId.observe(viewLifecycleOwner, Observer { selectedItemId ->
-                    if (!selectedItemId.isNullOrEmpty()) {
-                        stopMarkers.plus(trackingMarkers).find { marker ->
-                            (marker.tag as CustomClusterItem).itemId == selectedItemId
-                        }?.let { selectedMarker ->
-                            selectedMarker.showInfoWindow()
-                            map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as CustomClusterItem).position), 240, null)
-                            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-                        }
-                    }
-                })
             }
         })
 
@@ -337,10 +331,26 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 updateTrackingsDialogDistance()
             }
         })
+
+        lineDetailsVM.selectedItemId.observe(viewLifecycleOwner, Observer { selectedItemId ->
+            if (!selectedItemId.isNullOrEmpty()) {
+                stopMarkers.plus(trackingMarkers).find { marker ->
+                    (marker.tag as CustomClusterItem).itemId == selectedItemId
+                }?.let { selectedMarker ->
+                    selectingNewMarker = true
+                    selectedMarker.showInfoWindow()
+                    selectingNewMarker = false
+                    map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as CustomClusterItem).position), 240, null)
+                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+        })
     }
 
     private fun renewMarkers(stops: List<Stop>) {
+        renewingStopMarkers = true
         stopMarkers.forEach { it.remove() }
+        renewingStopMarkers = false
         stopMarkers.clear()
         stops.forEach { stop ->
             val item = CustomClusterItem(stop)
@@ -352,10 +362,16 @@ class LineDetailsFragment : FragmentWithToolbar() {
             marker.tag = item
             stopMarkers.add(marker)
         }
+        //TODO YIKES
+        if (stops.any { it.stopId == lineDetailsVM.selectedItemId.value }) {
+            lineDetailsVM.selectedItemId.postValue(lineDetailsVM.selectedItemId.value)
+        }
     }
 
     private fun renewTrackings(trackings: List<RuralTracking>) {
+        renewingTrackerMarkers = true
         trackingMarkers.forEach { it.remove() }
+        renewingTrackerMarkers = false
         trackingMarkers.clear()
         trackings.forEach { tracking ->
             val item = CustomClusterItem(tracking)
@@ -366,6 +382,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
             val marker = map.addMarker(markerOptions)
             marker.tag = item
             trackingMarkers.add(marker)
+        }
+        //TODO YIKES
+        if (trackings.any { it.vehicleId == lineDetailsVM.selectedItemId.value }) {
+            lineDetailsVM.selectedItemId.postValue(lineDetailsVM.selectedItemId.value)
         }
     }
 

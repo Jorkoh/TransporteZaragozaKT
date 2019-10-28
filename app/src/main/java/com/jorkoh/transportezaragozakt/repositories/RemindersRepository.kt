@@ -1,98 +1,92 @@
 package com.jorkoh.transportezaragozakt.repositories
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import com.jorkoh.transportezaragozakt.AppExecutors
 import com.jorkoh.transportezaragozakt.alarms.createAlarms
 import com.jorkoh.transportezaragozakt.alarms.deleteAlarms
-import com.jorkoh.transportezaragozakt.db.*
+import com.jorkoh.transportezaragozakt.db.DaysOfWeek
+import com.jorkoh.transportezaragozakt.db.Reminder
+import com.jorkoh.transportezaragozakt.db.ReminderExtended
+import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.daos.RemindersDao
 import com.jorkoh.transportezaragozakt.db.daos.StopsDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 interface RemindersRepository {
-    fun loadRemindersExtended(): LiveData<List<ReminderExtended>>
-    fun insertReminder(stopId: String, stopType: StopType, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int)
-    fun updateReminder(reminderId: Int, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int)
-    fun updateReminder(reminderId: Int, alias : String, colorHex: String)
-    fun restoreReminder(reminderId: Int, stopId : String)
-    fun moveReminder(from : Int, to : Int)
-    fun deleteReminder(reminderId: Int)
-    fun loadReminderAlias(reminderId: Int): LiveData<String>
-    fun loadReminderCount(): LiveData<Int>
-    fun deleteAllReminders()
+    fun getRemindersExtended(): Flow<List<ReminderExtended>>
+    fun getReminderCount(): Flow<Int>
+    fun getReminderAlias(reminderId: Int): Flow<String>
+    suspend fun updateReminder(reminderId: Int, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int)
+    suspend fun updateReminder(reminderId: Int, alias: String, colorHex: String)
+    suspend fun insertReminder(stopId: String, stopType: StopType, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int)
+    suspend fun restoreReminder(reminder: ReminderExtended)
+    suspend fun moveReminder(from: Int, to: Int)
+    suspend fun removeReminder(reminderId: Int)
+    suspend fun deleteAllReminders()
 }
 
 class RemindersRepositoryImplementation(
     private val remindersDao: RemindersDao,
     private val stopsDao: StopsDao,
-    private val db: AppDatabase,
-    private val appExecutors: AppExecutors,
     private val context: Context
 ) : RemindersRepository {
-    override fun loadRemindersExtended(): LiveData<List<ReminderExtended>> {
+    override fun getRemindersExtended(): Flow<List<ReminderExtended>> {
         return remindersDao.getRemindersExtended()
     }
 
-    override fun insertReminder(stopId: String, stopType: StopType, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int) {
-        appExecutors.diskIO().execute {
-            val reminder = Reminder(0, stopId, stopType, DaysOfWeek(daysOfWeek), hourOfDay, minute, stopsDao.getStopTitleImmediate(stopId), "", remindersDao.getLastPositionImmediate())
-            val reminderId =remindersDao.insertReminder(reminder)
-            reminder.reminderId = reminderId.toInt()
-            reminder.createAlarms(context)
-        }
-    }
-
-    override fun updateReminder(reminderId: Int, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int) {
-        appExecutors.diskIO().execute {
-            remindersDao.updateReminder(reminderId, DaysOfWeek(daysOfWeek), hourOfDay, minute)
-            remindersDao.getReminderInmediate(reminderId).apply {
-                deleteAlarms(context)
-                createAlarms(context)
-            }
-        }
-    }
-
-    override fun updateReminder(reminderId: Int, alias: String, colorHex: String) {
-        appExecutors.diskIO().execute {
-            remindersDao.updateReminder(reminderId, colorHex, alias)
-        }
-    }
-
-    override fun restoreReminder(reminderId: Int, stopId : String) {
-        appExecutors.diskIO().execute {
-            remindersDao.updateReminder(reminderId, "", stopsDao.getStopTitleImmediate(stopId))
-        }
-    }
-
-    override fun moveReminder(from: Int, to: Int) {
-        appExecutors.diskIO().execute {
-            db.runInTransaction {
-                remindersDao.moveReminder(from, to)
-            }
-        }
-    }
-
-    override fun deleteReminder(reminderId: Int) {
-        appExecutors.diskIO().execute {
-            remindersDao.getReminderInmediate(reminderId).deleteAlarms(context)
-            remindersDao.deleteReminder(reminderId)
-        }
-    }
-
-    override fun loadReminderAlias(reminderId: Int): LiveData<String> {
-        return remindersDao.getReminderAlias(reminderId)
-    }
-
-    override fun loadReminderCount() : LiveData<Int>{
+    override fun getReminderCount(): Flow<Int> {
         return remindersDao.getReminderCount()
     }
 
-    // For testing purposes
-    override fun deleteAllReminders() {
-        appExecutors.diskIO().execute {
-            db.runInTransaction {
-                remindersDao.deleteAllReminders()
-            }
+    override fun getReminderAlias(reminderId: Int): Flow<String> {
+        return remindersDao.getReminderAlias(reminderId)
+    }
+
+    override suspend fun updateReminder(reminderId: Int, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int) {
+        remindersDao.updateReminder(reminderId, DaysOfWeek(daysOfWeek), hourOfDay, minute)
+        remindersDao.getReminder(reminderId).apply {
+            deleteAlarms(context)
+            createAlarms(context)
         }
+    }
+
+    override suspend fun updateReminder(reminderId: Int, alias: String, colorHex: String) {
+        remindersDao.updateReminder(reminderId, colorHex, alias)
+    }
+
+    override suspend fun insertReminder(stopId: String, stopType: StopType, daysOfWeek: List<Boolean>, hourOfDay: Int, minute: Int) {
+        val reminder = Reminder(
+            0,
+            stopId,
+            stopType,
+            DaysOfWeek(daysOfWeek),
+            hourOfDay,
+            minute,
+            withContext(Dispatchers.IO) { stopsDao.getStopTitle(stopId) },
+            "",
+            withContext(Dispatchers.IO) { remindersDao.getLastPosition() }
+        )
+        val reminderId = remindersDao.insertReminder(reminder)
+        reminder.reminderId = reminderId.toInt()
+        reminder.createAlarms(context)
+    }
+
+    override suspend fun restoreReminder(reminder: ReminderExtended) {
+        remindersDao.updateReminder(reminder.reminderId, "", reminder.stopTitle)
+    }
+
+    override suspend fun moveReminder(from: Int, to: Int) {
+        remindersDao.moveReminder(from, to)
+    }
+
+    override suspend fun removeReminder(reminderId: Int) {
+        val reminder = remindersDao.getReminder(reminderId)
+        reminder.deleteAlarms(context)
+        remindersDao.deleteReminder(reminderId)
+    }
+
+    override suspend fun deleteAllReminders() {
+        remindersDao.deleteAllReminders()
     }
 }

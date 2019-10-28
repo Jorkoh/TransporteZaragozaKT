@@ -31,8 +31,8 @@ class MainActivityTest : KoinTest {
     fun init() {
         runBlocking {
             favoritesRepository.deleteAllFavoriteStops()
+            remindersRepository.deleteAllReminders()
         }
-        remindersRepository.deleteAllReminders()
     }
 
     @Test

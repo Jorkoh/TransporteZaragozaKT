@@ -9,7 +9,6 @@ import android.text.format.DateFormat.getTimeFormat
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.Observer
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -17,10 +16,10 @@ import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
 import com.jorkoh.transportezaragozakt.destinations.fixTimes
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
-import com.jorkoh.transportezaragozakt.repositories.util.DoubleCombinedLiveData
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
+import kotlinx.coroutines.flow.combine
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -61,21 +60,15 @@ class AlarmService : LifecycleService() {
             val stopId = requireNotNull(extras.getString(STOP_ID_KEY_ALARM))
             val stopType = StopType.valueOf(requireNotNull(extras.getString(STOP_TYPE_KEY_ALARM)))
             val reminderId = extras.getInt(REMINDER_ID_KEY_ALARM)
-            DoubleCombinedLiveData(
-                stopsRepository.loadStopDestinations(stopType, stopId),
-                remindersRepository.loadReminderAlias(reminderId)
-            ) { x, y -> Pair(x, y) }.observe(this, Observer { info ->
-                if (info.first?.status != Status.LOADING) {
-                    createNotification(
-                        stopId,
-                        stopType,
-                        reminderId,
-                        info.first as Resource<List<StopDestination>>,
-                        info.second as String
-                    )
+
+            val timesFlow = stopsRepository.loadStopDestinations(stopType, stopId)
+            val aliasFlow = remindersRepository.getReminderAlias(reminderId)
+            timesFlow.combine(aliasFlow) { times, alias ->
+                if (times.status != Status.LOADING) {
+                    createNotification(stopId, stopType, reminderId, times, alias)
                     stopSelfIfLast()
                 }
-            })
+            }
         }
 
         super.onStartCommand(intent, flags, startId)

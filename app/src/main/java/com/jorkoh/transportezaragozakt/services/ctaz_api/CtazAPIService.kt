@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.services.ctaz_api
 
-import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.bus.BusStopCtazAPIResponse
 import com.jorkoh.transportezaragozakt.services.ctaz_api.responses.rural.RuralStopCtazAPIResponse
@@ -18,15 +17,15 @@ interface CtazAPIService {
 
     @Headers("Accept: application/json")
     @GET("urban_arrival_time/{stopId}")
-    fun getBusStopCtazAPI(@Path("stopId") id: String): LiveData<ApiResponse<BusStopCtazAPIResponse>>
+    suspend fun getBusStopCtazAPI(@Path("stopId") id: String): ApiResponse<BusStopCtazAPIResponse>
 
     @Headers("Accept: application/json")
     @GET("tram_time/{stopId}")
-    fun getTramStopCtazAPI(@Path("stopId") id: String): LiveData<ApiResponse<TramStopCtazAPIResponse>>
+    suspend fun getTramStopCtazAPI(@Path("stopId") id: String): ApiResponse<TramStopCtazAPIResponse>
 
     @Headers("Accept: application/json")
     @GET("arrival_time/{stopId}")
-    fun getRuralStopCtazAPI(@Path("stopId") id: String): LiveData<ApiResponse<RuralStopCtazAPIResponse>>
+    suspend fun getRuralStopCtazAPI(@Path("stopId") id: String): ApiResponse<RuralStopCtazAPIResponse>
 
     @Headers("Accept: application/json")
     @GET("sae")

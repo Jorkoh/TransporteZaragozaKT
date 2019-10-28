@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.services.bus_web
 
-import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.services.bus_web.responses.bus.BusStopBusWebResponse
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import retrofit2.http.GET
@@ -12,7 +11,7 @@ interface BusWebService {
     }
 
     @GET("frm_esquemaparadatime.php")
-    fun getBusStopBusWeb(@Query("poste") id: String): LiveData<ApiResponse<BusStopBusWebResponse>>
+    suspend fun getBusStopBusWeb(@Query("poste") id: String): ApiResponse<BusStopBusWebResponse>
 }
 
 fun String.officialAPIToBusWebId() = this.split("-")[1]

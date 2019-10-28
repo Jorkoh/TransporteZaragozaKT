@@ -8,6 +8,9 @@ import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -17,14 +20,29 @@ class StopDetailsViewModel(
     private val stopsRepository: StopsRepository,
     private val favoritesRepository: FavoritesRepository,
     private val remindersRepository: RemindersRepository
-) :
-    ViewModel() {
+) : ViewModel() {
 
-    private lateinit var tempStopDestinations: LiveData<Resource<List<StopDestination>>>
-    val stopDestinations = MediatorLiveData<Resource<List<StopDestination>>>()
+    val stopDestinations = MutableLiveData<Resource<List<StopDestination>>>()
+    private var refreshJob: Job? = null
 
     val stopIsFavorited: LiveData<Boolean> = favoritesRepository.isFavoriteStop(stopId).asLiveData()
-    val stop: LiveData<Stop> = stopsRepository.loadStop(stopType, stopId)
+    val stop: LiveData<Stop> = stopsRepository.loadStop(stopType, stopId).asLiveData()
+
+    init {
+        viewModelScope.launch {
+            refreshStopDestinations()
+            delay(60_000)
+        }
+    }
+
+    fun refreshStopDestinations() {
+        refreshJob?.cancel()
+        refreshJob = viewModelScope.launch {
+            stopsRepository.loadStopDestinations(stopType, stopId).collect {
+                stopDestinations.postValue(it)
+            }
+        }
+    }
 
     fun toggleStopFavorite() {
         stop.value?.let { stop ->
@@ -34,23 +52,15 @@ class StopDetailsViewModel(
         }
     }
 
-    fun refreshStopDestinations() {
-        if (::tempStopDestinations.isInitialized) {
-            stopDestinations.removeSource(tempStopDestinations)
-        }
-        tempStopDestinations = stopsRepository.loadStopDestinations(stopType, stopId)
-        stopDestinations.addSource(tempStopDestinations) { value ->
-            stopDestinations.postValue(value)
-        }
-    }
-
     fun createReminder(daysOfWeek: List<Boolean>, time: Calendar) {
-        remindersRepository.insertReminder(
-            stopId,
-            stopType,
-            daysOfWeek,
-            time.get(Calendar.HOUR_OF_DAY),
-            time.get(Calendar.MINUTE)
-        )
+        viewModelScope.launch {
+            remindersRepository.insertReminder(
+                stopId,
+                stopType,
+                daysOfWeek,
+                time.get(Calendar.HOUR_OF_DAY),
+                time.get(Calendar.MINUTE)
+            )
+        }
     }
 }

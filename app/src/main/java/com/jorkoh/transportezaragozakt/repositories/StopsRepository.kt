@@ -1,28 +1,26 @@
 package com.jorkoh.transportezaragozakt.repositories
 
 import android.location.Location
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
-import com.jorkoh.transportezaragozakt.repositories.util.TripleCombinedLiveData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import java.util.*
 
 interface StopsRepository {
-    fun loadStop(stopType: StopType, stopId: String): LiveData<Stop>
-    fun loadStopDestinations(stopType: StopType, stopId: String): LiveData<Resource<List<StopDestination>>>
-    fun loadStops(stopType: StopType): LiveData<List<Stop>>
-    fun loadStops(): MediatorLiveData<List<Stop>>
-    fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): LiveData<List<StopWithDistance>>
-    fun loadMainLines(lineType: LineType): LiveData<List<Line>>
-    fun loadMainLines(): MutableLiveData<List<Line>>
-    fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>>
-    fun loadLine(lineType: LineType, lineId: String): LiveData<Line>
-    fun loadAlternativeLineIds(lineType: LineType, lineId: String): LiveData<List<String>>
-    fun loadStops(stopType: StopType, stopIds: List<String>): LiveData<List<Stop>>
+    fun loadStop(stopType: StopType, stopId: String): Flow<Stop>
+    fun loadStopDestinations(stopType: StopType, stopId: String): Flow<Resource<List<StopDestination>>>
+    fun loadStops(stopType: StopType): Flow<List<Stop>>
+    fun loadStops(): Flow<List<Stop>>
+    fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): Flow<List<StopWithDistance>>
+    fun loadMainLines(lineType: LineType): Flow<List<Line>>
+    fun loadMainLines(): Flow<List<Line>>
+    fun loadLineLocations(lineType: LineType, lineId: String): Flow<List<LineLocation>>
+    fun loadLine(lineType: LineType, lineId: String): Flow<Line>
+    fun loadAlternativeLineIds(lineType: LineType, lineId: String): Flow<List<String>>
+    fun loadStops(stopType: StopType, stopIds: List<String>): Flow<List<Stop>>
 }
 
 class StopsRepositoryImplementation(
@@ -31,7 +29,7 @@ class StopsRepositoryImplementation(
     private val ruralRepository: RuralRepository
 ) : StopsRepository {
 
-    override fun loadStop(stopType: StopType, stopId: String): LiveData<Stop> {
+    override fun loadStop(stopType: StopType, stopId: String): Flow<Stop> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStop(stopId)
             StopType.TRAM -> tramRepository.loadStop(stopId)
@@ -39,7 +37,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadStopDestinations(stopType: StopType, stopId: String): LiveData<Resource<List<StopDestination>>> {
+    override fun loadStopDestinations(stopType: StopType, stopId: String): Flow<Resource<List<StopDestination>>> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStopDestinations(stopId)
             StopType.TRAM -> tramRepository.loadStopDestinations(stopId)
@@ -47,7 +45,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadStops(stopType: StopType): LiveData<List<Stop>> {
+    override fun loadStops(stopType: StopType): Flow<List<Stop>> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops()
             StopType.TRAM -> tramRepository.loadStops()
@@ -55,7 +53,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadStops(stopType: StopType, stopIds: List<String>): LiveData<List<Stop>> {
+    override fun loadStops(stopType: StopType, stopIds: List<String>): Flow<List<Stop>> {
         return when (stopType) {
             StopType.BUS -> busRepository.loadStops(stopIds)
             StopType.TRAM -> tramRepository.loadStops(stopIds)
@@ -63,7 +61,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadMainLines(lineType: LineType): LiveData<List<Line>> {
+    override fun loadMainLines(lineType: LineType): Flow<List<Line>> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadMainLines()
             LineType.TRAM -> tramRepository.loadMainLines()
@@ -71,7 +69,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadLineLocations(lineType: LineType, lineId: String): LiveData<List<LineLocation>> {
+    override fun loadLineLocations(lineType: LineType, lineId: String): Flow<List<LineLocation>> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadLineLocations(lineId)
             LineType.TRAM -> tramRepository.loadLineLocations(lineId)
@@ -79,23 +77,23 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadStops(): MediatorLiveData<List<Stop>> {
-        return TripleCombinedLiveData(
-            loadStops(StopType.BUS),
-            loadStops(StopType.TRAM),
-            loadStops(StopType.RURAL)
-        ) { bus, tram, rural -> tram.orEmpty() + bus.orEmpty() + rural.orEmpty() }
+    override fun loadStops(): Flow<List<Stop>> {
+        return loadStops(StopType.BUS).combine(loadStops(StopType.TRAM)) { bus, tram ->
+            tram + bus
+        }.combine(loadStops(StopType.RURAL)) { busAndTram, rural ->
+            busAndTram + rural
+        }
     }
 
-    override fun loadMainLines(): MutableLiveData<List<Line>> {
-        return TripleCombinedLiveData(
-            loadMainLines(LineType.BUS),
-            loadMainLines(LineType.TRAM),
-            loadMainLines(LineType.RURAL)
-        ) { bus, tram, rural -> tram.orEmpty() + bus.orEmpty() + rural.orEmpty()}
+    override fun loadMainLines(): Flow<List<Line>> {
+        return loadMainLines(LineType.BUS).combine(loadMainLines(LineType.TRAM)) { bus, tram ->
+            tram + bus
+        }.combine(loadMainLines(LineType.RURAL)) { busAndTram, rural ->
+            busAndTram + rural
+        }
     }
 
-    override fun loadLine(lineType: LineType, lineId: String): LiveData<Line> {
+    override fun loadLine(lineType: LineType, lineId: String): Flow<Line> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadLine(lineId)
             LineType.TRAM -> tramRepository.loadLine(lineId)
@@ -103,7 +101,7 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadAlternativeLineIds(lineType: LineType, lineId: String): LiveData<List<String>> {
+    override fun loadAlternativeLineIds(lineType: LineType, lineId: String): Flow<List<String>> {
         return when (lineType) {
             LineType.BUS -> busRepository.loadAlternativeLineIds(lineId)
             LineType.TRAM -> tramRepository.loadAlternativeLineIds(lineId)
@@ -111,11 +109,8 @@ class StopsRepositoryImplementation(
         }
     }
 
-    override fun loadNearbyStops(
-        location: LatLng,
-        maxDistanceInMeters: Double
-    ): LiveData<List<StopWithDistance>> {
-        return Transformations.map(loadStops()) { stops ->
+    override fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): Flow<List<StopWithDistance>> {
+        return loadStops().map { stops ->
             val newStopsWithDistance = mutableListOf<StopWithDistance>()
             val distance = FloatArray(1)
             stops.forEach { stop ->

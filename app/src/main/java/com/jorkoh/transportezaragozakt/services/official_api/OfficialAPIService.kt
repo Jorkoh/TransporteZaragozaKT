@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.services.official_api
 
-import androidx.lifecycle.LiveData
 import com.jorkoh.transportezaragozakt.services.common.util.ApiResponse
 import com.jorkoh.transportezaragozakt.services.official_api.responses.bus.BusStopOfficialAPIResponse
 import com.jorkoh.transportezaragozakt.services.official_api.responses.tram.TramStopOfficialAPIResponse
@@ -15,11 +14,11 @@ interface OfficialAPIService {
 
     @Headers("Accept: application/json")
     @GET("poste-autobus/{stopId}")
-    fun getBusStopOfficialAPI(@Path("stopId") id: String): LiveData<ApiResponse<BusStopOfficialAPIResponse>>
+    suspend fun getBusStopOfficialAPI(@Path("stopId") id: String): ApiResponse<BusStopOfficialAPIResponse>
 
     @Headers("Accept: application/json")
     @GET("parada-tranvia/{stopId}")
-    fun getTramStopOfficialAPI(@Path("stopId") id: String): LiveData<ApiResponse<TramStopOfficialAPIResponse>>
+    suspend fun getTramStopOfficialAPI(@Path("stopId") id: String): ApiResponse<TramStopOfficialAPIResponse>
 }
 
 fun String.fixLine() =

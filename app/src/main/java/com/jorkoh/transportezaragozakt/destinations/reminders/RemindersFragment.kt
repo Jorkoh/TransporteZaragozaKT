@@ -93,7 +93,7 @@ class RemindersFragment : FragmentWithToolbar() {
             title(R.string.restore_reminder_title)
             message(R.string.restore_reminder_message)
             positiveButton(R.string.restore) {
-                remindersVM.restoreReminder(reminder.reminderId, reminder.stopId)
+                remindersVM.restoreReminder(reminder)
             }
             negativeButton(R.string.cancel)
         }

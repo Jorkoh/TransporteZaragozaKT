@@ -2,48 +2,48 @@ package com.jorkoh.transportezaragozakt.db.daos
 
 import android.content.Context
 import android.preference.PreferenceManager
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StopsDao {
     @Query("SELECT * FROM stops WHERE type = :stopType")
-    fun getStopsByType(stopType: StopType): LiveData<List<Stop>>
+    fun getStopsByType(stopType: StopType): Flow<List<Stop>>
 
     @Query("SELECT * FROM lines WHERE type = :lineType AND parentLineId IS NULL")
-    fun getMainLinesByType(lineType: LineType): LiveData<List<Line>>
+    fun getMainLinesByType(lineType: LineType): Flow<List<Line>>
 
     @Query("SELECT * FROM lineLocations WHERE lineId = :lineId ORDER BY position ASC")
-    fun getLineLocations(lineId: String): LiveData<List<LineLocation>>
+    fun getLineLocations(lineId: String): Flow<List<LineLocation>>
 
     @Query("SELECT * FROM lines WHERE lineId = :lineId")
-    fun getLine(lineId: String): LiveData<Line>
+    fun getLine(lineId: String): Flow<Line>
 
     @Query("SELECT lineId FROM lines WHERE parentLineId = :lineId")
-    fun getAlternativeLineIds(lineId: String): LiveData<List<String>>
+    fun getAlternativeLineIds(lineId: String): Flow<List<String>>
 
     @Query("SELECT * FROM stops WHERE stopId = :stopId")
-    fun getStop(stopId: String): LiveData<Stop>
+    fun getStop(stopId: String): Flow<Stop>
 
     @Query("SELECT * FROM stops WHERE stopId IN (:stopIds)")
-    fun getStops(stopIds: List<String>): LiveData<List<Stop>>
+    fun getStops(stopIds: List<String>): Flow<List<Stop>>
 
     @Query("SELECT * FROM stopDestinations WHERE stopId = :stopId")
-    fun getStopDestinations(stopId: String): LiveData<List<StopDestination>>
+    suspend fun getStopDestinations(stopId: String): List<StopDestination>
 
     @Query("SELECT stopTitle FROM stops WHERE stopId = :stopId")
-    fun getStopTitleImmediate(stopId: String): String
+    fun getStopTitle(stopId: String): String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertStops(stop: List<Stop>)
+    suspend fun insertStops(stop: List<Stop>)
 
     @Query("SELECT isFavorite FROM stops WHERE stopId = :stopId")
-    fun stopIsFavoriteImmediate(stopId: String): Boolean
+    fun stopIsFavorite(stopId: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLines(line: List<Line>)
+    suspend fun insertLines(line: List<Line>)
 
     @Query("DELETE FROM lines where type = :lineType")
     fun clearLines(lineType: LineType)
@@ -52,19 +52,25 @@ interface StopsDao {
     fun clearLinesLocations(lineType: LineType)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertLinesLocations(line: List<LineLocation>)
+    suspend fun insertLinesLocations(line: List<LineLocation>)
 
     @Query("DELETE FROM stops where type = :stopType")
     fun clearStops(stopType: StopType)
 
     @Query("DELETE FROM stopDestinations WHERE stopId = :stopId")
-    fun deleteStopDestinations(stopId: String)
+    suspend fun deleteStopDestinations(stopId: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertStopDestinations(stopDestinations: List<StopDestination>)
+    suspend fun insertStopDestinations(stopDestinations: List<StopDestination>)
 
     @Transaction
-    fun insertInitialData(context: Context) {
+    suspend fun replaceStopDestinations(stopId: String, stopDestinations: List<StopDestination>){
+        deleteStopDestinations(stopId)
+        insertStopDestinations(stopDestinations)
+    }
+
+    @Transaction
+    suspend fun insertInitialData(context: Context) {
         val initialChangelog = getInitialChangelog(context)
         with(PreferenceManager.getDefaultSharedPreferences(context).edit()) {
             // Versions of data
@@ -144,9 +150,9 @@ interface StopsDao {
     }
 
     @Transaction
-    fun updateStops(stops: List<Stop>, type: StopType) {
+    suspend fun updateStops(stops: List<Stop>, type: StopType) {
         stops.forEach { stop ->
-            if (stopIsFavoriteImmediate(stop.stopId)) {
+            if (stopIsFavorite(stop.stopId)) {
                 stop.isFavorite = true
             }
         }
@@ -155,13 +161,13 @@ interface StopsDao {
     }
 
     @Transaction
-    fun updateLines(lines: List<Line>, type: LineType) {
+    suspend fun updateLines(lines: List<Line>, type: LineType) {
         clearLines(type)
         insertLines(lines)
     }
 
     @Transaction
-    fun updateLinesLocations(linesLocations: List<LineLocation>, type: LineType) {
+    suspend fun updateLinesLocations(linesLocations: List<LineLocation>, type: LineType) {
         clearLinesLocations(type)
         insertLinesLocations(linesLocations)
     }
