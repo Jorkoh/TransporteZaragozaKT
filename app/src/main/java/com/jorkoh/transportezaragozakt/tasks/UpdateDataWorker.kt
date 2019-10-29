@@ -16,8 +16,10 @@ import com.jorkoh.transportezaragozakt.db.daos.StopsDao
 import com.jorkoh.transportezaragozakt.destinations.createChangelogDeepLink
 import com.parse.ParseObject
 import com.parse.ParseQuery
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -27,196 +29,129 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Co
     private val stopsDao: StopsDao by inject()
     private val sharedPreferences: SharedPreferences by inject()
 
+    private val ctx: Context
+        get() = applicationContext
+
     var newVersion = 0
     var oldVersion = 0
 
     // May fire multiple times? https://issuetracker.google.com/issues/119886476
-    override suspend fun doWork(): Result {
-        coroutineScope {
-            ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_versions_collection)).apply {
-                limit = 1
-            }.getFirstInBackground { document, exception ->
-                if (exception != null) return@getFirstInBackground
+    override suspend fun doWork() = coroutineScope {
+        launch {
+            val versions = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_versions_collection)).first
 
-                // Bus stops
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_stops_collection))
-                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_stops_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_stops_collection)).apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { busStopDocument, e ->
-                        if (e == null) {
-                            launch {
-                                updateStops(busStopDocument, StopType.BUS)
-                                updateVersion(applicationContext.getString(R.string.saved_bus_stops_version_number_key), newVersion)
-                            }
-                        }
-                    }
-                }
+            // Bus stops
+            newVersion = versions.getInt(ctx.getString(R.string.parse_bus_stops_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_bus_stops_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_bus_stops_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateStops(doc, StopType.BUS)
+                updateVersion(ctx.getString(R.string.saved_bus_stops_version_number_key), newVersion)
+            }
 
-                // Tram stops
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_stops_collection))
-                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_stops_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_stops_collection)).apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { tramStopDocument, e ->
-                        if (e == null) {
-                            launch {
-                                updateStops(tramStopDocument, StopType.TRAM)
-                                updateVersion(applicationContext.getString(R.string.saved_tram_stops_version_number_key), newVersion)
-                            }
-                        }
-                    }
-                }
+            // Tram stops
+            newVersion = versions.getInt(ctx.getString(R.string.parse_tram_stops_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_tram_stops_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_tram_stops_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateStops(doc, StopType.TRAM)
+                updateVersion(ctx.getString(R.string.saved_tram_stops_version_number_key), newVersion)
+            }
 
-                // Rural stops
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_stops_collection))
-                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_stops_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_stops_collection)).apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { ruralStopDocument, e ->
-                        if (e == null) {
-                            launch {
-                                updateStops(ruralStopDocument, StopType.RURAL)
-                                updateVersion(applicationContext.getString(R.string.saved_rural_stops_version_number_key), newVersion)
-                            }
-                        }
-                    }
-                }
+            // Rural stops
+            newVersion = versions.getInt(ctx.getString(R.string.parse_rural_stops_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_rural_stops_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_rural_stops_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateStops(doc, StopType.RURAL)
+                updateVersion(ctx.getString(R.string.saved_rural_stops_version_number_key), newVersion)
+            }
 
-                // Bus lines
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_collection))
-                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_collection)).apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { busLinesDocument, e ->
-                        if (e == null) {
-                            launch {
-                                updateLines(busLinesDocument, LineType.BUS)
-                                updateVersion(applicationContext.getString(R.string.saved_bus_lines_version_number_key), newVersion)
-                            }
-                        }
-                    }
-                }
+            // Bus lines
+            newVersion = versions.getInt(ctx.getString(R.string.parse_bus_lines_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_bus_lines_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_bus_lines_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateLines(doc, LineType.BUS)
+                updateVersion(ctx.getString(R.string.saved_bus_lines_version_number_key), newVersion)
+            }
 
-                // Tram lines
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_collection))
-                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_collection)).apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { tramLinesDocument, e ->
-                        if (e == null) {
-                            launch {
-                                updateLines(tramLinesDocument, LineType.TRAM)
-                                updateVersion(applicationContext.getString(R.string.saved_tram_lines_version_number_key), newVersion)
-                            }
-                        }
-                    }
-                }
+            // Tram lines
+            newVersion = versions.getInt(ctx.getString(R.string.parse_tram_lines_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_tram_lines_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_tram_lines_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateLines(doc, LineType.TRAM)
+                updateVersion(ctx.getString(R.string.saved_tram_lines_version_number_key), newVersion)
+            }
 
-                // Rural lines
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_collection))
-                oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_collection)).apply {
-                        whereEqualTo("version", newVersion)
-                        limit = 1
-                    }.getFirstInBackground { ruralLinesDocument, e ->
-                        if (e == null) {
-                            launch {
-                                updateLines(ruralLinesDocument, LineType.RURAL)
-                                updateVersion(applicationContext.getString(R.string.saved_rural_lines_version_number_key), newVersion)
-                            }
-                        }
-                    }
-                }
+            // Rural lines
+            newVersion = versions.getInt(ctx.getString(R.string.parse_rural_lines_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_rural_lines_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_rural_lines_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateLines(doc, LineType.RURAL)
+                updateVersion(ctx.getString(R.string.saved_rural_lines_version_number_key), newVersion)
+            }
 
-                // Bus lines locations
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
-                oldVersion =
-                    sharedPreferences.getInt(applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_bus_lines_locations_collection))
-                        .apply {
-                            whereEqualTo("version", newVersion)
-                            limit = 1
-                        }.getFirstInBackground { busLinesLocationsDocument, e ->
-                            if (e == null) {
-                                launch {
-                                    updateLinesLocations(busLinesLocationsDocument, LineType.BUS)
-                                    updateVersion(
-                                        applicationContext.getString(R.string.saved_bus_lines_locations_version_number_key),
-                                        newVersion
-                                    )
-                                }
-                            }
-                        }
-                }
+            // Bus lines locations
+            newVersion = versions.getInt(ctx.getString(R.string.parse_bus_lines_locations_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_bus_lines_locations_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_bus_lines_locations_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateLinesLocations(doc, LineType.BUS)
+                updateVersion(ctx.getString(R.string.saved_bus_lines_locations_version_number_key), newVersion)
+            }
 
-                // Tram lines locations
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
-                oldVersion =
-                    sharedPreferences.getInt(applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_tram_lines_locations_collection))
-                        .apply {
-                            whereEqualTo("version", newVersion)
-                            limit = 1
-                        }.getFirstInBackground { tramLinesLocationsDocument, e ->
-                            if (e == null) {
-                                launch {
-                                    updateLinesLocations(tramLinesLocationsDocument, LineType.TRAM)
-                                    updateVersion(
-                                        applicationContext.getString(R.string.saved_tram_lines_locations_version_number_key),
-                                        newVersion
-                                    )
-                                }
-                            }
-                        }
-                }
+            // Tram lines locations
+            newVersion = versions.getInt(ctx.getString(R.string.parse_tram_lines_locations_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_tram_lines_locations_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_tram_lines_locations_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateLinesLocations(doc, LineType.TRAM)
+                updateVersion(ctx.getString(R.string.saved_tram_lines_locations_version_number_key), newVersion)
+            }
 
-                // Rural lines locations
-                newVersion = document.getInt(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
-                oldVersion =
-                    sharedPreferences.getInt(applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key), 0)
-                if (newVersion != oldVersion) {
-                    ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_rural_lines_locations_collection))
-                        .apply {
-                            whereEqualTo("version", newVersion)
-                            limit = 1
-                        }.getFirstInBackground { ruralLinesLocationsDocument, e ->
-                            if (e == null) {
-                                launch {
-                                    updateLinesLocations(ruralLinesLocationsDocument, LineType.RURAL)
-                                    updateVersion(
-                                        applicationContext.getString(R.string.saved_rural_lines_locations_version_number_key),
-                                        newVersion
-                                    )
-                                }
-                            }
-                        }
-                }
+            // Rural lines locations
+            newVersion = versions.getInt(ctx.getString(R.string.parse_rural_lines_locations_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_rural_lines_locations_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_rural_lines_locations_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateLinesLocations(doc, LineType.RURAL)
+                updateVersion(ctx.getString(R.string.saved_rural_lines_locations_version_number_key), newVersion)
+            }
 
-                // Changelog
-                (document.getInt(applicationContext.getString(R.string.parse_changelog_collection))).let { newVersion ->
-                    val oldVersion = sharedPreferences.getInt(applicationContext.getString(R.string.saved_changelog_version_number_key), 0)
-                    if (newVersion != oldVersion) {
-                        updateChangelog(newVersion)
-                        showUpdateNotification()
-                    }
-                }
+            // Changelog
+            newVersion = versions.getInt(ctx.getString(R.string.parse_changelog_collection))
+            oldVersion = sharedPreferences.getInt(ctx.getString(R.string.saved_changelog_version_number_key), 0)
+            if (newVersion != oldVersion) {
+                val doc = ParseQuery.getQuery<ParseObject>(ctx.getString(R.string.parse_changelog_collection))
+                    .whereEqualTo("version", newVersion)
+                    .first
+                updateChangelog(doc)
+                updateVersion(ctx.getString(R.string.saved_rural_lines_locations_version_number_key), newVersion)
+                showUpdateNotification()
             }
         }
-        return Result.success()
+        Result.success()
     }
 
     private fun updateVersion(key: String, newVersion: Int) {
@@ -226,7 +161,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Co
         }
     }
 
-    private suspend fun updateStops(stopsDocument: ParseObject, stopType: StopType) {
+    private fun updateStops(stopsDocument: ParseObject, stopType: StopType) {
         val stopEntities = mutableListOf<Stop>()
         val stopsJson = checkNotNull(stopsDocument.getJSONArray("stops"))
         for (i in 0 until stopsJson.length()) {
@@ -251,10 +186,12 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Co
             )
             stopEntities.add(stopEntity)
         }
-        stopsDao.updateStops(stopEntities, stopType)
+        runBlocking(Dispatchers.IO) {
+            stopsDao.updateStops(stopEntities, stopType)
+        }
     }
 
-    private suspend fun updateLines(linesDocument: ParseObject, lineType: LineType) {
+    private fun updateLines(linesDocument: ParseObject, lineType: LineType) {
         val linesEntities = mutableListOf<Line>()
         val linesJson = checkNotNull(linesDocument.getJSONArray("lines"))
         for (i in 0 until linesJson.length()) {
@@ -288,7 +225,9 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Co
                 linesEntities.add(lineEntity)
             }
         }
-        stopsDao.updateLines(linesEntities, lineType)
+        runBlocking(Dispatchers.IO) {
+            stopsDao.updateLines(linesEntities, lineType)
+        }
     }
 
     private suspend fun updateLinesLocations(linesLocationsDocument: ParseObject, lineType: LineType) {
@@ -313,47 +252,30 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Co
         stopsDao.updateLinesLocations(linesLocationsEntities, lineType)
     }
 
-    private fun updateChangelog(newVersion: Int) {
-        ParseQuery.getQuery<ParseObject>(applicationContext.getString(R.string.parse_changelog_collection))
-            .apply {
-                whereEqualTo("version", newVersion)
-                limit = 1
-            }.getFirstInBackground { changelogDocument, e ->
-                if (e != null) return@getFirstInBackground
-                with(PreferenceManager.getDefaultSharedPreferences(applicationContext).edit()) {
-                    putString(
-                        applicationContext.getString(R.string.saved_changelog_en_key),
-                        changelogDocument.getString("textEN")
-                    )
-                    putString(
-                        applicationContext.getString(R.string.saved_changelog_es_key),
-                        changelogDocument.getString("textES")
-                    )
-                    apply()
-                }
-                updateVersion(
-                    applicationContext.getString(R.string.saved_changelog_version_number_key),
-                    newVersion
-                )
-            }
+    private fun updateChangelog(changelogDocument: ParseObject) {
+        with(PreferenceManager.getDefaultSharedPreferences(ctx).edit()) {
+            putString(ctx.getString(R.string.saved_changelog_en_key), changelogDocument.getString("textEN"))
+            putString(ctx.getString(R.string.saved_changelog_es_key), changelogDocument.getString("textES"))
+            apply()
+        }
     }
 
     private fun showUpdateNotification() {
         //NavDeepLinkBuilder doesn't work with bottom navigation view navigation so let's create the deep link normally
         val pendingIntent = PendingIntent.getActivity(
-            applicationContext,
+            ctx,
             -50,
             createChangelogDeepLink(),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val updateNotification = NotificationCompat.Builder(
-            applicationContext,
-            applicationContext.getString(R.string.notification_channel_id_updates)
+            ctx,
+            ctx.getString(R.string.notification_channel_id_updates)
         ).apply {
             setSmallIcon(R.drawable.ic_notification_icon)
-            setContentTitle(applicationContext.getString(R.string.updated_stops_lines_title))
-            setContentText(applicationContext.getString(R.string.updated_stops_lines_message))
+            setContentTitle(ctx.getString(R.string.updated_stops_lines_title))
+            setContentText(ctx.getString(R.string.updated_stops_lines_message))
             setContentIntent(pendingIntent)
             // If the notification is clicked the app opens into the stop details so notification is deleted
             setAutoCancel(true)
@@ -361,7 +283,7 @@ class UpdateDataWorker(appContext: Context, workerParams: WorkerParameters) : Co
             setOnlyAlertOnce(true)
         }
 
-        (applicationContext.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
+        (ctx.getSystemService(LifecycleService.NOTIFICATION_SERVICE) as NotificationManager).notify(
             -50,
             updateNotification.build()
         )

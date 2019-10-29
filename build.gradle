@@ -86,7 +86,11 @@ buildscript {
                     'test': "org.koin:koin-test:2.0.1"
             ],
             'okio'                 : "com.squareup.okio:okio:2.3.0",
-            'parse'                : "com.github.parse-community.Parse-SDK-Android:parse:1.19.0",
+            'parse'                : [
+                    'core'      : "com.github.parse-community.Parse-SDK-Android:parse:1.21.0",
+                    'coroutines': "com.github.parse-community.Parse-SDK-Android:coroutines:1.21.0",
+                    'ktx'       : "com.github.parse-community.Parse-SDK-Android:ktx:1.21.0"
+            ],
             'lottie'               : "com.airbnb.android:lottie:3.1.0",
             'nullaway'             : "com.uber.nullaway:nullaway:0.6.6",
             'firebase'             : "com.google.firebase:firebase-core:17.0.0",

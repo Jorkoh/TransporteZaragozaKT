@@ -46,7 +46,7 @@ interface StopsDao {
     suspend fun insertLines(line: List<Line>)
 
     @Query("DELETE FROM lines where type = :lineType")
-    fun clearLines(lineType: LineType)
+    suspend fun clearLines(lineType: LineType)
 
     @Query("DELETE FROM lineLocations where type = :lineType")
     fun clearLinesLocations(lineType: LineType)
@@ -55,7 +55,7 @@ interface StopsDao {
     suspend fun insertLinesLocations(line: List<LineLocation>)
 
     @Query("DELETE FROM stops where type = :stopType")
-    fun clearStops(stopType: StopType)
+    suspend fun clearStops(stopType: StopType)
 
     @Query("DELETE FROM stopDestinations WHERE stopId = :stopId")
     suspend fun deleteStopDestinations(stopId: String)

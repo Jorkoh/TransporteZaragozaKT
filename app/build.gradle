@@ -86,7 +86,9 @@ dependencies {
     implementation project(':google-map-utils')
 
     //Parse
-    implementation deps.parse
+    implementation deps.parse.core
+    implementation deps.parse.coroutines
+    implementation deps.parse.ktx
 
     //Lottie
     implementation deps.lottie
