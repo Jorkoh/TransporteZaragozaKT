@@ -38,8 +38,7 @@ class AllStopsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         searchVM.allStops.observe(viewLifecycleOwner, Observer { allStops ->
-            allStopsAdapter.setNewStops(allStops)
-            allStopsAdapter.filter.filter(searchVM.query.value)
+            allStopsAdapter.setNewStops(allStops, searchVM.query.value)
         })
         searchVM.query.observe(viewLifecycleOwner, Observer { query ->
             allStopsAdapter.filter.filter(query) { flag ->

@@ -61,8 +61,7 @@ class NearbyStopsFragment : Fragment() {
 
         searchVM.nearbyStops.observe(viewLifecycleOwner, Observer { nearbyStops ->
             updateEmptyViewVisibility(nearbyStops.isEmpty())
-            nearbyStopsAdapter.setNewStops(nearbyStops)
-            nearbyStopsAdapter.filter.filter(searchVM.query.value)
+            nearbyStopsAdapter.setNewStops(nearbyStops, searchVM.query.value)
         })
         searchVM.query.observe(viewLifecycleOwner, Observer { query ->
             nearbyStopsAdapter.filter.filter(query) { flag ->
@@ -81,15 +80,13 @@ class NearbyStopsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.search_destination_nearby_stops, container, false)
-
-        rootView.search_recycler_view_nearby_stops.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = nearbyStopsAdapter
+        return inflater.inflate(R.layout.search_destination_nearby_stops, container, false).apply {
+            search_recycler_view_nearby_stops.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = nearbyStopsAdapter
+            }
         }
-
-        return rootView
     }
 
     override fun onStart() {

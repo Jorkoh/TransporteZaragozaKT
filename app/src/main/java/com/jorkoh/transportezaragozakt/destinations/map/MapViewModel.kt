@@ -22,7 +22,7 @@ class MapViewModel(stopsRepository: StopsRepository, trackingsRepository: RuralR
                     emit(trackings.data)
                 }
             }
-            delay(30000)
+            delay(30_000)
         }
     }
 

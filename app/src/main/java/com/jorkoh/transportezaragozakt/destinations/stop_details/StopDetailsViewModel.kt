@@ -29,18 +29,18 @@ class StopDetailsViewModel(
     val stop: LiveData<Stop> = stopsRepository.loadStop(stopType, stopId).asLiveData()
 
     init {
-        viewModelScope.launch {
-            refreshStopDestinations()
-            delay(60_000)
-        }
+        refreshStopDestinations()
     }
 
+    // Arrival times auto refresh every minute, the user can force an early refresh which causes the timer to restart
     fun refreshStopDestinations() {
         refreshJob?.cancel()
         refreshJob = viewModelScope.launch {
             stopsRepository.loadStopDestinations(stopType, stopId).collect {
                 stopDestinations.postValue(it)
             }
+            delay(60_000)
+            refreshStopDestinations()
         }
     }
 
@@ -54,13 +54,7 @@ class StopDetailsViewModel(
 
     fun createReminder(daysOfWeek: List<Boolean>, time: Calendar) {
         viewModelScope.launch {
-            remindersRepository.insertReminder(
-                stopId,
-                stopType,
-                daysOfWeek,
-                time.get(Calendar.HOUR_OF_DAY),
-                time.get(Calendar.MINUTE)
-            )
+            remindersRepository.insertReminder(stopId, stopType, daysOfWeek, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE))
         }
     }
 }

@@ -39,8 +39,7 @@ class LinesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         searchVM.mainLines.observe(viewLifecycleOwner, Observer { lines ->
-            linesAdapter.setNewLines(lines)
-            linesAdapter.filter.filter(searchVM.query.value)
+            linesAdapter.setNewLines(lines, searchVM.query.value)
         })
         searchVM.query.observe(viewLifecycleOwner, Observer { query ->
             linesAdapter.filter.filter(query) { flag ->
@@ -56,15 +55,13 @@ class LinesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.search_destination_lines, container, false)
-
-        rootView.search_recycler_view_lines.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = linesAdapter
+        return inflater.inflate(R.layout.search_destination_lines, container, false).apply {
+            search_recycler_view_lines.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = linesAdapter
+            }
         }
-
-        return rootView
     }
 
     override fun onDestroyView() {

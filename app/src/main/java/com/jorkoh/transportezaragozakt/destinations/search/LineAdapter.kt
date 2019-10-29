@@ -79,9 +79,9 @@ class LineAdapter(
 
     override fun getItemCount(): Int = displayedLines.size
 
-    // When setting new stops we need to call filter afterwards to see the effects
-    fun setNewLines(newLines: List<Line>) {
+    fun setNewLines(newLines: List<Line>, query : String?) {
         linesFull = newLines
+        filter.filter(query)
     }
 
     override fun getFilter(): Filter = object : Filter() {

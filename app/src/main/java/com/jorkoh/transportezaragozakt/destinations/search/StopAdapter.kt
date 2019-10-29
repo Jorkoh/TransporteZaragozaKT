@@ -83,9 +83,9 @@ class StopAdapter(
 
     override fun getItemCount(): Int = displayedStops.size
 
-    // When setting new stops we need to call filter afterwards to see the effects
-    fun setNewStops(newStops: List<Stop>) {
+    fun setNewStops(newStops: List<Stop>, query : String?) {
         stopsFull = newStops
+        filter.filter(query)
     }
 
     override fun getFilter(): Filter = object : Filter() {

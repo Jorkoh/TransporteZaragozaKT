@@ -49,7 +49,7 @@ class LineDetailsViewModel(
                             }
                         }
                     }
-                    delay(30000)
+                    delay(30_000)
                 }
             }
         } else {
