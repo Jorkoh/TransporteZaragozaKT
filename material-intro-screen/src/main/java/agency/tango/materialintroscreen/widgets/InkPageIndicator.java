@@ -17,7 +17,6 @@
 
 package agency.tango.materialintroscreen.widgets;
 
-import agency.tango.materialintroscreen.R;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -34,11 +33,14 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
+
 import androidx.core.view.ViewCompat;
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import androidx.viewpager.widget.CustomViewPager;
 
 import java.util.Arrays;
+
+import agency.tango.materialintroscreen.R;
 
 public class InkPageIndicator extends View
         implements CustomViewPager.OnPageChangeListener, View.OnAttachStateChangeListener {
@@ -131,7 +133,7 @@ public class InkPageIndicator extends View
                 .getDimensionPixelSize(R.styleable.mis_InkPageIndicator_mis_dotDiameter,
                         DEFAULT_DOT_SIZE * density);
         dotRadius = dotDiameter / 2f;
-        dotRadiusSelected = dotRadius +1;
+        dotRadiusSelected = dotRadius + 1;
         halfDotRadius = dotRadius / 2f;
         gap = typedArray.getDimensionPixelSize(R.styleable.mis_InkPageIndicator_mis_dotGap,
                 DEFAULT_GAP * density);
@@ -360,7 +362,7 @@ public class InkPageIndicator extends View
         }
 
         // draw any retreating joins
-        if (retreatingJoinX1 != INVALID_FRACTION) {
+        if (retreatingJoinX1 != INVALID_FRACTION && retreatingJoinX2 != INVALID_FRACTION) {
             Path retreatingJoinPath = getRetreatingJoinPath();
             combinedUnselectedPath.addPath(retreatingJoinPath);
         }
