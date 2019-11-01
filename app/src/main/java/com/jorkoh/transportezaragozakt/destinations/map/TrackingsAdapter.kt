@@ -35,9 +35,9 @@ class TrackingsAdapter(
             type_image_stop.setImageResource(R.drawable.ic_rural_tracking)
             type_image_stop.contentDescription = context.getString(R.string.rural_tracking)
             // Texts
-            title_text_stop.text = tracking.lineName
-            number_text_stop.text = tracking.vehicleId
-            number_text_stop.contentDescription = context.getString(R.string.vehicle_template, tracking.vehicleId)
+            title_stop.text = tracking.lineName
+            number_stop.text = tracking.vehicleId
+            number_stop.contentDescription = context.getString(R.string.vehicle_template, tracking.vehicleId)
             // Lines
             listOf(tracking.lineId).inflateLines(lines_layout_stop, StopType.RURAL, context)
             // Favorite icon
@@ -55,7 +55,7 @@ class TrackingsAdapter(
                     tracking.location.longitude,
                     distance
                 )
-                distance_text_stop.text = "${"%.0f".format(distance[0])} m."
+                distance_stop.text = "${"%.0f".format(distance[0])} m."
             }
         }
     }

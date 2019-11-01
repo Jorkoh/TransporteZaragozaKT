@@ -6,6 +6,10 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.location.Location
 import android.net.Uri
 import android.util.TypedValue
@@ -198,4 +202,12 @@ fun String.fixTimes(context: Context): String =
 fun View.hideKeyboard() {
     val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun Drawable.setColor(context: Context, colorInt: Int) {
+    when (val mutable = this.mutate()) {
+        is GradientDrawable -> mutable.setColor(ContextCompat.getColor(context, colorInt))
+        is ShapeDrawable -> mutable.paint.color = ContextCompat.getColor(context, colorInt)
+        is ColorDrawable -> mutable.color = ContextCompat.getColor(context, colorInt)
+    }
 }

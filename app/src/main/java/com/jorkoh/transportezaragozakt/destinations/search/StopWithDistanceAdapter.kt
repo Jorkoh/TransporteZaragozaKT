@@ -51,11 +51,11 @@ class StopWithDistanceAdapter(
                 }
             }
             // Texts
-            title_text_stop.text = stopWithDistance.stop.stopTitle
-            number_text_stop.text = stopWithDistance.stop.number
-            number_text_stop.contentDescription = context.getString(R.string.number_template, stopWithDistance.stop.number)
+            title_stop.text = stopWithDistance.stop.stopTitle
+            number_stop.text = stopWithDistance.stop.number
+            number_stop.contentDescription = context.getString(R.string.number_template, stopWithDistance.stop.number)
             @SuppressLint("SetTextI18n")
-            distance_text_stop.text = "${"%.2f".format(stopWithDistance.distance)} m."
+            distance_stop.text = "${"%.0f".format(stopWithDistance.distance)} m."
             // Favorite icon
             if (stopWithDistance.stop.isFavorite) {
                 favorite_icon_stop.setImageResource(R.drawable.ic_favorite_black_24dp)
