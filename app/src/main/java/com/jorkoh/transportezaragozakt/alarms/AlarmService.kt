@@ -19,7 +19,11 @@ import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -63,11 +67,16 @@ class AlarmService : LifecycleService() {
 
             val timesFlow = stopsRepository.loadStopDestinations(stopType, stopId)
             val aliasFlow = remindersRepository.getReminderAlias(reminderId)
-            timesFlow.combine(aliasFlow) { times, alias ->
-                if (times.status != Status.LOADING) {
-                    createNotification(stopId, stopType, reminderId, times, alias)
-                    stopSelfIfLast()
-                }
+            GlobalScope.launch {
+                timesFlow
+                    .combine(aliasFlow) { times, alias -> Pair(times, alias) }
+                    .collect { timesAndAlias ->
+                        if (timesAndAlias.first.status != Status.LOADING) {
+                            createNotification(stopId, stopType, reminderId, timesAndAlias.first, timesAndAlias.second)
+                            stopSelfIfLast()
+                            cancel()
+                        }
+                    }
             }
         }
 

@@ -99,6 +99,8 @@ class MainActivity : AppCompatActivity() {
                     false -> makeSnackbar(getString(R.string.removed_favorite_snackbar))
                 }
             }
+        }
+        lifecycleScope.launch {
             mainActivityVM.reminderCountChangeSign.collect { changeSign ->
                 when (changeSign) {
                     true -> makeSnackbar(getString(R.string.added_reminder_snackbar))

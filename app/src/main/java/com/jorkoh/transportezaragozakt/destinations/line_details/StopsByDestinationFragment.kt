@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.line_stop_destinations.*
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class StopsByDestinationFragment : Fragment() {
@@ -26,9 +30,7 @@ class StopsByDestinationFragment : Fragment() {
         }
     }
 
-    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = {
-        parentFragment ?: error("Couldn't find parent Fragment")
-    })
+    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { parentFragment ?: error("Couldn't find parent Fragment") })
 
     private lateinit var stopIds: List<String>
 
@@ -58,12 +60,14 @@ class StopsByDestinationFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         stopIds = arguments?.getStringArrayList(STOP_IDS_KEY)?.toList().orEmpty()
         lineDetailsVM.stops.observe(viewLifecycleOwner, Observer { allStops ->
-            allStops?.let {
+            if (allStops != null) {
                 // Filter those with this destination
-                val stops = lineDetailsVM.stops.value?.filter { it.stopId in stopIds }
-                val orderById = stopIds.withIndex().associate { it.value to it.index }
-                val sortedStops = stops?.sortedBy { orderById[it.stopId] }
-                if (!sortedStops.isNullOrEmpty()) {
+                lifecycleScope.launch {
+                    val sortedStops = withContext(Dispatchers.Default) {
+                        val stops = allStops.filter { it.stopId in stopIds }
+                        val orderById = stopIds.withIndex().associate { it.value to it.index }
+                        stops.sortedBy { orderById[it.stopId] }
+                    }
                     stopsAdapter.setNewStops(sortedStops)
                 }
             }

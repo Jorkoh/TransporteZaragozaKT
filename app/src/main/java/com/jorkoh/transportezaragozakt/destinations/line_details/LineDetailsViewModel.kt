@@ -5,11 +5,8 @@ import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.RuralRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Status
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class LineDetailsViewModel(
     val lineId: String,
@@ -18,21 +15,11 @@ class LineDetailsViewModel(
     trackingsRepository: RuralRepository
 ) : ViewModel() {
 
-    private var activeStopsCollector : Job? = null
+    val line: LiveData<Line> = stopsRepository.loadLine(lineType, lineId).asLiveData()
 
-    val line: LiveData<Line> = stopsRepository.loadLine(lineType, lineId).onEach { line ->
-        activeStopsCollector?.cancel()
-        activeStopsCollector = viewModelScope.launch {
-            stopsRepository.loadStops(line.type.toStopType(), line.stopIdsFirstDestination + line.stopIdsSecondDestination)
-                .collect { stops ->
-                    _stops.postValue(stops)
-                }
-        }
-    }.asLiveData()
-
-    val stops: LiveData<List<Stop>>
-        get() = _stops
-    private val _stops = MutableLiveData<List<Stop>>()
+    val stops: LiveData<List<Stop>> = Transformations.switchMap(line) { line ->
+        stopsRepository.loadStops(line.type.toStopType(), line.stopIdsFirstDestination + line.stopIdsSecondDestination).asLiveData()
+    }
 
     val lineLocations = stopsRepository.loadLineLocations(lineType, lineId).asLiveData()
 

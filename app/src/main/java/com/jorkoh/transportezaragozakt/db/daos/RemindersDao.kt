@@ -24,7 +24,7 @@ interface RemindersDao{
     @Query("SELECT * FROM reminders")
     suspend fun getReminders() : List<Reminder>
 
-    @Query ("SELECT COUNT(reminderId) FROM reminders")
+    @Query ("SELECT COUNT(*) FROM reminders")
     fun getReminderCount(): Flow<Int>
 
     @Query("SELECT alias FROM reminders WHERE reminderId = :reminderId")

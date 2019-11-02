@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.afollestad.materialdialogs.MaterialDialog
@@ -44,6 +45,9 @@ import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOption
 import kotlinx.android.synthetic.main.line_details_destination.*
 import kotlinx.android.synthetic.main.line_details_destination.view.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
@@ -262,29 +266,44 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
         // Line route locations
         lineDetailsVM.lineLocations.observe(mapLifecycleOwner, Observer { locations ->
-            val line = PolylineOptions()
-                .clickable(false)
-                .color(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        when (lineDetailsVM.lineType) {
-                            LineType.BUS -> R.color.bus_color
-                            LineType.TRAM -> R.color.tram_color
-                            LineType.RURAL -> R.color.rural_color
+            lifecycleScope.launch {
+                val line = withContext(Dispatchers.Default) {
+                    PolylineOptions().apply {
+                        clickable(false)
+                        color(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                when (lineDetailsVM.lineType) {
+                                    LineType.BUS -> R.color.bus_color
+                                    LineType.TRAM -> R.color.tram_color
+                                    LineType.RURAL -> R.color.rural_color
+                                }
+                            )
+                        )
+                        val bounds = LatLngBounds.builder()
+                        locations.forEach {
+                            add(it.location)
+                            bounds.include(it.location)
                         }
-                    )
-                )
-            val bounds = LatLngBounds.builder()
-            locations.forEach {
-                line.add(it.location)
-                bounds.include(it.location)
-            }
-            map.addPolyline(line)
-            // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and the camera hasn't already moved
-            if (lineDetailsVM.selectedItemId.value.isNullOrEmpty()
-                && SphericalUtil.computeDistanceBetween(map.cameraPosition.target, ZARAGOZA_CENTER) < 1
-            ) {
-                map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
+                    }
+                }
+                map.addPolyline(line)
+
+                val bounds = withContext(Dispatchers.Default) {
+                    LatLngBounds.builder().apply {
+                        locations.forEach {
+                            include(it.location)
+                        }
+                    }
+                }
+                // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and the camera hasn't already moved
+                if (lineDetailsVM.selectedItemId.value.isNullOrEmpty() && SphericalUtil.computeDistanceBetween(
+                        map.cameraPosition.target,
+                        ZARAGOZA_CENTER
+                    ) < 1
+                ) {
+                    map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
+                }
             }
         })
 
