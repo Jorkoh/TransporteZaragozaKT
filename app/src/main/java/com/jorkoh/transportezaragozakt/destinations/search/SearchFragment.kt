@@ -60,7 +60,7 @@ class SearchFragment : FragmentWithToolbar() {
     }
 
     private fun setupToolbar(rootView: View) {
-        rootView.fragment_toolbar.also {toolbar ->
+        rootView.fragment_toolbar.also { toolbar ->
             toolbar.menu.clear()
             toolbar.inflateMenu(R.menu.search_destination_menu)
             toolbar.setOnMenuItemClickListener { item ->
@@ -116,7 +116,9 @@ class SearchFragment : FragmentWithToolbar() {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null && result.contents != null) {
-            if (result.contents.startsWith("http://www.urbanosdezaragoza.es/frm_esquemaparadatime.php?poste=")) {
+            if (result.contents.startsWith("http://www.urbanosdezaragoza.es/frm_esquemaparadatime.php?poste=")
+                || result.contents.startsWith("http://zaragoza.avanzagrupo.com/frm_esquemaparadatime.php?poste=")
+            ) {
                 val stopId = "tuzsa-" + result.contents.split("=")[1]
                 findNavController().navigate(
                     SearchFragmentDirections.actionSearchToStopDetails(
