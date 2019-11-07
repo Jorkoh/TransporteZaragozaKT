@@ -6,6 +6,7 @@ import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.repositories.RuralRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Status
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
@@ -26,5 +27,7 @@ class MapViewModel(stopsRepository: StopsRepository, trackingsRepository: RuralR
         }
     }
 
-    val selectedItemId = MutableLiveData<String>()
+    val preservedItemId = MutableLiveData<String>()
+
+    val selectedItemId = Channel<String>()
 }

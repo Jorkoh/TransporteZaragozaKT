@@ -68,11 +68,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
     private var activeMinZoom = MIN_ZOOM
     private var activeBounds: LatLngBounds = RURAL_BOUNDS
 
-    //TODO YIKES
-    private var renewingStopMarkers = false
-    private var renewingTrackerMarkers = false
-    private var selectingNewMarker = false
-
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var map: GoogleMap
     private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
@@ -84,7 +79,9 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private val selectTracking: (RuralTracking) -> Unit = { tracking ->
         trackingsDialog?.dismiss()
-        lineDetailsVM.selectedItemId.postValue(tracking.vehicleId)
+        lifecycleScope.launchWhenStarted {
+            lineDetailsVM.selectedItemId.send(tracking.vehicleId)
+        }
     }
 
     private var trackingsDialog: MaterialDialog? = null
@@ -136,13 +133,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-
-        // If the user navigated from a specific stop select it on the map
-        if (!args.stopId.isNullOrEmpty()) {
-            lineDetailsVM.selectedItemId.postValue(args.stopId)
-            // Since this should only happen the first time let's clear the argument
-            requireArguments().putString("stopId", null)
-        }
 
         var mapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?
@@ -226,14 +216,12 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
         map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
         map.setOnMarkerClickListener { marker ->
-            lineDetailsVM.selectedItemId.postValue((marker.tag as CustomClusterItem).itemId)
+            lineDetailsVM.preservedItemId.postValue((marker.tag as CustomClusterItem).itemId)
             false
         }
 
         map.setOnInfoWindowCloseListener {
-            if (!renewingStopMarkers && !renewingTrackerMarkers && !selectingNewMarker) {
-                lineDetailsVM.selectedItemId.postValue("")
-            }
+            lineDetailsVM.preservedItemId.postValue("")
         }
     }
 
@@ -297,7 +285,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     }
                 }
                 // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and the camera hasn't already moved
-                if (lineDetailsVM.selectedItemId.value.isNullOrEmpty() && SphericalUtil.computeDistanceBetween(
+                if (lineDetailsVM.preservedItemId.value.isNullOrEmpty() && SphericalUtil.computeDistanceBetween(
                         map.cameraPosition.target,
                         ZARAGOZA_CENTER
                     ) < 1
@@ -336,14 +324,14 @@ class LineDetailsFragment : FragmentWithToolbar() {
         lineDetailsVM.stops.observe(mapLifecycleOwner, Observer { stops ->
             stops?.let {
                 // Get rid of the old markers and set up new markers
-                renewMarkers(stops)
+                renewStopMarkers(stops)
             }
         })
 
         // Trackings
         lineDetailsVM.ruralTrackings?.observe(mapLifecycleOwner, Observer { trackings ->
             trackings?.let {
-                renewTrackings(trackings)
+                renewTrackingMarkers(trackings)
                 // Update the trackings selector
                 trackingsAdapter.setNewTrackings(trackings)
                 trackingsDialog?.title(text = getTrackingsTitle())
@@ -351,27 +339,34 @@ class LineDetailsFragment : FragmentWithToolbar() {
             }
         })
 
-        lineDetailsVM.selectedItemId.observe(viewLifecycleOwner, Observer { selectedItemId ->
-            if (!selectedItemId.isNullOrEmpty()) {
-                stopMarkers.plus(trackingMarkers).find { marker ->
-                    (marker.tag as CustomClusterItem).itemId == selectedItemId
-                }?.let { selectedMarker ->
-                    selectingNewMarker = true
-                    selectedMarker.showInfoWindow()
-                    selectingNewMarker = false
-                    map.animateCamera(CameraUpdateFactory.newLatLng((selectedMarker.tag as CustomClusterItem).position), 240, null)
+        lifecycleScope.launchWhenStarted {
+            // When a new item is selected (through bottom sheet or tracking position update) recenter to it
+            for (selectedItemId in lineDetailsVM.selectedItemId) {
+                findMarker(selectedItemId)?.run {
                     bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+                    map.animateCamera(CameraUpdateFactory.newLatLng((tag as CustomClusterItem).position), 240, null)
+                    showInfoWindow()
+                    lineDetailsVM.preservedItemId.postValue(selectedItemId)
                 }
             }
-        })
+        }
+
+        // If the user navigated from a specific stop select it on the map
+        lifecycleScope.launchWhenStarted {
+            args.stopId?.let {
+                lineDetailsVM.selectedItemId.send(it)
+            }
+            // Since this should only happen the first time let's clear the argument
+            requireArguments().putString("stopId", null)
+        }
     }
 
-    private fun renewMarkers(stops: List<Stop>) {
-        renewingStopMarkers = true
+    private fun renewStopMarkers(newStops: List<Stop>) {
+        val preservedItemId = lineDetailsVM.preservedItemId.value
+
         stopMarkers.forEach { it.remove() }
-        renewingStopMarkers = false
         stopMarkers.clear()
-        stops.forEach { stop ->
+        newStops.forEach { stop ->
             val item = CustomClusterItem(stop)
             val markerOptions = MarkerOptions().apply {
                 position(stop.location)
@@ -381,18 +376,22 @@ class LineDetailsFragment : FragmentWithToolbar() {
             marker.tag = item
             stopMarkers.add(marker)
         }
-        //TODO YIKES
-        if (stops.any { it.stopId == lineDetailsVM.selectedItemId.value }) {
-            lineDetailsVM.selectedItemId.postValue(lineDetailsVM.selectedItemId.value)
+
+        if (preservedItemId != null && newStops.any { it.stopId == preservedItemId }) {
+            findMarker(preservedItemId)?.run {
+                showInfoWindow()
+                lineDetailsVM.preservedItemId.postValue(preservedItemId)
+            }
         }
     }
 
-    private fun renewTrackings(trackings: List<RuralTracking>) {
-        renewingTrackerMarkers = true
+    private fun renewTrackingMarkers(newTrackings: List<RuralTracking>) {
+        val preservedItemId = lineDetailsVM.preservedItemId.value
+        val oldMarker = findMarker(preservedItemId)
+
         trackingMarkers.forEach { it.remove() }
-        renewingTrackerMarkers = false
         trackingMarkers.clear()
-        trackings.forEach { tracking ->
+        newTrackings.forEach { tracking ->
             val item = CustomClusterItem(tracking)
             val markerOptions = MarkerOptions().apply {
                 position(tracking.location)
@@ -402,11 +401,36 @@ class LineDetailsFragment : FragmentWithToolbar() {
             marker.tag = item
             trackingMarkers.add(marker)
         }
-        //TODO YIKES
-        if (trackings.any { it.vehicleId == lineDetailsVM.selectedItemId.value }) {
-            lineDetailsVM.selectedItemId.postValue(lineDetailsVM.selectedItemId.value)
+
+        if (preservedItemId != null && newTrackings.any { it.vehicleId == preservedItemId }) {
+            val newMarker = findMarker(preservedItemId)
+            // If the selected item is a tracking that exists after the renewal, it has changed position
+            // and the previous one was on the screen let's recenter to it
+            if (oldMarker != null
+                && newMarker != null
+                && SphericalUtil.computeDistanceBetween(oldMarker.position, newMarker.position) > 1
+                && map.projection.visibleRegion.latLngBounds.contains(oldMarker.position)
+            ) {
+                lifecycleScope.launchWhenStarted {
+                    lineDetailsVM.selectedItemId.send(preservedItemId)
+                }
+            } else {
+                newMarker?.run {
+                    showInfoWindow()
+                    lineDetailsVM.preservedItemId.postValue(preservedItemId)
+                }
+            }
         }
     }
+
+    private fun findMarker(itemId: String?): Marker? =
+        if (itemId == null) {
+            null
+        } else {
+            stopMarkers.plus(trackingMarkers).find { marker ->
+                (marker.tag as CustomClusterItem).itemId == itemId
+            }
+        }
 
     private fun setupToolbar(rootView: View) {
         rootView.fragment_toolbar.apply {

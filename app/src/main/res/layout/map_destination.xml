@@ -16,7 +16,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ActionBarTheme"/>
+                android:theme="@style/CustomActionBarTheme"
+                style="@style/CustomActionBarStyle"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

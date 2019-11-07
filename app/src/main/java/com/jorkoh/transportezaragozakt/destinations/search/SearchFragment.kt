@@ -83,6 +83,7 @@ class SearchFragment : FragmentWithToolbar() {
                 queryHint = getString(R.string.search_view_hint)
                 findViewById<TextView>(androidx.appcompat.R.id.search_src_text).textSize = 16f
                 maxWidth = Int.MAX_VALUE
+                suggestionsAdapter = null
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         return false
@@ -92,7 +93,7 @@ class SearchFragment : FragmentWithToolbar() {
                         if (!this@apply.isIconified && isVisible) {
                             searchVM.query.value = newText
                         }
-                        return false
+                        return true
                     }
                 })
 

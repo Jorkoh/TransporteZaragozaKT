@@ -5,6 +5,7 @@ import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.RuralRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Status
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 
@@ -23,7 +24,9 @@ class LineDetailsViewModel(
 
     val lineLocations = stopsRepository.loadLineLocations(lineType, lineId).asLiveData()
 
-    val selectedItemId = MutableLiveData<String>()
+    val preservedItemId = MutableLiveData<String>()
+
+    val selectedItemId = Channel<String>()
 
     val ruralTrackings: LiveData<List<RuralTracking>>? =
         if (lineType == LineType.RURAL) {

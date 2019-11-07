@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -16,10 +17,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.SphericalUtil
 import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
@@ -75,21 +74,9 @@ class MapFragment : FragmentWithToolbar() {
 
     private val selectTracking: (RuralTracking) -> Unit = { tracking ->
         trackingsDialog?.dismiss()
-        val cameraPosition = CameraPosition.builder()
-            .target(tracking.location)
-            .zoom(DEFAULT_ZOOM)
-            .bearing(0f)
-            .build()
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), object : GoogleMap.CancelableCallback {
-            override fun onFinish() {
-                mapVM.selectedItemId.postValue(tracking.vehicleId)
-                clusterRenderer.getMarker(CustomClusterItem(tracking))?.showInfoWindow()
-            }
-
-            override fun onCancel() {
-            }
-
-        })
+        lifecycleScope.launchWhenStarted {
+            mapVM.selectedItemId.send(tracking.vehicleId)
+        }
     }
     private var trackingsDialog: MaterialDialog? = null
     private val trackingsAdapter = TrackingsAdapter(selectTracking)
@@ -208,7 +195,7 @@ class MapFragment : FragmentWithToolbar() {
             requireContext(),
             map,
             clusterManager,
-            mapVM.selectedItemId,
+            mapVM.preservedItemId,
             mapSettingsVM.busFilterEnabled,
             mapSettingsVM.tramFilterEnabled,
             mapSettingsVM.ruralFilterEnabled
@@ -217,11 +204,11 @@ class MapFragment : FragmentWithToolbar() {
 
         clusterManager.algorithm = clusteringAlgorithm
         clusterManager.setOnClusterItemClickListener { item ->
-            mapVM.selectedItemId.postValue(item.itemId)
+            mapVM.preservedItemId.postValue(item.itemId)
             false
         }
         map.setOnInfoWindowCloseListener {
-            mapVM.selectedItemId.postValue("")
+            mapVM.preservedItemId.postValue("")
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { item ->
             item.stop?.let { stop ->
@@ -295,46 +282,104 @@ class MapFragment : FragmentWithToolbar() {
 
         // Stops
         mapVM.busStopLocations.observe(mapLifecycleOwner, Observer { stops ->
-            val items = stops.map { CustomClusterItem(it) }
-            clusterManager.removeItems(busStopsItems.minus(items))
-            clusterManager.addItems(items.minus(busStopsItems))
-            clusterManager.cluster()
-            busStopsItems.clear()
-            busStopsItems.addAll(items)
+            renewStopItems(stops.map { CustomClusterItem(it) }, busStopsItems)
         })
         mapVM.tramStopLocations.observe(mapLifecycleOwner, Observer { stops ->
-            val items = stops.map { CustomClusterItem(it) }
-            clusterManager.removeItems(tramStopsItems.minus(items))
-            clusterManager.addItems(items.minus(tramStopsItems))
-            clusterManager.cluster()
-            tramStopsItems.clear()
-            tramStopsItems.addAll(items)
+            renewStopItems(stops.map { CustomClusterItem(it) }, tramStopsItems)
         })
         mapVM.ruralStopLocations.observe(mapLifecycleOwner, Observer { stops ->
-            val items = stops.map { CustomClusterItem(it) }
-            clusterManager.removeItems(ruralStopsItems.minus(items))
-            clusterManager.addItems(items.minus(ruralStopsItems))
-            clusterManager.cluster()
-            ruralStopsItems.clear()
-            ruralStopsItems.addAll(items)
+            renewStopItems(stops.map { CustomClusterItem(it) }, ruralStopsItems)
         })
 
         // Trackings
         mapVM.ruralTrackings.observe(mapLifecycleOwner, Observer { trackings ->
             trackings?.let {
-                val items = trackings.map { CustomClusterItem(it) }
-                clusterManager.removeItems(ruralTrackingsItems.minus(items))
-                clusterManager.addItems(items.minus(ruralTrackingsItems))
-                clusterManager.cluster()
-                ruralTrackingsItems.clear()
-                ruralTrackingsItems.addAll(items)
+                renewTrackingItems(trackings, ruralTrackingsItems)
                 // Update the trackings selector
                 trackingsAdapter.setNewTrackings(trackings)
                 trackingsDialog?.title(text = getTrackingsTitle())
                 updateTrackingsDialogDistance()
             }
         })
+
+        lifecycleScope.launchWhenStarted {
+            for (selectedItemId in mapVM.selectedItemId) {
+                findMarker(selectedItemId)?.let { selectedMarker ->
+                    val cameraPosition = CameraPosition.builder()
+                        .target(selectedMarker.position)
+                        .zoom(DEFAULT_ZOOM)
+                        .bearing(0f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), object : GoogleMap.CancelableCallback {
+                        override fun onFinish() {
+                            mapVM.preservedItemId.postValue(selectedItemId)
+                            selectedMarker.showInfoWindow()
+                        }
+
+                        override fun onCancel() {}
+                    })
+                }
+            }
+        }
     }
+
+    private fun renewStopItems(newItems: List<CustomClusterItem>, oldItems: MutableList<CustomClusterItem>) {
+        val preservedItemId = mapVM.preservedItemId.value
+
+        clusterManager.removeItems(oldItems.minus(newItems))
+        clusterManager.addItems(newItems.minus(oldItems))
+        clusterManager.cluster()
+        oldItems.clear()
+        oldItems.addAll(newItems)
+
+        if (preservedItemId != null && newItems.any { it.itemId == preservedItemId }) {
+            findMarker(preservedItemId)?.run {
+                showInfoWindow()
+                mapVM.preservedItemId.postValue(preservedItemId)
+            }
+        }
+    }
+
+    private fun renewTrackingItems(newTrackings: List<RuralTracking>, oldItems: MutableList<CustomClusterItem>) {
+        val preservedItemId = mapVM.preservedItemId.value
+        val oldMarker = findMarker(preservedItemId)
+
+        val newItems = newTrackings.map { CustomClusterItem(it) }
+        clusterManager.removeItems(oldItems.minus(newItems))
+        clusterManager.addItems(newItems.minus(oldItems))
+        clusterManager.cluster()
+        oldItems.clear()
+        oldItems.addAll(newItems)
+
+        if (preservedItemId != null && newTrackings.any { it.vehicleId == preservedItemId }) {
+            val newMarker = findMarker(preservedItemId)
+            // If the selected item is a tracking that exists after the renewal, it has changed position
+            // and the previous one was on the screen let's recenter to it
+            if (oldMarker != null
+                && newMarker != null
+                && SphericalUtil.computeDistanceBetween(oldMarker.position, newMarker.position) > 1
+                && map.projection.visibleRegion.latLngBounds.contains(oldMarker.position)
+            ) {
+                lifecycleScope.launchWhenStarted {
+                    mapVM.selectedItemId.send(preservedItemId)
+                }
+            } else {
+                newMarker?.run {
+                    showInfoWindow()
+                    mapVM.preservedItemId.postValue(preservedItemId)
+                }
+            }
+        }
+    }
+
+    private fun findMarker(itemId: String?): Marker? =
+        if (itemId == null) {
+            null
+        } else {
+            clusterRenderer.getMarker(busStopsItems.plus(tramStopsItems).plus(ruralStopsItems).plus(ruralTrackingsItems).find { item ->
+                item.itemId == itemId
+            })
+        }
 
     private fun getTrackingsTitle(): String {
         val time = ruralTrackingsItems.getOrNull(0)?.ruralTracking?.updatedAt
