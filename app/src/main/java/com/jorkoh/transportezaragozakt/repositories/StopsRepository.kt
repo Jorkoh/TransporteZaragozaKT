@@ -1,7 +1,7 @@
 package com.jorkoh.transportezaragozakt.repositories
 
-import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.SphericalUtil
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -112,17 +112,10 @@ class StopsRepositoryImplementation(
     override fun loadNearbyStops(location: LatLng, maxDistanceInMeters: Double): Flow<List<StopWithDistance>> {
         return loadStops().map { stops ->
             val newStopsWithDistance = mutableListOf<StopWithDistance>()
-            val distance = FloatArray(1)
             stops.forEach { stop ->
-                Location.distanceBetween(
-                    location.latitude,
-                    location.longitude,
-                    stop.location.latitude,
-                    stop.location.longitude,
-                    distance
-                )
-                if (distance[0] < maxDistanceInMeters) {
-                    newStopsWithDistance.add(StopWithDistance(stop, distance[0]))
+                val distance = SphericalUtil.computeDistanceBetween(location, stop.location).toFloat()
+                if (distance < maxDistanceInMeters) {
+                    newStopsWithDistance.add(StopWithDistance(stop, distance))
                 }
             }
             newStopsWithDistance.sortedBy { it.distance }
