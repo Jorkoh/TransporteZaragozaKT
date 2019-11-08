@@ -378,10 +378,8 @@ class LineDetailsFragment : FragmentWithToolbar() {
         }
 
         if (preservedItemId != null && newStops.any { it.stopId == preservedItemId }) {
-            findMarker(preservedItemId)?.run {
-                showInfoWindow()
-                lineDetailsVM.preservedItemId.postValue(preservedItemId)
-            }
+            findMarker(preservedItemId)?.showInfoWindow()
+            lineDetailsVM.preservedItemId.postValue(preservedItemId)
         }
     }
 
@@ -402,23 +400,20 @@ class LineDetailsFragment : FragmentWithToolbar() {
             trackingMarkers.add(marker)
         }
 
-        if (preservedItemId != null && newTrackings.any { it.vehicleId == preservedItemId }) {
-            val newMarker = findMarker(preservedItemId)
+        val newTracking = newTrackings.firstOrNull { it.vehicleId == preservedItemId }
+        if (preservedItemId != null && newTracking != null) {
             // If the selected item is a tracking that exists after the renewal, it has changed position
             // and the previous one was on the screen let's recenter to it
             if (oldMarker != null
-                && newMarker != null
-                && SphericalUtil.computeDistanceBetween(oldMarker.position, newMarker.position) > 1
+                && SphericalUtil.computeDistanceBetween(oldMarker.position, newTracking.location) > 1
                 && map.projection.visibleRegion.latLngBounds.contains(oldMarker.position)
             ) {
                 lifecycleScope.launchWhenStarted {
                     lineDetailsVM.selectedItemId.send(preservedItemId)
                 }
             } else {
-                newMarker?.run {
-                    showInfoWindow()
-                    lineDetailsVM.preservedItemId.postValue(preservedItemId)
-                }
+                findMarker(preservedItemId)?.showInfoWindow()
+                lineDetailsVM.preservedItemId.postValue(preservedItemId)
             }
         }
     }
