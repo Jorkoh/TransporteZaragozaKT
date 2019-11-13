@@ -4,7 +4,7 @@
           android:layout_height="wrap_content"
           android:paddingLeft="3dp"
           android:paddingRight="3dp"
-          android:background="@drawable/map_info_window_rounded_edges"
+          android:background="@drawable/rounded_rectangle"
           style="@android:style/TextAppearance.Material.Small"
           android:textStyle="bold"
           android:textColor="@color/kinda_white"

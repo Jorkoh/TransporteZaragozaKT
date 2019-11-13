@@ -165,7 +165,7 @@ fun lighter(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) factor: Floa
 fun List<String>.inflateLines(container: GridLayout, stopType: StopType, context: Context) {
     container.removeAllViews()
     forEachIndexed { index, line ->
-        LayoutInflater.from(context).inflate(R.layout.map_info_window_line, container)
+        LayoutInflater.from(context).inflate(R.layout.line_number, container)
         val lineView = container.getChildAt(index) as TextView
 
         val lineColor = when(stopType){

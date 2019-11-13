@@ -40,7 +40,8 @@ class AlarmService : LifecycleService() {
     private val stopsRepository: StopsRepository by inject()
     private val remindersRepository: RemindersRepository by inject()
 
-    private val currentInstances = ArrayDeque<Unit>()
+    // Vector provides thread safety
+    private val currentInstances = Vector<Int>()
 
     override fun onCreate() {
         super.onCreate()
@@ -58,7 +59,7 @@ class AlarmService : LifecycleService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        currentInstances.push(Unit)
+        currentInstances.add(startId)
 
         intent?.extras?.let { extras ->
             val stopId = requireNotNull(extras.getString(STOP_ID_KEY_ALARM))
@@ -73,7 +74,7 @@ class AlarmService : LifecycleService() {
                     .collect { timesAndAlias ->
                         if (timesAndAlias.first.status != Status.LOADING) {
                             createNotification(stopId, stopType, reminderId, timesAndAlias.first, timesAndAlias.second)
-                            stopSelfIfLast()
+                            stopSelfIfLast(startId)
                             cancel()
                         }
                     }
@@ -85,9 +86,11 @@ class AlarmService : LifecycleService() {
         return Service.START_REDELIVER_INTENT
     }
 
-    private fun stopSelfIfLast() {
-        currentInstances.pop()
-        if (currentInstances.isEmpty()) {
+    // stopSelf(startId) is not enough since notification creation is asynchronous
+    private fun stopSelfIfLast(startId: Int) {
+        currentInstances.remove(startId)
+        if (currentInstances.size == 0) {
+            // It doesn't matter that removal and check aren't atomic since any instance can safely stop the service now
             stopSelf()
         }
     }

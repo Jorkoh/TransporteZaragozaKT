@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt.destinations.map
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,6 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
         return null
     }
 
-    @SuppressLint("InflateParams")
     override fun getInfoContents(marker: Marker?): View? {
         val item = marker?.tag
         return if (item is CustomClusterItem) {
