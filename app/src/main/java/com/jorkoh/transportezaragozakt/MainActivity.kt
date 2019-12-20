@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity() {
                 stop_details_fab.animate().alpha(1f).setDuration(150).setStartDelay(200).start()
             }
             else -> {
+                stop_details_fab.animation?.cancel()
+                stop_details_fab.clearAnimation()
                 stop_details_fab.visibility = View.GONE
                 stop_details_fab.close()
             }

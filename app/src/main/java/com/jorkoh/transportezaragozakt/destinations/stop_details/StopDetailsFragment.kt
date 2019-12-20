@@ -151,7 +151,10 @@ class StopDetailsFragment : FragmentWithToolbar() {
             }
 
             stop_details_appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                if (verticalOffset == 0 && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                if (verticalOffset == 0 && activity?.stop_details_fab?.isShown == false
+                    && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+                    && findNavController().currentDestination?.id == R.id.stopDetails
+                ) {
                     activity?.stop_details_fab?.show()
                 } else if (appBarLayout.totalScrollRange + verticalOffset == 0) {
                     activity?.stop_details_fab?.hide()
