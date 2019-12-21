@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
-import com.jorkoh.transportezaragozakt.destinations.inflateLines
-import com.jorkoh.transportezaragozakt.destinations.setColor
-import com.jorkoh.transportezaragozakt.destinations.toPx
+import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
+import com.jorkoh.transportezaragozakt.destinations.utils.setColor
+import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.synthetic.main.line_stop_row.view.*
 
 class StopsByDestinationAdapter(

@@ -10,7 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
 import kotlinx.android.synthetic.main.web_view_destination.*
 import kotlinx.android.synthetic.main.web_view_destination.view.*
 

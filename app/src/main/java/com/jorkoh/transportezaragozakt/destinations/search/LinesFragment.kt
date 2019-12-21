@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.hideKeyboard
+import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import kotlinx.android.synthetic.main.search_destination_lines.*
 import kotlinx.android.synthetic.main.search_destination_lines.view.*

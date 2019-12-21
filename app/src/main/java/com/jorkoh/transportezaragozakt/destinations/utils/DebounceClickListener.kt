@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.destinations
+package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.os.SystemClock
 import android.view.View

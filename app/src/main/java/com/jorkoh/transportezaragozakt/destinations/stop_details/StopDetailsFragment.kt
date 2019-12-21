@@ -28,9 +28,9 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
-import com.jorkoh.transportezaragozakt.destinations.inflateLines
+import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.createStopDetailsDeepLink
+import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
@@ -310,7 +310,12 @@ class StopDetailsFragment : FragmentWithToolbar() {
                             }
                         )
                     )
-                    .setIntent(createStopDetailsDeepLink(stopDetailsVM.stopId, stopDetailsVM.stopType))
+                    .setIntent(
+                        createStopDetailsDeepLink(
+                            stopDetailsVM.stopId,
+                            stopDetailsVM.stopType
+                        )
+                    )
                     .build()
                 val successCallback = PendingIntent.getBroadcast(
                     requireContext(),

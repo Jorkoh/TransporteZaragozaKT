@@ -14,10 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.hideKeyboard
+import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
-import com.jorkoh.transportezaragozakt.destinations.toLatLng
+import com.jorkoh.transportezaragozakt.destinations.utils.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.*

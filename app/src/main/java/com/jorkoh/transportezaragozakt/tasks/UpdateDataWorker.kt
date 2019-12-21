@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.*
 import com.jorkoh.transportezaragozakt.db.daos.StopsDao
-import com.jorkoh.transportezaragozakt.destinations.createChangelogDeepLink
+import com.jorkoh.transportezaragozakt.destinations.utils.createChangelogDeepLink
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import kotlinx.coroutines.Dispatchers

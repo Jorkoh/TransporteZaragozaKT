@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jorkoh.transportezaragozakt.destinations
+package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.content.Intent
 import android.util.SparseArray

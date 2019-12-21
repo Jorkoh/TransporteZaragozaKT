@@ -3,8 +3,8 @@ package com.jorkoh.transportezaragozakt
 import android.graphics.Color
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
-import com.jorkoh.transportezaragozakt.destinations.toHexFromColor
+import com.jorkoh.transportezaragozakt.destinations.utils.toColorFromHex
+import com.jorkoh.transportezaragozakt.destinations.utils.toHexFromColor
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test

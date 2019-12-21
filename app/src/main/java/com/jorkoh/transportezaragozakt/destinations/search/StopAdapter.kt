@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
-import com.jorkoh.transportezaragozakt.destinations.inflateLines
+import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.stop_row.*

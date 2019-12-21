@@ -31,7 +31,6 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.destinations.*
 import com.jorkoh.transportezaragozakt.destinations.map.*
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.DEFAULT_ZOOM
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MAX_ZOOM
@@ -40,6 +39,7 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MI
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.RURAL_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
+import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
@@ -431,14 +431,14 @@ class LineDetailsFragment : FragmentWithToolbar() {
         rootView.fragment_toolbar.apply {
             menu.clear()
             inflateMenu(R.menu.line_details_destination_menu)
-            setOnMenuItemClickListener { item ->
+            setOnMenuItemClickListener(ToolbarMenuItemDebounceClickListener { item ->
                 if (item.itemId == R.id.item_schedule) {
                     openSchedule()
                     true
                 } else {
                     super.onOptionsItemSelected(item)
                 }
-            }
+            })
         }
     }
 

@@ -7,9 +7,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.PreferenceFragmentCompatWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.isSpanish
-import com.jorkoh.transportezaragozakt.destinations.toPx
+import com.jorkoh.transportezaragozakt.destinations.utils.PreferenceFragmentCompatWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.isSpanish
+import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 
 
 class MoreFragment : PreferenceFragmentCompatWithToolbar() {

@@ -9,7 +9,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.RuralTracking
 import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.inflateLines
+import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
 import kotlinx.android.synthetic.main.map_info_window.view.*
 
 class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {

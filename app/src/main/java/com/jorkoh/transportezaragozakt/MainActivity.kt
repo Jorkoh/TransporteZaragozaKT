@@ -20,9 +20,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.jorkoh.transportezaragozakt.destinations.getColorFromAttr
-import com.jorkoh.transportezaragozakt.destinations.setupWithNavController
-import com.jorkoh.transportezaragozakt.destinations.toPx
+import com.jorkoh.transportezaragozakt.destinations.utils.getColorFromAttr
+import com.jorkoh.transportezaragozakt.destinations.utils.setupWithNavController
+import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels

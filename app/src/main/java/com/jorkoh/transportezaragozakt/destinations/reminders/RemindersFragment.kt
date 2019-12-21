@@ -16,11 +16,11 @@ import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.ReminderExtended
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.destinations.favorites.ItemGestureHelper
-import com.jorkoh.transportezaragozakt.destinations.materialColors
-import com.jorkoh.transportezaragozakt.destinations.toColorFromHex
-import com.jorkoh.transportezaragozakt.destinations.toHexFromColor
+import com.jorkoh.transportezaragozakt.destinations.utils.materialColors
+import com.jorkoh.transportezaragozakt.destinations.utils.toColorFromHex
+import com.jorkoh.transportezaragozakt.destinations.utils.toHexFromColor
 import kotlinx.android.synthetic.main.reminders_destination.*
 import kotlinx.android.synthetic.main.reminders_destination.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

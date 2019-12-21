@@ -16,7 +16,7 @@ import com.google.zxing.integration.android.IntentIntegrator
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
 import kotlinx.android.synthetic.main.search_destination.*
 import kotlinx.android.synthetic.main.search_destination.view.*

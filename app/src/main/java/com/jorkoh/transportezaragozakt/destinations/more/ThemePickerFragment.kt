@@ -10,7 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
 import daio.io.dresscode.dressCodeStyleId
 import daio.io.dresscode.getDressCodes
 

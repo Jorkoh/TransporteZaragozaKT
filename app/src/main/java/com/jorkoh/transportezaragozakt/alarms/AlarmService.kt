@@ -12,8 +12,8 @@ import androidx.lifecycle.LifecycleService
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.createStopDetailsDeepLink
-import com.jorkoh.transportezaragozakt.destinations.fixTimes
+import com.jorkoh.transportezaragozakt.destinations.utils.createStopDetailsDeepLink
+import com.jorkoh.transportezaragozakt.destinations.utils.fixTimes
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.StopsRepository
 import com.jorkoh.transportezaragozakt.repositories.util.Resource

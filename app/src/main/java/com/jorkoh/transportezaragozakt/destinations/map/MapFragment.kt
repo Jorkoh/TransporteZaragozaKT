@@ -26,9 +26,9 @@ import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.RuralTracking
-import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
-import com.jorkoh.transportezaragozakt.destinations.FragmentWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.toLatLng
+import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.utils.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.map_trackings_control.*

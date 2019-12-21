@@ -11,10 +11,10 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.db.toLineType
-import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
-import com.jorkoh.transportezaragozakt.destinations.fixTimes
+import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.utils.fixTimes
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
-import com.jorkoh.transportezaragozakt.destinations.toPx
+import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.destination_row.*
 

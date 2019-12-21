@@ -1,4 +1,4 @@
-package com.jorkoh.transportezaragozakt.destinations
+package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.content.Context
 import android.content.Intent

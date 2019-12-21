@@ -13,10 +13,10 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.Line
 import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.Stop
-import com.jorkoh.transportezaragozakt.destinations.DebounceClickListener
-import com.jorkoh.transportezaragozakt.destinations.isSpanish
+import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
+import com.jorkoh.transportezaragozakt.destinations.utils.isSpanish
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
-import com.jorkoh.transportezaragozakt.destinations.toPx
+import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.line_row.*
 
