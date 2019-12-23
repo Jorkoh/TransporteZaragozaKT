@@ -183,12 +183,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private fun setupMap(centerCamera: Boolean) {
         if (centerCamera) {
-            map.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    ZARAGOZA_CENTER,
-                    DEFAULT_ZOOM
-                )
-            )
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(ZARAGOZA_CENTER, DEFAULT_ZOOM))
         }
         configureMap()
         styleMap()
@@ -277,19 +272,22 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 }
                 map.addPolyline(line)
 
-                val bounds = withContext(Dispatchers.Default) {
-                    LatLngBounds.builder().apply {
-                        locations.forEach {
-                            include(it.location)
-                        }
-                    }
-                }
                 // Only adjust the camera to reveal the entire line when user didn't come from a specific stop and the camera hasn't already moved
-                if (lineDetailsVM.preservedItemId.value.isNullOrEmpty() && SphericalUtil.computeDistanceBetween(
+                if (lineDetailsVM.preservedItemId.value.isNullOrEmpty()
+                    && lineDetailsVM.selectedItemId.isEmpty
+                    && args.stopId.isNullOrEmpty()
+                    && SphericalUtil.computeDistanceBetween(
                         map.cameraPosition.target,
                         ZARAGOZA_CENTER
                     ) < 1
                 ) {
+                    val bounds = withContext(Dispatchers.Default) {
+                        LatLngBounds.builder().apply {
+                            locations.forEach {
+                                include(it.location)
+                            }
+                        }
+                    }
                     map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
                 }
             }
@@ -325,6 +323,18 @@ class LineDetailsFragment : FragmentWithToolbar() {
             stops?.let {
                 // Get rid of the old markers and set up new markers
                 renewStopMarkers(stops)
+
+                // If the user navigated from a specific stop select it on the map
+                // this is done after the stop markers are set for the first time
+                lifecycleScope.launchWhenStarted {
+                    if (!args.stopId.isNullOrEmpty()) {
+                        args.stopId?.let {
+                            lineDetailsVM.selectedItemId.send(it)
+                        }
+                        // Since this should only happen the first time let's clear the argument
+                        requireArguments().putString("stopId", null)
+                    }
+                }
             }
         })
 
@@ -349,15 +359,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     lineDetailsVM.preservedItemId.postValue(selectedItemId)
                 }
             }
-        }
-
-        // If the user navigated from a specific stop select it on the map
-        lifecycleScope.launchWhenStarted {
-            args.stopId?.let {
-                lineDetailsVM.selectedItemId.send(it)
-            }
-            // Since this should only happen the first time let's clear the argument
-            requireArguments().putString("stopId", null)
         }
     }
 
