@@ -16,7 +16,8 @@
     </fragment>
     <fragment
             android:id="@id/stopDetails"
-            android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment">
+            android:name="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
+            tools:layout="@layout/stop_details_destination">
         <argument
                 android:name="stopType"
                 app:argType="string" />
@@ -33,7 +34,7 @@
     <fragment
             android:id="@id/lineDetails"
             android:name="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
-            tools:layout="@layout/stop_details_destination">
+            tools:layout="@layout/line_details_destination">
         <argument
                 android:name="lineType"
                 app:argType="string" />

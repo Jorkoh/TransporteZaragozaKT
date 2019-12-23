@@ -29,9 +29,9 @@ buildscript {
                             'ktx'     : "androidx.room:room-ktx:2.2.1"
                     ],
                     'navigation'      : [
-                            'runtime' : "androidx.navigation:navigation-runtime-ktx:2.2.0-rc01",
-                            'fragment': "androidx.navigation:navigation-fragment-ktx:2.2.0-rc01",
-                            'ui'      : "androidx.navigation:navigation-ui-ktx:2.2.0-rc01"
+                            'runtime' : "androidx.navigation:navigation-runtime-ktx:2.2.0-rc04",
+                            'fragment': "androidx.navigation:navigation-fragment-ktx:2.2.0-rc04",
+                            'ui'      : "androidx.navigation:navigation-ui-ktx:2.2.0-rc04"
                     ],
                     'lifecycle'       : [
                             'extensions': "androidx.lifecycle:lifecycle-extensions:2.2.0-rc01",
