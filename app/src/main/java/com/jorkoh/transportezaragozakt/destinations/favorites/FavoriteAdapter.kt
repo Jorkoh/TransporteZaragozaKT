@@ -2,39 +2,45 @@ package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.FavoriteStopExtended
 import com.jorkoh.transportezaragozakt.db.StopType
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
 import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
-import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.favorite_row.*
 
+private const val STATE_LAST_SELECTED_ID = "last_selected_id"
+
 class FavoriteAdapter(
-    private val openStop: (StopDetailsFragmentArgs) -> Unit,
+    private val openStop: (StopDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit,
     private val editAlias: (FavoriteStopExtended) -> Unit,
     private val editColor: (FavoriteStopExtended) -> Unit,
     private val restore: (FavoriteStopExtended) -> Unit,
     private val reorder: (RecyclerView.ViewHolder) -> Unit,
-    private val delete: (FavoriteStopExtended, Int) -> Unit
+    private val delete: (FavoriteStopExtended, Int) -> Unit,
+    private val onReadyToTransition: () -> Unit
 ) : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    class FavoriteViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class FavoriteViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        val context : Context
+        val context: Context
             get() = itemView.context
 
         fun bind(
             favorite: FavoriteStopExtended,
-            openStop: (StopDetailsFragmentArgs) -> Unit,
+            openStop: (StopDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit,
             editAlias: (FavoriteStopExtended) -> Unit,
             editColor: (FavoriteStopExtended) -> Unit,
             restore: (FavoriteStopExtended) -> Unit,
@@ -44,35 +50,49 @@ class FavoriteAdapter(
             // Stop type icon
             when (favorite.type) {
                 StopType.BUS -> {
-                    type_image_favorite.setImageResource(R.drawable.ic_bus_stop)
-                    type_image_favorite.contentDescription = context.getString(R.string.stop_type_bus)
+                    favorite_row_type_image.setImageResource(R.drawable.ic_bus_stop)
+                    favorite_row_type_image.contentDescription = context.getString(R.string.stop_type_bus)
                 }
                 StopType.TRAM -> {
-                    type_image_favorite.setImageResource(R.drawable.ic_tram_stop)
-                    type_image_favorite.contentDescription = context.getString(R.string.stop_type_tram)
+                    favorite_row_type_image.setImageResource(R.drawable.ic_tram_stop)
+                    favorite_row_type_image.contentDescription = context.getString(R.string.stop_type_tram)
                 }
                 StopType.RURAL -> {
-                    type_image_favorite.setImageResource(R.drawable.ic_rural_stop)
-                    type_image_favorite.contentDescription = context.getString(R.string.stop_type_rural)
+                    favorite_row_type_image.setImageResource(R.drawable.ic_rural_stop)
+                    favorite_row_type_image.contentDescription = context.getString(R.string.stop_type_rural)
                 }
             }
             // Texts
-            title_text_favorite.text = favorite.alias
+            favorite_row_title_text.text = favorite.alias
             number_text_favorite.text = favorite.number
             number_text_favorite.contentDescription = context.getString(R.string.number_template, favorite.number)
             // Favorite user defined color
             if (favorite.colorHex.isNotEmpty()) {
-                favorite_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
-                favorite_color.visibility = View.VISIBLE
+                favorite_row_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
+                favorite_row_color.visibility = View.VISIBLE
             } else {
-                favorite_color.setBackgroundColor(Color.TRANSPARENT)
-                favorite_color.visibility = View.GONE
+                favorite_row_color.setBackgroundColor(Color.TRANSPARENT)
+                favorite_row_color.visibility = View.GONE
             }
             // Lines
-            favorite.lines.inflateLines(lines_layout_favorite, favorite.type, context)
+            favorite.lines.inflateLines(favorite_row_lines_layout, favorite.type, context)
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
-                openStop(StopDetailsFragmentArgs(favorite.type.name, favorite.stopId))
+                // Record the selected item so that we can make the item ready before starting the
+                // reenter transition.
+                lastSelectedId = favorite.stopId
+
+                openStop(
+                    StopDetailsFragmentArgs(favorite.type.name, favorite.stopId),
+                    arrayOf(
+                        favorite_row_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
+                        favorite_row_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
+                        favorite_row_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
+                        favorite_row_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
+                        favorite_row_title_text to StopDetailsFragment.TRANSITION_NAME_TITLE,
+                        favorite_row_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES
+                    )
+                )
             })
             edit_view_favorite.setOnClickListener {
                 PopupMenu(context, it).apply {
@@ -106,6 +126,11 @@ class FavoriteAdapter(
         }
     }
 
+    private var lastSelectedId: String? = null
+
+    val expectsTransition: Boolean
+        get() = lastSelectedId != null
+
     var favorites: List<FavoriteStopExtended> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
@@ -114,7 +139,33 @@ class FavoriteAdapter(
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.bind(favorites[position], openStop, editAlias, editColor, restore, reorder, delete)
+        val favorite = favorites[position]
+
+        ViewCompat.setTransitionName(holder.favorite_row_card, "favorite_row_card_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_layout, "favorite_row_layout_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_toolbar, "favorite_row_toolbar_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_type_image, "favorite_row_type_image_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_title_text, "favorite_row_title_text_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_lines_layout, "favorite_row_lines_layout_${favorite.stopId}")
+
+        holder.bind(favorite, openStop, editAlias, editColor, restore, reorder, delete)
+
+        if (favorite.stopId == lastSelectedId) {
+            onReadyToTransition()
+            lastSelectedId = null
+        }
+    }
+
+    fun saveInstanceState(outState: Bundle) {
+        lastSelectedId?.let { id ->
+            outState.putString(STATE_LAST_SELECTED_ID, id)
+        }
+    }
+
+    fun restoreInstanceState(state: Bundle) {
+        if (lastSelectedId == null && state.containsKey(STATE_LAST_SELECTED_ID)) {
+            lastSelectedId = state.getString(STATE_LAST_SELECTED_ID)
+        }
     }
 
     override fun getItemCount(): Int = favorites.size

@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         style="@style/Widget.MaterialComponents.CardView"
+        android:id="@+id/favorite_row_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -15,10 +16,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/favorite_row_layout"
             android:background="?android:attr/selectableItemBackground">
 
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/favorite_row_toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         <View
-                android:id="@+id/favorite_color"
+                android:id="@+id/favorite_row_color"
                 android:layout_width="10dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -31,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-                android:id="@+id/type_image_favorite"
+                android:id="@+id/favorite_row_type_image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="8dp"
@@ -39,11 +49,11 @@
                 android:layout_marginBottom="8dp"
                 android:contentDescription="@string/stop_type"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/favorite_color"
+                app:layout_constraintStart_toEndOf="@id/favorite_row_color"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/title_text_favorite"
+                android:id="@+id/favorite_row_title_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -56,7 +66,7 @@
                 android:textColor="?colorOnSurface"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/edit_view_favorite"
-                app:layout_constraintStart_toEndOf="@+id/type_image_favorite"
+                app:layout_constraintStart_toEndOf="@+id/favorite_row_type_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -92,7 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@id/edit_view_favorite" />
 
         <GridLayout
-                android:id="@+id/lines_layout_favorite"
+                android:id="@+id/favorite_row_lines_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -102,8 +112,8 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/number_text_favorite"
-                app:layout_constraintStart_toEndOf="@+id/type_image_favorite"
-                app:layout_constraintTop_toBottomOf="@+id/title_text_favorite" />
+                app:layout_constraintStart_toEndOf="@+id/favorite_row_type_image"
+                app:layout_constraintTop_toBottomOf="@+id/favorite_row_title_text" />
 
         <TextView
                 android:id="@+id/number_text_favorite"
@@ -115,8 +125,8 @@
                 android:textColor="?colorOnSurface"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/edit_view_favorite"
-                app:layout_constraintStart_toEndOf="@+id/lines_layout_favorite"
-                app:layout_constraintTop_toBottomOf="@+id/title_text_favorite" />
+                app:layout_constraintStart_toEndOf="@+id/favorite_row_lines_layout"
+                app:layout_constraintTop_toBottomOf="@+id/favorite_row_title_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

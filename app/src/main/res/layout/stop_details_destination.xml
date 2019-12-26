@@ -4,6 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment"
+        android:id="@+id/stop_details_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,7 +34,7 @@
                     android:focusable="true">
 
                 <ImageView
-                        android:id="@+id/type_image_stop_details"
+                        android:id="@+id/stop_details_type_image"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
                         android:layout_marginBottom="8dp"
@@ -44,12 +45,12 @@
 
                 <TextView
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/stop_details_title_text_view"
+                        android:id="@+id/stop_details_title_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textColor="?colorOnPrimary"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toEndOf="@id/type_image_stop_details"
+                        app:layout_constraintStart_toEndOf="@id/stop_details_type_image"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -62,8 +63,8 @@
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/type_image_stop_details"
-                        app:layout_constraintTop_toBottomOf="@+id/stop_details_title_text_view"/>
+                        app:layout_constraintStart_toEndOf="@id/stop_details_type_image"
+                        app:layout_constraintTop_toBottomOf="@+id/stop_details_title_text"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -82,6 +83,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/stop_details_constraint_layout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.airbnb.lottie.LottieAnimationView

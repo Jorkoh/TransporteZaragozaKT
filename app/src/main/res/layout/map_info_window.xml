@@ -36,7 +36,7 @@
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/type_image_info_window"
             android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toTopOf="@+id/lines_layout_favorite"
+            app:layout_constraintBottom_toTopOf="@+id/favorite_row_lines_layout"
             android:textAlignment="center"
             android:layout_marginStart="4dp"
             />
@@ -50,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintTop_toBottomOf="@+id/title_text_info_window"
-            android:id="@+id/lines_layout_favorite"
+            android:id="@+id/favorite_row_lines_layout"
             android:gravity="start"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toStartOf="@+id/number_text_info_window"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toBottomOf="@id/title_text_info_window"
             android:layout_marginEnd="8dp"
             android:textAlignment="textEnd"
-            app:layout_constraintStart_toEndOf="@+id/lines_layout_favorite"
+            app:layout_constraintStart_toEndOf="@+id/favorite_row_lines_layout"
             android:layout_marginBottom="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_weight="0"/>

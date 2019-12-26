@@ -13,11 +13,16 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.ChangeBounds
+import androidx.transition.ChangeImageTransform
+import androidx.transition.ChangeTransform
+import androidx.transition.Transition
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
@@ -28,10 +33,8 @@ import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.utils.createStopDetailsDeepLink
-import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.jorkoh.transportezaragozakt.repositories.util.Resource
 import com.jorkoh.transportezaragozakt.repositories.util.Status
 import com.leinardi.android.speeddial.SpeedDialActionItem
@@ -42,11 +45,19 @@ import kotlinx.android.synthetic.main.stop_details_destination.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.util.concurrent.TimeUnit
 
 
 class StopDetailsFragment : FragmentWithToolbar() {
     companion object {
         const val FAVORITE_ITEM_FAB_POSITION = 0
+
+        const val TRANSITION_NAME_BACKGROUND = "background"
+        const val TRANSITION_NAME_APPBAR = "appBar"
+        const val TRANSITION_NAME_TOOLBAR = "toolbar"
+        const val TRANSITION_NAME_IMAGE = "image"
+        const val TRANSITION_NAME_TITLE = "title"
+        const val TRANSITION_NAME_LINES = "lines"
     }
 
     private val args: StopDetailsFragmentArgs by navArgs()
@@ -138,6 +149,25 @@ class StopDetailsFragment : FragmentWithToolbar() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // These are the shared element transitions.
+        sharedElementEnterTransition = createSharedElementTransition(LARGE_EXPAND_DURATION)
+        sharedElementReturnTransition = createSharedElementTransition(LARGE_COLLAPSE_DURATION)
+    }
+
+    private fun createSharedElementTransition(duration: Long): Transition {
+        return transitionTogether {
+            this.duration = duration
+            interpolator = FAST_OUT_SLOW_IN
+            this += SharedFade()
+            this += ChangeImageTransform()
+            this += ChangeBounds()
+            this += ChangeTransform()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -170,6 +200,19 @@ class StopDetailsFragment : FragmentWithToolbar() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // We are expecting an enter transition from the grid fragment.
+        postponeEnterTransition(500L, TimeUnit.MILLISECONDS)
+
+        // Transition names. Note that they don't need to match with the names of the selected grid
+        // item. They only have to be unique in this fragment.
+        ViewCompat.setTransitionName(stop_details_constraint_layout, TRANSITION_NAME_BACKGROUND)
+        ViewCompat.setTransitionName(stop_details_appBar, TRANSITION_NAME_APPBAR)
+        ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
+        ViewCompat.setTransitionName(stop_details_type_image, TRANSITION_NAME_IMAGE)
+        ViewCompat.setTransitionName(stop_details_title_text, TRANSITION_NAME_TITLE)
+        ViewCompat.setTransitionName(stop_details_lines_layout, TRANSITION_NAME_LINES)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -182,21 +225,22 @@ class StopDetailsFragment : FragmentWithToolbar() {
             // Setup the toolbar
             when (stop.type) {
                 StopType.BUS -> {
-                    type_image_stop_details.setImageResource(R.drawable.ic_bus_stop)
-                    type_image_stop_details.contentDescription = getString(R.string.stop_type_bus)
+                    stop_details_type_image.setImageResource(R.drawable.ic_bus_stop)
+                    stop_details_type_image.contentDescription = getString(R.string.stop_type_bus)
                 }
                 StopType.TRAM -> {
-                    type_image_stop_details.setImageResource(R.drawable.ic_tram_stop)
-                    type_image_stop_details.contentDescription = getString(R.string.stop_type_tram)
+                    stop_details_type_image.setImageResource(R.drawable.ic_tram_stop)
+                    stop_details_type_image.contentDescription = getString(R.string.stop_type_tram)
                 }
                 StopType.RURAL -> {
-                    type_image_stop_details.setImageResource(R.drawable.ic_rural_stop)
-                    type_image_stop_details.contentDescription = getString(R.string.stop_type_rural)
+                    stop_details_type_image.setImageResource(R.drawable.ic_rural_stop)
+                    stop_details_type_image.contentDescription = getString(R.string.stop_type_rural)
                 }
             }
             fragment_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
-            stop_details_title_text_view.text = stop.stopTitle
+            stop_details_title_text.text = stop.stopTitle
             stop.lines.inflateLines(stop_details_lines_layout, stop.type, requireContext())
+            startPostponedEnterTransition()
         })
     }
 

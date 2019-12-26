@@ -52,13 +52,13 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
         }
 
         // If the stopTitle is longer we can fit more lines while keeping a nice ratio
-        content.lines_layout_favorite.columnCount = when {
+        content.favorite_row_lines_layout.columnCount = when {
             stop.stopTitle.length >= 24 -> 8
             stop.stopTitle.length >= 18 -> 6
             else -> 4
         }
 
-        stop.lines.inflateLines(content.lines_layout_favorite, stop.type, context)
+        stop.lines.inflateLines(content.favorite_row_lines_layout, stop.type, context)
         content.number_text_info_window.text = stop.number
         content.title_text_info_window.text = stop.stopTitle
 
@@ -72,13 +72,13 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
         content.type_image_info_window.contentDescription = context.getString(R.string.rural_tracking)
 
         // If the stopTitle is longer we can fit more lines while keeping a nice ratio
-        content.lines_layout_favorite.columnCount = when {
+        content.favorite_row_lines_layout.columnCount = when {
             tracking.lineId.length >= 24 -> 8
             tracking.lineId.length >= 18 -> 6
             else -> 4
         }
 
-        listOf(tracking.lineId).inflateLines(content.lines_layout_favorite, StopType.RURAL, context)
+        listOf(tracking.lineId).inflateLines(content.favorite_row_lines_layout, StopType.RURAL, context)
         content.number_text_info_window.text = tracking.vehicleId
         content.title_text_info_window.text = tracking.lineName
 

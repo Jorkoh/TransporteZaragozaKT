@@ -90,7 +90,7 @@ class RemindersAdapter(
                 reminder_color.visibility = View.GONE
             }
             // Lines
-            reminder.lines.inflateLines(itemView.lines_layout_favorite, reminder.type, context)
+            reminder.lines.inflateLines(itemView.favorite_row_lines_layout, reminder.type, context)
             // Listeners
             itemView.setOnClickListener { edit(reminder) }
             edit_view_reminder.setOnClickListener {

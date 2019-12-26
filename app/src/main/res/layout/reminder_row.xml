@@ -218,7 +218,7 @@
                 app:layout_constraintTop_toBottomOf="@id/edit_view_reminder" />
 
         <GridLayout
-                android:id="@+id/lines_layout_favorite"
+                android:id="@+id/favorite_row_lines_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
