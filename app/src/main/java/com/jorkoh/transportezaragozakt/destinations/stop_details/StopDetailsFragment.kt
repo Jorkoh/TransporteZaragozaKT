@@ -202,7 +202,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // We are expecting an enter transition from the grid fragment.
-        postponeEnterTransition(500L, TimeUnit.MILLISECONDS)
+        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
 
         // Transition names. Note that they don't need to match with the names of the selected grid
         // item. They only have to be unique in this fragment.

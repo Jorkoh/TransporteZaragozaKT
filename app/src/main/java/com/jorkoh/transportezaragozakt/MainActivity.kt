@@ -11,18 +11,14 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
-import androidx.core.view.updateLayoutParams
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.jorkoh.transportezaragozakt.destinations.utils.getColorFromAttr
-import com.jorkoh.transportezaragozakt.destinations.utils.setupWithNavController
-import com.jorkoh.transportezaragozakt.destinations.utils.toPx
+import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -211,25 +207,14 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        with(bottom_navigation) {
-            bottomNavigationShowing = false
-            currentAnimator?.end()
-            currentAnimator = ValueAnimator.ofInt(measuredHeight, 1).apply {
-                addUpdateListener { valueAnimator ->
-                    updateLayoutParams {
-                        height = valueAnimator.animatedValue as Int
-                    }
-                }
-                interpolator = FastOutLinearInInterpolator()
-                duration = 250
-                doOnEnd {
-                    if (!bottomNavigationShowing) {
-                        visibility = View.INVISIBLE
-                    }
-                }
-                start()
-            }
-        }
+        TransitionManager.beginDelayedTransition(coordinator_layout, Slide(Gravity.BOTTOM).apply {
+            duration = LARGE_EXPAND_DURATION / 2
+            interpolator = FAST_OUT_LINEAR_IN
+            mode = Slide.MODE_OUT
+            addTarget(R.id.bottom_navigation)
+        })
+        bottom_navigation.visibility = View.INVISIBLE
+        bottomNavigationShowing = false
     }
 
     private fun showBottomNavigation() {
@@ -238,26 +223,14 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        with(bottom_navigation) {
-            bottomNavigationShowing = true
-            currentAnimator?.end()
-            currentAnimator = ValueAnimator.ofInt(
-                measuredHeight,
-                56.toPx()
-            ).apply {
-                addUpdateListener { valueAnimator ->
-                    updateLayoutParams {
-                        height = valueAnimator.animatedValue as Int
-                    }
-                }
-                interpolator = FastOutLinearInInterpolator()
-                duration = 250
-                doOnStart {
-                    visibility = View.VISIBLE
-                }
-                start()
-            }
-        }
+        TransitionManager.beginDelayedTransition(coordinator_layout, Slide(Gravity.BOTTOM).apply {
+            duration = LARGE_COLLAPSE_DURATION / 2
+            interpolator = LINEAR_OUT_SLOW_IN
+            mode = Slide.MODE_IN
+            addTarget(R.id.bottom_navigation)
+        })
+        bottom_navigation.visibility = View.VISIBLE
+        bottomNavigationShowing = true
     }
 
     inner class ShortcutPinnedReceiver : BroadcastReceiver() {

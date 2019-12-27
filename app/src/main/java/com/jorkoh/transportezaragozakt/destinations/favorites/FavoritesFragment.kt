@@ -146,7 +146,6 @@ class FavoritesFragment : FragmentWithToolbar() {
                 addTarget(R.id.favorites_appBar)
             }
             this += Explode().apply {
-                // The grid items should start imploding after the app bar is in.
                 startDelay = LARGE_COLLAPSE_DURATION / 2
                 mode = Explode.MODE_IN
                 excludeTarget(R.id.favorites_appBar, true)
@@ -182,7 +181,7 @@ class FavoritesFragment : FragmentWithToolbar() {
         if (favoriteStopsAdapter.expectsTransition) {
             // We are transitioning back from CheeseDetailFragment.
             // Postpone the transition animation until the destination item is ready.
-            postponeEnterTransition(500L, TimeUnit.MILLISECONDS)
+            postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
 
         ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
