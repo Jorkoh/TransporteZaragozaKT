@@ -1,16 +1,14 @@
 package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.animation.TimeInterpolator
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.transition.Transition
 import androidx.transition.TransitionSet
 
-const val MEDIUM_EXPAND_DURATION = 250L
-const val MEDIUM_COLLAPSE_DURATION = 200L
-
-const val LARGE_EXPAND_DURATION = 350L
-const val LARGE_COLLAPSE_DURATION = 275L
-
+const val ANIMATE_OUT_OF_STOP_DETAILS_DURATION = 350L
+const val ANIMATE_INTO_STOP_DETAILS_DURATION = 280L
 
 /**
  * Standard easing.
@@ -75,10 +73,41 @@ operator fun TransitionSet.iterator() = object : MutableIterator<Transition> {
     }
 }
 
-operator fun TransitionSet.plusAssign(transition: Transition) {
-    addTransition(transition)
+operator fun TransitionSet.plusAssign(transition: Transition?) {
+    if (transition != null) {
+        addTransition(transition)
+    }
 }
 
 operator fun TransitionSet.get(i: Int): Transition {
     return getTransitionAt(i) ?: throw IndexOutOfBoundsException()
+}
+
+fun View.doAfterLayout(what: () -> Unit) {
+    if(isLaidOut) {
+        what.invoke()
+    } else {
+        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                what.invoke()
+            }
+        })
+    }
+}
+
+fun View.slideUp() {
+    animate().apply {
+        translationY(0f)
+        duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
+        interpolator = FAST_OUT_LINEAR_IN
+    }
+}
+
+fun View.slideDown() {
+    animate().apply {
+        translationY(height.toFloat())
+        interpolator = LINEAR_OUT_SLOW_IN
+        duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+    }
 }

@@ -54,6 +54,7 @@ dependencies {
     //Androidx
     implementation deps.material
     implementation deps.coroutines
+    implementation deps.androidx.transition
     implementation deps.androidx.appCompat
     implementation deps.androidx.constraintLayout
     implementation deps.androidx.recyclerView

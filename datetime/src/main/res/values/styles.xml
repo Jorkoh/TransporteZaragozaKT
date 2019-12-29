@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<style name="testing" parent="Theme.MaterialComponents.NoActionBar">-->
     <style name="testing">
         <item name="android:textColorPrimary">#EEFFFFFF</item>
         <item name="android:textColorSecondary">#99FFFFFF</item>

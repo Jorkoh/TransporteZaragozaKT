@@ -1,6 +1,5 @@
 package com.jorkoh.transportezaragozakt
 
-import android.animation.ValueAnimator
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -35,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val ACTION_SHORTCUT_PINNED = "ACTION_SHORTCUT_PINNED"
+
+        val DESTINATIONS_WITH_BOTTOM_NAVIGATION = listOf(R.id.favorites, R.id.map, R.id.search, R.id.reminders, R.id.more)
     }
 
     private val mainActivityVM: MainActivityViewModel by viewModel()
@@ -43,26 +44,11 @@ class MainActivity : AppCompatActivity() {
     private val shortcutPinnedReceiver = ShortcutPinnedReceiver()
 
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
+        // Fab showing and hiding, the Fab is part of the root coordinator layout instead of the specific fragment layout.
+        animateStopDetailsFab(destination.id)
         // Bottom navigation showing and hiding
-        when (destination.id) {
-            R.id.stopDetails, R.id.lineDetails, R.id.themePicker, R.id.webView -> hideBottomNavigation()
-            else -> showBottomNavigation()
-        }
-        // Fab showing and hiding. Ideally the fab would just be part of that fragment layout but to have it properly react to snackbars
-        // and the bottom navigation animations it has to be a direct child of the main_container coordinator layout.
-        when (destination.id) {
-            R.id.stopDetails -> {
-                stop_details_fab.alpha = 0f
-                stop_details_fab.visibility = View.VISIBLE
-                stop_details_fab.animate().alpha(1f).setDuration(150).setStartDelay(200).start()
-            }
-            else -> {
-                stop_details_fab.animation?.cancel()
-                stop_details_fab.clearAnimation()
-                stop_details_fab.visibility = View.GONE
-                stop_details_fab.close()
-            }
-        }
+        animateBottomNavigation(destination.id)
+
         logDestinationVisit(destination.id)
     }
 
@@ -112,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigationBar(false)
     }
@@ -187,6 +173,7 @@ class MainActivity : AppCompatActivity() {
             R.id.stopDetails -> "StopDetails"
             R.id.lineDetails -> "LineDetails"
             R.id.themePicker -> "ThemePicker"
+            R.id.webView -> "WebView"
             else -> "Unknown"
         }
         firebaseAnalytics.setCurrentScreen(this, screenName, screenName)
@@ -198,43 +185,48 @@ class MainActivity : AppCompatActivity() {
     // from multiple root destinations and doesn't belong to one specifically. For example stop details can be opened from favorites, map,
     // search, notifications... It wouldn't make sense to have one open on the map stack and another on the favorites stack. It would
     // be even worse if the same stop is opened on different stacks. This is similar to how the youtube app handles the video screen
-    private var currentAnimator: ValueAnimator? = null
     private var bottomNavigationShowing = true
 
-    private fun hideBottomNavigation() {
-        if (!bottomNavigationShowing) {
-            // Avoid duplicating animations
-            return
+    private fun animateBottomNavigation(destinationId: Int) {
+        if (DESTINATIONS_WITH_BOTTOM_NAVIGATION.contains(destinationId) && !bottomNavigationShowing) {
+            bottom_navigation.slideUp()
+            bottomNavigationShowing = true
+        } else if (!DESTINATIONS_WITH_BOTTOM_NAVIGATION.contains(destinationId) && bottomNavigationShowing) {
+            bottom_navigation.slideDown()
+            bottomNavigationShowing = false
         }
-
-        TransitionManager.beginDelayedTransition(coordinator_layout, Slide(Gravity.BOTTOM).apply {
-            duration = LARGE_EXPAND_DURATION / 2
-            interpolator = FAST_OUT_LINEAR_IN
-            mode = Slide.MODE_OUT
-            addTarget(R.id.bottom_navigation)
-        })
-        bottom_navigation.visibility = View.INVISIBLE
-        bottomNavigationShowing = false
     }
 
-    private fun showBottomNavigation() {
-        if (bottomNavigationShowing) {
-            // Avoid duplicating animations
-            return
+    private fun animateStopDetailsFab(destinationId: Int) {
+        if (destinationId == R.id.stopDetails && stop_details_fab.visibility != View.VISIBLE) {
+            TransitionManager.beginDelayedTransition(
+                coordinator_layout,
+                Slide(Gravity.END).apply {
+                    duration = ANIMATE_INTO_STOP_DETAILS_DURATION
+                    interpolator = LINEAR_OUT_SLOW_IN
+                    mode = Slide.MODE_IN
+                    addTarget(R.id.stop_details_fab)
+                }
+            )
+            stop_details_fab.show()
+            stop_details_fab.visibility = View.VISIBLE
+        } else if (destinationId != R.id.stopDetails && stop_details_fab.visibility == View.VISIBLE) {
+            TransitionManager.beginDelayedTransition(
+                coordinator_layout,
+                Slide(Gravity.END).apply {
+                    duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION
+                    interpolator = FAST_OUT_LINEAR_IN
+                    mode = Slide.MODE_OUT
+                    addTarget(R.id.stop_details_fab)
+                }
+            )
+            stop_details_fab.close()
+            stop_details_fab.visibility = View.GONE
         }
-
-        TransitionManager.beginDelayedTransition(coordinator_layout, Slide(Gravity.BOTTOM).apply {
-            duration = LARGE_COLLAPSE_DURATION / 2
-            interpolator = LINEAR_OUT_SLOW_IN
-            mode = Slide.MODE_IN
-            addTarget(R.id.bottom_navigation)
-        })
-        bottom_navigation.visibility = View.VISIBLE
-        bottomNavigationShowing = true
     }
+
 
     inner class ShortcutPinnedReceiver : BroadcastReceiver() {
-
         override fun onReceive(context: Context?, intent: Intent?) {
             makeSnackbar(getString(R.string.pinned_shortcut_snackbar))
         }

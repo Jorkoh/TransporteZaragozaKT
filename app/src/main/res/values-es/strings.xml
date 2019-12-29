@@ -123,7 +123,7 @@
     <string name="open_source_title">Código abierto</string>
     <string name="pinned_shortcut_snackbar">¡Acceso directo creado!</string>
     <string name="changelog_summary">Lista de cambios en información de paradas y líneas</string>
-    <string name="stop">Parada</string>
+    <string name="stop">Parada %1$s</string>
     <string name="directions_menu_item">Direcciones</string>
     <string name="schedule_menu_item">Horario</string>
     <string name="tram_line_schedule_title">Horario línea de tranvía</string>

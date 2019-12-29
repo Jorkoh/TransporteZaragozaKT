@@ -60,7 +60,7 @@
     <string name="directions_menu_item" translatable="true">Directions</string>
     <string name="refresh_menu_item" translatable="true">Refresh</string>
     <string name="pinned_shortcut_snackbar" translatable="true">Created shortcut!</string>
-    <string name="stop" translatable="true">Stop</string>
+    <string name="stop" translatable="true">Stop %1$s</string>
     <string name="number_template" translatable="true">Number %1$s</string>
     <string name="estimated_time_warning" translatable="true">Estimated time warning</string>
 

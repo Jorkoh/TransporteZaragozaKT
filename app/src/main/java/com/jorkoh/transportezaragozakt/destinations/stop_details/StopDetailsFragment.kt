@@ -14,15 +14,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.ChangeBounds
-import androidx.transition.ChangeImageTransform
-import androidx.transition.ChangeTransform
-import androidx.transition.Transition
+import androidx.transition.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
@@ -153,8 +151,8 @@ class StopDetailsFragment : FragmentWithToolbar() {
         super.onCreate(savedInstanceState)
 
         // These are the shared element transitions.
-        sharedElementEnterTransition = createSharedElementTransition(LARGE_EXPAND_DURATION)
-        sharedElementReturnTransition = createSharedElementTransition(LARGE_COLLAPSE_DURATION)
+        sharedElementEnterTransition = createSharedElementTransition(ANIMATE_OUT_OF_STOP_DETAILS_DURATION)
+        sharedElementReturnTransition = createSharedElementTransition(ANIMATE_INTO_STOP_DETAILS_DURATION)
     }
 
     private fun createSharedElementTransition(duration: Long): Transition {
@@ -163,6 +161,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
             interpolator = FAST_OUT_SLOW_IN
             this += SharedFade()
             this += ChangeImageTransform()
+            this += ChangeClipBounds()
             this += ChangeBounds()
             this += ChangeTransform()
         }
@@ -201,12 +200,12 @@ class StopDetailsFragment : FragmentWithToolbar() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // We are expecting an enter transition from the grid fragment.
+        // We are expecting an enter transition
         postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
 
         // Transition names. Note that they don't need to match with the names of the selected grid
         // item. They only have to be unique in this fragment.
-        ViewCompat.setTransitionName(stop_details_constraint_layout, TRANSITION_NAME_BACKGROUND)
+        ViewCompat.setTransitionName(stop_details_coordinator_layout, TRANSITION_NAME_BACKGROUND)
         ViewCompat.setTransitionName(stop_details_appBar, TRANSITION_NAME_APPBAR)
         ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
         ViewCompat.setTransitionName(stop_details_type_image, TRANSITION_NAME_IMAGE)
@@ -237,10 +236,14 @@ class StopDetailsFragment : FragmentWithToolbar() {
                     stop_details_type_image.contentDescription = getString(R.string.stop_type_rural)
                 }
             }
-            fragment_toolbar.title = "${getString(R.string.stop)} ${stop.number}"
+            fragment_toolbar.title = getString(R.string.stop, stop.number)
             stop_details_title_text.text = stop.stopTitle
             stop.lines.inflateLines(stop_details_lines_layout, stop.type, requireContext())
-            startPostponedEnterTransition()
+
+            (view?.parent as? ViewGroup)?.doOnPreDraw {
+                // Wait for the views to be laid out before starting the transition
+                startPostponedEnterTransition()
+            }
         })
     }
 

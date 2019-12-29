@@ -60,7 +60,6 @@ class FavoritesFragment : FragmentWithToolbar() {
                     info.stopId
                 ),
                 FragmentNavigatorExtras(*extras)
-//                        FragmentNavigatorExtras(*extras.plus(fragment_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR))
             )
         }
     }
@@ -117,14 +116,16 @@ class FavoritesFragment : FragmentWithToolbar() {
     }
 
     private val favoriteStopsAdapter =
-        FavoriteAdapter(openStop, editAlias, editColor, restore, reorder, delete, { startPostponedEnterTransition() })
+        FavoriteAdapter(openStop, editAlias, editColor, restore, reorder, delete, {
+            startPostponedEnterTransition()
+        })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
         exitTransition = transitionTogether {
-            duration = LARGE_EXPAND_DURATION / 2
+            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION /2
             interpolator = FAST_OUT_LINEAR_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_OUT
@@ -138,15 +139,14 @@ class FavoritesFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = transitionTogether {
-            duration = LARGE_COLLAPSE_DURATION / 2
+            duration = ANIMATE_INTO_STOP_DETAILS_DURATION /2
             interpolator = LINEAR_OUT_SLOW_IN
-            // The app bar.
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_IN
                 addTarget(R.id.favorites_appBar)
             }
             this += Explode().apply {
-                startDelay = LARGE_COLLAPSE_DURATION / 2
+                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
                 mode = Explode.MODE_IN
                 excludeTarget(R.id.favorites_appBar, true)
             }
@@ -195,6 +195,11 @@ class FavoritesFragment : FragmentWithToolbar() {
         }
         no_favorites_animation?.visibility = newVisibility
         no_favorites_text?.visibility = newVisibility
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        favoriteStopsAdapter.saveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
