@@ -51,7 +51,6 @@
                         android:textColor="?colorOnPrimary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/stop_details_type_image"
-                        app:layout_constraintBottom_toTopOf="@id/stop_details_lines_layout"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 <GridLayout

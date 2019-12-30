@@ -101,6 +101,9 @@ fun View.slideUp() {
         translationY(0f)
         duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
         interpolator = FAST_OUT_LINEAR_IN
+        withStartAction{
+            visibility = View.VISIBLE
+        }
     }
 }
 
@@ -109,5 +112,8 @@ fun View.slideDown() {
         translationY(height.toFloat())
         interpolator = LINEAR_OUT_SLOW_IN
         duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+        withEndAction {
+            visibility = View.GONE
+        }
     }
 }
