@@ -63,9 +63,9 @@ class FavoriteAdapter(
                 }
             }
             // Texts
-            favorite_row_title_text.text = favorite.alias
-            number_text_favorite.text = favorite.number
-            number_text_favorite.contentDescription = context.getString(R.string.number_template, favorite.number)
+            favorite_row_title.text = favorite.alias
+            favorite_row_number.text = favorite.number
+            favorite_row_number.contentDescription = context.getString(R.string.number_template, favorite.number)
             // Favorite user defined color
             if (favorite.colorHex.isNotEmpty()) {
                 favorite_row_color.setBackgroundColor(Color.parseColor(favorite.colorHex))
@@ -78,23 +78,27 @@ class FavoriteAdapter(
             favorite.lines.inflateLines(favorite_row_lines_layout, favorite.type, context)
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
-                // Record the selected item so that we can make the item ready before starting the
-                // reenter transition.
+                // Record the selected item so that we can make the item ready before starting the reenter transition.
                 lastSelectedId = favorite.stopId
 
                 openStop(
                     StopDetailsFragmentArgs(favorite.type.name, favorite.stopId),
                     arrayOf(
                         favorite_row_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
+                        favorite_row_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
                         favorite_row_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
-                        favorite_row_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
+                        favorite_row_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
                         favorite_row_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
-                        favorite_row_title_text to StopDetailsFragment.TRANSITION_NAME_TITLE,
-                        favorite_row_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES
+                        favorite_row_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
+                        favorite_row_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
+
+                        favorite_row_edit_button to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW,
+                        favorite_row_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW,
+                        favorite_row_reorder_button to StopDetailsFragment.TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW
                     )
                 )
             })
-            edit_view_favorite.setOnClickListener {
+            favorite_row_edit_button.setOnClickListener {
                 PopupMenu(context, it).apply {
                     menu.apply {
                         add(context.resources.getString(R.string.alias)).setOnMenuItemClickListener {
@@ -117,7 +121,7 @@ class FavoriteAdapter(
                     show()
                 }
             }
-            reorder_view_favorite.setOnTouchListener { _, event ->
+            favorite_row_reorder_button.setOnTouchListener { _, event ->
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                     reorder(this@FavoriteViewHolder)
                 }
@@ -142,11 +146,16 @@ class FavoriteAdapter(
         val favorite = favorites[position]
 
         ViewCompat.setTransitionName(holder.favorite_row_card, "favorite_row_card_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_mirror_body, "favorite_row_mirror_body_${favorite.stopId}")
         ViewCompat.setTransitionName(holder.favorite_row_layout, "favorite_row_layout_${favorite.stopId}")
-        ViewCompat.setTransitionName(holder.favorite_row_toolbar, "favorite_row_toolbar_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_mirror_toolbar, "favorite_row_toolbar_${favorite.stopId}")
         ViewCompat.setTransitionName(holder.favorite_row_type_image, "favorite_row_type_image_${favorite.stopId}")
-        ViewCompat.setTransitionName(holder.favorite_row_title_text, "favorite_row_title_text_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_title, "favorite_row_title_${favorite.stopId}")
         ViewCompat.setTransitionName(holder.favorite_row_lines_layout, "favorite_row_lines_layout_${favorite.stopId}")
+
+        ViewCompat.setTransitionName(holder.favorite_row_edit_button, "favorite_row_edit_button_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_number, "favorite_row_number_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_reorder_button, "favorite_row_reorder_button_${favorite.stopId}")
 
         holder.bind(favorite, openStop, editAlias, editColor, restore, reorder, delete)
 

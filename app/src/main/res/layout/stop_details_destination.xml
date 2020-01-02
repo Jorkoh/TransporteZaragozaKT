@@ -38,20 +38,29 @@
                         android:layout_marginBottom="8dp"
                         android:contentDescription="@string/stop_type"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/stop_details_title_text"
+                        app:layout_constraintEnd_toStartOf="@id/stop_details_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                        android:id="@+id/stop_details_title_text"
+                        android:id="@+id/stop_details_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?colorOnPrimary"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/stop_details_mirror_first_element_first_row"
                         app:layout_constraintStart_toEndOf="@id/stop_details_type_image"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                        android:id="@+id/stop_details_mirror_first_element_first_row"
+                        android:layout_width="1px"
+                        android:layout_height="1px"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/stop_details_title"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/stop_details_mirror_second_element_second_row"/>
 
                 <GridLayout
                         android:id="@+id/stop_details_lines_layout"
@@ -61,9 +70,27 @@
                         android:layout_marginBottom="8dp"
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/stop_details_mirror_first_element_second_row"
                         app:layout_constraintStart_toEndOf="@id/stop_details_type_image"
-                        app:layout_constraintTop_toBottomOf="@+id/stop_details_title_text"/>
+                        app:layout_constraintTop_toBottomOf="@+id/stop_details_title" />
+
+                <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                        android:id="@+id/stop_details_mirror_first_element_second_row"
+                        android:layout_width="1px"
+                        android:layout_height="1px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/stop_details_mirror_second_element_second_row"
+                        app:layout_constraintStart_toEndOf="@id/stop_details_lines_layout"
+                        app:layout_constraintTop_toBottomOf="@id/stop_details_title" />
+
+                <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                        android:id="@+id/stop_details_mirror_second_element_second_row"
+                        android:layout_width="1px"
+                        android:layout_height="1px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/stop_details_mirror_first_element_second_row"
+                        app:layout_constraintTop_toBottomOf="@id/stop_details_title" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,7 +131,7 @@
                 app:lottie_scale="0.3" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swiperefresh"
+                android:id="@+id/stop_details_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

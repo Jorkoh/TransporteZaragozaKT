@@ -51,11 +51,16 @@ class StopDetailsFragment : FragmentWithToolbar() {
         const val FAVORITE_ITEM_FAB_POSITION = 0
 
         const val TRANSITION_NAME_BACKGROUND = "background"
+        const val TRANSITION_NAME_BODY = "body"
         const val TRANSITION_NAME_APPBAR = "appBar"
         const val TRANSITION_NAME_TOOLBAR = "toolbar"
         const val TRANSITION_NAME_IMAGE = "image"
         const val TRANSITION_NAME_TITLE = "title"
         const val TRANSITION_NAME_LINES = "lines"
+
+        const val TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW = "first_element_first_row"
+        const val TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW = "first_element_second_row"
+        const val TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW = "second_element_second_row"
     }
 
     private val args: StopDetailsFragmentArgs by navArgs()
@@ -87,7 +92,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
         val newVisibility = when (stopDestinations.status) {
             Status.SUCCESS -> {
-                swiperefresh?.isRefreshing = false
+                stop_details_swipe_refresh?.isRefreshing = false
                 stopDestinationsTimesAdapter.setDestinations(stopDestinations.data.orEmpty(), stopDetailsVM.stopType, stopDetailsVM.stopId)
                 if (stopDestinations.data.isNullOrEmpty()) {
                     View.VISIBLE
@@ -101,13 +106,13 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 }
             }
             Status.ERROR -> {
-                swiperefresh?.isRefreshing = false
+                stop_details_swipe_refresh?.isRefreshing = false
                 stopDestinationsTimesAdapter.setDestinations(listOf(), stopDetailsVM.stopType, stopDetailsVM.stopId)
                 View.VISIBLE
 
             }
             Status.LOADING -> {
-                swiperefresh?.isRefreshing = true
+                stop_details_swipe_refresh?.isRefreshing = true
                 stop_details_no_data_animation.visibility
             }
         }
@@ -127,15 +132,15 @@ class StopDetailsFragment : FragmentWithToolbar() {
             R.drawable.ic_favorite_border_black_24dp
         }
 
-        val newLabel = if (isFavorited) {
-            R.string.fab_remove_favorite
-        } else {
-            R.string.fab_add_favorite
-        }
-
         requireActivity().stop_details_fab.replaceActionItem(
             SpeedDialActionItem.Builder(R.id.stop_details_fab_favorite, newIcon)
-                .setLabel(newLabel)
+                .setLabel(
+                    if (isFavorited) {
+                        R.string.fab_remove_favorite
+                    } else {
+                        R.string.fab_add_favorite
+                    }
+                )
                 .create(),
             FAVORITE_ITEM_FAB_POSITION
         )
@@ -192,7 +197,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
 
             stop_details_no_data_text.setOnClickListener(noDataOnClickListener)
             stop_details_no_data_help.setOnClickListener(noDataOnClickListener)
-            swiperefresh.setOnRefreshListener {
+            stop_details_swipe_refresh.setOnRefreshListener {
                 stopDetailsVM.refreshStopDestinations()
             }
             setupToolbar(this)
@@ -203,14 +208,18 @@ class StopDetailsFragment : FragmentWithToolbar() {
         // We are expecting an enter transition
         postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
 
-        // Transition names. Note that they don't need to match with the names of the selected grid
-        // item. They only have to be unique in this fragment.
+        // Transition names, they only have to be unique in this fragment.
         ViewCompat.setTransitionName(stop_details_coordinator_layout, TRANSITION_NAME_BACKGROUND)
+        ViewCompat.setTransitionName(stop_details_constraint_layout, TRANSITION_NAME_BODY)
         ViewCompat.setTransitionName(stop_details_appBar, TRANSITION_NAME_APPBAR)
         ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
         ViewCompat.setTransitionName(stop_details_type_image, TRANSITION_NAME_IMAGE)
-        ViewCompat.setTransitionName(stop_details_title_text, TRANSITION_NAME_TITLE)
+        ViewCompat.setTransitionName(stop_details_title, TRANSITION_NAME_TITLE)
         ViewCompat.setTransitionName(stop_details_lines_layout, TRANSITION_NAME_LINES)
+
+        ViewCompat.setTransitionName(stop_details_mirror_first_element_first_row, TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW)
+        ViewCompat.setTransitionName(stop_details_mirror_first_element_second_row, TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW)
+        ViewCompat.setTransitionName(stop_details_mirror_second_element_second_row, TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -237,7 +246,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 }
             }
             fragment_toolbar.title = getString(R.string.stop, stop.number)
-            stop_details_title_text.text = stop.stopTitle
+            stop_details_title.text = stop.stopTitle
             stop.lines.inflateLines(stop_details_lines_layout, stop.type, requireContext())
 
             (view?.parent as? ViewGroup)?.doOnPreDraw {

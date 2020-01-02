@@ -4,25 +4,28 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.utils.toLatLng
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.*
 import kotlinx.android.synthetic.main.search_destination_nearby_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.concurrent.TimeUnit
 
 class NearbyStopsFragment : Fragment() {
 
@@ -42,19 +45,23 @@ class NearbyStopsFragment : Fragment() {
         }
     })
 
-    private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
+    private val openStop: (StopDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit = { info, extras ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             activity?.currentFocus?.hideKeyboard()
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchToStopDetails(
                     info.stopType,
                     info.stopId
-                )
+                ),
+                FragmentNavigatorExtras(*extras)
             )
         }
     }
 
-    private val nearbyStopsAdapter = StopWithDistanceAdapter(openStop)
+    private val nearbyStopsAdapter = StopWithDistanceAdapter(openStop, {
+        Log.d("TESTING", "startPostponedEnterTransition()")
+        parentFragment?.startPostponedEnterTransition()
+    })
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -67,10 +74,7 @@ class NearbyStopsFragment : Fragment() {
             nearbyStopsAdapter.filter.filter(query) { flag ->
                 // If the list went from actually filtered to initial state scroll back up to the top
                 if (query == "" && flag == 1) {
-                    (view?.search_recycler_view_nearby_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(
-                        0,
-                        0
-                    )
+                    (view?.search_recycler_view_nearby_stops?.layoutManager as LinearLayoutManager?)?.scrollToPositionWithOffset(0, 0)
                 }
             }
         })
@@ -86,6 +90,19 @@ class NearbyStopsFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context)
                 adapter = nearbyStopsAdapter
             }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState != null) {
+            nearbyStopsAdapter.restoreInstanceState(savedInstanceState)
+        }
+        if (nearbyStopsAdapter.expectsTransition) {
+            // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
+            Log.d("TESTING", "postponeEnterTransition()")
+            parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
     }
 
@@ -138,6 +155,11 @@ class NearbyStopsFragment : Fragment() {
         }
         view?.no_search_result_animation_nearby_stops?.visibility = newVisibility
         view?.no_search_result_text_nearby_stops?.visibility = newVisibility
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        nearbyStopsAdapter.saveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {

@@ -3,20 +3,25 @@ package com.jorkoh.transportezaragozakt.destinations.search
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.transition.Explode
+import androidx.transition.Slide
 import com.google.android.material.tabs.TabLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopType
-import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment.Companion.TRANSITION_NAME_TOOLBAR
+import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.jorkoh.transportezaragozakt.repositories.util.observeOnce
 import kotlinx.android.synthetic.main.search_destination.*
 import kotlinx.android.synthetic.main.search_destination.view.*
@@ -26,6 +31,39 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class SearchFragment : FragmentWithToolbar() {
 
     private val searchVM: SearchViewModel by sharedViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // This is the transition to be used for non-shared elements when we are opening the detail screen.
+        exitTransition = transitionTogether {
+            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION /2
+            interpolator = FAST_OUT_LINEAR_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_OUT
+                addTarget(R.id.search_appBar)
+            }
+            this += Explode().apply {
+                mode = Explode.MODE_OUT
+                excludeTarget(R.id.search_appBar, true)
+            }
+        }
+
+        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
+        reenterTransition = transitionTogether {
+            duration = ANIMATE_INTO_STOP_DETAILS_DURATION /2
+            interpolator = LINEAR_OUT_SLOW_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.search_appBar)
+            }
+            this += Explode().apply {
+                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+                mode = Explode.MODE_IN
+                excludeTarget(R.id.search_appBar, true)
+            }
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -104,6 +142,12 @@ class SearchFragment : FragmentWithToolbar() {
                 }
             }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
     }
 
     override fun onDestroyView() {

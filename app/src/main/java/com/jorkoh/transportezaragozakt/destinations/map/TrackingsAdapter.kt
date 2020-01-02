@@ -32,16 +32,16 @@ class TrackingsAdapter(
             userLocation: Location?
         ) {
             // Icon
-            type_image_stop.setImageResource(R.drawable.ic_rural_tracking)
-            type_image_stop.contentDescription = context.getString(R.string.rural_tracking)
+            stop_row_type_image.setImageResource(R.drawable.ic_rural_tracking)
+            stop_row_type_image.contentDescription = context.getString(R.string.rural_tracking)
             // Texts
-            title_stop.text = tracking.lineName
-            number_stop.text = tracking.vehicleId
-            number_stop.contentDescription = context.getString(R.string.vehicle_template, tracking.vehicleId)
+            stop_row_title.text = tracking.lineName
+            stop_row_number.text = tracking.vehicleId
+            stop_row_number.contentDescription = context.getString(R.string.vehicle_template, tracking.vehicleId)
             // Lines
-            listOf(tracking.lineId).inflateLines(lines_layout_stop, StopType.RURAL, context)
+            listOf(tracking.lineId).inflateLines(stop_row_lines_layout, StopType.RURAL, context)
             // Favorite icon
-            favorite_icon_stop.visibility = View.GONE
+            stop_row_favorite_icon.visibility = View.GONE
             // Listeners
             itemView.setOnClickListener(DebounceClickListener {
                 selectTracking(tracking)
@@ -55,7 +55,7 @@ class TrackingsAdapter(
                     tracking.location.longitude,
                     distance
                 )
-                distance_stop.text = "${"%.0f".format(distance[0])} m."
+                stop_row_distance.text = "${"%.0f".format(distance[0])} m."
             }
         }
     }

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/card_stop"
+        android:id="@+id/stop_row_card"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,11 +19,29 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/stop_row_layout"
             android:background="?android:attr/selectableItemBackground">
 
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/stop_row_mirror_toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/stop_row_mirror_body"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/stop_row_mirror_toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
         <ImageView
-                android:id="@+id/type_image_stop"
+                android:id="@+id/stop_row_type_image"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
                 android:layout_marginStart="8dp"
@@ -37,7 +53,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/title_stop"
+                android:id="@+id/stop_row_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
@@ -49,12 +65,12 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textColor="?colorOnSurface"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@id/distance_stop"
-                app:layout_constraintStart_toEndOf="@+id/type_image_stop"
+                app:layout_constraintEnd_toStartOf="@id/stop_row_distance"
+                app:layout_constraintStart_toEndOf="@+id/stop_row_type_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/distance_stop"
+                android:id="@+id/stop_row_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -67,7 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <GridLayout
-                android:id="@+id/lines_layout_stop"
+                android:id="@+id/stop_row_lines_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -77,12 +93,12 @@
                 android:columnCount="7"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/favorite_icon_stop"
-                app:layout_constraintStart_toEndOf="@id/type_image_stop"
-                app:layout_constraintTop_toBottomOf="@id/title_stop" />
+                app:layout_constraintEnd_toStartOf="@+id/stop_row_favorite_icon"
+                app:layout_constraintStart_toEndOf="@id/stop_row_type_image"
+                app:layout_constraintTop_toBottomOf="@id/stop_row_title" />
 
         <ImageView
-                android:id="@+id/favorite_icon_stop"
+                android:id="@+id/stop_row_favorite_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -91,11 +107,11 @@
                 android:src="@drawable/ic_favorite_border_black_24dp"
                 android:tint="?colorOnSurface"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/number_stop"
-                app:layout_constraintStart_toEndOf="@id/lines_layout_stop" />
+                app:layout_constraintEnd_toStartOf="@id/stop_row_number"
+                app:layout_constraintStart_toEndOf="@id/stop_row_lines_layout" />
 
         <TextView
-                android:id="@+id/number_stop"
+                android:id="@+id/stop_row_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

@@ -126,6 +126,14 @@ class CustomSupportMapFragment : SupportMapFragment() {
         wrapper.addView(filterChipsView)
     }
 
+    private fun setupTrackerControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
+        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackings_control, wrapper, false)
+        wrapper.addView(mapTrackerControl)
+        wrapper.map_trackings_layout.updateLayoutParams<FrameLayout.LayoutParams> {
+            this@updateLayoutParams.bottomMargin += this@CustomSupportMapFragment.bottomPadding
+        }
+    }
+
     private fun setupExtraMapControls(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
         val mapExtraControls = layoutInflater.inflate(R.layout.map_extra_controls, wrapper, false)
         mapExtraControls.map_type_button.setOnClickListener {
@@ -141,14 +149,6 @@ class CustomSupportMapFragment : SupportMapFragment() {
         wrapper.addView(mapExtraControls)
         wrapper.map_types_layout.updateLayoutParams<FrameLayout.LayoutParams> {
             this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomPadding
-        }
-    }
-
-    private fun setupTrackerControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
-        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackings_control, wrapper, false)
-        wrapper.addView(mapTrackerControl)
-        wrapper.map_trackings_layout.updateLayoutParams<FrameLayout.LayoutParams> {
-            this@updateLayoutParams.bottomMargin += this@CustomSupportMapFragment.bottomPadding
         }
     }
 

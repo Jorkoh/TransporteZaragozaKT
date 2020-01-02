@@ -20,12 +20,21 @@
             android:background="?android:attr/selectableItemBackground">
 
         <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
-                android:id="@+id/favorite_row_toolbar"
+                android:id="@+id/favorite_row_mirror_toolbar"
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/favorite_row_mirror_body"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/favorite_row_mirror_toolbar"/>
 
         <View
                 android:id="@+id/favorite_row_color"
@@ -53,7 +62,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/favorite_row_title_text"
+                android:id="@+id/favorite_row_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -65,12 +74,12 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textColor="?colorOnSurface"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/edit_view_favorite"
+                app:layout_constraintEnd_toStartOf="@+id/favorite_row_edit_button"
                 app:layout_constraintStart_toEndOf="@+id/favorite_row_type_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/edit_view_favorite"
+                android:id="@+id/favorite_row_edit_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@android:color/transparent"
@@ -81,12 +90,12 @@
                 android:paddingEnd="8dp"
                 android:paddingBottom="4dp"
                 android:scrollbars="none"
-                app:layout_constraintBottom_toTopOf="@id/reorder_view_favorite"
+                app:layout_constraintBottom_toTopOf="@id/favorite_row_reorder_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/reorder_view_favorite"
+                android:id="@+id/favorite_row_reorder_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@android:color/transparent"
@@ -99,7 +108,7 @@
                 android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_view_favorite" />
+                app:layout_constraintTop_toBottomOf="@id/favorite_row_edit_button" />
 
         <GridLayout
                 android:id="@+id/favorite_row_lines_layout"
@@ -111,12 +120,12 @@
                 android:columnCount="7"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/number_text_favorite"
+                app:layout_constraintEnd_toStartOf="@+id/favorite_row_number"
                 app:layout_constraintStart_toEndOf="@+id/favorite_row_type_image"
-                app:layout_constraintTop_toBottomOf="@+id/favorite_row_title_text" />
+                app:layout_constraintTop_toBottomOf="@+id/favorite_row_title" />
 
         <TextView
-                android:id="@+id/number_text_favorite"
+                android:id="@+id/favorite_row_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -124,9 +133,9 @@
                 android:textAlignment="center"
                 android:textColor="?colorOnSurface"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/edit_view_favorite"
+                app:layout_constraintEnd_toStartOf="@+id/favorite_row_edit_button"
                 app:layout_constraintStart_toEndOf="@+id/favorite_row_lines_layout"
-                app:layout_constraintTop_toBottomOf="@+id/favorite_row_title_text" />
+                app:layout_constraintTop_toBottomOf="@+id/favorite_row_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

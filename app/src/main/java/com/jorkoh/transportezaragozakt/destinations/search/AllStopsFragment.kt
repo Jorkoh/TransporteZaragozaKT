@@ -1,38 +1,45 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import kotlinx.android.synthetic.main.search_destination_all_stops.*
 import kotlinx.android.synthetic.main.search_destination_all_stops.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.concurrent.TimeUnit
 
 class AllStopsFragment : Fragment() {
 
     private val searchVM: SearchViewModel by sharedViewModel()
 
-    private val openStop: (StopDetailsFragmentArgs) -> Unit = { info ->
+    private val openStop: (StopDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit = { info, extras ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             activity?.currentFocus?.hideKeyboard()
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchToStopDetails(
                     info.stopType,
                     info.stopId
-                )
+                ),
+                FragmentNavigatorExtras(*extras)
             )
         }
     }
 
-    private val allStopsAdapter = StopAdapter(openStop)
+    private val allStopsAdapter = StopAdapter(openStop, {
+        Log.d("TESTING", "startPostponedEnterTransition()")
+        parentFragment?.startPostponedEnterTransition()
+    })
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -54,15 +61,31 @@ class AllStopsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.search_destination_all_stops, container, false)
-
-        rootView.search_recycler_view_all_stops.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-            adapter = allStopsAdapter
+        return inflater.inflate(R.layout.search_destination_all_stops, container, false).apply {
+            rootView.search_recycler_view_all_stops.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(context)
+                adapter = allStopsAdapter
+            }
         }
+    }
 
-        return rootView
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState != null) {
+            allStopsAdapter.restoreInstanceState(savedInstanceState)
+        }
+        if (allStopsAdapter.expectsTransition) {
+            // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
+            Log.d("TESTING", "postponeEnterTransition()")
+            parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        allStopsAdapter.saveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {

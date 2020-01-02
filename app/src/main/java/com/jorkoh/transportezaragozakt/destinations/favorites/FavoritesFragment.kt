@@ -179,8 +179,7 @@ class FavoritesFragment : FragmentWithToolbar() {
             favoriteStopsAdapter.restoreInstanceState(savedInstanceState)
         }
         if (favoriteStopsAdapter.expectsTransition) {
-            // We are transitioning back from CheeseDetailFragment.
-            // Postpone the transition animation until the destination item is ready.
+            // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
             postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
 
