@@ -32,36 +32,30 @@ class SearchFragment : FragmentWithToolbar() {
 
     private val searchVM: SearchViewModel by sharedViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // This is the transition to be used for non-shared elements when we are opening the detail screen.
-        exitTransition = transitionTogether {
-            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION /2
-            interpolator = FAST_OUT_LINEAR_IN
-            this += Slide(Gravity.TOP).apply {
-                mode = Slide.MODE_OUT
-                addTarget(R.id.search_appBar)
-            }
-            this += Explode().apply {
-                mode = Explode.MODE_OUT
-                excludeTarget(R.id.search_appBar, true)
-            }
+    private val stopExitTransition = transitionTogether {
+        duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION /2
+        interpolator = FAST_OUT_LINEAR_IN
+        this += Slide(Gravity.TOP).apply {
+            mode = Slide.MODE_OUT
+            addTarget(R.id.search_appBar)
         }
+        this += Explode().apply {
+            mode = Explode.MODE_OUT
+            excludeTarget(R.id.search_appBar, true)
+        }
+    }
 
-        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
-        reenterTransition = transitionTogether {
-            duration = ANIMATE_INTO_STOP_DETAILS_DURATION /2
-            interpolator = LINEAR_OUT_SLOW_IN
-            this += Slide(Gravity.TOP).apply {
-                mode = Slide.MODE_IN
-                addTarget(R.id.search_appBar)
-            }
-            this += Explode().apply {
-                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
-                mode = Explode.MODE_IN
-                excludeTarget(R.id.search_appBar, true)
-            }
+    private val stopReenterTransition = transitionTogether {
+        duration = ANIMATE_INTO_STOP_DETAILS_DURATION /2
+        interpolator = LINEAR_OUT_SLOW_IN
+        this += Slide(Gravity.TOP).apply {
+            mode = Slide.MODE_IN
+            addTarget(R.id.search_appBar)
+        }
+        this += Explode().apply {
+            startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+            mode = Explode.MODE_IN
+            excludeTarget(R.id.search_appBar, true)
         }
     }
 
@@ -82,6 +76,20 @@ class SearchFragment : FragmentWithToolbar() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 // Save the selected search tab for future launches
                 searchVM.setSearchTabPosition(tab.position)
+
+                // O
+                when(tab.position){
+                    0, 1 -> {
+                        // This is the transition to be used for non-shared elements when we are opening the detail screen.
+                        exitTransition = stopExitTransition
+                        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
+                        reenterTransition = stopReenterTransition
+                    }
+                    else -> {
+                        exitTransition = null
+                        reenterTransition = null
+                    }
+                }
             }
         })
 

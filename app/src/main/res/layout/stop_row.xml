@@ -64,7 +64,7 @@
                 android:maxLines="2"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textColor="?colorOnSurface"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toStartOf="@id/stop_row_distance"
                 app:layout_constraintStart_toEndOf="@+id/stop_row_type_image"
                 app:layout_constraintTop_toTopOf="parent" />
