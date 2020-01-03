@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
@@ -264,6 +265,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 when (item.itemId) {
                     R.id.item_refresh -> {
                         stopDetailsVM.refreshStopDestinations()
+                        (item.icon as? AnimatedVectorDrawable)?.start()
                         true
                     }
                     R.id.item_directions -> {
