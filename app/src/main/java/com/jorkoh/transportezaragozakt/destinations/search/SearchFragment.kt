@@ -64,6 +64,7 @@ class SearchFragment : FragmentWithToolbar() {
 
         searchVM.searchTabPosition.observeOnce(viewLifecycleOwner, Observer { position ->
             search_tab_layout.getTabAt(position)?.select()
+            setupTransitionsByTab(position)
         })
 
         search_viewpager.adapter = SearchPagerAdapter(childFragmentManager, requireContext())
@@ -77,19 +78,7 @@ class SearchFragment : FragmentWithToolbar() {
                 // Save the selected search tab for future launches
                 searchVM.setSearchTabPosition(tab.position)
 
-                // O
-                when(tab.position){
-                    0, 1 -> {
-                        // This is the transition to be used for non-shared elements when we are opening the detail screen.
-                        exitTransition = stopExitTransition
-                        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
-                        reenterTransition = stopReenterTransition
-                    }
-                    else -> {
-                        exitTransition = null
-                        reenterTransition = null
-                    }
-                }
+                setupTransitionsByTab(tab.position)
             }
         })
 
@@ -102,6 +91,21 @@ class SearchFragment : FragmentWithToolbar() {
     ): View? {
         return inflater.inflate(R.layout.search_destination, container, false).apply {
             setupToolbar(this)
+        }
+    }
+
+    private fun setupTransitionsByTab(tabPosition : Int){
+        when(tabPosition){
+            0, 1 -> {
+                // This is the transition to be used for non-shared elements when we are opening the detail screen.
+                exitTransition = stopExitTransition
+                // This is the transition to be used for non-shared elements when we are return back from the detail screen.
+                reenterTransition = stopReenterTransition
+            }
+            else -> {
+                exitTransition = null
+                reenterTransition = null
+            }
         }
     }
 

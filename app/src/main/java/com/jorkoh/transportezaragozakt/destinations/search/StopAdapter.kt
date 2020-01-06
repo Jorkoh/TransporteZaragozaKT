@@ -2,7 +2,6 @@ package com.jorkoh.transportezaragozakt.destinations.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,7 +122,6 @@ class StopAdapter(
         holder.bind(stop, openStop)
 
         if (stop.stopId == lastSelectedId) {
-            Log.d("TESTING", "onReadyToTransition()")
             onReadyToTransition()
             lastSelectedId = null
         }

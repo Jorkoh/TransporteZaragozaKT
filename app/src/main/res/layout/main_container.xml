@@ -30,8 +30,6 @@
             app:itemTextAppearanceInactive="@style/BaseTheme.CustomBottomNavigationViewText"
             app:menu="@menu/bottom_navigation_menu"/>
 
-    <!-- SHADOW BUGS ON ANDROID 9 :( -->
-    <!-- https://issuetracker.google.com/issues/132569416 -->
     <com.leinardi.android.speeddial.SpeedDialView
             android:id="@+id/stop_details_fab"
             android:layout_width="wrap_content"

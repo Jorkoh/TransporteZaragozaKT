@@ -209,7 +209,6 @@ class MainActivity : AppCompatActivity() {
                 }
             )
             stop_details_fab.show()
-            stop_details_fab.visibility = View.VISIBLE
         } else if (destinationId != R.id.stopDetails && stop_details_fab.visibility == View.VISIBLE) {
             TransitionManager.beginDelayedTransition(
                 coordinator_layout,

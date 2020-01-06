@@ -1,7 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,6 @@ class AllStopsFragment : Fragment() {
     }
 
     private val allStopsAdapter = StopAdapter(openStop, {
-        Log.d("TESTING", "startPostponedEnterTransition()")
         parentFragment?.startPostponedEnterTransition()
     })
 
@@ -78,7 +76,6 @@ class AllStopsFragment : Fragment() {
         }
         if (allStopsAdapter.expectsTransition) {
             // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
-            Log.d("TESTING", "postponeEnterTransition()")
             parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
     }

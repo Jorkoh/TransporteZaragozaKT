@@ -52,3 +52,8 @@
 -keepclassmembers class kotlin.Metadata {
     public <methods>;
 }
+
+# Avoids slide transition not working on release
+-keep public class androidx.transition.Slide {
+    *;
+}

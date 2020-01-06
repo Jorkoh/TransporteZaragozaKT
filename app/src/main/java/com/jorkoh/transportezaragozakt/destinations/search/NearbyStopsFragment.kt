@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +58,6 @@ class NearbyStopsFragment : Fragment() {
     }
 
     private val nearbyStopsAdapter = StopWithDistanceAdapter(openStop, {
-        Log.d("TESTING", "startPostponedEnterTransition()")
         parentFragment?.startPostponedEnterTransition()
     })
 
@@ -101,7 +99,6 @@ class NearbyStopsFragment : Fragment() {
         }
         if (nearbyStopsAdapter.expectsTransition) {
             // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
-            Log.d("TESTING", "postponeEnterTransition()")
             parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
     }
