@@ -20,6 +20,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
+import java.lang.ref.WeakReference
 
 /**
  * Takes another view as a substance and draws its content.
@@ -39,15 +40,15 @@ class MirrorView @JvmOverloads constructor(
         setWillNotDraw(true)
     }
 
-    private var _substance: View? = null
+    private var _substance: WeakReference<View?> = WeakReference(null)
     var substance: View?
-        get() = _substance
+        get() = _substance.get()
         set(value) {
-            _substance = value
+            _substance = WeakReference(value)
             setWillNotDraw(value == null)
         }
 
     override fun onDraw(canvas: Canvas?) {
-        _substance?.draw(canvas)
+        _substance.get()?.draw(canvas)
     }
 }

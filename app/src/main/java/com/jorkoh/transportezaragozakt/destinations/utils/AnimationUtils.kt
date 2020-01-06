@@ -114,6 +114,7 @@ fun View.slideDown() {
         duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
         withEndAction {
             visibility = View.GONE
+            translationY = height.toFloat()
         }
     }
 }
