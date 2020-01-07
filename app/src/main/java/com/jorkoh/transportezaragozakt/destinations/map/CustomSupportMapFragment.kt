@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.map
 
+import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.jorkoh.transportezaragozakt.MainActivityViewModel
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_filters.*
@@ -40,6 +44,8 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
     }
 
+    private var fakeTransitionView: FakeTransitionInfoWindow? = null
+
     private var displayFilters: Boolean = true
     private var displayTrackingsButton: Boolean = true
     private var bottomPadding: Int = 0
@@ -47,6 +53,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     private var mapViewWrapper: FrameLayout? = null
 
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
+    private val mainActivityViewModel: MainActivityViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +62,27 @@ class CustomSupportMapFragment : SupportMapFragment() {
         (arguments?.getInt(BOTTOM_PADDING_DIMEN_KEY) ?: 0).takeIf { it != 0 }?.let { bottomPaddingDimen ->
             bottomPadding = resources.getDimensionPixelOffset(bottomPaddingDimen)
         }
+    }
+
+    override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
+        mapViewWrapper = FrameLayout(layoutInflater.context)
+
+        val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
+        mapView?.setPadding(0, 0, 0, bottomPadding)
+        mapViewWrapper?.addView(mapView)
+
+        if (displayFilters) {
+            setupFilters(layoutInflater)
+        }
+        if (displayTrackingsButton) {
+            setupTrackerControl(layoutInflater)
+        }
+        setupExtraMapControls(layoutInflater)
+
+        fakeTransitionView?.let {
+            addFakeTransitionInfoWindow(it)
+        }
+        return mapViewWrapper
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -91,29 +119,16 @@ class CustomSupportMapFragment : SupportMapFragment() {
                 traffic_button.setImageResource(R.drawable.ic_traffic_black_24dp)
                 traffic_button.contentDescription = getString(R.string.traffic_layer_enabled_description)
             }
-
         })
-    }
 
-    override fun onCreateView(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mapViewWrapper = FrameLayout(layoutInflater.context).apply {
-            val mapView = super.onCreateView(layoutInflater, viewGroup, savedInstanceState)
-            mapView?.setPadding(0, 0, 0, bottomPadding)
-            addView(mapView)
-
-            if (displayFilters) {
-                setupFilters(layoutInflater, this)
-            }
-            if (displayTrackingsButton) {
-                setupTrackerControl(layoutInflater, this)
-            }
-            setupExtraMapControls(layoutInflater, this)
+        lifecycleScope.launchWhenStarted {
+            mainActivityViewModel.removeFakeTransitionView.receive()
+            removeFakeTransitionView()
         }
-        return mapViewWrapper
     }
 
-    private fun setupFilters(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
-        val filterChipsView = layoutInflater.inflate(R.layout.map_filters, wrapper, false)
+    private fun setupFilters(layoutInflater: LayoutInflater) {
+        val filterChipsView = layoutInflater.inflate(R.layout.map_filters, mapViewWrapper, false)
         filterChipsView.bus_chip.setOnClickListener {
             mapSettingsVM.setBusFilterEnabled(it.bus_chip.isChecked)
         }
@@ -123,19 +138,19 @@ class CustomSupportMapFragment : SupportMapFragment() {
         filterChipsView.rural_chip.setOnClickListener {
             mapSettingsVM.setRuralFilterEnabled(it.rural_chip.isChecked)
         }
-        wrapper.addView(filterChipsView)
+        mapViewWrapper?.addView(filterChipsView)
     }
 
-    private fun setupTrackerControl(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
-        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackings_control, wrapper, false)
-        wrapper.addView(mapTrackerControl)
-        wrapper.map_trackings_layout.updateLayoutParams<FrameLayout.LayoutParams> {
+    private fun setupTrackerControl(layoutInflater: LayoutInflater) {
+        val mapTrackerControl = layoutInflater.inflate(R.layout.map_trackings_control, mapViewWrapper, false)
+        mapViewWrapper?.addView(mapTrackerControl)
+        mapViewWrapper?.map_trackings_layout?.updateLayoutParams<FrameLayout.LayoutParams> {
             this@updateLayoutParams.bottomMargin += this@CustomSupportMapFragment.bottomPadding
         }
     }
 
-    private fun setupExtraMapControls(layoutInflater: LayoutInflater, wrapper: FrameLayout) {
-        val mapExtraControls = layoutInflater.inflate(R.layout.map_extra_controls, wrapper, false)
+    private fun setupExtraMapControls(layoutInflater: LayoutInflater) {
+        val mapExtraControls = layoutInflater.inflate(R.layout.map_extra_controls, mapViewWrapper, false)
         mapExtraControls.map_type_button.setOnClickListener {
             if (mapSettingsVM.mapType.value == GoogleMap.MAP_TYPE_NORMAL) {
                 mapSettingsVM.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
@@ -146,10 +161,32 @@ class CustomSupportMapFragment : SupportMapFragment() {
         mapExtraControls.traffic_button.setOnClickListener {
             mapSettingsVM.setTrafficEnabled(mapSettingsVM.trafficEnabled.value != true)
         }
-        wrapper.addView(mapExtraControls)
-        wrapper.map_types_layout.updateLayoutParams<FrameLayout.LayoutParams> {
+        mapViewWrapper?.addView(mapExtraControls)
+        mapViewWrapper?.map_types_layout?.updateLayoutParams<FrameLayout.LayoutParams> {
             this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomPadding
         }
+    }
+
+    fun addFakeTransitionInfoWindow(fakeView: FakeTransitionInfoWindow) {
+        // Measure the view to calculate the margins
+        val size = Point()
+        requireActivity().windowManager.defaultDisplay.getSize(size)
+        fakeView.first.measure(size.x, size.y)
+
+        // Position it according to the screen position of the marker
+        mapViewWrapper?.addView(fakeView.first)
+        fakeView.first.updateLayoutParams<FrameLayout.LayoutParams> {
+            width = FrameLayout.LayoutParams.WRAP_CONTENT
+            height = FrameLayout.LayoutParams.WRAP_CONTENT
+            leftMargin = fakeView.second.x - fakeView.first.measuredWidth / 2
+            topMargin = fakeView.second.y - fakeView.first.measuredHeight - 31.toPx()
+        }
+
+        fakeTransitionView = fakeView
+    }
+
+    private fun removeFakeTransitionView() {
+        mapViewWrapper?.removeView(fakeTransitionView?.first)
     }
 
     override fun onDestroyView() {
@@ -159,3 +196,5 @@ class CustomSupportMapFragment : SupportMapFragment() {
         mapViewWrapper = null
     }
 }
+
+typealias FakeTransitionInfoWindow = Pair<View, Point>

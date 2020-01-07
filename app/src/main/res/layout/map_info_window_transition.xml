@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map_info_window_transition-card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="2dp">
+<!--        app:cardBackgroundColor="#d0d0d0"-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/map_info_window_transition_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:maxWidth="300dp">
+
+
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/map_info_window_transition_mirror_toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/map_info_window_transition_mirror_body"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/map_info_window_transition_mirror_toolbar" />
+
+        <ImageView
+                android:id="@+id/map_info_window_transition_type_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="@string/stop_type"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/map_info_window_transition_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxWidth="230dp"
+                android:maxLines="2"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:textColor="@color/kinda_black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/map_info_window_transition_lines_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/map_info_window_transition_type_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <GridLayout
+                android:id="@+id/map_info_window_transition_lines_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="0dp"
+                android:columnCount="4"
+                android:gravity="start"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/map_info_window_transition_number"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/map_info_window_transition_title">
+
+        </GridLayout>
+
+        <TextView
+                android:id="@+id/map_info_window_transition_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="0dp"
+                android:textAlignment="textEnd"
+                android:textColor="@color/kinda_black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0"
+                app:layout_constraintStart_toEndOf="@+id/map_info_window_transition_lines_layout"
+                app:layout_constraintTop_toBottomOf="@id/map_info_window_transition_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

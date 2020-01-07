@@ -4,13 +4,17 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.transition.Fade
+import androidx.transition.Slide
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,14 +30,15 @@ import com.google.maps.android.clustering.ClusterManager
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.RuralTracking
-import com.jorkoh.transportezaragozakt.destinations.utils.DebounceClickListener
-import com.jorkoh.transportezaragozakt.destinations.utils.FragmentWithToolbar
-import com.jorkoh.transportezaragozakt.destinations.utils.toLatLng
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
+import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import kotlinx.android.synthetic.main.map_info_window_transition.view.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.DateFormat
+import java.util.concurrent.TimeUnit
 
 class MapFragment : FragmentWithToolbar() {
 
@@ -66,9 +71,11 @@ class MapFragment : FragmentWithToolbar() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var clusterManager: ClusterManager<CustomClusterItem>
+    private lateinit var infoWindowAdapter: CustomInfoWindowAdapter
     private lateinit var clusteringAlgorithm: CustomClusteringAlgorithm<CustomClusterItem>
     private lateinit var clusterRenderer: CustomClusterRenderer
     private lateinit var map: GoogleMap
+    private lateinit var mapFragment: CustomSupportMapFragment
 
     private val busStopsItems = mutableListOf<CustomClusterItem>()
     private val tramStopsItems = mutableListOf<CustomClusterItem>()
@@ -104,27 +111,61 @@ class MapFragment : FragmentWithToolbar() {
         true
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.map_destination, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // This is the transition to be used for non-shared elements when we are opening the detail screen.
+        exitTransition = transitionTogether {
+            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
+            interpolator = FAST_OUT_LINEAR_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_OUT
+                addTarget(R.id.map_appBar)
+            }
+            this += Fade().apply {
+                mode = Fade.MODE_OUT
+                excludeTarget(R.id.map_appBar, true)
+            }
+        }
+
+        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
+        reenterTransition = transitionTogether {
+            duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+            interpolator = LINEAR_OUT_SLOW_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.map_appBar)
+            }
+//            this += Fade().apply {
+//                startDelay = 2 * (ANIMATE_INTO_STOP_DETAILS_DURATION / 3)
+//                mode = Fade.MODE_IN
+//                excludeTarget(R.id.map_appBar, true)
+//            }
+        }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+        return inflater.inflate(R.layout.map_destination, container, false)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        var mapFragment =
+        var tempMapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.map_destination_map_fragment_tag)) as CustomSupportMapFragment?
-        if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment.newInstance(
+        if (tempMapFragment == null) {
+            tempMapFragment = CustomSupportMapFragment.newInstance(
                 displayFilters = true,
                 displayTrackingsButton = true,
                 bottomPaddingDimen = R.dimen.map_destination_map_view_bottom_padding
             )
             childFragmentManager.beginTransaction()
-                .add(R.id.map_fragment_container, mapFragment, getString(R.string.map_destination_map_fragment_tag))
+                .add(R.id.map_fragment_container, tempMapFragment, getString(R.string.map_destination_map_fragment_tag))
                 .commit()
         }
+        mapFragment = tempMapFragment
         mapFragment.getMapAsync { newMap ->
             val mapNeedsSetup = !::map.isInitialized
             val cameraNeedsCentering = !activeBounds.contains(newMap.cameraPosition.target)
@@ -154,6 +195,8 @@ class MapFragment : FragmentWithToolbar() {
                     (requireActivity() as MainActivity).makeSnackbar(getString(R.string.no_trackings_available))
                 }
             })
+
+            startPostponedEnterTransition()
         }
     }
 
@@ -181,6 +224,7 @@ class MapFragment : FragmentWithToolbar() {
 
     private fun configureMap() {
         clusterManager = ClusterManager(context, map)
+        infoWindowAdapter = CustomInfoWindowAdapter(requireContext())
 
         clusteringAlgorithm = CustomClusteringAlgorithm(
             mapSettingsVM.busFilterEnabled,
@@ -192,7 +236,7 @@ class MapFragment : FragmentWithToolbar() {
         map.setInfoWindowAdapter(clusterManager.markerManager)
         map.setOnInfoWindowClickListener(clusterManager)
         map.setOnCameraIdleListener(clusterManager)
-        clusterManager.markerCollection.setOnInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
+        clusterManager.markerCollection.setOnInfoWindowAdapter(infoWindowAdapter)
 
         clusterRenderer = CustomClusterRenderer(
             requireContext(),
@@ -215,7 +259,25 @@ class MapFragment : FragmentWithToolbar() {
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { item ->
             item.stop?.let { stop ->
-                findNavController().navigate(MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId))
+                //Inflate the view in the right position and use it for transition?
+                val screenPosition = map.projection.toScreenLocation(stop.location)
+                infoWindowAdapter.inflateFakeTransitionStopInfoContents(stop).run {
+                    mapFragment.addFakeTransitionInfoWindow(FakeTransitionInfoWindow(this, screenPosition))
+                    findNavController().navigate(
+                        MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId),
+                        FragmentNavigatorExtras(
+                            map_info_window_transition_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
+                            map_info_window_transition_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
+                            map_info_window_transition_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
+                            map_info_window_transition_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
+                            map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
+                            map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
+                            map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
+
+                            map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
+                        )
+                    )
+                }
             }
         }
         clusterManager.setAnimation(true)

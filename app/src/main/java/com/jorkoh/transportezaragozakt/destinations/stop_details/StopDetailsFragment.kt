@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +30,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.MainActivity
+import com.jorkoh.transportezaragozakt.MainActivityViewModel
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.db.StopDestination
 import com.jorkoh.transportezaragozakt.db.StopType
@@ -41,7 +43,9 @@ import com.pixplicity.generate.Rate
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
@@ -67,6 +71,8 @@ class StopDetailsFragment : FragmentWithToolbar() {
     private val args: StopDetailsFragmentArgs by navArgs()
 
     private val stopDetailsVM: StopDetailsViewModel by viewModel { parametersOf(args.stopId, StopType.valueOf(args.stopType)) }
+    // Can't be lazy because it will be first called when the fragment is already detached from the activity
+    private lateinit var mainActivityViewModel: MainActivityViewModel
 
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -221,11 +227,27 @@ class StopDetailsFragment : FragmentWithToolbar() {
         ViewCompat.setTransitionName(stop_details_mirror_first_element_first_row, TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW)
         ViewCompat.setTransitionName(stop_details_mirror_first_element_second_row, TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW)
         ViewCompat.setTransitionName(stop_details_mirror_second_element_second_row, TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW)
+
+
+        (sharedElementReturnTransition as TransitionSet?)?.addListener(object : Transition.TransitionListener {
+            override fun onTransitionEnd(transition: Transition) {
+                // When the shared element transition ends notify the fragment we went back to that it's time to
+                // remove views created for the shared element transition
+                lifecycleScope.launch {
+                    mainActivityViewModel.removeFakeTransitionView.send(Unit)
+                }
+            }
+            override fun onTransitionResume(transition: Transition) {}
+            override fun onTransitionPause(transition: Transition) {}
+            override fun onTransitionCancel(transition: Transition) {}
+            override fun onTransitionStart(transition: Transition) {}
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+        mainActivityViewModel = getSharedViewModel()
 
         stopDetailsVM.stopDestinations.observe(viewLifecycleOwner, stopDestinationsObserver)
         stopDetailsVM.refreshStopDestinations()

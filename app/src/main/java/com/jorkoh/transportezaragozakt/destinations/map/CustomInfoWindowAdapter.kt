@@ -3,6 +3,7 @@ package com.jorkoh.transportezaragozakt.destinations.map
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.ViewCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.jorkoh.transportezaragozakt.R
@@ -11,6 +12,7 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
 import kotlinx.android.synthetic.main.map_info_window.view.*
+import kotlinx.android.synthetic.main.map_info_window_transition.view.*
 
 class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
 
@@ -34,54 +36,87 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
     }
 
     private fun inflateStopInfoContents(stop: Stop): View {
-        val content = layoutInflater.inflate(R.layout.map_info_window, null)
+        return layoutInflater.inflate(R.layout.map_info_window, null).apply {
+            when (stop.type) {
+                StopType.BUS -> {
+                    map_info_window_type_image.setImageResource(R.drawable.ic_bus_stop)
+                    map_info_window_type_image.contentDescription = context.getString(R.string.stop_type_bus)
+                }
+                StopType.TRAM -> {
+                    map_info_window_type_image.setImageResource(R.drawable.ic_tram_stop)
+                    map_info_window_type_image.contentDescription = context.getString(R.string.stop_type_tram)
+                }
+                StopType.RURAL -> {
+                    map_info_window_type_image.setImageResource(R.drawable.ic_rural_stop)
+                    map_info_window_type_image.contentDescription = context.getString(R.string.stop_type_rural)
+                }
+            }
 
-        when (stop.type) {
-            StopType.BUS -> {
-                content.type_image_info_window.setImageResource(R.drawable.ic_bus_stop)
-                content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_bus)
+            // If the stopTitle is longer we can fit more lines while keeping a nice ratio
+            map_info_window_lines_layout.columnCount = when {
+                stop.stopTitle.length >= 24 -> 8
+                stop.stopTitle.length >= 18 -> 6
+                else -> 4
             }
-            StopType.TRAM -> {
-                content.type_image_info_window.setImageResource(R.drawable.ic_tram_stop)
-                content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_tram)
-            }
-            StopType.RURAL -> {
-                content.type_image_info_window.setImageResource(R.drawable.ic_rural_stop)
-                content.type_image_info_window.contentDescription = context.getString(R.string.stop_type_rural)
-            }
+
+            stop.lines.inflateLines(map_info_window_lines_layout, stop.type, context)
+            map_info_window_number.text = stop.number
+            map_info_window_title.text = stop.stopTitle
         }
-
-        // If the stopTitle is longer we can fit more lines while keeping a nice ratio
-        content.favorite_row_lines_layout.columnCount = when {
-            stop.stopTitle.length >= 24 -> 8
-            stop.stopTitle.length >= 18 -> 6
-            else -> 4
-        }
-
-        stop.lines.inflateLines(content.favorite_row_lines_layout, stop.type, context)
-        content.number_text_info_window.text = stop.number
-        content.title_text_info_window.text = stop.stopTitle
-
-        return content
     }
 
     private fun inflateTrackingInfoContents(tracking: RuralTracking): View? {
-        val content = layoutInflater.inflate(R.layout.map_info_window, null)
+        return layoutInflater.inflate(R.layout.map_info_window, null).apply {
+            map_info_window_type_image.setImageResource(R.drawable.ic_rural_tracking)
+            map_info_window_type_image.contentDescription = context.getString(R.string.rural_tracking)
 
-        content.type_image_info_window.setImageResource(R.drawable.ic_rural_tracking)
-        content.type_image_info_window.contentDescription = context.getString(R.string.rural_tracking)
+            // If the stopTitle is longer we can fit more lines while keeping a nice ratio
+            map_info_window_lines_layout.columnCount = when {
+                tracking.lineId.length >= 24 -> 8
+                tracking.lineId.length >= 18 -> 6
+                else -> 4
+            }
 
-        // If the stopTitle is longer we can fit more lines while keeping a nice ratio
-        content.favorite_row_lines_layout.columnCount = when {
-            tracking.lineId.length >= 24 -> 8
-            tracking.lineId.length >= 18 -> 6
-            else -> 4
+            listOf(tracking.lineId).inflateLines(map_info_window_lines_layout, StopType.RURAL, context)
+            map_info_window_number.text = tracking.vehicleId
+            map_info_window_title.text = tracking.lineName
         }
+    }
 
-        listOf(tracking.lineId).inflateLines(content.favorite_row_lines_layout, StopType.RURAL, context)
-        content.number_text_info_window.text = tracking.vehicleId
-        content.title_text_info_window.text = tracking.lineName
+    fun inflateFakeTransitionStopInfoContents(stop: Stop): View {
+        return layoutInflater.inflate(R.layout.map_info_window_transition, null).apply {
+            when (stop.type) {
+                StopType.BUS -> {
+                    map_info_window_transition_type_image.setImageResource(R.drawable.ic_bus_stop)
+                }
+                StopType.TRAM -> {
+                    map_info_window_transition_type_image.setImageResource(R.drawable.ic_tram_stop)
+                }
+                StopType.RURAL -> {
+                    map_info_window_transition_type_image.setImageResource(R.drawable.ic_rural_stop)
+                }
+            }
 
-        return content
+            // If the stopTitle is longer we can fit more lines while keeping a nice ratio
+            map_info_window_transition_lines_layout.columnCount = when {
+                stop.stopTitle.length >= 24 -> 8
+                stop.stopTitle.length >= 18 -> 6
+                else -> 4
+            }
+
+            stop.lines.inflateLines(map_info_window_transition_lines_layout, stop.type, context)
+            map_info_window_transition_number.text = stop.number
+            map_info_window_transition_title.text = stop.stopTitle
+
+            ViewCompat.setTransitionName(map_info_window_transition_card, "map_info_window_transition_card")
+            ViewCompat.setTransitionName(map_info_window_transition_mirror_body, "map_info_window_transition_mirror_body")
+            ViewCompat.setTransitionName(map_info_window_transition_layout, "map_info_window_transition_layout")
+            ViewCompat.setTransitionName(map_info_window_transition_mirror_toolbar, "map_info_window_transition_mirror_toolbar")
+            ViewCompat.setTransitionName(map_info_window_transition_type_image, "map_info_window_transition_type_image")
+            ViewCompat.setTransitionName(map_info_window_transition_title, "map_info_window_transition_title")
+            ViewCompat.setTransitionName(map_info_window_transition_lines_layout, "map_info_window_transition_lines_layout")
+
+            ViewCompat.setTransitionName(map_info_window_transition_number, "map_info_window_number")
+        }
     }
 }
