@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/stop_details_coordinator_layout"
+        android:background="?android:colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment">

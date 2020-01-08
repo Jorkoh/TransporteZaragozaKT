@@ -1,5 +1,6 @@
 package com.jorkoh.transportezaragozakt.destinations.map
 
+import android.graphics.Bitmap
 import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
+import kotlinx.android.synthetic.main.map_fake_transition_background.view.*
 import kotlinx.android.synthetic.main.map_filters.*
 import kotlinx.android.synthetic.main.map_filters.view.*
 import kotlinx.android.synthetic.main.map_trackings_control.view.*
@@ -78,9 +80,10 @@ class CustomSupportMapFragment : SupportMapFragment() {
             setupTrackerControl(layoutInflater)
         }
         setupExtraMapControls(layoutInflater)
+        setupFakeTransitionBackground(layoutInflater)
 
         fakeTransitionView?.let {
-            addFakeTransitionInfoWindow(it)
+            addFakeTransitionViews(it)
         }
         return mapViewWrapper
     }
@@ -167,7 +170,18 @@ class CustomSupportMapFragment : SupportMapFragment() {
         }
     }
 
-    fun addFakeTransitionInfoWindow(fakeView: FakeTransitionInfoWindow) {
+    private fun setupFakeTransitionBackground(layoutInflater: LayoutInflater) {
+        mapViewWrapper?.addView(layoutInflater.inflate(R.layout.map_fake_transition_background, mapViewWrapper, false))
+        mapViewWrapper?.map_fake_transition_background_image?.updateLayoutParams<FrameLayout.LayoutParams> {
+            this@updateLayoutParams.bottomMargin = this@CustomSupportMapFragment.bottomPadding
+        }
+    }
+
+    fun addFakeTransitionViews(fakeView: FakeTransitionInfoWindow, mapSnapShot: Bitmap? = null) {
+        if (mapSnapShot != null) {
+            mapViewWrapper?.map_fake_transition_background_image?.setImageBitmap(mapSnapShot)
+        }
+
         // Measure the view to calculate the margins
         val size = Point()
         requireActivity().windowManager.defaultDisplay.getSize(size)
