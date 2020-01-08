@@ -7,7 +7,8 @@ import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.transition.Transition
 import androidx.transition.TransitionSet
 
-const val ANIMATE_OUT_OF_STOP_DETAILS_DURATION = 350L
+
+const val ANIMATE_OUT_OF_STOP_DETAILS_DURATION = 325L
 const val ANIMATE_INTO_STOP_DETAILS_DURATION = 280L
 
 /**
@@ -84,7 +85,7 @@ operator fun TransitionSet.get(i: Int): Transition {
 }
 
 fun View.doAfterLayout(what: () -> Unit) {
-    if(isLaidOut) {
+    if (isLaidOut) {
         what.invoke()
     } else {
         viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -101,7 +102,7 @@ fun View.slideUp() {
         translationY(0f)
         duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
         interpolator = FAST_OUT_LINEAR_IN
-        withStartAction{
+        withStartAction {
             visibility = View.VISIBLE
         }
     }

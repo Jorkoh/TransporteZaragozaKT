@@ -163,8 +163,8 @@ class StopDetailsFragment : FragmentWithToolbar() {
         super.onCreate(savedInstanceState)
 
         // These are the shared element transitions.
-        sharedElementEnterTransition = createSharedElementTransition(ANIMATE_OUT_OF_STOP_DETAILS_DURATION)
-        sharedElementReturnTransition = createSharedElementTransition(ANIMATE_INTO_STOP_DETAILS_DURATION)
+        sharedElementEnterTransition = createSharedElementTransition(ANIMATE_INTO_STOP_DETAILS_DURATION)
+        sharedElementReturnTransition = createSharedElementTransition(ANIMATE_OUT_OF_STOP_DETAILS_DURATION)
     }
 
     private fun createSharedElementTransition(duration: Long): Transition {

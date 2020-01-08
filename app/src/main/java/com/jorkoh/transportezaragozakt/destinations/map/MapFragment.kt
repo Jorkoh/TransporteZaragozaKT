@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.transition.Fade
 import androidx.transition.Slide
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
@@ -113,19 +114,25 @@ class MapFragment : FragmentWithToolbar() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //TODO fix other elements disappearing while exit animation is in process
-
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
-        exitTransition = Slide(Gravity.TOP).apply {
-            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
-            interpolator = FAST_OUT_LINEAR_IN
-            mode = Slide.MODE_OUT
-            addTarget(R.id.map_appBar)
+        exitTransition = transitionTogether {
+            this += Slide(Gravity.TOP).apply {
+                duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+                interpolator = FAST_OUT_LINEAR_IN
+                mode = Slide.MODE_OUT
+                addTarget(R.id.map_appBar)
+            }
+            this += Fade().apply {
+                duration = 1
+                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION -1
+                mode = Fade.MODE_OUT
+                addTarget(R.id.map_fake_transition_background_image)
+            }
         }
 
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = Slide(Gravity.TOP).apply {
-            duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
             interpolator = LINEAR_OUT_SLOW_IN
             mode = Slide.MODE_IN
             addTarget(R.id.map_appBar)
@@ -247,26 +254,26 @@ class MapFragment : FragmentWithToolbar() {
         }
         clusterManager.setOnClusterItemInfoWindowClickListener { item ->
             item.stop?.let { stop ->
-                //Inflate the view in the right position and use it for transition?
+                // Since the InfoWindow is not a live view, inflate and position a fake InfoWindow to use in the transition
                 val screenPosition = map.projection.toScreenLocation(stop.location)
-                infoWindowAdapter.inflateFakeTransitionStopInfoContents(stop).run {
-                    map.snapshot { mapSnapshot ->
-                        mapFragment.addFakeTransitionViews(FakeTransitionInfoWindow(this, screenPosition), mapSnapshot)
-                        findNavController().navigate(
-                            MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId),
-                            FragmentNavigatorExtras(
-                                map_info_window_transition_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
-                                map_info_window_transition_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
-                                map_info_window_transition_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
-                                map_info_window_transition_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
-                                map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
-                                map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
-                                map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
+                val fakeTransitionInfoWindow = infoWindowAdapter.inflateFakeTransitionInfoWindow(stop)
+                // Need a snapshot of the map because the surface view blanks when the transition starts
+                map.snapshot { mapSnapshot ->
+                    mapFragment.addFakeTransitionViews(FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition), mapSnapshot)
+                    findNavController().navigate(
+                        MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId),
+                        FragmentNavigatorExtras(
+                            map_info_window_transition_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
+                            map_info_window_transition_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
+                            map_info_window_transition_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
+                            map_info_window_transition_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
+                            map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
+                            map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
+                            map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
 
-                                map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
-                            )
+                            map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
                         )
-                    }
+                    )
                 }
             }
         }

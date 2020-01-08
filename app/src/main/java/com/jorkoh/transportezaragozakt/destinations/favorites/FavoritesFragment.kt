@@ -125,7 +125,7 @@ class FavoritesFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
         exitTransition = transitionTogether {
-            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION /2
+            duration = ANIMATE_INTO_STOP_DETAILS_DURATION /2
             interpolator = FAST_OUT_LINEAR_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_OUT
@@ -139,14 +139,14 @@ class FavoritesFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = transitionTogether {
-            duration = ANIMATE_INTO_STOP_DETAILS_DURATION /2
+            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION /2
             interpolator = LINEAR_OUT_SLOW_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_IN
                 addTarget(R.id.favorites_appBar)
             }
             this += Explode().apply {
-                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+                startDelay = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
                 mode = Explode.MODE_IN
                 excludeTarget(R.id.favorites_appBar, true)
             }

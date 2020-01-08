@@ -83,7 +83,7 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
         }
     }
 
-    fun inflateFakeTransitionStopInfoContents(stop: Stop): View {
+    fun inflateFakeTransitionInfoWindow(stop: Stop): View {
         return layoutInflater.inflate(R.layout.map_info_window_transition, null).apply {
             when (stop.type) {
                 StopType.BUS -> {

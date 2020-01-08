@@ -193,6 +193,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
             width = FrameLayout.LayoutParams.WRAP_CONTENT
             height = FrameLayout.LayoutParams.WRAP_CONTENT
             leftMargin = fakeView.second.x - fakeView.first.measuredWidth / 2
+            //TODO when the stop is favorite the marker is bigger and this value isn't quite right
             topMargin = fakeView.second.y - fakeView.first.measuredHeight - 31.toPx()
         }
 
