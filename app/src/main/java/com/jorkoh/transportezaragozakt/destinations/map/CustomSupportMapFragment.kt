@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.jorkoh.transportezaragozakt.MainActivityViewModel
 import com.jorkoh.transportezaragozakt.R
+import com.jorkoh.transportezaragozakt.destinations.utils.RemoveFakeTransitionViewEvent
 import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.map_fake_transition_background.view.*
 import kotlinx.android.synthetic.main.map_filters.*
 import kotlinx.android.synthetic.main.map_filters.view.*
 import kotlinx.android.synthetic.main.map_trackings_control.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -123,11 +125,6 @@ class CustomSupportMapFragment : SupportMapFragment() {
                 traffic_button.contentDescription = getString(R.string.traffic_layer_enabled_description)
             }
         })
-
-        lifecycleScope.launchWhenStarted {
-            mainActivityViewModel.removeFakeTransitionView.receive()
-            removeFakeTransitionView()
-        }
     }
 
     private fun setupFilters(layoutInflater: LayoutInflater) {
@@ -209,6 +206,22 @@ class CustomSupportMapFragment : SupportMapFragment() {
         // Avoid leaks
         mapViewWrapper?.removeAllViews()
         mapViewWrapper = null
+    }
+
+    // EventBus to handle removal of fake transition view, event sent from StopDetailsFragment
+    @Subscribe
+    fun onMessageEvent(event: RemoveFakeTransitionViewEvent) {
+        removeFakeTransitionView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 }
 

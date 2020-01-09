@@ -7,7 +7,6 @@ import androidx.navigation.NavController
 import com.jorkoh.transportezaragozakt.repositories.FavoritesRepository
 import com.jorkoh.transportezaragozakt.repositories.RemindersRepository
 import com.jorkoh.transportezaragozakt.repositories.SettingsRepository
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.transform
 
 class MainActivityViewModel(
@@ -41,8 +40,6 @@ class MainActivityViewModel(
         }
         reminderCount = newReminderCount
     }
-
-    val removeFakeTransitionView = Channel<Unit>()
 
     fun isFirstLaunch() = settingsRepository.isFirstLaunch()
 

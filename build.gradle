@@ -82,6 +82,7 @@ buildscript {
             'mockito'              : "org.mockito:mockito-core:2.8.9",
             'kotlinx_serialization': "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0",
             'workmanager'          : "androidx.work:work-runtime-ktx:2.3.0-alpha03",
+            'eventbus'             : "org.greenrobot:eventbus:3.1.1",
             'koin'                 : [
                     'core': "org.koin:koin-androidx-viewmodel:2.0.1",
                     'test': "org.koin:koin-test:2.0.1"

@@ -81,6 +81,9 @@ dependencies {
     //WorkManager
     implementation deps.workmanager
 
+    //EventBus
+    implementation deps.eventbus
+
     //Google Play Services
     implementation deps.playServices.maps
     implementation deps.playServices.location

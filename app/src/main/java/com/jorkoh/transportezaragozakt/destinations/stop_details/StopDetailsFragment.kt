@@ -18,7 +18,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +42,7 @@ import com.pixplicity.generate.Rate
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.android.synthetic.main.stop_details_destination.*
 import kotlinx.android.synthetic.main.stop_details_destination.view.*
-import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -232,11 +231,10 @@ class StopDetailsFragment : FragmentWithToolbar() {
         (sharedElementReturnTransition as TransitionSet?)?.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 // When the shared element transition ends notify the fragment we went back to that it's time to
-                // remove views created for the shared element transition
-                lifecycleScope.launch {
-                    mainActivityViewModel.removeFakeTransitionView.send(Unit)
-                }
+                // remove fake views created for the shared element transition
+                EventBus.getDefault().post(RemoveFakeTransitionViewEvent())
             }
+
             override fun onTransitionResume(transition: Transition) {}
             override fun onTransitionPause(transition: Transition) {}
             override fun onTransitionCancel(transition: Transition) {}

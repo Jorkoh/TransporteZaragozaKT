@@ -119,3 +119,6 @@ fun View.slideDown() {
         }
     }
 }
+
+// Event class used to notify the removal of fake views used on shared element transitions
+data class RemoveFakeTransitionViewEvent(val empty: Unit = Unit)
