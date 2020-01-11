@@ -86,13 +86,13 @@ class StopsByDestinationAdapter(
     var stops: List<Stop> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.line_stop_row, parent, false) as View
-        return StopViewHolder(view)
+        return StopViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.line_stop_row, parent, false))
     }
 
     override fun onBindViewHolder(holder: StopViewHolder, position: Int) {
         val isFirstItem = position == 0
         val isLastItem = position == stops.size - 1
+
         holder.bind(stops[position], isFirstItem, isLastItem, selectStop)
     }
 

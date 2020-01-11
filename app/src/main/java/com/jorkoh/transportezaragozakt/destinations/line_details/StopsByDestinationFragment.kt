@@ -20,11 +20,13 @@ class StopsByDestinationFragment : Fragment() {
 
     companion object {
         const val STOP_IDS_KEY = "STOP_IDS_KEY"
+        const val IS_FIRST_DESTINATION = "IS_FIRST_DESTINATION"
 
-        fun newInstance(stopIds: List<String>): StopsByDestinationFragment {
+        fun newInstance(stopIds: List<String>, isFirstDestination: Boolean = false): StopsByDestinationFragment {
             val instance = StopsByDestinationFragment()
             instance.arguments = Bundle().apply {
                 putStringArrayList(STOP_IDS_KEY, ArrayList(stopIds))
+                putBoolean(IS_FIRST_DESTINATION, isFirstDestination)
             }
             return instance
         }
@@ -35,7 +37,9 @@ class StopsByDestinationFragment : Fragment() {
     private lateinit var stopIds: List<String>
 
     private val selectStop: (String) -> Unit = { stopId ->
-        lineDetailsVM.selectedItemId.offer(stopId)
+        lifecycleScope.launchWhenStarted {
+            lineDetailsVM.selectedItemId.send(stopId)
+        }
     }
 
     private val stopsAdapter = StopsByDestinationAdapter(selectStop)
@@ -58,7 +62,10 @@ class StopsByDestinationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         stopIds = arguments?.getStringArrayList(STOP_IDS_KEY)?.toList().orEmpty()
+        val isFirstDestination = arguments?.getBoolean(IS_FIRST_DESTINATION) ?: false
+
         lineDetailsVM.stops.observe(viewLifecycleOwner, Observer { allStops ->
             if (allStops != null) {
                 // Filter those with this destination
@@ -69,6 +76,10 @@ class StopsByDestinationFragment : Fragment() {
                         stops.sortedBy { orderById[it.stopId] }
                     }
                     stopsAdapter.setNewStops(sortedStops)
+
+                    if (isFirstDestination) {
+                        parentFragment?.startPostponedEnterTransition()
+                    }
                 }
             }
         })

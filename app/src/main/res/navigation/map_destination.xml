@@ -26,9 +26,7 @@
                 app:argType="string" />
         <action
                 android:id="@+id/action_stopDetails_to_lineDetails"
-                app:destination="@id/lineDetails"
-                app:popUpTo="@id/lineDetails"
-                app:popUpToInclusive="true" />
+                app:destination="@id/lineDetails" />
 
     </fragment>
     <fragment
@@ -47,9 +45,7 @@
                 app:nullable="true" />
         <action
                 android:id="@+id/action_lineDetails_to_stopDetails"
-                app:destination="@id/stopDetails"
-                app:popUpTo="@id/stopDetails"
-                app:popUpToInclusive="true" />
+                app:destination="@id/stopDetails"/>
         <action
                 android:id="@id/action_lineDetails_to_webView"
                 app:destination="@id/webView" />

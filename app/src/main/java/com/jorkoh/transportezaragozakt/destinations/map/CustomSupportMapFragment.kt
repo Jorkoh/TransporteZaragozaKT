@@ -197,10 +197,6 @@ class CustomSupportMapFragment : SupportMapFragment() {
         fakeTransitionView = fakeView
     }
 
-    private fun removeFakeTransitionView() {
-        mapViewWrapper?.removeView(fakeTransitionView?.first)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         // Avoid leaks
@@ -211,7 +207,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     // EventBus to handle removal of fake transition view, event sent from StopDetailsFragment
     @Subscribe
     fun onMessageEvent(event: RemoveFakeTransitionViewEvent) {
-        removeFakeTransitionView()
+        mapViewWrapper?.removeView(fakeTransitionView?.first)
     }
 
     override fun onStart() {

@@ -1,9 +1,12 @@
 package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.animation.TimeInterpolator
+import android.content.Context
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.core.view.animation.PathInterpolatorCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Transition
 import androidx.transition.TransitionSet
 
@@ -122,3 +125,21 @@ fun View.slideDown() {
 
 // Event class used to notify the removal of fake views used on shared element transitions
 data class RemoveFakeTransitionViewEvent(val empty: Unit = Unit)
+
+class NotifyingLinearLayoutManager(context: Context, val callback: () -> Unit) : LinearLayoutManager(context, VERTICAL, false) {
+    override fun onLayoutCompleted(state: RecyclerView.State?) {
+        super.onLayoutCompleted(state)
+        callback()
+    }
+}
+
+fun View.afterMeasured(function : () -> Unit) {
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            if (measuredWidth > 0 && measuredHeight > 0) {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                function()
+            }
+        }
+    })
+}

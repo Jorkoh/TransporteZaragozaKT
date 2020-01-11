@@ -6,6 +6,7 @@ import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.Fade
+import androidx.transition.Slide
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -39,11 +43,13 @@ import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.MI
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.RURAL_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_BOUNDS
 import com.jorkoh.transportezaragozakt.destinations.map.MapFragment.Companion.ZARAGOZA_CENTER
+import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment
 import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
 import kotlinx.android.synthetic.main.line_details_destination.view.*
+import kotlinx.android.synthetic.main.map_info_window_transition.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,6 +58,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 import java.text.DateFormat
+import java.util.concurrent.TimeUnit
 
 class LineDetailsFragment : FragmentWithToolbar() {
 
@@ -69,7 +76,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
     private var activeBounds: LatLngBounds = RURAL_BOUNDS
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var infoWindowAdapter: CustomInfoWindowAdapter
     private lateinit var map: GoogleMap
+    private lateinit var mapFragment: CustomSupportMapFragment
+
     private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
 
     private val stopMarkers = mutableListOf<Marker>()
@@ -120,10 +130,49 @@ class LineDetailsFragment : FragmentWithToolbar() {
         true
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // This is the transition to be used for non-shared elements when we are opening the detail screen.
+        exitTransition = transitionTogether {
+            duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+            interpolator = FAST_OUT_LINEAR_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_OUT
+                addTarget(R.id.line_details_appBar)
+            }
+            this += Slide(Gravity.BOTTOM).apply {
+                mode = Slide.MODE_OUT
+                addTarget(R.id.line_details_bottom_sheet)
+            }
+            this += Fade().apply {
+                duration = 1
+                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION - 1
+                mode = Fade.MODE_OUT
+                addTarget(R.id.map_fake_transition_background_image)
+            }
+        }
+
+        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
+        reenterTransition = transitionTogether {
+            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
+            interpolator = LINEAR_OUT_SLOW_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.line_details_appBar)
+            }
+            this += Slide(Gravity.BOTTOM).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.line_details_bottom_sheet)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        postponeEnterTransition(400L, TimeUnit.MILLISECONDS)
         return inflater.inflate(R.layout.line_details_destination, container, false).apply {
             bottomSheetBehavior = BottomSheetBehavior.from(line_details_bottom_sheet)
             setupToolbar(this)
@@ -134,18 +183,19 @@ class LineDetailsFragment : FragmentWithToolbar() {
         super.onActivityCreated(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        var mapFragment =
+        var tempMapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?
-        if (mapFragment == null) {
-            mapFragment = CustomSupportMapFragment.newInstance(
+        if (tempMapFragment == null) {
+            tempMapFragment = CustomSupportMapFragment.newInstance(
                 displayFilters = false,
                 displayTrackingsButton = true,
                 bottomPaddingDimen = R.dimen.line_details_destination_map_view_bottom_padding
             )
             childFragmentManager.beginTransaction()
-                .add(R.id.map_fragment_container_line, mapFragment, getString(R.string.line_destination_map_fragment_tag))
+                .add(R.id.map_fragment_container_line, tempMapFragment, getString(R.string.line_destination_map_fragment_tag))
                 .commit()
         }
+        mapFragment = tempMapFragment
         mapFragment.getMapAsync { newMap ->
             val mapNeedsSetup = !::map.isInitialized
             val cameraNeedsCentering = !activeBounds.contains(newMap.cameraPosition.target)
@@ -199,22 +249,37 @@ class LineDetailsFragment : FragmentWithToolbar() {
     }
 
     private fun configureMap() {
-        map.setOnInfoWindowClickListener { marker ->
-            (marker.tag as CustomClusterItem).stop?.let { stop ->
-                findNavController().navigate(
-                    LineDetailsFragmentDirections.actionLineDetailsToStopDetails(
-                        stop.type.name,
-                        stop.stopId
-                    )
-                )
-            }
-        }
-        map.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
+        infoWindowAdapter = CustomInfoWindowAdapter(requireContext())
+        map.setInfoWindowAdapter(infoWindowAdapter)
         map.setOnMarkerClickListener { marker ->
             lineDetailsVM.preservedItemId.postValue((marker.tag as CustomClusterItem).itemId)
             false
         }
+        map.setOnInfoWindowClickListener { marker ->
+            (marker.tag as CustomClusterItem).stop?.let { stop ->
+                // Since the InfoWindow is not a live view, inflate and position a fake InfoWindow to use in the transition
+                val screenPosition = map.projection.toScreenLocation(stop.location)
+                val fakeTransitionInfoWindow = infoWindowAdapter.inflateFakeTransitionInfoWindow(stop)
+                // Need a snapshot of the map because the surface view blanks when the transition starts
+                map.snapshot { mapSnapshot ->
+                    mapFragment.addFakeTransitionViews(FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition), mapSnapshot)
+                    findNavController().navigate(
+                        LineDetailsFragmentDirections.actionLineDetailsToStopDetails(stop.type.name, stop.stopId),
+                        FragmentNavigatorExtras(
+                            map_info_window_transition_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
+                            map_info_window_transition_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
+                            map_info_window_transition_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
+                            map_info_window_transition_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
+                            map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
+                            map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
+                            map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
 
+                            map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
+                        )
+                    )
+                }
+            }
+        }
         map.setOnInfoWindowCloseListener {
             lineDetailsVM.preservedItemId.postValue("")
         }
@@ -294,7 +359,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         })
 
         // Line itself
-        lineDetailsVM.line.observe(viewLifecycleOwner, Observer { line ->
+        lineDetailsVM.line.observe(mapLifecycleOwner, Observer { line ->
             if (line != null) {
                 // Set the action bar title
                 fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
@@ -327,12 +392,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 // If the user navigated from a specific stop select it on the map
                 // this is done after the stop markers are set for the first time
                 lifecycleScope.launchWhenStarted {
-                    if (!args.stopId.isNullOrEmpty()) {
+                    if (!args.stopId.isNullOrEmpty() && lineDetailsVM.preservedItemId.value.isNullOrEmpty()) {
                         args.stopId?.let {
                             lineDetailsVM.selectedItemId.send(it)
                         }
-                        // Since this should only happen the first time let's clear the argument
-                        requireArguments().putString("stopId", null)
                     }
                 }
             }

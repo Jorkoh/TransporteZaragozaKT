@@ -8,13 +8,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.db.Line
 
-
+//TODO only load one?
 class StopsByDestinationPagerAdapter(private val fragmentManager: FragmentManager, private val line: Line) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> StopsByDestinationFragment.newInstance(line.stopIdsFirstDestination)
+            0 -> StopsByDestinationFragment.newInstance(line.stopIdsFirstDestination, isFirstDestination = true)
             else -> StopsByDestinationFragment.newInstance(line.stopIdsSecondDestination)
         }
 
