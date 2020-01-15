@@ -117,14 +117,14 @@ class MapFragment : FragmentWithToolbar() {
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
         exitTransition = transitionTogether {
             this += Slide(Gravity.TOP).apply {
-                duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+                duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION / 2
                 interpolator = FAST_OUT_LINEAR_IN
                 mode = Slide.MODE_OUT
                 addTarget(R.id.map_appBar)
             }
             this += Fade().apply {
                 duration = 1
-                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION -1
+                startDelay = ANIMATE_INTO_DETAILS_SCREEN_DURATION -1
                 mode = Fade.MODE_OUT
                 addTarget(R.id.map_fake_transition_background_image)
             }
@@ -132,7 +132,7 @@ class MapFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = Slide(Gravity.TOP).apply {
-            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
+            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
             interpolator = LINEAR_OUT_SLOW_IN
             mode = Slide.MODE_IN
             addTarget(R.id.map_appBar)

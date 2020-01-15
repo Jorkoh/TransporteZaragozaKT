@@ -11,16 +11,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/stop_row_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/stop_row_layout"
             android:background="?android:attr/selectableItemBackground">
 
         <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
@@ -35,10 +31,10 @@
                 android:id="@+id/stop_row_mirror_body"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/stop_row_mirror_toolbar"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/stop_row_mirror_toolbar" />
 
         <ImageView
                 android:id="@+id/stop_row_type_image"

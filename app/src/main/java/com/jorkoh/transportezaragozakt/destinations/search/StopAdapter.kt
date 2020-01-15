@@ -100,8 +100,7 @@ class StopAdapter(
     private var stopsFull: List<Stop> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.stop_row, parent, false)
-        return StopViewHolder(view)
+        return StopViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.stop_row, parent, false))
     }
 
     override fun onBindViewHolder(holder: StopViewHolder, position: Int) {

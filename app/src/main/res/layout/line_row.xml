@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView
-        xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/line_row_card"
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
         app:cardElevation="4dp"
         tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/line_row_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <TextView
-                android:id="@+id/line_text_line"
-                android:textColor="@color/kinda_white"
-                android:layout_width="wrap_content"
-                android:minWidth="60dp"
-                android:layout_height="50dp"
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/line_row_mirror_body"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/line_row_title"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:minWidth="60dp"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:textColor="@color/kinda_white"
+                android:textSize="36dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpUsage" />
+
+        <TextView
+                android:id="@+id/line_row_first_destination"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                app:layout_constraintTop_toTopOf="parent"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:textSize="36dp"
-                tools:ignore="SpUsage"
-                android:textAlignment="center"
-                />
+                android:textColor="?colorOnSurface"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/line_row_second_destination"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/line_row_title"
+                app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:textSize="18sp"
-                android:gravity="center"
-                android:id="@+id/first_destination_line"
-                android:textColor="?colorOnSurface"
+                android:id="@+id/line_row_second_destination"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                app:layout_constraintBottom_toTopOf="@+id/second_destination_line"
-                app:layout_constraintStart_toEndOf="@+id/line_text_line"
-                android:layout_marginStart="8dp"/>
-
-        <TextView
-                android:textSize="18sp"
-                android:gravity="center"
-                android:id="@+id/second_destination_line"
-                android:textColor="?colorOnSurface"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:textColor="?colorOnSurface"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/first_destination_line"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toEndOf="@+id/line_text_line"
-                android:layout_marginStart="8dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/line_row_title"
+                app:layout_constraintTop_toBottomOf="@id/line_row_first_destination" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

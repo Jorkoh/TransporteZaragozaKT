@@ -161,4 +161,5 @@
     <string name="rural_line_schedule_title">Horario línea rural %1$s</string>
     <string name="estimated_time_warning">Aviso de tiempo estimado</string>
     <string name="time_not_tracked_explanation">¡Cuidado! Esta estimación puede ser muy inexacta.\n\nCTAZ proporciona este tiempo de llegada basado en tablas de horarios y no en la localización en tiempo real de los vehículos.\n\nIntenta encontrar tu próximo bus con la función de rastreo en la pantalla de línea para confirmar la estimación.</string>
+    <string name="line_title_placeholder">Línea desconocida</string>
 </resources>

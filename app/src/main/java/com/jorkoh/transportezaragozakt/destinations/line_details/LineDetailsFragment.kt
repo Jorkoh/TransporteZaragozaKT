@@ -12,14 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.Fade
-import androidx.transition.Slide
+import androidx.transition.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -61,6 +62,13 @@ import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
 class LineDetailsFragment : FragmentWithToolbar() {
+
+    companion object {
+        const val TRANSITION_NAME_BACKGROUND = "line_background"
+        const val TRANSITION_NAME_BODY_DETAILS = "line_body_details"
+        const val TRANSITION_NAME_BODY_ROW = "line_body_row"
+    }
+
 
     private val args: LineDetailsFragmentArgs by navArgs()
 
@@ -135,7 +143,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
         exitTransition = transitionTogether {
-            duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+            duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION / 2
             interpolator = FAST_OUT_LINEAR_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_OUT
@@ -147,7 +155,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
             }
             this += Fade().apply {
                 duration = 1
-                startDelay = ANIMATE_INTO_STOP_DETAILS_DURATION - 1
+                startDelay = ANIMATE_INTO_DETAILS_SCREEN_DURATION - 1
                 mode = Fade.MODE_OUT
                 addTarget(R.id.map_fake_transition_background_image)
             }
@@ -155,16 +163,28 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = transitionTogether {
-            duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
+            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
             interpolator = LINEAR_OUT_SLOW_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_IN
                 addTarget(R.id.line_details_appBar)
             }
-            this += Slide(Gravity.BOTTOM).apply {
-                mode = Slide.MODE_IN
-                addTarget(R.id.line_details_bottom_sheet)
-            }
+        }
+
+        // These are the shared element transitions.
+        sharedElementEnterTransition = createSharedElementTransition(ANIMATE_INTO_DETAILS_SCREEN_DURATION)
+        sharedElementReturnTransition = createSharedElementTransition(ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION)
+    }
+
+    private fun createSharedElementTransition(duration: Long): Transition {
+        return transitionTogether {
+            this.duration = duration
+            interpolator = FAST_OUT_SLOW_IN
+            this += SharedFade()
+            this += ChangeImageTransform()
+            this += ChangeClipBounds()
+            this += ChangeBounds()
+            this += ChangeTransform()
         }
     }
 
@@ -172,11 +192,23 @@ class LineDetailsFragment : FragmentWithToolbar() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        postponeEnterTransition(400L, TimeUnit.MILLISECONDS)
+        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         return inflater.inflate(R.layout.line_details_destination, container, false).apply {
             bottomSheetBehavior = BottomSheetBehavior.from(line_details_bottom_sheet)
             setupToolbar(this)
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // We are expecting an enter transition
+        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+
+        // Transition names, they only have to be unique in this fragment.
+        ViewCompat.setTransitionName(line_details_frame_layout, TRANSITION_NAME_BACKGROUND)
+        ViewCompat.setTransitionName(line_details_coordinator_layout, TRANSITION_NAME_BODY_DETAILS)
+        ViewCompat.setTransitionName(line_details_mirror_body, TRANSITION_NAME_BODY_ROW)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -192,7 +224,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 bottomPaddingDimen = R.dimen.line_details_destination_map_view_bottom_padding
             )
             childFragmentManager.beginTransaction()
-                .add(R.id.map_fragment_container_line, tempMapFragment, getString(R.string.line_destination_map_fragment_tag))
+                .add(R.id.line_details_map_container, tempMapFragment, getString(R.string.line_destination_map_fragment_tag))
                 .commit()
         }
         mapFragment = tempMapFragment
@@ -360,7 +392,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
         // Line itself
         lineDetailsVM.line.observe(mapLifecycleOwner, Observer { line ->
-            if (line != null) {
+            if (line != null && line_details_viewpager.adapter == null) {
                 // Set the action bar title
                 fragment_toolbar.title = getString(R.string.line_template, if (requireContext().isSpanish()) line.nameES else line.nameEN)
                 // Map bounds and min  depend on line type
@@ -368,13 +400,19 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 map.setLatLngBoundsForCameraTarget(activeBounds)
                 activeMinZoom = if (line.type == LineType.RURAL) MIN_ZOOM_RURAL else MIN_ZOOM
                 map.setMinZoomPreference(activeMinZoom)
+
                 // Load the bottom sheet with the stops by destination
                 line_details_viewpager.adapter = StopsByDestinationPagerAdapter(
                     childFragmentManager,
                     requireNotNull(lineDetailsVM.line.value)
                 )
                 line_details_tab_layout.setupWithViewPager(line_details_viewpager)
-            } else {
+
+                (view?.parent as? ViewGroup)?.doOnPreDraw {
+                    // Wait for the views to be laid out before starting the transition
+                    startPostponedEnterTransition()
+                }
+            } else if (line == null) {
                 (requireActivity() as MainActivity).makeSnackbar(getString(R.string.line_not_found))
                 FirebaseAnalytics.getInstance(requireContext()).logEvent("LINE_NOT_FOUND", Bundle().apply {
                     putString("LINE_ID", lineDetailsVM.lineId)

@@ -12,7 +12,6 @@ import com.jorkoh.transportezaragozakt.R
 import kotlinx.android.synthetic.main.line_stop_destinations.*
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -20,13 +19,11 @@ class StopsByDestinationFragment : Fragment() {
 
     companion object {
         const val STOP_IDS_KEY = "STOP_IDS_KEY"
-        const val IS_FIRST_DESTINATION = "IS_FIRST_DESTINATION"
 
-        fun newInstance(stopIds: List<String>, isFirstDestination: Boolean = false): StopsByDestinationFragment {
+        fun newInstance(stopIds: List<String>): StopsByDestinationFragment {
             val instance = StopsByDestinationFragment()
             instance.arguments = Bundle().apply {
                 putStringArrayList(STOP_IDS_KEY, ArrayList(stopIds))
-                putBoolean(IS_FIRST_DESTINATION, isFirstDestination)
             }
             return instance
         }
@@ -64,22 +61,17 @@ class StopsByDestinationFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         stopIds = arguments?.getStringArrayList(STOP_IDS_KEY)?.toList().orEmpty()
-        val isFirstDestination = arguments?.getBoolean(IS_FIRST_DESTINATION) ?: false
 
         lineDetailsVM.stops.observe(viewLifecycleOwner, Observer { allStops ->
-            if (allStops != null) {
+            if (allStops != null && stopsAdapter.stops.isEmpty()) {
                 // Filter those with this destination
-                lifecycleScope.launch {
+                lifecycleScope.launchWhenStarted {
                     val sortedStops = withContext(Dispatchers.Default) {
                         val stops = allStops.filter { it.stopId in stopIds }
                         val orderById = stopIds.withIndex().associate { it.value to it.index }
                         stops.sortedBy { orderById[it.stopId] }
                     }
                     stopsAdapter.setNewStops(sortedStops)
-
-                    if (isFirstDestination) {
-                        parentFragment?.startPostponedEnterTransition()
-                    }
                 }
             }
         })

@@ -11,6 +11,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,22 +51,21 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.util.concurrent.TimeUnit
 
-
 class StopDetailsFragment : FragmentWithToolbar() {
     companion object {
         const val FAVORITE_ITEM_FAB_POSITION = 0
 
-        const val TRANSITION_NAME_BACKGROUND = "background"
-        const val TRANSITION_NAME_BODY = "body"
-        const val TRANSITION_NAME_APPBAR = "appBar"
-        const val TRANSITION_NAME_TOOLBAR = "toolbar"
-        const val TRANSITION_NAME_IMAGE = "image"
-        const val TRANSITION_NAME_TITLE = "title"
-        const val TRANSITION_NAME_LINES = "lines"
+        const val TRANSITION_NAME_BACKGROUND = "stop_background"
+        const val TRANSITION_NAME_BODY = "stop_body"
+        const val TRANSITION_NAME_APPBAR = "stop_appBar"
+        const val TRANSITION_NAME_TOOLBAR = "stop_toolbar"
+        const val TRANSITION_NAME_IMAGE = "stop_image"
+        const val TRANSITION_NAME_TITLE = "stop_title"
+        const val TRANSITION_NAME_LINES = "stop_lines"
 
-        const val TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW = "first_element_first_row"
-        const val TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW = "first_element_second_row"
-        const val TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW = "second_element_second_row"
+        const val TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW = "stop_first_element_first_row"
+        const val TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW = "stop_first_element_second_row"
+        const val TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW = "stop_second_element_second_row"
     }
 
     private val args: StopDetailsFragmentArgs by navArgs()
@@ -76,14 +77,15 @@ class StopDetailsFragment : FragmentWithToolbar() {
     private val rate: Rate by inject()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
+    private val openLine: (LineDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit = { info, extras ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             findNavController().navigate(
                 StopDetailsFragmentDirections.actionStopDetailsToLineDetails(
                     info.lineType,
                     info.lineId,
                     info.stopId
-                )
+                ),
+                FragmentNavigatorExtras(*extras)
             )
         }
     }
@@ -93,7 +95,9 @@ class StopDetailsFragment : FragmentWithToolbar() {
         }
     }
 
-    private val stopDestinationsTimesAdapter: StopDestinationsTimesAdapter = StopDestinationsTimesAdapter(openLine, openNotTrackedWarning)
+    private val stopDestinationsTimesAdapter: StopDestinationsTimesAdapter = StopDestinationsTimesAdapter(openLine, openNotTrackedWarning, {
+        startPostponedEnterTransition()
+    })
 
     private val stopDestinationsObserver = Observer<Resource<List<StopDestination>>> { stopDestinations ->
         val newVisibility = when (stopDestinations.status) {
@@ -161,9 +165,38 @@ class StopDetailsFragment : FragmentWithToolbar() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // This is the transition to be used for non-shared elements when we are opening the detail screen.
+        exitTransition = transitionTogether {
+            duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION / 2
+            interpolator = FAST_OUT_LINEAR_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_OUT
+                addTarget(R.id.stop_details_appBar)
+            }
+            this += Explode().apply {
+                mode = Explode.MODE_OUT
+                excludeTarget(R.id.stop_details_appBar, true)
+            }
+        }
+
+        // This is the transition to be used for non-shared elements when we are return back from the detail screen.
+        reenterTransition = transitionTogether {
+            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
+            interpolator = LINEAR_OUT_SLOW_IN
+            this += Slide(Gravity.TOP).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.stop_details_appBar)
+            }
+            this += Explode().apply {
+                startDelay = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
+                mode = Explode.MODE_IN
+                excludeTarget(R.id.stop_details_appBar, true)
+            }
+        }
+
         // These are the shared element transitions.
-        sharedElementEnterTransition = createSharedElementTransition(ANIMATE_INTO_STOP_DETAILS_DURATION)
-        sharedElementReturnTransition = createSharedElementTransition(ANIMATE_OUT_OF_STOP_DETAILS_DURATION)
+        sharedElementEnterTransition = createSharedElementTransition(ANIMATE_INTO_DETAILS_SCREEN_DURATION)
+        sharedElementReturnTransition = createSharedElementTransition(ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION)
     }
 
     private fun createSharedElementTransition(duration: Long): Transition {
@@ -240,6 +273,10 @@ class StopDetailsFragment : FragmentWithToolbar() {
             override fun onTransitionCancel(transition: Transition) {}
             override fun onTransitionStart(transition: Transition) {}
         })
+
+        if (savedInstanceState != null) {
+            stopDestinationsTimesAdapter.restoreInstanceState(savedInstanceState)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -410,6 +447,11 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 ).show()
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        stopDestinationsTimesAdapter.saveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {

@@ -189,10 +189,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun animateBottomNavigation(destinationId: Int) {
         if (DESTINATIONS_WITH_BOTTOM_NAVIGATION.contains(destinationId) && !bottomNavigationShowing) {
-            bottom_navigation.slideUp()
+            bottom_navigation.slideUpToShow()
             bottomNavigationShowing = true
         } else if (!DESTINATIONS_WITH_BOTTOM_NAVIGATION.contains(destinationId) && bottomNavigationShowing) {
-            bottom_navigation.slideDown()
+            bottom_navigation.slideDownToHide()
             bottomNavigationShowing = false
         }
     }
@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity() {
             TransitionManager.beginDelayedTransition(
                 coordinator_layout,
                 Slide(Gravity.END).apply {
-                    duration = ANIMATE_INTO_STOP_DETAILS_DURATION
+                    duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION
                     interpolator = LINEAR_OUT_SLOW_IN
                     mode = Slide.MODE_IN
                     addTarget(R.id.stop_details_fab)
@@ -213,7 +213,7 @@ class MainActivity : AppCompatActivity() {
             TransitionManager.beginDelayedTransition(
                 coordinator_layout,
                 Slide(Gravity.END).apply {
-                    duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION
+                    duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION
                     interpolator = FAST_OUT_LINEAR_IN
                     mode = Slide.MODE_OUT
                     addTarget(R.id.stop_details_fab)

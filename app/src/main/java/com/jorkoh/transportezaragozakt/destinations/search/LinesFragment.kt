@@ -7,20 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragmentArgs
+import com.jorkoh.transportezaragozakt.destinations.utils.hideKeyboard
 import kotlinx.android.synthetic.main.search_destination_lines.*
 import kotlinx.android.synthetic.main.search_destination_lines.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.concurrent.TimeUnit
 
 class LinesFragment : Fragment() {
-
     private val searchVM: SearchViewModel by sharedViewModel()
 
-    private val openLine: (LineDetailsFragmentArgs) -> Unit = { info ->
+    private val openLine: (LineDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit = { info, extras ->
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             activity?.currentFocus?.hideKeyboard()
             findNavController().navigate(
@@ -28,12 +29,15 @@ class LinesFragment : Fragment() {
                     info.lineType,
                     info.lineId,
                     info.stopId
-                )
+                ),
+                FragmentNavigatorExtras(*extras)
             )
         }
     }
 
-    private val linesAdapter = LineAdapter(openLine)
+    private val linesAdapter = LineAdapter(openLine, {
+        parentFragment?.startPostponedEnterTransition()
+    })
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -62,6 +66,23 @@ class LinesFragment : Fragment() {
                 adapter = linesAdapter
             }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState != null) {
+            linesAdapter.restoreInstanceState(savedInstanceState)
+        }
+        if (linesAdapter.expectsTransition) {
+            // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
+            parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        linesAdapter.saveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {

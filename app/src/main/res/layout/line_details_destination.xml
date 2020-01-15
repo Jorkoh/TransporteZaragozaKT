@@ -1,65 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment"
+        android:id="@+id/line_details_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/line_details_appBar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-        <androidx.appcompat.widget.Toolbar
-                android:id="@id/fragment_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/CustomActionBarTheme"
-                style="@style/CustomActionBarStyle"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <FrameLayout
-            android:id="@+id/map_fragment_container_line"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_height="match_parent"
+        android:background="?android:colorBackground">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/line_details_coordinator_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent"
+            tools:context="com.jorkoh.transportezaragozakt.destinations.line_details.LineDetailsFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/line_details_appBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@id/fragment_toolbar"
+                    style="@style/CustomActionBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/CustomActionBarTheme"
+                    app:title="@string/line_title_placeholder" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/line_details_mirror_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         <FrameLayout
-                android:id="@+id/line_details_bottom_sheet"
+                android:id="@+id/line_details_map_container"
                 android:layout_width="match_parent"
-                android:background="@drawable/rounded_dialog"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                app:behavior_hideable="false"
-                app:layout_insetEdge="bottom"
-                app:behavior_peekHeight="@dimen/line_details_destination_map_view_bottom_padding">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/line_details_viewpager"
+            <FrameLayout
+                    android:id="@+id/line_details_bottom_sheet"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_dialog"
+                    app:behavior_hideable="false"
+                    app:behavior_peekHeight="@dimen/line_details_destination_map_view_bottom_padding"
+                    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                    app:layout_insetEdge="bottom">
 
-                <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/line_details_tab_layout"
-                        app:tabMaxWidth="0dp"
-                        app:tabGravity="fill"
+                <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/line_details_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent">
 
-            </androidx.viewpager.widget.ViewPager>
+                    <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/line_details_tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:tabGravity="fill"
+                            app:tabMaxWidth="0dp" />
 
-        </FrameLayout>
+                </androidx.viewpager.widget.ViewPager>
+
+            </FrameLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

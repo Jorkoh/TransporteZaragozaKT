@@ -65,6 +65,7 @@
     <string name="estimated_time_warning" translatable="true">Estimated time warning</string>
 
     <!--Line details-->
+    <string name="line_title_placeholder" translatable="true">Line unknown</string>
     <string name="line_template" translatable="true">Line %1$s</string>
     <string name="lines" translatable="true">Lines</string>
     <string name="schedule_menu_item" translatable="true">Schedule</string>

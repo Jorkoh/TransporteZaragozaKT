@@ -3,16 +3,16 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/stop_details_coordinator_layout"
-        android:background="?android:colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:colorBackground"
+        android:transitionGroup="false"
         tools:context="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/stop_details_appBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="0dp">
+            android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/stop_details_collapsing_toolbar_layout"
@@ -58,10 +58,10 @@
                         android:id="@+id/stop_details_mirror_first_element_first_row"
                         android:layout_width="1px"
                         android:layout_height="1px"
+                        app:layout_constraintBottom_toTopOf="@id/stop_details_mirror_second_element_second_row"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/stop_details_title"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/stop_details_mirror_second_element_second_row"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <GridLayout
                         android:id="@+id/stop_details_lines_layout"
@@ -111,6 +111,7 @@
             android:id="@+id/stop_details_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:transitionGroup="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.airbnb.lottie.LottieAnimationView
@@ -149,7 +150,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
         <com.jorkoh.transportezaragozakt.destinations.stop_details.WrapWidthTextView
                 android:id="@+id/stop_details_no_data_text"
                 android:layout_width="wrap_content"
@@ -183,6 +183,5 @@
                 app:layout_constraintTop_toTopOf="@+id/stop_details_no_data_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

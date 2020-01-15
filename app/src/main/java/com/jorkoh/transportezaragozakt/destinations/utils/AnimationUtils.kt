@@ -11,8 +11,8 @@ import androidx.transition.Transition
 import androidx.transition.TransitionSet
 
 
-const val ANIMATE_OUT_OF_STOP_DETAILS_DURATION = 325L
-const val ANIMATE_INTO_STOP_DETAILS_DURATION = 280L
+const val ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION = 325L
+const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 280L
 
 /**
  * Standard easing.
@@ -100,10 +100,10 @@ fun View.doAfterLayout(what: () -> Unit) {
     }
 }
 
-fun View.slideUp() {
+fun View.slideUpToShow() {
     animate().apply {
         translationY(0f)
-        duration = ANIMATE_OUT_OF_STOP_DETAILS_DURATION / 2
+        duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
         interpolator = FAST_OUT_LINEAR_IN
         withStartAction {
             visibility = View.VISIBLE
@@ -111,11 +111,11 @@ fun View.slideUp() {
     }
 }
 
-fun View.slideDown() {
+fun View.slideDownToHide() {
     animate().apply {
         translationY(height.toFloat())
         interpolator = LINEAR_OUT_SLOW_IN
-        duration = ANIMATE_INTO_STOP_DETAILS_DURATION / 2
+        duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION / 2
         withEndAction {
             visibility = View.GONE
             translationY = height.toFloat()
