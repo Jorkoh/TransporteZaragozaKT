@@ -57,3 +57,10 @@
 -keep public class androidx.transition.Slide {
     *;
 }
+
+# EventBus rules
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }

@@ -133,7 +133,7 @@ class NotifyingLinearLayoutManager(context: Context, val callback: () -> Unit) :
     }
 }
 
-fun View.afterMeasured(function : () -> Unit) {
+fun View.afterMeasured(function: () -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {
             if (measuredWidth > 0 && measuredHeight > 0) {
