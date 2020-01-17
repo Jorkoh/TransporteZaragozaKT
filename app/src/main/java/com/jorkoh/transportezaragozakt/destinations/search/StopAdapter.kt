@@ -85,7 +85,8 @@ class StopAdapter(
 
                         stop_row_distance to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW,
                         stop_row_favorite_icon to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW,
-                        stop_row_number to StopDetailsFragment.TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW
+                        stop_row_number to StopDetailsFragment.TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW,
+                        stop_row_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB
                     ))
             })
         }
@@ -117,6 +118,7 @@ class StopAdapter(
         ViewCompat.setTransitionName(holder.stop_row_distance, "stop_row_distance_${stop.stopId}")
         ViewCompat.setTransitionName(holder.stop_row_favorite_icon, "stop_row_favorite_icon_${stop.stopId}")
         ViewCompat.setTransitionName(holder.stop_row_number, "stop_row_number_${stop.stopId}")
+        ViewCompat.setTransitionName(holder.stop_row_mirror_fab, "stop_row_mirror_fab_${stop.stopId}")
 
         holder.bind(stop, openStop)
 

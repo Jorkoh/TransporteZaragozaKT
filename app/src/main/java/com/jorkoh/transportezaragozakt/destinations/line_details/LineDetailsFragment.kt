@@ -169,6 +169,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 mode = Slide.MODE_IN
                 addTarget(R.id.line_details_appBar)
             }
+            this += Slide(Gravity.BOTTOM).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.line_details_bottom_sheet)
+            }
         }
 
         // These are the shared element transitions.
@@ -305,6 +309,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
                             map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
                             map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
                             map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
+                            map_info_window_transition_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB,
 
                             map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
                         )

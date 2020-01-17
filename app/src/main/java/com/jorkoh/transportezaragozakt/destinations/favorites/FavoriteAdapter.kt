@@ -91,6 +91,7 @@ class FavoriteAdapter(
                         favorite_row_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
                         favorite_row_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
                         favorite_row_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
+                        favorite_row_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB,
 
                         favorite_row_edit_button to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW,
                         favorite_row_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW,
@@ -152,6 +153,7 @@ class FavoriteAdapter(
         ViewCompat.setTransitionName(holder.favorite_row_type_image, "favorite_row_type_image_${favorite.stopId}")
         ViewCompat.setTransitionName(holder.favorite_row_title, "favorite_row_title_${favorite.stopId}")
         ViewCompat.setTransitionName(holder.favorite_row_lines_layout, "favorite_row_lines_layout_${favorite.stopId}")
+        ViewCompat.setTransitionName(holder.favorite_row_mirror_fab, "favorite_row_mirror_fab_${favorite.stopId}")
 
         ViewCompat.setTransitionName(holder.favorite_row_edit_button, "favorite_row_edit_button_${favorite.stopId}")
         ViewCompat.setTransitionName(holder.favorite_row_number, "favorite_row_number_${favorite.stopId}")

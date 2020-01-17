@@ -107,6 +107,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/stop_details_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:transitionGroup="true"
+            app:sdMainFabClosedSrc="@drawable/ic_add_black_24dp"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/stop_details_constraint_layout"
             android:layout_width="match_parent"

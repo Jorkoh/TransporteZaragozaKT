@@ -115,6 +115,7 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
             ViewCompat.setTransitionName(map_info_window_transition_type_image, "map_info_window_transition_type_image")
             ViewCompat.setTransitionName(map_info_window_transition_title, "map_info_window_transition_title")
             ViewCompat.setTransitionName(map_info_window_transition_lines_layout, "map_info_window_transition_lines_layout")
+            ViewCompat.setTransitionName(map_info_window_transition_mirror_fab, "map_info_window_transition_mirror_fab")
 
             ViewCompat.setTransitionName(map_info_window_transition_number, "map_info_window_number")
         }

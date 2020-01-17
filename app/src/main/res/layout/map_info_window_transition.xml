@@ -6,7 +6,6 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="2dp">
-<!--        app:cardBackgroundColor="#d0d0d0"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/map_info_window_transition_layout"
@@ -17,7 +16,6 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:maxWidth="300dp">
-
 
         <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
                 android:id="@+id/map_info_window_transition_mirror_toolbar"
@@ -35,6 +33,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/map_info_window_transition_mirror_toolbar" />
+
+        <com.jorkoh.transportezaragozakt.destinations.utils.MirrorView
+                android:id="@+id/map_info_window_transition_mirror_fab"
+                android:layout_width="1px"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
                 android:id="@+id/map_info_window_transition_type_image"

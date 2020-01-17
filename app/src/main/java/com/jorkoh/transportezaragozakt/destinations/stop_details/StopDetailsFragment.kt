@@ -28,7 +28,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jorkoh.transportezaragozakt.MainActivity
 import com.jorkoh.transportezaragozakt.MainActivityViewModel
@@ -66,6 +65,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
         const val TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW = "stop_first_element_first_row"
         const val TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW = "stop_first_element_second_row"
         const val TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW = "stop_second_element_second_row"
+        const val TRANSITION_NAME_FAB = "stop_fab"
     }
 
     private val args: StopDetailsFragmentArgs by navArgs()
@@ -142,7 +142,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
             R.drawable.ic_favorite_border_black_24dp
         }
 
-        requireActivity().stop_details_fab.replaceActionItem(
+        stop_details_fab?.replaceActionItem(
             SpeedDialActionItem.Builder(R.id.stop_details_fab_favorite, newIcon)
                 .setLabel(
                     if (isFavorited) {
@@ -173,9 +173,14 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 mode = Slide.MODE_OUT
                 addTarget(R.id.stop_details_appBar)
             }
+            this += Slide(Gravity.END).apply {
+                mode = Slide.MODE_OUT
+                addTarget(R.id.stop_details_fab)
+            }
             this += Explode().apply {
                 mode = Explode.MODE_OUT
                 excludeTarget(R.id.stop_details_appBar, true)
+                excludeTarget(R.id.stop_details_fab, true)
             }
         }
 
@@ -187,10 +192,15 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 mode = Slide.MODE_IN
                 addTarget(R.id.stop_details_appBar)
             }
+            this += Slide(Gravity.END).apply {
+                mode = Slide.MODE_IN
+                addTarget(R.id.stop_details_fab)
+            }
             this += Explode().apply {
                 startDelay = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
                 mode = Explode.MODE_IN
                 excludeTarget(R.id.stop_details_appBar, true)
+                excludeTarget(R.id.stop_details_fab, true)
             }
         }
 
@@ -216,7 +226,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.stop_details_destination, container, false).apply {
-            setupFab()
+            setupFab(this)
             stop_details_recycler_view.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context)
@@ -224,13 +234,13 @@ class StopDetailsFragment : FragmentWithToolbar() {
             }
 
             stop_details_appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                if (verticalOffset == 0 && activity?.stop_details_fab?.isShown == false
+                if (verticalOffset == 0 && stop_details_fab?.isShown == false
                     && lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
                     && findNavController().currentDestination?.id == R.id.stopDetails
                 ) {
-                    activity?.stop_details_fab?.show()
+                    stop_details_fab?.show()
                 } else if (appBarLayout.totalScrollRange + verticalOffset == 0) {
-                    activity?.stop_details_fab?.hide()
+                    stop_details_fab?.hide()
                 }
             })
 
@@ -259,6 +269,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
         ViewCompat.setTransitionName(stop_details_mirror_first_element_first_row, TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW)
         ViewCompat.setTransitionName(stop_details_mirror_first_element_second_row, TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW)
         ViewCompat.setTransitionName(stop_details_mirror_second_element_second_row, TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW)
+        ViewCompat.setTransitionName(stop_details_fab, TRANSITION_NAME_FAB)
 
 
         (sharedElementReturnTransition as TransitionSet?)?.addListener(object : Transition.TransitionListener {
@@ -344,8 +355,8 @@ class StopDetailsFragment : FragmentWithToolbar() {
         }
     }
 
-    private fun setupFab() {
-        activity?.stop_details_fab?.apply {
+    private fun setupFab(rootView: View) {
+        rootView.stop_details_fab.apply {
             // Items
             addActionItem(
                 SpeedDialActionItem.Builder(
@@ -440,11 +451,7 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 )
                 shortcutManager.requestPinShortcut(shortcut, successCallback.intentSender)
             } else {
-                Snackbar.make(
-                    stop_details_fab,
-                    R.string.shortcut_pinning_not_supported,
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                (requireActivity() as MainActivity).makeSnackbar(getString(R.string.shortcut_pinning_not_supported))
             }
         }
     }
@@ -458,6 +465,6 @@ class StopDetailsFragment : FragmentWithToolbar() {
         super.onDestroyView()
         // Avoid leaks
         stop_details_recycler_view?.adapter = null
-        activity?.stop_details_fab?.setOnActionSelectedListener(null)
+        stop_details_fab?.setOnActionSelectedListener(null)
     }
 }

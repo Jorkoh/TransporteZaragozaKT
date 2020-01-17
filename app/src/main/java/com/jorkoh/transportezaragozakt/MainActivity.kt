@@ -6,18 +6,18 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Gravity
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.transition.Slide
-import androidx.transition.TransitionManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.jorkoh.transportezaragozakt.destinations.utils.*
+import com.jorkoh.transportezaragozakt.destinations.utils.getColorFromAttr
+import com.jorkoh.transportezaragozakt.destinations.utils.setupWithNavController
+import com.jorkoh.transportezaragozakt.destinations.utils.slideDownToHide
+import com.jorkoh.transportezaragozakt.destinations.utils.slideUpToShow
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -43,8 +43,6 @@ class MainActivity : AppCompatActivity() {
     private val shortcutPinnedReceiver = ShortcutPinnedReceiver()
 
     private val onDestinationChangedListener = NavController.OnDestinationChangedListener { _, destination, _ ->
-        // Fab showing and hiding, the Fab is part of the root coordinator layout instead of the specific fragment layout.
-        animateStopDetailsFab(destination.id)
         // Bottom navigation showing and hiding
         animateBottomNavigation(destination.id)
 
@@ -178,7 +176,6 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics.setCurrentScreen(this, screenName, screenName)
     }
 
-
     /* Bottom navigation animation stuff. */
     // The idea is to hide the bottom navigation when the user enters a destination that can be accessed
     // from multiple root destinations and doesn't belong to one specifically. For example stop details can be opened from favorites, map,
@@ -195,34 +192,6 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationShowing = false
         }
     }
-
-    private fun animateStopDetailsFab(destinationId: Int) {
-        if (destinationId == R.id.stopDetails && stop_details_fab.visibility != View.VISIBLE) {
-            TransitionManager.beginDelayedTransition(
-                coordinator_layout,
-                Slide(Gravity.END).apply {
-                    duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION
-                    interpolator = LINEAR_OUT_SLOW_IN
-                    mode = Slide.MODE_IN
-                    addTarget(R.id.stop_details_fab)
-                }
-            )
-            stop_details_fab.show()
-        } else if (destinationId != R.id.stopDetails && stop_details_fab.visibility == View.VISIBLE) {
-            TransitionManager.beginDelayedTransition(
-                coordinator_layout,
-                Slide(Gravity.END).apply {
-                    duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION
-                    interpolator = FAST_OUT_LINEAR_IN
-                    mode = Slide.MODE_OUT
-                    addTarget(R.id.stop_details_fab)
-                }
-            )
-            stop_details_fab.close()
-            stop_details_fab.visibility = View.GONE
-        }
-    }
-
 
     inner class ShortcutPinnedReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {

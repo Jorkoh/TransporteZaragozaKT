@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatImageView
+<androidx.appcompat.widget.AppCompatImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map_fake_transition_background_image"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-</androidx.appcompat.widget.AppCompatImageView>
+        android:layout_height="match_parent" />
