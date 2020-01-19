@@ -210,7 +210,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
 
         // Transition names, they only have to be unique in this fragment.
-        ViewCompat.setTransitionName(line_details_frame_layout, TRANSITION_NAME_BACKGROUND)
+        ViewCompat.setTransitionName(line_details_fake_background, TRANSITION_NAME_BACKGROUND)
         ViewCompat.setTransitionName(line_details_coordinator_layout, TRANSITION_NAME_BODY_DETAILS)
         ViewCompat.setTransitionName(line_details_mirror_body, TRANSITION_NAME_BODY_ROW)
     }
