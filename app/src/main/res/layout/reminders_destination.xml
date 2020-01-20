@@ -57,7 +57,7 @@
                 app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintVertical_chainStyle="packed"
-                android:visibility="gone"/>
+                android:visibility="invisible"/>
 
         <TextView
                 android:id="@+id/no_reminders_text"
@@ -76,7 +76,7 @@
                 android:layout_marginStart="8dp"
                 android:textAlignment="center"
                 app:layout_constraintHorizontal_bias="0.5"
-                android:visibility="gone"/>
+                android:visibility="invisible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

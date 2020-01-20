@@ -93,7 +93,7 @@ buildscript {
                     'coroutines': "com.github.parse-community.Parse-SDK-Android:coroutines:1.21.0",
                     'ktx'       : "com.github.parse-community.Parse-SDK-Android:ktx:1.21.0"
             ],
-            'lottie'               : "com.airbnb.android:lottie:3.1.0",
+            'lottie'               : "com.airbnb.android:lottie:3.3.1",
             'nullaway'             : "com.uber.nullaway:nullaway:0.6.6",
             'firebase'             : "com.google.firebase:firebase-core:17.0.0",
             'crashlytics'          : "com.crashlytics.sdk.android:crashlytics:2.10.1",
