@@ -12,7 +12,7 @@ import androidx.transition.TransitionSet
 
 
 const val ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION = 325L
-const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 285L
+const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 290L
 
 /**
  * Standard easing.

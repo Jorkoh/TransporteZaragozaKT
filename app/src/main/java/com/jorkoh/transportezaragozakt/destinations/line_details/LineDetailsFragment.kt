@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -196,7 +195,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         return inflater.inflate(R.layout.line_details_destination, container, false).apply {
             bottomSheetBehavior = BottomSheetBehavior.from(line_details_bottom_sheet)
             setupToolbar(this)
@@ -207,7 +205,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
         super.onViewCreated(view, savedInstanceState)
 
         // We are expecting an enter transition
-        postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
+        postponeEnterTransition(400L, TimeUnit.MILLISECONDS)
 
         // Transition names, they only have to be unique in this fragment.
         ViewCompat.setTransitionName(line_details_fake_background, TRANSITION_NAME_BACKGROUND)
@@ -390,7 +388,8 @@ class LineDetailsFragment : FragmentWithToolbar() {
                             }
                         }
                     }
-                    map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
+                    map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
+//                    map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
                 }
             }
         })
@@ -412,11 +411,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
                     requireNotNull(lineDetailsVM.line.value)
                 )
                 line_details_tab_layout.setupWithViewPager(line_details_viewpager)
-
-                (view?.parent as? ViewGroup)?.doOnPreDraw {
-                    // Wait for the views to be laid out before starting the transition
-                    startPostponedEnterTransition()
-                }
             } else if (line == null) {
                 (requireActivity() as MainActivity).makeSnackbar(getString(R.string.line_not_found))
                 FirebaseAnalytics.getInstance(requireContext()).logEvent("LINE_NOT_FOUND", Bundle().apply {

@@ -11,7 +11,6 @@ import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.jorkoh.transportezaragozakt.MainActivityViewModel
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.utils.RemoveFakeTransitionViewEvent
 import com.jorkoh.transportezaragozakt.destinations.utils.toPx
@@ -24,7 +23,6 @@ import kotlinx.android.synthetic.main.map_trackings_control.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-
 
 class CustomSupportMapFragment : SupportMapFragment() {
 
@@ -57,7 +55,6 @@ class CustomSupportMapFragment : SupportMapFragment() {
     private var mapViewWrapper: FrameLayout? = null
 
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
-    private val mainActivityViewModel: MainActivityViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -208,6 +205,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
     @Subscribe
     fun onMessageEvent(event: RemoveFakeTransitionViewEvent) {
         mapViewWrapper?.removeView(fakeTransitionView?.first)
+        fakeTransitionView = null
     }
 
     override fun onStart() {
