@@ -39,7 +39,7 @@ interface FavoritesDao {
     @Query("UPDATE favoriteStops SET alias = :alias, colorHex = :colorHex WHERE stopId = :stopId")
     suspend fun updateFavorite(stopId: String, colorHex: String, alias: String)
 
-    @Query("SELECT IFNULL(position, 0)+1 FROM favoriteStops ORDER BY position LIMIT 1")
+    @Query("SELECT IFNULL(position, 0)+1 FROM favoriteStops ORDER BY position DESC LIMIT 1")
     fun getLastPosition(): Int
 
     @Transaction

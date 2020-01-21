@@ -48,7 +48,7 @@ interface RemindersDao{
     @Query("UPDATE reminders SET position = :newPosition WHERE reminderId = :reminderId")
     suspend fun updatePosition(reminderId: Int, newPosition: Int)
 
-    @Query("SELECT IFNULL(position, 0)+1 'position' FROM reminders ORDER BY position LIMIT 1")
+    @Query("SELECT IFNULL(position, 0)+1 FROM reminders ORDER BY position DESC LIMIT 1")
     fun getLastPosition(): Int
 
     @Transaction
