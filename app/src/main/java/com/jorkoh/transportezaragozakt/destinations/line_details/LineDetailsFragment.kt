@@ -385,7 +385,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
                         }
                     }
                     map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
-//                    map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 75))
                 }
             }
         })

@@ -14,10 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.jorkoh.transportezaragozakt.destinations.utils.getColorFromAttr
-import com.jorkoh.transportezaragozakt.destinations.utils.setupWithNavController
-import com.jorkoh.transportezaragozakt.destinations.utils.slideDownToHide
-import com.jorkoh.transportezaragozakt.destinations.utils.slideUpToShow
+import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicSetupRemindersWorker
 import com.jorkoh.transportezaragozakt.tasks.enqueuePeriodicUpdateDataWorker
 import com.jorkoh.transportezaragozakt.tasks.setupNotificationChannels
@@ -26,6 +23,7 @@ import daio.io.dresscode.matchDressCode
 import kotlinx.android.synthetic.main.main_container.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -90,6 +88,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         mainActivityVM.currentNavController.observe(this, Observer { navController ->
+            EventBus.getDefault().post(RemoveFakeTransitionViewEvent())
             navController.removeOnDestinationChangedListener(onDestinationChangedListener)
             navController.addOnDestinationChangedListener(onDestinationChangedListener)
         })
