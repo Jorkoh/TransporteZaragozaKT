@@ -58,7 +58,6 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 import java.text.DateFormat
-import java.util.concurrent.TimeUnit
 
 class LineDetailsFragment : FragmentWithToolbar() {
 
@@ -203,9 +202,6 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // We are expecting an enter transition
-        postponeEnterTransition(400L, TimeUnit.MILLISECONDS)
 
         // Transition names, they only have to be unique in this fragment.
         ViewCompat.setTransitionName(line_details_fake_background, TRANSITION_NAME_BACKGROUND)

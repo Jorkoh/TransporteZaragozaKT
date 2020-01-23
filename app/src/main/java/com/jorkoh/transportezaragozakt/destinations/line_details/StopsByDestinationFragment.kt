@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jorkoh.transportezaragozakt.R
-import com.jorkoh.transportezaragozakt.destinations.utils.NotifyingLinearLayoutManager
 import kotlinx.android.synthetic.main.line_stop_destinations.*
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
 import kotlinx.coroutines.Dispatchers
@@ -49,9 +49,7 @@ class StopsByDestinationFragment : Fragment() {
 
         rootView.line_recycler_view_stop_destinations.apply {
             setHasFixedSize(true)
-            layoutManager = NotifyingLinearLayoutManager(context) {
-                parentFragment?.startPostponedEnterTransition()
-            }
+            layoutManager = LinearLayoutManager(context)
             adapter = stopsAdapter
             itemAnimator = null
         }

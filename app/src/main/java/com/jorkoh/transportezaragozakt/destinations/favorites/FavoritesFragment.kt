@@ -134,6 +134,8 @@ class FavoritesFragment : FragmentWithToolbar() {
             this += Explode().apply {
                 mode = Explode.MODE_OUT
                 excludeTarget(R.id.favorites_appBar, true)
+                excludeTarget(R.id.no_favorites_animation, true)
+                excludeTarget(R.id.no_favorites_text, true)
             }
         }
 
@@ -149,6 +151,8 @@ class FavoritesFragment : FragmentWithToolbar() {
                 startDelay = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
                 mode = Explode.MODE_IN
                 excludeTarget(R.id.favorites_appBar, true)
+                excludeTarget(R.id.no_favorites_animation, true)
+                excludeTarget(R.id.no_favorites_text, true)
             }
         }
     }

@@ -27,7 +27,7 @@ class StopsByDestinationPagerAdapter(private val fragmentManager: FragmentManage
             else -> line.destinations.getOrNull(1) ?: ""
         }
 
-    //Hack around multiple nested scrolling inside bottom sheet https://stackoverflow.com/a/54098536
+    // Hack around multiple nested scrolling inside bottom sheet https://stackoverflow.com/a/54098536
     override fun setPrimaryItem(container: ViewGroup, position: Int, item: Any) {
         super.setPrimaryItem(container, position, item)
 
