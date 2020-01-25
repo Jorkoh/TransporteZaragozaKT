@@ -259,7 +259,7 @@ class MapFragment : FragmentWithToolbar() {
                 val fakeTransitionInfoWindow = infoWindowAdapter.inflateFakeTransitionInfoWindow(stop)
                 // Need a snapshot of the map because the surface view blanks when the transition starts
                 map.snapshot { mapSnapshot ->
-                    mapFragment.addFakeTransitionViews(FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition), mapSnapshot)
+                    mapFragment.addFakeTransitionViews(FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition, stop.isFavorite), mapSnapshot)
                     findNavController().navigate(
                         MapFragmentDirections.actionMapToStopDetails(stop.type.name, stop.stopId),
                         FragmentNavigatorExtras(

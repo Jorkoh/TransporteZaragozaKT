@@ -13,7 +13,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.jorkoh.transportezaragozakt.R
 import com.jorkoh.transportezaragozakt.destinations.utils.RemoveFakeTransitionViewEvent
-import com.jorkoh.transportezaragozakt.destinations.utils.toPx
 import kotlinx.android.synthetic.main.map_extra_controls.*
 import kotlinx.android.synthetic.main.map_extra_controls.view.*
 import kotlinx.android.synthetic.main.map_fake_transition_background.view.*
@@ -187,8 +186,8 @@ class CustomSupportMapFragment : SupportMapFragment() {
             width = FrameLayout.LayoutParams.WRAP_CONTENT
             height = FrameLayout.LayoutParams.WRAP_CONTENT
             leftMargin = fakeView.second.x - fakeView.first.measuredWidth / 2
-            //TODO when the stop is favorite the marker is bigger and this value isn't quite right
-            topMargin = fakeView.second.y - fakeView.first.measuredHeight - 31.toPx()
+            val bottomOffset = 55 + (if (fakeView.third) 15 else 0) + 31
+            topMargin = fakeView.second.y - fakeView.first.measuredHeight - bottomOffset
         }
 
         fakeTransitionView = fakeView
@@ -219,4 +218,5 @@ class CustomSupportMapFragment : SupportMapFragment() {
     }
 }
 
-typealias FakeTransitionInfoWindow = Pair<View, Point>
+// View, marker screen location and whether the stop is favorite
+typealias FakeTransitionInfoWindow = Triple<View, Point, Boolean>
