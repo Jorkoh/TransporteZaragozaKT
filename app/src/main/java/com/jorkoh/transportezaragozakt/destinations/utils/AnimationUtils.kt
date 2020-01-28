@@ -2,17 +2,17 @@ package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.animation.TimeInterpolator
 import android.content.Context
+import android.transition.Transition
+import android.transition.TransitionSet
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Transition
-import androidx.transition.TransitionSet
 
 
-const val ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION = 325L
-const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 290L
+const val ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION = 3250L
+const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 2900L
 
 /**
  * Standard easing.

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/stop_details_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:colorBackground"
-        android:transitionGroup="false"
-        tools:context="com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFragment">
+        android:elevation="1dp"
+        android:transitionGroup="false">
 
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/stop_details_appBar"

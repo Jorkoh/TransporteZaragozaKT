@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jorkoh.transportezaragozakt.db.Line
 
-
-//TODO only load one?
 class StopsByDestinationPagerAdapter(private val fragmentManager: FragmentManager, private val line: Line) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -33,7 +31,7 @@ class StopsByDestinationPagerAdapter(private val fragmentManager: FragmentManage
 
         val primaryFragment = item as Fragment
 
-        primaryFragment.view?.let {view ->
+        primaryFragment.view?.let { view ->
             val nestedView = view.findViewWithTag<View>("nested")
             if (nestedView != null && nestedView is RecyclerView) {
                 nestedView.setNestedScrollingEnabled(true)
@@ -42,7 +40,7 @@ class StopsByDestinationPagerAdapter(private val fragmentManager: FragmentManage
 
         for (fragment in fragmentManager.fragments) {
             if (fragment != primaryFragment) {
-                fragment.view?.let {view ->
+                fragment.view?.let { view ->
                     val nestedView = view.findViewWithTag<View>("nested")
                     if (nestedView != null && nestedView is RecyclerView) {
                         nestedView.setNestedScrollingEnabled(false)

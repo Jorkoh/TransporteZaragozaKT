@@ -4,6 +4,8 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
+import android.transition.Fade
+import android.transition.Slide
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.transition.Fade
-import androidx.transition.Slide
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -34,7 +34,7 @@ import com.jorkoh.transportezaragozakt.destinations.stop_details.StopDetailsFrag
 import com.jorkoh.transportezaragozakt.destinations.utils.*
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
-import kotlinx.android.synthetic.main.map_info_window_transition.*
+import kotlinx.android.synthetic.main.map_fake_transition_info_window.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.DateFormat

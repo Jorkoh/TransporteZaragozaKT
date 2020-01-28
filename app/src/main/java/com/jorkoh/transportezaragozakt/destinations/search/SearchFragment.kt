@@ -13,8 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.transition.Explode
-import androidx.transition.Slide
+import android.transition.Explode
+import android.transition.Slide
 import com.google.android.material.tabs.TabLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import com.jorkoh.transportezaragozakt.MainActivity

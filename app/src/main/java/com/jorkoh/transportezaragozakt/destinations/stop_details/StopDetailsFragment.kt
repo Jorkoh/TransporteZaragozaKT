@@ -11,6 +11,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.O
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.transition.*
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.timePicker
 import com.afollestad.materialdialogs.input.input
@@ -270,7 +270,6 @@ class StopDetailsFragment : FragmentWithToolbar() {
         ViewCompat.setTransitionName(stop_details_mirror_first_element_second_row, TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW)
         ViewCompat.setTransitionName(stop_details_mirror_second_element_second_row, TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW)
         ViewCompat.setTransitionName(stop_details_fab, TRANSITION_NAME_FAB)
-
 
         (sharedElementReturnTransition as TransitionSet?)?.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition) {

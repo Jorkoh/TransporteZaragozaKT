@@ -6,6 +6,7 @@ import android.content.Intent
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.transition.*
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.*
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.customListAdapter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -49,7 +49,7 @@ import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.android.synthetic.main.line_details_destination.*
 import kotlinx.android.synthetic.main.line_details_destination.view.*
-import kotlinx.android.synthetic.main.map_info_window_transition.*
+import kotlinx.android.synthetic.main.map_fake_transition_info_window.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

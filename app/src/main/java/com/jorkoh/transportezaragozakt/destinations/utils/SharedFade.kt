@@ -18,12 +18,13 @@ package com.jorkoh.transportezaragozakt.destinations.utils
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.transition.Transition
+import android.transition.TransitionValues
 import android.view.View
 import android.view.ViewGroup
-import androidx.transition.Transition
-import androidx.transition.TransitionValues
+import androidx.appcompat.widget.Toolbar
 
-private const val PROPNAME_IS_MIRROR = "com.example.android.motion.demo:is_mirror"
+private const val PROPNAME_IS_MIRROR = "com.jorkoh.transportezaragozakt.destinations.utils:is_mirror"
 
 private val MIRROR_PROPERTIES = arrayOf(PROPNAME_IS_MIRROR)
 
@@ -73,8 +74,9 @@ class SharedFade : Transition() {
             // The view is appearing. We animate the substance view.
             // The MirrorView was used merely for matching the layout position by other Transitions.
             return ObjectAnimator.ofFloat(endView, View.ALPHA, 0f, 0f, 1f)
-        } else if (endView is MirrorView) { // Disappearing
+        } else if (endView is MirrorView && startView !is Toolbar) { // Disappearing
             // The view is disappearing. We mirror the substance view, and animate the MirrorView.
+            // Removal of toolbars are not animated
             endView.substance = startView
             return ObjectAnimator.ofFloat(endView, View.ALPHA, 1f, 0f, 0f)
         }

@@ -12,7 +12,7 @@ import com.jorkoh.transportezaragozakt.db.Stop
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.utils.inflateLines
 import kotlinx.android.synthetic.main.map_info_window.view.*
-import kotlinx.android.synthetic.main.map_info_window_transition.view.*
+import kotlinx.android.synthetic.main.map_fake_transition_info_window.view.*
 
 class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
 
@@ -84,7 +84,7 @@ class CustomInfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapte
     }
 
     fun inflateFakeTransitionInfoWindow(stop: Stop): View {
-        return layoutInflater.inflate(R.layout.map_info_window_transition, null).apply {
+        return layoutInflater.inflate(R.layout.map_fake_transition_info_window, null).apply {
             when (stop.type) {
                 StopType.BUS -> {
                     map_info_window_transition_type_image.setImageResource(R.drawable.ic_bus_stop)

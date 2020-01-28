@@ -85,17 +85,20 @@ class FavoriteAdapter(
                     StopDetailsFragmentArgs(favorite.type.name, favorite.stopId),
                     arrayOf(
                         favorite_row_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
-                        favorite_row_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
-                        favorite_row_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
                         favorite_row_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
                         favorite_row_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
                         favorite_row_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
                         favorite_row_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
-                        favorite_row_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB,
 
+                        // These elements only exist on the favorites card
                         favorite_row_edit_button to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_FIRST_ROW,
                         favorite_row_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW,
-                        favorite_row_reorder_button to StopDetailsFragment.TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW
+                        favorite_row_reorder_button to StopDetailsFragment.TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW,
+
+                        // These elements only exist on the StopDetails Fragment
+                        favorite_row_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB,
+                        favorite_row_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
+                        favorite_row_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR
                     )
                 )
             })
