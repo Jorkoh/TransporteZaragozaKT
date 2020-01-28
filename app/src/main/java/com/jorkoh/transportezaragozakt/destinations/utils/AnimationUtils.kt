@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-const val ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION = 3250L
-const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 2900L
+const val ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION = 325L
+const val ANIMATE_INTO_DETAILS_SCREEN_DURATION = 290L
 
 /**
  * Standard easing.
