@@ -25,9 +25,9 @@ buildscript {
                     ],
                     'legacy'          : "androidx.legacy:legacy-support-v4:1.0.0",
                     'room'            : [
-                            'runtime' : "androidx.room:room-runtime:2.2.1",
-                            'compiler': "androidx.room:room-compiler:2.2.1",
-                            'ktx'     : "androidx.room:room-ktx:2.2.1"
+                            'runtime' : "androidx.room:room-runtime:2.2.4",
+                            'compiler': "androidx.room:room-compiler:2.2.4",
+                            'ktx'     : "androidx.room:room-ktx:2.2.4"
                     ],
                     'navigation'      : [
                             'runtime' : "androidx.navigation:navigation-runtime-ktx:2.2.0-rc04",
@@ -35,9 +35,9 @@ buildscript {
                             'ui'      : "androidx.navigation:navigation-ui-ktx:2.2.0-rc04"
                     ],
                     'lifecycle'       : [
-                            'extensions': "androidx.lifecycle:lifecycle-extensions:2.2.0-rc01",
-                            'viewModel' : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc01",
-                            'liveData'  : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc01"
+                            'extensions': "androidx.lifecycle:lifecycle-extensions:2.2.0",
+                            'viewModel' : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0",
+                            'liveData'  : "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
                     ]
             ],
             'kotlin'               : [
@@ -45,7 +45,7 @@ buildscript {
                             'jdk': "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61"
                     ]
             ],
-            'coroutines'           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2",
+            'coroutines'           : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3",
             'material'             : "com.google.android.material:material:1.2.0-alpha03",
             'playServices'         : [
                     'maps'    : "com.google.android.gms:play-services-maps:16.1.0",
@@ -109,7 +109,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${buildConfig.gradlePlugin}"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-rc04"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0-alpha02"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
         classpath "org.jetbrains.kotlin:kotlin-serialization:1.3.61"
         classpath 'com.google.gms:google-services:4.3.3'
