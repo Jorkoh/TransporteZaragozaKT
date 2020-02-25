@@ -16,6 +16,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Lifecycle
@@ -173,11 +174,13 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 mode = Slide.MODE_OUT
                 addTarget(R.id.stop_details_appBar)
             }
-            this += Slide(Gravity.END).apply {
+            // Gravity.END is not supported for Slide animation on API 21
+            this += Slide(GravityCompat.getAbsoluteGravity(GravityCompat.END, resources.configuration.layoutDirection)).apply {
                 mode = Slide.MODE_OUT
                 addTarget(R.id.stop_details_fab)
             }
             this += Explode().apply {
+
                 mode = Explode.MODE_OUT
                 excludeTarget(R.id.stop_details_appBar, true)
                 excludeTarget(R.id.stop_details_fab, true)
@@ -192,7 +195,8 @@ class StopDetailsFragment : FragmentWithToolbar() {
                 mode = Slide.MODE_IN
                 addTarget(R.id.stop_details_appBar)
             }
-            this += Slide(Gravity.END).apply {
+            // Gravity.END is not supported for Slide animation on API 21
+            this += Slide(GravityCompat.getAbsoluteGravity(GravityCompat.END, resources.configuration.layoutDirection)).apply {
                 mode = Slide.MODE_IN
                 addTarget(R.id.stop_details_fab)
             }
