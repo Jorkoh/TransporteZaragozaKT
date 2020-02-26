@@ -84,8 +84,8 @@ buildscript {
             'workmanager'          : "androidx.work:work-runtime-ktx:2.3.0-alpha03",
             'eventbus'             : "org.greenrobot:eventbus:3.1.1",
             'koin'                 : [
-                    'core': "org.koin:koin-androidx-viewmodel:2.0.1",
-                    'test': "org.koin:koin-test:2.0.1"
+                    'core': "org.koin:koin-androidx-viewmodel:2.1.0",
+                    'test': "org.koin:koin-test:2.1.0"
             ],
             'okio'                 : "com.squareup.okio:okio:2.3.0",
             'parse'                : [

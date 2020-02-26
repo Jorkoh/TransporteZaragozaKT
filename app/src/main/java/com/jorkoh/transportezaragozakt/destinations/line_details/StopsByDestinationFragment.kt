@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.line_stop_destinations.*
 import kotlinx.android.synthetic.main.line_stop_destinations.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class StopsByDestinationFragment : Fragment() {
 
@@ -29,7 +29,9 @@ class StopsByDestinationFragment : Fragment() {
         }
     }
 
-    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { parentFragment ?: error("Couldn't find parent Fragment") })
+    private val lineDetailsVM: LineDetailsViewModel by lazy {
+        requireParentFragment().getViewModel<LineDetailsViewModel>()
+    }
 
     private lateinit var stopIds: List<String>
 

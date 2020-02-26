@@ -56,6 +56,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.text.DateFormat
 
@@ -70,12 +71,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private val args: LineDetailsFragmentArgs by navArgs()
 
-    private val lineDetailsVM: LineDetailsViewModel by sharedViewModel(from = { this }) {
-        parametersOf(
-            args.lineId,
-            LineType.valueOf(args.lineType)
-        )
-    }
+    private val lineDetailsVM: LineDetailsViewModel by viewModel { parametersOf(args.lineId, LineType.valueOf(args.lineType)) }
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private var activeMinZoom = MIN_ZOOM
@@ -292,7 +288,10 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 val fakeTransitionInfoWindow = infoWindowAdapter.inflateFakeTransitionInfoWindow(stop)
                 // Need a snapshot of the map because the surface view blanks when the transition starts
                 map.snapshot { mapSnapshot ->
-                    mapFragment.addFakeTransitionViews(FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition, stop.isFavorite), mapSnapshot)
+                    mapFragment.addFakeTransitionViews(
+                        FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition, stop.isFavorite),
+                        mapSnapshot
+                    )
                     findNavController().navigate(
                         LineDetailsFragmentDirections.actionLineDetailsToStopDetails(stop.type.name, stop.stopId),
                         FragmentNavigatorExtras(

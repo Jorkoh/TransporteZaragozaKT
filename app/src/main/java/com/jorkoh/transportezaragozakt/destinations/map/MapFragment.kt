@@ -37,6 +37,7 @@ import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOption
 import kotlinx.android.synthetic.main.map_fake_transition_info_window.*
 import kotlinx.android.synthetic.main.map_trackings_control.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
@@ -66,7 +67,7 @@ class MapFragment : FragmentWithToolbar() {
     private var activeMinZoom = MIN_ZOOM
     private var activeBounds: LatLngBounds = RURAL_BOUNDS
 
-    private val mapVM: MapViewModel by sharedViewModel(from = { this })
+    private val mapVM: MapViewModel by viewModel()
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
