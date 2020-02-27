@@ -57,6 +57,7 @@ class CustomSupportMapFragment : SupportMapFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
         displayFilters = arguments?.getBoolean(DISPLAY_FILTERS_KEY) ?: true
         displayTrackingsButton = arguments?.getBoolean(DISPLAY_TRACKINGS_BUTTON_KEY) ?: true
         (arguments?.getInt(BOTTOM_PADDING_DIMEN_KEY) ?: 0).takeIf { it != 0 }?.let { bottomPaddingDimen ->
@@ -204,16 +205,13 @@ class CustomSupportMapFragment : SupportMapFragment() {
     @Subscribe
     fun onMessageEvent(event: RemoveFakeTransitionViewEvent) {
         mapViewWrapper?.removeView(fakeTransitionView?.first)
+        mapViewWrapper?.map_fake_transition_background_image?.setImageDrawable(null)
         fakeTransitionView = null
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         EventBus.getDefault().unregister(this)
     }
 }

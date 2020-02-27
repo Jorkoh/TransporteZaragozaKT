@@ -288,25 +288,27 @@ class LineDetailsFragment : FragmentWithToolbar() {
                 val fakeTransitionInfoWindow = infoWindowAdapter.inflateFakeTransitionInfoWindow(stop)
                 // Need a snapshot of the map because the surface view blanks when the transition starts
                 map.snapshot { mapSnapshot ->
-                    mapFragment.addFakeTransitionViews(
-                        FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition, stop.isFavorite),
-                        mapSnapshot
-                    )
-                    findNavController().navigate(
-                        LineDetailsFragmentDirections.actionLineDetailsToStopDetails(stop.type.name, stop.stopId),
-                        FragmentNavigatorExtras(
-                            map_info_window_transition_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
-                            map_info_window_transition_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
-                            map_info_window_transition_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
-                            map_info_window_transition_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
-                            map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
-                            map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
-                            map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
-                            map_info_window_transition_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB,
-
-                            map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
+                    if (isAdded && findNavController().currentDestination?.id == R.id.lineDetails) {
+                        mapFragment.addFakeTransitionViews(
+                            FakeTransitionInfoWindow(fakeTransitionInfoWindow, screenPosition, stop.isFavorite),
+                            mapSnapshot
                         )
-                    )
+                        findNavController().navigate(
+                            LineDetailsFragmentDirections.actionLineDetailsToStopDetails(stop.type.name, stop.stopId),
+                            FragmentNavigatorExtras(
+                                map_info_window_transition_card to StopDetailsFragment.TRANSITION_NAME_BACKGROUND,
+                                map_info_window_transition_mirror_body to StopDetailsFragment.TRANSITION_NAME_BODY,
+                                map_info_window_transition_layout to StopDetailsFragment.TRANSITION_NAME_APPBAR,
+                                map_info_window_transition_mirror_toolbar to StopDetailsFragment.TRANSITION_NAME_TOOLBAR,
+                                map_info_window_transition_type_image to StopDetailsFragment.TRANSITION_NAME_IMAGE,
+                                map_info_window_transition_title to StopDetailsFragment.TRANSITION_NAME_TITLE,
+                                map_info_window_transition_lines_layout to StopDetailsFragment.TRANSITION_NAME_LINES,
+                                map_info_window_transition_mirror_fab to StopDetailsFragment.TRANSITION_NAME_FAB,
+
+                                map_info_window_transition_number to StopDetailsFragment.TRANSITION_NAME_FIRST_ELEMENT_SECOND_ROW
+                            )
+                        )
+                    }
                 }
             }
         }

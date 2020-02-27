@@ -275,10 +275,23 @@ class StopDetailsFragment : FragmentWithToolbar() {
         ViewCompat.setTransitionName(stop_details_mirror_second_element_second_row, TRANSITION_NAME_SECOND_ELEMENT_SECOND_ROW)
         ViewCompat.setTransitionName(stop_details_fab, TRANSITION_NAME_FAB)
 
+        (sharedElementEnterTransition as TransitionSet?)?.addListener(object : Transition.TransitionListener {
+            override fun onTransitionPause(transition: Transition) {
+                // When the shared element enter transition is canceled midway notify the fragment
+                // to remove fake views created for the shared element transition
+                EventBus.getDefault().post(RemoveFakeTransitionViewEvent())
+            }
+
+            override fun onTransitionEnd(transition: Transition) {}
+            override fun onTransitionResume(transition: Transition) {}
+            override fun onTransitionCancel(transition: Transition) {}
+            override fun onTransitionStart(transition: Transition) {}
+        })
+
         (sharedElementReturnTransition as TransitionSet?)?.addListener(object : Transition.TransitionListener {
             override fun onTransitionEnd(transition: Transition) {
-                // When the shared element transition ends notify the fragment we went back to that it's time to
-                // remove fake views created for the shared element transition
+                // When the shared element return transition ends notify the fragment we went back to
+                // to remove fake views created for the shared element transition
                 EventBus.getDefault().post(RemoveFakeTransitionViewEvent())
             }
 
