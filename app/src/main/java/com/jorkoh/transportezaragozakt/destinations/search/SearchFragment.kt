@@ -3,6 +3,8 @@ package com.jorkoh.transportezaragozakt.destinations.search
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.transition.Explode
+import android.transition.Slide
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +15,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import android.transition.Explode
-import android.transition.Slide
 import com.google.android.material.tabs.TabLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import com.jorkoh.transportezaragozakt.MainActivity
@@ -37,7 +37,7 @@ class SearchFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
         exitTransition = transitionTogether {
-            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION /2
+            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
             interpolator = FAST_OUT_LINEAR_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_OUT
@@ -50,7 +50,7 @@ class SearchFragment : FragmentWithToolbar() {
         }
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = transitionTogether {
-            duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION /2
+            duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION / 2
             interpolator = LINEAR_OUT_SLOW_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_IN

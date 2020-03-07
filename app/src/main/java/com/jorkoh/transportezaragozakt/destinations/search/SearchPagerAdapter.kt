@@ -9,13 +9,12 @@ import com.jorkoh.transportezaragozakt.R
 class SearchPagerAdapter(fragmentManager: FragmentManager, private val context: Context) :
     FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    override fun getItem(position: Int): Fragment {
-        return when (position) {
+    override fun getItem(position: Int): Fragment =
+        when (position) {
             0 -> NearbyStopsFragment()
             1 -> AllStopsFragment()
             else -> LinesFragment()
         }
-    }
 
     override fun getCount(): Int = 3
 

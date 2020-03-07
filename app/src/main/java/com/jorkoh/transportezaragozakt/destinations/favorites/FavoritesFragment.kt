@@ -1,6 +1,8 @@
 package com.jorkoh.transportezaragozakt.destinations.favorites
 
 import android.os.Bundle
+import android.transition.Explode
+import android.transition.Slide
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.transition.Explode
-import android.transition.Slide
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.callbacks.onCancel
 import com.afollestad.materialdialogs.color.colorChooser
@@ -125,7 +125,7 @@ class FavoritesFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are opening the detail screen.
         exitTransition = transitionTogether {
-            duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION /2
+            duration = ANIMATE_INTO_DETAILS_SCREEN_DURATION / 2
             interpolator = FAST_OUT_LINEAR_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_OUT
@@ -141,7 +141,7 @@ class FavoritesFragment : FragmentWithToolbar() {
 
         // This is the transition to be used for non-shared elements when we are return back from the detail screen.
         reenterTransition = transitionTogether {
-            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION /2
+            duration = ANIMATE_OUT_OF_DETAILS_SCREEN_DURATION / 2
             interpolator = LINEAR_OUT_SLOW_IN
             this += Slide(Gravity.TOP).apply {
                 mode = Slide.MODE_IN
@@ -182,13 +182,13 @@ class FavoritesFragment : FragmentWithToolbar() {
         if (savedInstanceState != null) {
             favoriteStopsAdapter.restoreInstanceState(savedInstanceState)
         }
-        if (favoriteStopsAdapter.expectsTransition) {
+        if (favoriteStopsAdapter.expectsTransition && findNavController().currentDestination?.id == R.id.favorites) {
             // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
             postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
 
         ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
-    }
+}
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {
         val newVisibility = if (isEmpty) {

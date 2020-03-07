@@ -74,7 +74,7 @@ class AllStopsFragment : Fragment() {
         if (savedInstanceState != null) {
             allStopsAdapter.restoreInstanceState(savedInstanceState)
         }
-        if (allStopsAdapter.expectsTransition) {
+        if (allStopsAdapter.expectsTransition && findNavController().currentDestination?.id == R.id.search) {
             // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
             parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }

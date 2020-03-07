@@ -97,7 +97,7 @@ class NearbyStopsFragment : Fragment() {
         if (savedInstanceState != null) {
             nearbyStopsAdapter.restoreInstanceState(savedInstanceState)
         }
-        if (nearbyStopsAdapter.expectsTransition) {
+        if (nearbyStopsAdapter.expectsTransition && findNavController().currentDestination?.id == R.id.search) {
             // Transitioning back from StopDetailsFragment , postpone the transition animation until the destination item is ready
             parentFragment?.postponeEnterTransition(300L, TimeUnit.MILLISECONDS)
         }
