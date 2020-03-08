@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jorkoh.transportezaragozakt.db.AppDatabase
-import com.jorkoh.transportezaragozakt.db.LineType
 import com.jorkoh.transportezaragozakt.db.MIGRATION_1_2
 import com.jorkoh.transportezaragozakt.db.StopType
 import com.jorkoh.transportezaragozakt.destinations.favorites.FavoritesViewModel
@@ -159,7 +158,7 @@ val appModule = module {
     viewModel { SearchViewModel(get(), get()) }
     viewModel { RemindersViewModel(get()) }
     viewModel { (stopId: String, stopType: StopType) -> StopDetailsViewModel(stopId, stopType, get(), get(), get()) }
-    viewModel { (lineId: String, lineType: LineType) -> LineDetailsViewModel(lineId, lineType, get(), get()) }
+    viewModel { LineDetailsViewModel(get(), get()) }
     viewModel { MainActivityViewModel(get(), get(), get()) }
     viewModel { IntroActivityViewModel(get()) }
 }

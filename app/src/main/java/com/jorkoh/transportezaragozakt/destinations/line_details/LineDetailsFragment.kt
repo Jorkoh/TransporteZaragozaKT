@@ -71,7 +71,7 @@ class LineDetailsFragment : FragmentWithToolbar() {
 
     private val args: LineDetailsFragmentArgs by navArgs()
 
-    private val lineDetailsVM: LineDetailsViewModel by viewModel { parametersOf(args.lineId, LineType.valueOf(args.lineType)) }
+    private val lineDetailsVM: LineDetailsViewModel by viewModel()
     private val mapSettingsVM: MapSettingsViewModel by sharedViewModel()
 
     private var activeMinZoom = MIN_ZOOM
@@ -209,6 +209,8 @@ class LineDetailsFragment : FragmentWithToolbar() {
         super.onActivityCreated(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
+        val args = LineDetailsFragmentArgs.fromBundle(requireArguments())
+        lineDetailsVM.init(args.lineId, LineType.valueOf(args.lineType))
         var tempMapFragment =
             childFragmentManager.findFragmentByTag(getString(R.string.line_destination_map_fragment_tag)) as CustomSupportMapFragment?
         if (tempMapFragment == null) {
