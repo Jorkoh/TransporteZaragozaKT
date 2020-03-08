@@ -45,7 +45,7 @@ class NearbyStopsFragment : Fragment() {
     })
 
     private val openStop: (StopDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit = { info, extras ->
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && findNavController().currentDestination?.id == R.id.search) {
             activity?.currentFocus?.hideKeyboard()
             findNavController().navigate(
                 SearchFragmentDirections.actionSearchToStopDetails(

@@ -53,7 +53,7 @@ class FavoritesFragment : FragmentWithToolbar() {
     }
 
     private val openStop: (StopDetailsFragmentArgs, Array<Pair<View, String>>) -> Unit = { info, extras ->
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && findNavController().currentDestination?.id == R.id.favorites) {
             findNavController().navigate(
                 FavoritesFragmentDirections.actionFavoritesToStopDetails(
                     info.stopType,
@@ -188,7 +188,7 @@ class FavoritesFragment : FragmentWithToolbar() {
         }
 
         ViewCompat.setTransitionName(fragment_toolbar, TRANSITION_NAME_TOOLBAR)
-}
+    }
 
     private fun updateEmptyViewVisibility(isEmpty: Boolean) {
         val newVisibility = if (isEmpty) {

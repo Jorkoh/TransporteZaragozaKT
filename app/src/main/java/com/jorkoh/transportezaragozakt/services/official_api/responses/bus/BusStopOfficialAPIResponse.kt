@@ -10,7 +10,7 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class BusStopOfficialAPIResponse(
     @Json(name = "id")
-    val id: String,
+    val stopId: String,
 
     @Json(name = "title")
     val title: String,

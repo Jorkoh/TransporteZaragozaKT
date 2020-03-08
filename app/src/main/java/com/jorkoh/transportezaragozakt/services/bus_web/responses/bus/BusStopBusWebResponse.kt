@@ -9,7 +9,7 @@ import java.util.*
 class BusStopBusWebResponse : BusStopResponse {
 
     @Selector("h4")
-    lateinit var id: String
+    lateinit var stopId: String
 
     @Selector("[xmlns] tbody:nth-of-type(1) tbody tr:not(:first-child)")
     var destinations: List<Destination>? = null
